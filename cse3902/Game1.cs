@@ -1,52 +1,104 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
-namespace cse3902
+namespace cse3902;
+
+public class Game1 : Game
 {
-    public class Game1 : Game
+    private GraphicsDeviceManager _graphics;
+    private SpriteBatch _spriteBatch;
+
+    private List<IController> _controllers;
+
+    private List<ISprite> _sprites;
+
+    public Game1()
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        _graphics = new GraphicsDeviceManager(this);
+        Content.RootDirectory = "Content";
+        IsMouseVisible = true;
 
-        public Game1()
+        _controllers = new List<IController> {
+            new KeyboardController(),
+            new MouseController(Window)
+        };
+    }
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+    }
+
+    protected override void LoadContent()
+    {
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        _sprites = new List<ISprite> {
+            new NonMovingNonAnimatedSprite(GetScreenCenter()),
+            new NonMovingAnimatedSprite(   GetScreenCenter()),
+            new MovingNonAnimatedSprite(   GetScreenCenter()),
+            new MovingAnimatedSprite(      GetScreenCenter()),
+            new TextSprite(Vector2.One * 10),
+        };
+
+        foreach (ISprite sprite in _sprites)
         {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            sprite.LoadContent(Content);
+        }
+    }
+
+    private Vector2 GetScreenCenter()
+    {
+        return new Vector2(
+            Window.ClientBounds.Width / 2,
+            Window.ClientBounds.Height / 2
+        );
+    }
+
+    protected override void Update(GameTime gameTime)
+    {
+        foreach (IController controller in _controllers)
+        {
+            controller.Update(gameTime);
         }
 
-        protected override void Initialize()
+        /* collect input states */
+        List<InputState> inputStates = new List<InputState>();
+        foreach (IController controller in _controllers)
         {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
+            inputStates.Add(controller.GetState());
         }
 
-        protected override void LoadContent()
+        if (InputState.IsAnyPressed(inputStates, InputAction.Quit))
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            Exit();
         }
 
-        protected override void Update(GameTime gameTime)
+        foreach (ISprite sprite in _sprites)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
+            sprite.Update(this, gameTime, inputStates);
         }
 
-        protected override void Draw(GameTime gameTime)
+        base.Update(gameTime);
+    }
+
+    protected override void Draw(GameTime gameTime)
+    {
+        GraphicsDevice.Clear(Color.Lavender);
+
+        /* enable nearest-neighbor texture filtering */
+        SamplerState s = new SamplerState();
+        s.Filter = TextureFilter.Point;
+
+        _spriteBatch.Begin(samplerState: s);
+
+        foreach (ISprite sprite in _sprites)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
+            sprite.Draw(this, gameTime, _spriteBatch);
         }
+        _spriteBatch.End();
+
+        base.Draw(gameTime);
     }
 }
