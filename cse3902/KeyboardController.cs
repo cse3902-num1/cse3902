@@ -7,27 +7,67 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    private InputState _inputState;
+    private Player player;
 
-    public KeyboardController()
+
+    public KeyboardController(Player player)
     {
-        _inputState = new InputState();
+        this.player = player;
     }
 
     public InputState GetState()
     {
-        return _inputState;
+        throw new NotImplementedException();
     }
 
     public void Update(GameTime gameTime)
     {
-        _inputState.Update();
-
         KeyboardState keyboardState = Keyboard.GetState();
-        _inputState.SetPressed(InputAction.Quit,                     keyboardState.IsKeyDown(Keys.D0));
-        _inputState.SetPressed(InputAction.ShowNonMovingNonAnimatedSprite,         keyboardState.IsKeyDown(Keys.D1));
-        _inputState.SetPressed(InputAction.ShowNonMovingAnimatedSprite, keyboardState.IsKeyDown(Keys.D2));
-        _inputState.SetPressed(InputAction.ShowMovingNonAnimatedSprite,               keyboardState.IsKeyDown(Keys.D3));
-        _inputState.SetPressed(InputAction.ShowMovingAnimatedSprite,       keyboardState.IsKeyDown(Keys.D4));
+
+        // Player controls
+        if (keyboardState.IsKeyDown(Keys.W))
+            player.MoveUp();
+
+        if (keyboardState.IsKeyDown(Keys.S))
+            player.MoveDown();
+
+        if (keyboardState.IsKeyDown(Keys.A))
+            player.MoveLeft();
+
+        if (keyboardState.IsKeyDown(Keys.D))
+            player.MoveRight();
+
+        if (keyboardState.IsKeyDown(Keys.Z) || keyboardState.IsKeyDown(Keys.N))
+            player.Attack();
+
+        // Other controls
+        if (keyboardState.IsKeyDown(Keys.E))
+            player.UseItem();
+
+        if (keyboardState.IsKeyDown(Keys.T) || keyboardState.IsKeyDown(Keys.Y))
+            player.BlockCycle();
+
+        if (keyboardState.IsKeyDown(Keys.U) || keyboardState.IsKeyDown(Keys.I))
+            player.ItemCycle();
+
+        if (keyboardState.IsKeyDown(Keys.O) || keyboardState.IsKeyDown(Keys.P))
+            player.CharacterCycle();
+
+        if (keyboardState.IsKeyDown(Keys.Q))
+            QuitGame();
+
+        if (keyboardState.IsKeyDown(Keys.R))
+            ResetGame();
     }
+
+    private void QuitGame()
+    {
+        // Implement logic to quit the game
+    }
+
+    private void ResetGame()
+    {
+        // Implement logic to reset the game
+    }
+
 }
