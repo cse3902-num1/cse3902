@@ -15,11 +15,6 @@ public class KeyboardController : IController
         this.player = player;
     }
 
-    public InputState GetState()
-    {
-        throw new NotImplementedException();
-    }
-
     public void Update(GameTime gameTime)
     {
         KeyboardState keyboardState = Keyboard.GetState();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902
@@ -22,15 +23,13 @@ namespace cse3902
 
         private Sprite playerSprite; // Reference to the player's sprite
 
-        public Player(Sprite sprite)
+        public Player(ContentManager content)
         {
             currentState = PlayerState.Idle;
             previousState = PlayerState.Idle;
 
             items = new List<IItem>();
             idxItem = 0;
-
-            playerSprite = sprite;
         }
 
         public void Update(GameTime gameTime)
