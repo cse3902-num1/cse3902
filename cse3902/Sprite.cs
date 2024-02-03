@@ -6,9 +6,11 @@ using System.Collections.Generic;
 
 namespace cse3902
 {
-	public class Sprite: ISprite
-	{
+    public class Sprite : ISprite
+    {
         private Vector2 position;
+        private Texture2D texture2D;
+             
 
         public float X
         {
@@ -21,25 +23,23 @@ namespace cse3902
             get { return position.Y; }
             set { position.Y = value; }
         }
-        public Sprite()
-		{
+        //need sprite
+        public Sprite(Texture2D _texture2D,ContentManager content)
+        {
             position = Vector2.Zero;
+            texture2D = _texture2D;
         }
 
-		public void LoadContent(ContentManager content)
-		{
 
-		}
+        public void Update(Game game, GameTime gameTime)
+        {
 
-		public void Update(Game game, GameTime gameTime, List<InputState> inputStates)
-		{
+        }
 
-		}
+        public void Draw(Game game, GameTime gameTime, SpriteBatch spriteBatch)
+        {
 
-		public void Draw(Game game, GameTime gameTime, SpriteBatch spriteBatch)
-		{
-
-		}
+        }
 
         // Set the position of the sprite
         public void SetPosition(float x, float y)
@@ -53,6 +53,7 @@ namespace cse3902
         {
             // Implement logic to change the state of the sprite
         }
+
     }
 }
 
