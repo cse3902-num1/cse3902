@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902
@@ -12,9 +13,9 @@ namespace cse3902
         public IPlayerState State;
         public List<IItem> Items = new List<IItem>();
 
-        public Player()
+        public Player(Game1 game)
         {
-            State = new PlayerStateIdle(this);
+            State = new PlayerStateIdle(game, this);
         }
 
         public void Update(GameTime gameTime)

@@ -6,6 +6,9 @@ namespace cse3902;
 
 public class Game1 : Game
 {
+    /* loaded game content accessible by anyone with a reference to this Game1 */
+    public Texture2D ContentSpritesheetLink;
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -37,6 +40,8 @@ public class Game1 : Game
         _sprites = new List<IPlayer> {
            new Player(Content)
         };
+
+        ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
     }
 
     private Vector2 GetScreenCenter()

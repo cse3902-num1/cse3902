@@ -5,18 +5,27 @@ namespace cse3902
 {
     public class PlayerStateAttack : IPlayerState
     {
+        private Game1 game;
         private Player player;
-        private ISprite attackSprite = new Sprite();
-        public PlayerStateAttack(Player player)
+        private Sprite attackSprite;
+        public PlayerStateAttack(Game1 game, Player player)
         {
+            this.game = game;
             this.player = player;
-            // TODO: set texture and frame data of attackSprite
+            attackSprite = new Sprite(game.ContentSpritesheetLink, game.Content);
+            // TODO: set frame data of attackSprite
         }
 
         public void Update(GameTime gameTime)
         {
             // TODO: return to idle state if attackSprite animation is done
-            attackSprite.Update(gameTime);
+            // something like:
+            if (attackSprite.isDone())
+            {
+                player.State = new PlayerStateIdle(game, player);
+            }
+
+            attackSprite.Update(game, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
