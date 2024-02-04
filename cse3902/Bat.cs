@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,15 @@ namespace cse3902
         ISprite sprite;
 
         public Bat(ContentManager content)
-        {
+        {/*
             sprite = new Sprite();
             sprite.texture = content.Load<Texture2D>("enemies");
+            */
         }
 
-        public void move()
+        public void move(GameTime gameTime, int randomNum)
         {
+            /*
             Random random = new Random();
             int randomNum = random.Next(1, 4);
             switch (randomNum)
@@ -37,6 +40,7 @@ namespace cse3902
                     sprite.moveDown();
                     break;
             }
+            */
         }
 
         public void attack()
@@ -45,6 +49,16 @@ namespace cse3902
         }
 
         public void takeDmg()
+        {
+
+        }
+
+        public void draw(SpriteBatch spriteBatch)
+        {
+
+        }
+
+        public void update(GameTime gameTime)
         {
 
         }

@@ -13,6 +13,8 @@ public class Game1 : Game
 
     private List<ISprite> _sprites;
 
+    private IEnemy dragon;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -33,6 +35,8 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+        dragon = new Dragon(Content);
 
         _sprites = new List<ISprite> {
             new NonMovingNonAnimatedSprite(GetScreenCenter()),
@@ -58,6 +62,8 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+        dragon.update(gameTime);
+
         foreach (IController controller in _controllers)
         {
             controller.Update(gameTime);
@@ -92,6 +98,8 @@ public class Game1 : Game
         s.Filter = TextureFilter.Point;
 
         _spriteBatch.Begin(samplerState: s);
+
+        dragon.draw(_spriteBatch);
 
         foreach (ISprite sprite in _sprites)
         {
