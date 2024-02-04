@@ -14,7 +14,9 @@ public class Game1 : Game
     private List<ISprite> _sprites;
 
     private IEnemy dragon;
-
+    private IEnemy skeleton;
+    private IEnemy gel;
+    private IEnemy keese;
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -35,8 +37,10 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+        skeleton = new Skeleton(Content);
         dragon = new Dragon(Content);
+        gel = new Gel(Content);
+        keese = new Keese(Content);
 
         _sprites = new List<ISprite> {
             new NonMovingNonAnimatedSprite(GetScreenCenter()),
@@ -63,7 +67,9 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         dragon.update(gameTime);
-
+        skeleton.update(gameTime);
+        gel.update(gameTime);
+        keese.update(gameTime);
         foreach (IController controller in _controllers)
         {
             controller.Update(gameTime);
@@ -100,7 +106,9 @@ public class Game1 : Game
         _spriteBatch.Begin(samplerState: s);
 
         dragon.draw(_spriteBatch);
-
+        skeleton.draw(_spriteBatch);
+        gel.draw(_spriteBatch);
+        keese.draw(_spriteBatch);
         foreach (ISprite sprite in _sprites)
         {
             sprite.Draw(this, gameTime, _spriteBatch);

@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace cse3902
 {
-    public class Skeleton : IEnemy
+    public class Gel : IEnemy
     {
         //private ISprite sprite;
         private Texture2D texture;
@@ -20,14 +20,14 @@ namespace cse3902
         private Random random = new Random();
         private int randomNum = 1;
 
-        public Skeleton(ContentManager content)
+        public Gel(ContentManager content)
         {
             //sprite = new Sprite();
             sourceRectangles = new Rectangle[2];
-            sourceRectangles[0] = new Rectangle(0, 0, 15, 15);
-            sourceRectangles[1] = new Rectangle(15, 0, 15, 15);
-      
-            texture = content.Load<Texture2D>("skeleton");
+            sourceRectangles[0] = new Rectangle(1, 11, 7, 16);
+            sourceRectangles[1] = new Rectangle(10, 11, 7, 16);
+
+            texture = content.Load<Texture2D>("enemiesSheet");
         }
 
         public void move(GameTime gameTime, int randomNum)
