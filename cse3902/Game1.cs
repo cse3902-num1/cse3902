@@ -12,20 +12,22 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private List<IController> _controllers;
+    private IController keyboard;
 
-    private List<ISprite> _sprites;
-
+    private Player _player;
+    
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+       
 
-        _controllers = new List<IController> {
-            //new KeyboardController(),
-            new MouseController(Window)
-        };
+
+        keyboard = new KeyboardController();
+
+
+
     }
 
     protected override void Initialize()
@@ -36,12 +38,14 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+        /*
         _sprites = new List<IPlayer> {
            new Player(Content)
         };
-
+        */
+        
         ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
+        _player = new Player(this);
     }
 
     private Vector2 GetScreenCenter()
@@ -55,19 +59,16 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
 
-        foreach (IController controller in _controllers)
-        {
-            controller.Update(gameTime);
-        }
+        
+  
+ 
+        keyboard.Update(gameTime);
+
 
         /* collect input states */
     
 
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.Update(this, gameTime);
-        }
-
+        _player.Update(gameTime, keyboard);
         base.Update(gameTime);
     }
 
@@ -80,11 +81,8 @@ public class Game1 : Game
         s.Filter = TextureFilter.Point;
 
         _spriteBatch.Begin(samplerState: s);
-
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.Draw(this, gameTime, _spriteBatch);
-        }
+        _player.Draw(_spriteBatch);
+       
         _spriteBatch.End();
 
         base.Draw(gameTime);

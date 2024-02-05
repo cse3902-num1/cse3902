@@ -10,5 +10,5 @@ public interface ISprite
  
     public void Update(Game game, GameTime gameTime);
 
-    public void Draw(Game game, GameTime gameTime, SpriteBatch spriteBatch);
+    public void Draw(SpriteBatch spriteBatch);
 }

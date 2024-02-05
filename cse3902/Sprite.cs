@@ -24,7 +24,7 @@ namespace cse3902
             set { position.Y = value; }
         }
         //need sprite
-        public Sprite(Texture2D _texture2D,ContentManager content)
+        public Sprite(Texture2D _texture2D)
         {
             position = Vector2.Zero;
             texture2D = _texture2D;
@@ -36,7 +36,7 @@ namespace cse3902
 
         }
 
-        public void Draw(Game game, GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
 
         }

@@ -18,9 +18,9 @@ namespace cse3902
             State = new PlayerStateIdle(game, this);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController keyboard)
         {
-            State.Update(gameTime);
+            State.Update(gameTime,keyboard);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -47,5 +47,7 @@ namespace cse3902
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

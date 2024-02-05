@@ -12,25 +12,29 @@ namespace cse3902
         {
             this.game = game;
             this.player = player;
-            attackSprite = new Sprite(game.ContentSpritesheetLink, game.Content);
+            attackSprite = new Sprite(game.ContentSpritesheetLink);
             // TODO: set frame data of attackSprite
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController keyboard)
         {
+
             // TODO: return to idle state if attackSprite animation is done
             // something like:
+            /* Temperary comment
             if (attackSprite.isDone())
             {
                 player.State = new PlayerStateIdle(game, player);
             }
-
+           comment end  */
             attackSprite.Update(game, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+           
             attackSprite.Draw(spriteBatch);
+           
         }
     }
 }
