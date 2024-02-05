@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,47 +8,101 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    private Player player;
+    //private Enermy enermy;
+    //private Block block;
+    //private IItem item;
+    private KeyboardState keyboardState;
 
-
-    public KeyboardController(Player player)
+    public bool isPlayerMoveUpPress()
     {
-        this.player = player;
+     
+
+        if (keyboardState.IsKeyDown(Keys.W)){
+            return true;
+        }
+        return false;
+    }
+    public bool isPlayerMoveDownPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.S))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool isPlayerMoveLeftPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.A))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool isPlayerMoveRightPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.D))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool isPlayerAttackPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.Z) || keyboardState.IsKeyDown(Keys.N))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool isItem1Press()
+    {
+        if (keyboardState.IsKeyDown(Keys.NumPad1))
+        {
+            return true;
+        }
+        return false;
     }
 
-    public void Update(GameTime gameTime)
+    public bool isItem2Press()
     {
-        KeyboardState keyboardState = Keyboard.GetState();
+        if (keyboardState.IsKeyDown(Keys.NumPad2))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool isItem3Press()
+    {
+        if (keyboardState.IsKeyDown(Keys.NumPad3))
+        {
+            return true;
+        }
+        return false;
+    }
+
+public void Update(GameTime gameTime)
+    {
+        keyboardState = Keyboard.GetState();
 
         // Player controls
-        if (keyboardState.IsKeyDown(Keys.W))
-            player.MoveUp();
 
-        if (keyboardState.IsKeyDown(Keys.S))
-            player.MoveDown();
-
-        if (keyboardState.IsKeyDown(Keys.A))
-            player.MoveLeft();
-
-        if (keyboardState.IsKeyDown(Keys.D))
-            player.MoveRight();
-
-        if (keyboardState.IsKeyDown(Keys.Z) || keyboardState.IsKeyDown(Keys.N))
-            player.Attack();
+      
+   
 
         // Other controls
-        if (keyboardState.IsKeyDown(Keys.E))
-            player.UseItem();
+       
 
+        /*
         if (keyboardState.IsKeyDown(Keys.T) || keyboardState.IsKeyDown(Keys.Y))
-            player.BlockCycle();
+            block.BlockCycle();
 
         if (keyboardState.IsKeyDown(Keys.U) || keyboardState.IsKeyDown(Keys.I))
-            player.ItemCycle();
+            item.ItemCycle();
 
         if (keyboardState.IsKeyDown(Keys.O) || keyboardState.IsKeyDown(Keys.P))
-            player.CharacterCycle();
-
+            enermy.CharacterCycle();
+        */
         if (keyboardState.IsKeyDown(Keys.Q))
             QuitGame();
 
@@ -57,6 +112,7 @@ public class KeyboardController : IController
 
     private void QuitGame()
     {
+        
         // Implement logic to quit the game
     }
 
@@ -66,3 +122,4 @@ public class KeyboardController : IController
     }
 
 }
+   

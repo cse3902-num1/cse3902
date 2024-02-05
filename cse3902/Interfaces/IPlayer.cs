@@ -6,7 +6,7 @@ namespace cse3902
 {
 	public interface IPlayer
 	{
-        public void Update(GameTime gameTime);
+        public void Update(GameTime gameTime,IController keyboard);
         public void Draw(SpriteBatch spriteBatch);
         public void Move(Vector2 direction);
         public void Attack();
