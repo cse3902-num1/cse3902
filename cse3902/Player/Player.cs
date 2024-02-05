@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902
@@ -11,16 +9,18 @@ namespace cse3902
         public Vector2 Position = Vector2.Zero;
         public Vector2 Velocity = Vector2.Zero;
         public IPlayerState State;
-        public List<IItem> Items = new List<IItem>();
+        public IItem Item;
 
         public Player(Game1 game)
         {
             State = new PlayerStateIdle(game, this);
         }
 
-        public void Update(GameTime gameTime, IController keyboard)
+        public void Update(GameTime gameTime, IController controller)
         {
-            State.Update(gameTime,keyboard);
+            State.Update(gameTime, controller);
+
+            /* TODO: take damage if damage player button is pressed */
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -38,9 +38,22 @@ namespace cse3902
             throw new NotImplementedException();
         }
 
+        /* Sets the current item, which is used by PlayerStateItem. */
         public void UseItem(int idx)
         {
-            throw new NotImplementedException();
+            /* TODO: finish this once item classes are done */
+            if (idx == 0)
+            {
+                // this.Item = new ExampleItem();
+            }
+            else if (idx == 1)
+            {
+                // this.Item = new ExampleItem();
+            }
+            else if (idx == 2)
+            {
+                // this.Item = new ExampleItem();
+            }
         }
 
         public void TakeDamage()

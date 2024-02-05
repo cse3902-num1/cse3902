@@ -81,17 +81,17 @@ public class KeyboardController : IController
         return false;
     }
 
+    /* TODO: make functions to check inputs for:
+     * - cycling the block
+     * - cycling the item
+     * - cycling the enemy
+     * - quitting the game
+     * - resetting the game
+     */
+
 public void Update(GameTime gameTime)
     {
         keyboardState = Keyboard.GetState();
-
-        // Player controls
-
-      
-   
-
-        // Other controls
-       
 
         /*
         if (keyboardState.IsKeyDown(Keys.T) || keyboardState.IsKeyDown(Keys.Y))

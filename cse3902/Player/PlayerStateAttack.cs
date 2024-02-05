@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,13 +11,14 @@ namespace cse3902
         private Sprite attackSprite;
         public PlayerStateAttack(Game1 game, Player player)
         {
+            Debug.WriteLine("[info] player entered attack state");
             this.game = game;
             this.player = player;
             attackSprite = new Sprite(game.ContentSpritesheetLink);
             // TODO: set frame data of attackSprite
         }
 
-        public void Update(GameTime gameTime, IController keyboard)
+        public void Update(GameTime gameTime, IController controller)
         {
 
             // TODO: return to idle state if attackSprite animation is done
@@ -32,9 +34,8 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-           
+            attackSprite.SetPosition(player.Position.X, player.Position.Y);
             attackSprite.Draw(spriteBatch);
-           
         }
     }
 }

@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Diagnostics;
 
 namespace cse3902
@@ -9,88 +8,63 @@ namespace cse3902
     {
         private Game1 game;
         private Player player;
-        private Sprite MovingLeftSprite;
-        private Sprite MovingRightSprite;
-        private Sprite MovingUpSprite;
-        private Sprite MovingDownSprite;
+        private Sprite movingLeftSprite;
+        private Sprite movingRightSprite;
+        private Sprite movingUpSprite;
+        private Sprite movingDownSprite;
         private Sprite currentSprite; // will reference one of the above sprites
 
 
         public PlayerStateMove(Game1 game, Player player)
         {
+            Debug.WriteLine("[info] player entered move state");
             this.game = game;
             this.player = player;
-            MovingLeftSprite = new Sprite(game.ContentSpritesheetLink);
-            MovingRightSprite = new Sprite(game.ContentSpritesheetLink);
-            MovingUpSprite = new Sprite(game.ContentSpritesheetLink);
-            MovingDownSprite = new Sprite(game.ContentSpritesheetLink);
+            movingLeftSprite = new Sprite(game.ContentSpritesheetLink);
+            movingRightSprite = new Sprite(game.ContentSpritesheetLink);
+            movingUpSprite = new Sprite(game.ContentSpritesheetLink);
+            movingDownSprite = new Sprite(game.ContentSpritesheetLink);
             // TODO: set frame data of MovingLeftSprite, spriteMovingRightSprite, MovingUpSprite, and MovingDownSprite
-            currentSprite = MovingRightSprite; // just a default value
+            currentSprite = movingRightSprite; // just a default value
         }
 
-        public void Update(GameTime gameTime, IController keyboard)
+        public void Update(GameTime gameTime, IController controller)
         {
-            if (keyboard.isPlayerMoveLeftPress() == true)
+            /* move player if any movement key is pressed */
+            if (controller.isPlayerMoveLeftPress() == true)
             {
-                currentSprite  = MovingLeftSprite;
+                currentSprite  = movingLeftSprite;
                 player.Position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (keyboard.isPlayerMoveRightPress() == true)
+            else if (controller.isPlayerMoveRightPress() == true)
             {
-                currentSprite = MovingRightSprite;
+                currentSprite = movingRightSprite;
                 player.Position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if(keyboard.isPlayerMoveUpPress() == true)
+            else if(controller.isPlayerMoveUpPress() == true)
             {
-                currentSprite = MovingUpSprite;
+                currentSprite = movingUpSprite;
                 player.Position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if( keyboard.isPlayerMoveDownPress() == true)
+            else if( controller.isPlayerMoveDownPress() == true)
             {
-                currentSprite = MovingDownSprite;
+                currentSprite = movingDownSprite;
                 player.Position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+
+            /* change to idle state if no movement keys are pressed */
             else
             {
                 player.State = new PlayerStateIdle(game, player);
             }
-            
-            // TODO: return to idle state if no movement keys are pressed
-            // something like:
-            /* Temperary comment
-            if (no movement keys are pressed)
-            {
-                player.State = new PlayerStateIdle(game, player);
-            }
 
-            // TODO: go to attack state if attack button is pressed
-            // something like:
-            if (attack button pressed)
-            {
-                player.State = new PlayerStateAttack(game, player);
-            }
-            */
-
-            // TODO: move according to movement direction
-            UpdateCurrentSprite();
             currentSprite.Update(game, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.SetPosition(player.Position.X, player.Position.Y);
-            Debug.WriteLine("it's moving!!!");
             currentSprite.Draw(spriteBatch);
-            
-        }
-
-        /* sets currentSprite based on the player's velocity */
-            private void UpdateCurrentSprite()
-        {
-            if (player.Velocity.Y < 0) currentSprite = MovingUpSprite;
-            if (player.Velocity.Y > 0) currentSprite = MovingDownSprite;
-            if (player.Velocity.X < 0) currentSprite = MovingLeftSprite;
-            if (player.Velocity.X > 0) currentSprite = MovingRightSprite;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902
 {
@@ -9,34 +8,36 @@ namespace cse3902
     {
         private Game1 game;
         private Player player;
-        private Sprite idleSprite;
+        private IItem item;
+        private Sprite itemUsageSprite;
 
 
-        public PlayerStateItem(Game1 game, Player player)
+        public PlayerStateItem(Game1 game, Player player, IItem item)
         {
+            Debug.WriteLine("[info] player entered item state");
             this.game = game;
             this.player = player;
-            idleSprite = new Sprite(game.ContentSpritesheetLink);
-            // TODO: set frame data of idleSprite
+            this.item = item;
+            itemUsageSprite = new Sprite(game.ContentSpritesheetLink);
+            // TODO: set frame data of itemUsageSprite
+
+            this.item.Use(player);
         }
-        public void Update(GameTime gameTime, IController keyboard)
+        public void Update(GameTime gameTime, IController controller)
         {
-           if(keyboard.isItem1Press() == true)
-            {
-                // to do: new a Item class: ex: Arrow.
-                throw new NotImplementedException();
-            }
+            /* TODO: change to idle state if itemUsageSprite animation is done */
+
+            /* TODO: depending on how we implement items, we might need to update them */
+            // item.Update();
 
             /* play idle sprite animation */
-            idleSprite.Update(game, gameTime);
+            itemUsageSprite.Update(game, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            idleSprite.SetPosition(player.Position.X, player.Position.Y);
-
-            idleSprite.Draw(spriteBatch);
-
+            itemUsageSprite.SetPosition(player.Position.X, player.Position.Y);
+            itemUsageSprite.Draw(spriteBatch);
         }
     }
 }
