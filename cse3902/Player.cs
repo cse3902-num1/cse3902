@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,7 +14,27 @@ namespace cse3902
             Attack,
             Walk
         }
+        public interface Istate()
+        {
+            void update()
+            void Idle();
+            void Attack();
+            void Walk();
 
+        }
+
+        idleState()
+        {
+            void update()
+            void idle()
+            {
+                state = idleState
+            }
+            void attack()
+            {
+            }
+        }
+        
         private PlayerState currentState;
         private PlayerState previousState;
 
@@ -35,22 +56,12 @@ namespace cse3902
 
         public void Update(GameTime gameTime)
         {
-            switch (currentState)
-            {
-                case PlayerState.Idle:
-                    UpdateIdleState(gameTime);
-                    break;
-
-                case PlayerState.Attack:
-                    UpdateAttackState(gameTime);
-                    break;
-
-                case PlayerState.Walk:
-                    UpdateWalkState(gameTime);
-                    break;
-
-                    // Add additional states and corresponding update methods as needed
-            }
+            // detact current state if no state are avalibale change to idle.
+            if (currentState == PlayerState.Idle)
+            else if (currentState == PlayerState.Attack)
+                    AttackState.attack()
+            ISprite.update(luigui);
+         
         }
 
         public void MoveUp()
@@ -105,7 +116,7 @@ namespace cse3902
 
         private void ChangeState(PlayerState newState)
         {
-            previousState = currentState;
+            
             currentState = newState;
         }
 

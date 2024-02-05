@@ -20,7 +20,7 @@ public class Game1 : Game
         IsMouseVisible = true;
 
         _controllers = new List<IController> {
-            new KeyboardController(),
+            //new KeyboardController(),
             new MouseController(Window)
         };
     }
@@ -58,6 +58,7 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+
         foreach (IController controller in _controllers)
         {
             controller.Update(gameTime);
