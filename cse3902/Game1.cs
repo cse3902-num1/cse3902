@@ -16,6 +16,7 @@ public class Game1 : Game
 
     private List<IEnemy> _enemy;
     private int enemyIdx;
+    private KeyboardState previousKbState;
 
     public Game1()
     {
@@ -74,7 +75,7 @@ public class Game1 : Game
     {
         KeyboardState kbState = Keyboard.GetState();
 
-        if (kbState.IsKeyDown(Keys.P))
+        if (kbState.IsKeyDown(Keys.P) && !previousKbState.IsKeyDown(Keys.P))
         { 
             foreach (IEnemy enemy in _enemy)
             {
@@ -84,7 +85,7 @@ public class Game1 : Game
             _enemy[enemyIdx].IsVisible = true;
         }
 
-        if (kbState.IsKeyDown(Keys.O))
+        if (kbState.IsKeyDown(Keys.O) && !previousKbState.IsKeyDown(Keys.O))
         {
             foreach (IEnemy enemy in _enemy)
             {
@@ -94,6 +95,7 @@ public class Game1 : Game
             if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
             _enemy[enemyIdx].IsVisible = true;
         }
+        previousKbState = kbState;
         _enemy[enemyIdx].update(gameTime);
 
         /*
