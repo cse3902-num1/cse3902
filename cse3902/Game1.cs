@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace cse3902;
 
@@ -13,10 +14,9 @@ public class Game1 : Game
 
     private List<ISprite> _sprites;
 
-    private IEnemy dragon;
-    private IEnemy skeleton;
-    private IEnemy gel;
-    private IEnemy keese;
+    private List<IEnemy> _enemy;
+    private int enemyIdx;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -36,11 +36,17 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
+        
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-        skeleton = new Skeleton(Content);
-        dragon = new Dragon(Content);
-        gel = new Gel(Content);
-        keese = new Keese(Content);
+
+        _enemy = new List<IEnemy>
+        {
+            new Skeleton(Content),
+            new Dragon(Content),
+            new Gel(Content),
+            new Keese(Content),
+        };
+        enemyIdx = 0;
 
         _sprites = new List<ISprite> {
             new NonMovingNonAnimatedSprite(GetScreenCenter()),
@@ -66,16 +72,36 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        dragon.update(gameTime);
-        skeleton.update(gameTime);
-        gel.update(gameTime);
-        keese.update(gameTime);
+        KeyboardState kbState = Keyboard.GetState();
+
+        if (kbState.IsKeyDown(Keys.P))
+        { 
+            foreach (IEnemy enemy in _enemy)
+            {
+                enemy.IsVisible = false;
+            }
+            enemyIdx = (enemyIdx + 1) % _enemy.Count;
+            _enemy[enemyIdx].IsVisible = true;
+        }
+
+        if (kbState.IsKeyDown(Keys.O))
+        {
+            foreach (IEnemy enemy in _enemy)
+            {
+                enemy.IsVisible = false;
+            }
+            enemyIdx--;
+            if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
+            _enemy[enemyIdx].IsVisible = true;
+        }
+        _enemy[enemyIdx].update(gameTime);
+
+        /*
         foreach (IController controller in _controllers)
         {
             controller.Update(gameTime);
         }
 
-        /* collect input states */
         List<InputState> inputStates = new List<InputState>();
         foreach (IController controller in _controllers)
         {
@@ -91,6 +117,7 @@ public class Game1 : Game
         {
             sprite.Update(this, gameTime, inputStates);
         }
+        */
 
         base.Update(gameTime);
     }
@@ -105,14 +132,16 @@ public class Game1 : Game
 
         _spriteBatch.Begin(samplerState: s);
 
-        dragon.draw(_spriteBatch);
-        skeleton.draw(_spriteBatch);
-        gel.draw(_spriteBatch);
-        keese.draw(_spriteBatch);
+        foreach (IEnemy enemy in _enemy)
+        {
+            enemy.draw(_spriteBatch);
+        }
+        /*
         foreach (ISprite sprite in _sprites)
         {
             sprite.Draw(this, gameTime, _spriteBatch);
         }
+        */
         _spriteBatch.End();
 
         base.Draw(gameTime);

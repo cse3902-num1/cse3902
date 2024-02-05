@@ -19,6 +19,13 @@ namespace cse3902
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
         private int randomNum = 1;
+        public bool isVisible = false;
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set { isVisible = value; }
+        }
 
         public Gel(ContentManager content)
         {
@@ -65,15 +72,18 @@ namespace cse3902
 
         public void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture,
-                new Vector2(x, y),
-                sourceRectangles[currentAnimationIndex],
-                Color.White,
-                0f,
-                new Vector2(0, 0),
-                3f,
-                SpriteEffects.None, 1f
-            );
+            if (isVisible)
+            {
+                spriteBatch.Draw(texture,
+                    new Vector2(x, y),
+                    sourceRectangles[currentAnimationIndex],
+                    Color.White,
+                    0f,
+                    new Vector2(0, 0),
+                    3f,
+                    SpriteEffects.None, 1f
+                );
+            }
         }
 
         public void update(GameTime gameTime)

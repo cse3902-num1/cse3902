@@ -12,6 +12,7 @@ namespace cse3902
     public class RedFox : IEnemy
     {
         ISprite sprite;
+        public bool isVisible = false;
 
         public RedFox(ContentManager content)
         {
@@ -19,6 +20,12 @@ namespace cse3902
             sprite = new Sprite();
             sprite.texture = content.Load<Texture2D>("enemies");
             */
+        }
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set { isVisible = value; }
         }
 
         public void move(GameTime gameTime, int randomNum)

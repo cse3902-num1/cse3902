@@ -5,6 +5,7 @@ namespace cse3902;
 
 public interface IEnemy
 {
+    public bool IsVisible { get; set; }
     public void move(GameTime gameTime, int randomNum);
 
     public void attack();
