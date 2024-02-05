@@ -6,6 +6,9 @@ namespace cse3902;
 
 public class Game1 : Game
 {
+    /* loaded game content accessible by anyone with a reference to this Game1 */
+    public Texture2D ContentSpritesheetLink;
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -34,18 +37,11 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _sprites = new List<ISprite> {
-            new NonMovingNonAnimatedSprite(GetScreenCenter()),
-            new NonMovingAnimatedSprite(   GetScreenCenter()),
-            new MovingNonAnimatedSprite(   GetScreenCenter()),
-            new MovingAnimatedSprite(      GetScreenCenter()),
-            new TextSprite(Vector2.One * 10),
+        _sprites = new List<IPlayer> {
+           new Player(Content)
         };
 
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.LoadContent(Content);
-        }
+        ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
     }
 
     private Vector2 GetScreenCenter()
@@ -65,20 +61,11 @@ public class Game1 : Game
         }
 
         /* collect input states */
-        List<InputState> inputStates = new List<InputState>();
-        foreach (IController controller in _controllers)
-        {
-            inputStates.Add(controller.GetState());
-        }
-
-        if (InputState.IsAnyPressed(inputStates, InputAction.Quit))
-        {
-            Exit();
-        }
+    
 
         foreach (ISprite sprite in _sprites)
         {
-            sprite.Update(this, gameTime, inputStates);
+            sprite.Update(this, gameTime);
         }
 
         base.Update(gameTime);
