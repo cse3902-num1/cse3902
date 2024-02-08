@@ -82,7 +82,8 @@ namespace cse3902
                     0f,
                     new Vector2(0, 0),
                     3f,
-                    SpriteEffects.None, 1f
+                    SpriteEffects.None, 
+                    1f
                 );
             }
         }
