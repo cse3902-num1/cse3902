@@ -46,6 +46,7 @@ public class Game1 : Game
             new Dragon(Content),
             new Gel(Content),
             new Keese(Content),
+            new Goriya(Content),
         };
         enemyIdx = 0;
 
