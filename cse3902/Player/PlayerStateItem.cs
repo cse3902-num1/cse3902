@@ -36,7 +36,7 @@ namespace cse3902
             // item.Update();
 
             /* play idle sprite animation */
-            itemUsageSprite.Update(spritesheet, gameTime);
+            itemUsageSprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

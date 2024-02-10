@@ -14,7 +14,7 @@ public class Game1 : Game
     private IController controller;
 
     private Player player;
-    private GameContent spriteSheet;
+    private GameContent gameContent;
     
     public Game1()
     {
@@ -32,9 +32,9 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
-        spriteSheet = new GameContent(Content);
+        gameContent = new GameContent(Content);
 
-        player = new Player(this);
+        player = new Player(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
