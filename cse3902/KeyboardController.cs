@@ -10,7 +10,7 @@ namespace cse3902;
 public class KeyboardController : IController
 {
 
-    private KeyboardState keyboardState;
+    public KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
     {
@@ -120,13 +120,18 @@ public class KeyboardController : IController
     /*
     * for Enemy control: "o" switches to the previous item and "p" switches to the next
     */
-    public bool isCycleEnemyPress()
+    public bool isEnemyPressO()
     {
         if (keyboardState.IsKeyDown(Keys.O))
         {
             return true;
         }
-        else if (keyboardState.IsKeyDown(Keys.P))
+        return false;
+    }
+
+    public bool isEnemyPressP()
+    {
+        if (keyboardState.IsKeyDown(Keys.P))
         {
             return true;
         }
@@ -137,6 +142,7 @@ public class KeyboardController : IController
 
     public void Update(GameTime gameTime)
     {
+        keyboardState = Keyboard.GetState();
 
         if (keyboardState.IsKeyDown(Keys.Q))
         {

@@ -15,7 +15,7 @@ public class Game1 : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
 
-    private IController controller;
+    private KeyboardController controller;
 
     private List<IEnemy> _enemy;
     private int enemyIdx;
@@ -59,9 +59,9 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        KeyboardState kbState = Keyboard.GetState();
+        controller.Update(gameTime);
 
-        if (kbState.IsKeyDown(Keys.P) && !previousKbState.IsKeyDown(Keys.P))
+        if (controller.isEnemyPressP() && !previousKbState.IsKeyDown(Keys.P))
         { 
             foreach (IEnemy enemy in _enemy)
             {
@@ -71,7 +71,7 @@ public class Game1 : Game
             _enemy[enemyIdx].IsVisible = true;
         }
 
-        if (kbState.IsKeyDown(Keys.O) && !previousKbState.IsKeyDown(Keys.O))
+        if (controller.isEnemyPressO() && !previousKbState.IsKeyDown(Keys.O))
         {
             foreach (IEnemy enemy in _enemy)
             {
@@ -81,10 +81,10 @@ public class Game1 : Game
             if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
             _enemy[enemyIdx].IsVisible = true;
         }
-        previousKbState = kbState;
+        previousKbState = controller.keyboardState;
         _enemy[enemyIdx].update(gameTime);
 
-        controller.Update(gameTime);
+
         player.Update(gameTime, controller);
 
         base.Update(gameTime);
