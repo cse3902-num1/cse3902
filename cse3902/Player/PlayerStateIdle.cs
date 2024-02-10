@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace cse3902
@@ -15,7 +16,9 @@ namespace cse3902
             Debug.WriteLine("[info] player entered idle state");
             this.game = game;
             this.player = player;
-            idleSprite = new Sprite(game.ContentSpritesheetLink);
+            idleSprite = new Sprite(game.ContentSpritesheetLink, new List<Rectangle>() {
+                new Rectangle(1, 11, 15, 15)
+            });
             // TODO: set frame data of idleSprite
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace cse3902
@@ -18,7 +19,11 @@ namespace cse3902
             this.game = game;
             this.player = player;
             this.item = item;
-            itemUsageSprite = new Sprite(game.ContentSpritesheetLink);
+            itemUsageSprite = new Sprite(game.ContentSpritesheetLink, new List<Rectangle>() {
+                new Rectangle(107, 11, 15, 15),
+                new Rectangle(124, 11, 15, 15),
+                new Rectangle(141, 11, 15, 15)
+            });
             // TODO: set frame data of itemUsageSprite
 
             this.item.Use(player);

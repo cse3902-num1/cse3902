@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,9 @@ namespace cse3902
             Debug.WriteLine("[info] player entered attack state");
             this.game = game;
             this.player = player;
-            attackSprite = new Sprite(game.ContentSpritesheetLink);
+            attackSprite = new Sprite(game.ContentSpritesheetLink, new List<Rectangle>() {
+                new Rectangle(107, 11, 15, 15)
+            });
             // TODO: set frame data of attackSprite
         }
 
