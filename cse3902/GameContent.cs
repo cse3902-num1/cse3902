@@ -12,6 +12,7 @@ namespace cse3902
         public GameContent(ContentManager content) 
         {
             ContentSpritesheetLink = content.Load<Texture2D>("spritesheet_link");
+            ContentSpritesheetLink = content.Load<Texture2D>("spritesheet")
         }
 
     }
