@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cse3902
+namespace cse3902.Enemy
 {
     public class Goriya : IEnemy
     {
@@ -18,7 +19,7 @@ namespace cse3902
         private float timer = 0;
         private int threshold = 250;
         private int currentIdx = 0;
-        private byte previousAnimationIndex = 3;
+        //private byte previousAnimationIndex = 3;
         private byte currentAnimationIndex = 2;
         private float x = 200, y = 200;
         private Stopwatch randomChangeTimer = new Stopwatch();
@@ -135,7 +136,7 @@ namespace cse3902
                         );
                     }
                 }
-                else if(state == GoriyaState.Right)
+                else if (state == GoriyaState.Right)
                 {
                     spriteBatch.Draw(texture,
                             new Vector2(x, y),

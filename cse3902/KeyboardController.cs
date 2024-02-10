@@ -9,15 +9,6 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    private List<Block> blocks;
-    private List<Item> items;
-    private List<Enemy> enemies;
-
-
-    private int currentBlockIndex;
-    private int currentItemIndex;
-    private int currentEnemyIndex;
-    private int currentNPCIndex;
 
     private KeyboardState keyboardState;
 
@@ -92,27 +83,6 @@ public class KeyboardController : IController
         }
         return false;
     }
-    /*
-     *  initialize the lists of game entities (blocks, items, enemies) 
-     *  that KeyboardController will interact with
-     */
-    public void SetBlocks(List<Block> blockList)
-    {
-        blocks = blockList;
-        currentBlockIndex = 0;
-    }
-
-    public void SetItems(List<Item> itemList)
-    {
-        items = itemList;
-        currentItemIndex = 0;
-    }
-
-    public void SetEnemies(List<Enemy> enemyList)
-    {
-        enemies = enemyList;
-        currentEnemyIndex = 0;
-    }
 
     /*
      * for block control: "t" switches to the previous item and "y" switches to the next
@@ -121,12 +91,10 @@ public class KeyboardController : IController
     {
         if (keyboardState.IsKeyDown(Keys.T))
         {
-            currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
             return true;
         }
         else if (keyboardState.IsKeyDown(Keys.Y))
         {
-            currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
             return true;
         }
         return false;
@@ -140,12 +108,10 @@ public class KeyboardController : IController
     {
         if (keyboardState.IsKeyDown(Keys.U))
         {
-            currentItemIndex = (currentItemIndex - 1 + items.Count) % items.Count;
             return true;
         }
         else if (keyboardState.IsKeyDown(Keys.I))
         {
-            currentItemIndex = (currentItemIndex + 1) % items.Count;
             return true;
         }
         return false;
@@ -158,12 +124,10 @@ public class KeyboardController : IController
     {
         if (keyboardState.IsKeyDown(Keys.O))
         {
-            currentEnemyIndex = (currentEnemyIndex - 1 + enemies.Count) % enemies.Count;
             return true;
         }
         else if (keyboardState.IsKeyDown(Keys.P))
         {
-            currentEnemyIndex = (currentEnemyIndex + 1) % enemies.Count;
             return true;
         }
         return false;
@@ -173,22 +137,6 @@ public class KeyboardController : IController
 
     public void Update(GameTime gameTime)
     {
-        keyboardState = Keyboard.GetState();
-
-        if (isCycleBlockPress())
-        {
-            blocks[currentBlockIndex].BlockCycle();
-        }
-
-        if (isCycleItemPress())
-        {
-            items[currentItemIndex].ItemCycle();
-        }
-
-        if (isCycleEnemyPress())
-        {
-            enemies[currentEnemyIndex].CharacterCycle();
-        }
 
         if (keyboardState.IsKeyDown(Keys.Q))
         {
@@ -214,10 +162,7 @@ public class KeyboardController : IController
      */
     private void ResetGame()
     {
-        // Reset entity indices to their initial values
-        currentBlockIndex = 0;
-        currentItemIndex = 0;
-        currentEnemyIndex = 0;
+        
     }
 
 }

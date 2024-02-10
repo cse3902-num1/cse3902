@@ -1,25 +1,25 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 
-namespace cse3902
+namespace cse3902.Enemy
 {
-    public class Gel : IEnemy
+    public class Skeleton : IEnemy
     {
         //private ISprite sprite;
         private Texture2D texture;
         private Rectangle[] sourceRectangles;
         private float timer = 0;
         private int threshold = 75;
-        private byte previousAnimationIndex = 2;
         private byte currentAnimationIndex = 1;
         private float x = 200, y = 200;
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
         private int randomNum = 1;
-        public bool isVisible = false;
+        public bool isVisible = true;
 
         public bool IsVisible
         {
@@ -27,14 +27,14 @@ namespace cse3902
             set { isVisible = value; }
         }
 
-        public Gel(ContentManager content)
+        public Skeleton(ContentManager content)
         {
             //sprite = new Sprite();
             sourceRectangles = new Rectangle[2];
-            sourceRectangles[0] = new Rectangle(1, 11, 7, 16);
-            sourceRectangles[1] = new Rectangle(10, 11, 7, 16);
+            sourceRectangles[0] = new Rectangle(0, 0, 15, 15);
+            sourceRectangles[1] = new Rectangle(15, 0, 15, 15);
 
-            texture = content.Load<Texture2D>("enemiesSheet");
+            texture = content.Load<Texture2D>("skeleton");
         }
 
         public void move(GameTime gameTime, int randomNum)

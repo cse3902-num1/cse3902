@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.Interfaces;
+using cse3902.Enemy;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
