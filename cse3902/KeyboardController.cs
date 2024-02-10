@@ -9,8 +9,15 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
+    /*
+    *  initialize the lists of game entities (blocks, items, enemies) 
+    *  that KeyboardController will interact with
+    */
+    public KeyboardController(List<Enemy> enemies,List<Item> items,List<Block> blocks) {
 
-    public KeyboardState keyboardState;
+    }
+
+    private KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
     {

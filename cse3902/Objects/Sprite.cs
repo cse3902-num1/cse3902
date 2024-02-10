@@ -9,8 +9,16 @@ namespace cse3902
     public class Sprite : ISprite
     {
         private Vector2 position;
-        private Texture2D texture2D;
-             
+        private Texture2D texture;
+        private List<Rectangle> frames; /* source rectangles */
+        public int Frame /* index of current frame's source rectangle */
+        {
+            get { return Frame; }
+            set { Frame = value % frames.Count; }
+        }
+
+        private double frameTimerThreshold = 1.0 / 5.0; /* how long to spend on each frame (seconds) */
+        private double frameTimer = 0.0; /* how long we've spent on current frame (seconds) */
 
         public float X
         {
@@ -24,21 +32,31 @@ namespace cse3902
             set { position.Y = value; }
         }
         //need sprite
-        public Sprite(Texture2D _texture2D)
+        public Sprite(Texture2D texture, List<Rectangle> frames)
         {
-            position = Vector2.Zero;
-            texture2D = _texture2D;
+            this.position = Vector2.Zero;
+            this.texture = texture;
+            this.frames = frames;
         }
 
 
         public void Update(Game game, GameTime gameTime)
         {
+            frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            if (frameTimer < frameTimerThreshold) return;
 
+            frameTimer = 0.0;
+
+            Frame++;
+            if (Frame >= frames.Count)
+            {
+                Frame = 0;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White);
         }
 
         // Set the position of the sprite
