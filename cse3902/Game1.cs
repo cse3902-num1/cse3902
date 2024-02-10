@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,12 +6,13 @@ namespace cse3902;
 
 public class Game1 : Game
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    /* loaded game content accessible by anyone with a reference to this Game1 */
+    public Texture2D ContentSpritesheetLink;
 
-    private List<IController> _controllers;
+    private GraphicsDeviceManager graphics;
+    private SpriteBatch spriteBatch;
 
-    private List<ISprite> _sprites;
+    private IController controller;
 
     private List<IEnemy> _enemy;
     private int enemyIdx;
@@ -20,14 +20,10 @@ public class Game1 : Game
 
     public Game1()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-
-        _controllers = new List<IController> {
-            new KeyboardController(),
-            new MouseController(Window)
-        };
+        controller = new KeyboardController();
     }
 
     protected override void Initialize()
@@ -38,7 +34,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _enemy = new List<IEnemy>
         {
@@ -50,26 +46,10 @@ public class Game1 : Game
         };
         enemyIdx = 0;
 
-        _sprites = new List<ISprite> {
-            new NonMovingNonAnimatedSprite(GetScreenCenter()),
-            new NonMovingAnimatedSprite(   GetScreenCenter()),
-            new MovingNonAnimatedSprite(   GetScreenCenter()),
-            new MovingAnimatedSprite(      GetScreenCenter()),
-            new TextSprite(Vector2.One * 10),
-        };
 
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.LoadContent(Content);
-        }
-    }
 
-    private Vector2 GetScreenCenter()
-    {
-        return new Vector2(
-            Window.ClientBounds.Width / 2,
-            Window.ClientBounds.Height / 2
-        );
+        ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
+        player = new Player(this);
     }
 
     protected override void Update(GameTime gameTime)
@@ -104,23 +84,8 @@ public class Game1 : Game
         {
             controller.Update(gameTime);
         }
-
-        List<InputState> inputStates = new List<InputState>();
-        foreach (IController controller in _controllers)
-        {
-            inputStates.Add(controller.GetState());
-        }
-
-        if (InputState.IsAnyPressed(inputStates, InputAction.Quit))
-        {
-            Exit();
-        }
-
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.Update(this, gameTime, inputStates);
-        }
-        */
+        controller.Update(gameTime);
+        player.Update(gameTime, controller);
 
         base.Update(gameTime);
     }
@@ -133,18 +98,14 @@ public class Game1 : Game
         SamplerState s = new SamplerState();
         s.Filter = TextureFilter.Point;
 
-        _spriteBatch.Begin(samplerState: s);
+        spriteBatch.Begin(samplerState: s);
 
         foreach (IEnemy enemy in _enemy)
         {
             enemy.draw(_spriteBatch);
         }
-        /*
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.Draw(this, gameTime, _spriteBatch);
-        }
-        */
+        player.Draw(spriteBatch);
+        
         _spriteBatch.End();
 
         base.Draw(gameTime);
