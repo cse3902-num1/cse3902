@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace cse3902;
 
@@ -17,6 +18,8 @@ public class Game1 : Game
     private List<IEnemy> _enemy;
     private int enemyIdx;
     private KeyboardState previousKbState;
+
+    private Player player;
 
     public Game1()
     {
@@ -79,11 +82,6 @@ public class Game1 : Game
         previousKbState = kbState;
         _enemy[enemyIdx].update(gameTime);
 
-        /*
-        foreach (IController controller in _controllers)
-        {
-            controller.Update(gameTime);
-        }
         controller.Update(gameTime);
         player.Update(gameTime, controller);
 
@@ -102,11 +100,11 @@ public class Game1 : Game
 
         foreach (IEnemy enemy in _enemy)
         {
-            enemy.draw(_spriteBatch);
+            enemy.draw(spriteBatch);
         }
         player.Draw(spriteBatch);
         
-        _spriteBatch.End();
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }
