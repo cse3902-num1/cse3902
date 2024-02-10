@@ -7,7 +7,7 @@ namespace cse3902
     public class Player : IPlayer
     {
         public Vector2 Position = Vector2.Zero;
-        public Vector2 Velocity = Vector2.Zero;
+        public Direction Facing;
         public IPlayerState State;
         public IItem Item;
 
@@ -60,7 +60,5 @@ namespace cse3902
         {
             throw new NotImplementedException();
         }
-
-       
     }
 }
