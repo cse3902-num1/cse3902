@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using cse3902.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using cse3902.Interfaces;
 
 namespace cse3902;
 
@@ -13,11 +14,13 @@ public class KeyboardController : IController
     *  initialize the lists of game entities (blocks, items, enemies) 
     *  that KeyboardController will interact with
     */
-    public KeyboardController(List<Enemy> enemies,List<Item> items,List<Block> blocks) {
+    /*
+    public KeyboardController(List<IEnemy> enemies,List<Item> items,List<Block> blocks) {
 
     }
+    */
 
-    private KeyboardState keyboardState;
+    public KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
     {
