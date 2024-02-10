@@ -20,28 +20,28 @@ namespace cse3902
             sprites = new Dictionary<Direction, ISprite>() {
                 {
                     Direction.Left,
-                    new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                         new Rectangle(35, 11, 15, 15),
                         new Rectangle(52, 11, 15, 15),
                     })
                 },
                 {
                     Direction.Right,
-                    new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                         new Rectangle(35, 11, 15, 15),
                         new Rectangle(52, 11, 15, 15),
                     })
                 },
                 {
                     Direction.Up,
-                    new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                         new Rectangle(69, 11, 15, 15),
                         new Rectangle(86, 11, 15, 15),
                     })
                 },
                 {
                     Direction.Down,
-                    new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                         new Rectangle(1, 11, 15, 15),
                         new Rectangle(18, 11, 15, 15),
                     })

@@ -17,28 +17,28 @@ namespace cse3902
             this.player = player;
 
             sprites = new Dictionary<Direction, ISprite>() {
-                {Direction.Left, new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                {Direction.Left, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                     new Rectangle(1, 77, 27, 16),
                     new Rectangle(18, 77, 27, 16),
                     new Rectangle(46, 77, 27, 16),
                     new Rectangle(70, 77, 27, 16),
                 })},
 
-                {Direction.Right, new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                {Direction.Right, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                     new Rectangle(1, 77, 27, 16),
                     new Rectangle(18, 77, 27, 16),
                     new Rectangle(46, 77, 27, 16),
                     new Rectangle(70, 77, 27, 16),
                 })},
 
-                {Direction.Up, new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                {Direction.Up, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                     new Rectangle(1, 97, 16, 28),
                     new Rectangle(18, 97, 16, 28),
                     new Rectangle(35, 97, 16, 28),
                     new Rectangle(52, 97, 16, 28),
                 })},
 
-                {Direction.Down, new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                {Direction.Down, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                     new Rectangle(1, 47, 16, 27),
                     new Rectangle(18, 47, 16, 27),
                     new Rectangle(35, 47, 16, 27),
