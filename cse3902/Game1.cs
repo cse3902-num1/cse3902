@@ -33,8 +33,6 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
-=======
         gameContent = new GameContent(Content);
 
 
