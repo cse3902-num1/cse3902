@@ -8,7 +8,7 @@ namespace cse3902
     public class PlayerStateAttack : IPlayerState
     {
         private Player player;
-        private Dictionary<Direction, ISprite> sprites;
+        private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
         public PlayerStateAttack(GameContent content, Player player)
         {
@@ -16,7 +16,7 @@ namespace cse3902
             this.content = content;
             this.player = player;
 
-            sprites = new Dictionary<Direction, ISprite>() {
+            sprites = new Dictionary<Direction, Sprite>() {
                 {Direction.Left, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
                     new Rectangle(1, 77, 27, 16),
                     new Rectangle(18, 77, 27, 16),
@@ -49,15 +49,12 @@ namespace cse3902
 
         public void Update(GameTime gameTime, IController controller)
         {
-
-            // TODO: return to idle state if attackSprite animation is done
-            // something like:
-            /* Temperary comment
-            if (attackSprite.isDone())
+            /* go to idle state if attack animation is done */
+            if (sprites[player.Facing].Frame == 3)
             {
-                player.State = new PlayerStateIdle(game, player);
+                player.State = new PlayerStateIdle(content, player);
             }
-           comment end  */
+
             sprites[player.Facing].Update(gameTime);
         }
 
