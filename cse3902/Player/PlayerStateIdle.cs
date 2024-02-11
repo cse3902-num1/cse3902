@@ -6,16 +6,17 @@ namespace cse3902
 {
     public class PlayerStateIdle : IPlayerState
     {
-        private Game1 game;
+        
         private Player player;
         private Sprite idleSprite;
-    
-        public PlayerStateIdle(Game1 game, Player player)
+        private Spritesheet spritesheet;
+
+        public PlayerStateIdle(Spritesheet sprite, Player player)
         {
             Debug.WriteLine("[info] player entered idle state");
-            this.game = game;
+            spritesheet = sprite;
             this.player = player;
-            idleSprite = new Sprite(game.ContentSpritesheetLink);
+            idleSprite = new Sprite(sprite.ContentSpritesheetLink);
             // TODO: set frame data of idleSprite
         }
 
@@ -25,13 +26,13 @@ namespace cse3902
             if (controller.isPlayerMoveLeftPress() == true || controller.isPlayerMoveUpPress() == true ||
                 controller.isPlayerMoveDownPress() ==true || controller.isPlayerMoveRightPress() == true)
             {
-                player.State = new PlayerStateMove(game, player);
+                player.State = new PlayerStateMove(spritesheet, player);
             }
 
             /* enter attack state if attack key is pressed */
             else if (controller.isPlayerAttackPress())
             {
-                player.State = new PlayerStateAttack(game, player);
+                player.State = new PlayerStateAttack(spritesheet, player);
             }
 
             /* enter item state if any item use keys are pressed */
@@ -50,7 +51,7 @@ namespace cse3902
             }
         
             /* play idle sprite animation */
-            idleSprite.Update(game, gameTime);
+            idleSprite.Update(spritesheet, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

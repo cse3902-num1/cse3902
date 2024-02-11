@@ -13,17 +13,17 @@ namespace cse3902
         private Sprite movingUpSprite;
         private Sprite movingDownSprite;
         private Sprite currentSprite; // will reference one of the above sprites
+        private Spritesheet spritesheet;
 
-
-        public PlayerStateMove(Game1 game, Player player)
+        public PlayerStateMove(Spritesheet sprite, Player player)
         {
             Debug.WriteLine("[info] player entered move state");
-            this.game = game;
+            this.spritesheet = sprite;
             this.player = player;
-            movingLeftSprite = new Sprite(game.ContentSpritesheetLink);
-            movingRightSprite = new Sprite(game.ContentSpritesheetLink);
-            movingUpSprite = new Sprite(game.ContentSpritesheetLink);
-            movingDownSprite = new Sprite(game.ContentSpritesheetLink);
+            movingLeftSprite = new Sprite(sprite.ContentSpritesheetLink);
+            movingRightSprite = new Sprite(sprite.ContentSpritesheetLink);
+            movingUpSprite = new Sprite(sprite.ContentSpritesheetLink);
+            movingDownSprite = new Sprite(sprite.ContentSpritesheetLink);
             // TODO: set frame data of MovingLeftSprite, spriteMovingRightSprite, MovingUpSprite, and MovingDownSprite
             currentSprite = movingRightSprite; // just a default value
         }
@@ -33,7 +33,7 @@ namespace cse3902
             /* move player if any movement key is pressed */
             if (controller.isPlayerMoveLeftPress() == true)
             {
-                currentSprite  = movingLeftSprite;
+                currentSprite = movingLeftSprite;
                 player.Position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controller.isPlayerMoveRightPress() == true)
@@ -41,12 +41,12 @@ namespace cse3902
                 currentSprite = movingRightSprite;
                 player.Position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if(controller.isPlayerMoveUpPress() == true)
+            else if (controller.isPlayerMoveUpPress() == true)
             {
                 currentSprite = movingUpSprite;
                 player.Position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if( controller.isPlayerMoveDownPress() == true)
+            else if (controller.isPlayerMoveDownPress() == true)
             {
                 currentSprite = movingDownSprite;
                 player.Position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -55,10 +55,10 @@ namespace cse3902
             /* change to idle state if no movement keys are pressed */
             else
             {
-                player.State = new PlayerStateIdle(game, player);
+                player.State = new PlayerStateIdle(spritesheet, player);
             }
 
-            currentSprite.Update(game, gameTime);
+            currentSprite.Update(spritesheet, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

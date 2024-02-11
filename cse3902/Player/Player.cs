@@ -11,9 +11,9 @@ namespace cse3902
         public IPlayerState State;
         public IItem Item;
 
-        public Player(Game1 game)
+        public Player(Spritesheet sprite)
         {
-            State = new PlayerStateIdle(game, this);
+            State = new PlayerStateIdle(sprite,this);
         }
 
         public void Update(GameTime gameTime, IController controller)

@@ -12,13 +12,12 @@ namespace cse3902
         private Sprite itemUsageSprite;
 
 
-        public PlayerStateItem(Game1 game, Player player, IItem item)
+        public PlayerStateItem(Spritesheet sprite, Player player, IItem item)
         {
             Debug.WriteLine("[info] player entered item state");
-            this.game = game;
             this.player = player;
             this.item = item;
-            itemUsageSprite = new Sprite(game.ContentSpritesheetLink);
+            itemUsageSprite = new Sprite(sprite.ContentSpritesheetLink);
             // TODO: set frame data of itemUsageSprite
 
             this.item.Use(player);
@@ -31,7 +30,7 @@ namespace cse3902
             // item.Update();
 
             /* play idle sprite animation */
-            itemUsageSprite.Update(game, gameTime);
+            itemUsageSprite.Update(spritesheet, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

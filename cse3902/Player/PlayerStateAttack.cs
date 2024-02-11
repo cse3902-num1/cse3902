@@ -9,12 +9,13 @@ namespace cse3902
         private Game1 game;
         private Player player;
         private Sprite attackSprite;
-        public PlayerStateAttack(Game1 game, Player player)
+        private Spritesheet spritesheet;
+        public PlayerStateAttack(Spritesheet sprite, Player player)
         {
             Debug.WriteLine("[info] player entered attack state");
-            this.game = game;
+            this.spritesheet = sprite;
             this.player = player;
-            attackSprite = new Sprite(game.ContentSpritesheetLink);
+            attackSprite = new Sprite(sprite.ContentSpritesheetLink);
             // TODO: set frame data of attackSprite
         }
 
@@ -29,7 +30,7 @@ namespace cse3902
                 player.State = new PlayerStateIdle(game, player);
             }
            comment end  */
-            attackSprite.Update(game, gameTime);
+            attackSprite.Update(spritesheet, gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
