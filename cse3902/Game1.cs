@@ -34,7 +34,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
         spriteSheet = new Spritesheet(Content);
 
-        player = new Player(this);
+        player = new Player(spriteSheet.ContentSpreadsheetLink);
     }
 
     protected override void Update(GameTime gameTime)
