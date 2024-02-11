@@ -33,6 +33,19 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        _enemy = new List<IEnemy>
+        {
+            new Skeleton(Content),
+            new Dragon(Content),
+            new Gel(Content),
+            new Keese(Content),
+            new Goriya(Content),
+        };
+        enemyIdx = 0;
+
+
+
+        
         gameContent = new GameContent(Content);
 
 

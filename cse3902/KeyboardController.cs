@@ -4,13 +4,12 @@ using System.Linq.Expressions;
 using cse3902.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using cse3902.Interfaces;
 
 namespace cse3902;
 
 public class KeyboardController : IController
 {
-
-
     public KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
@@ -84,8 +83,6 @@ public class KeyboardController : IController
         }
         return false;
     }
-
-
     /*
      * for block control: "t" switches to the previous item and "y" switches to the next
      */
@@ -115,7 +112,14 @@ public class KeyboardController : IController
     /*
     * for Enemy control: "o" switches to the previous item and "p" switches to the next
     */
-
+    public bool isEnemyPressO()
+    {
+        if (keyboardState.IsKeyDown(Keys.O))
+        {
+            return true;
+        }
+        return false;
+    }
 
     public bool isEnemyPressP()
     {
@@ -159,11 +163,6 @@ public class KeyboardController : IController
     private void ResetGame()
     {
         
-    }
-
-    public bool isEnemyPressO()
-    {
-        throw new NotImplementedException();
     }
 }
    
