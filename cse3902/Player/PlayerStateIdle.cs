@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace cse3902
@@ -9,14 +10,16 @@ namespace cse3902
         
         private Player player;
         private Sprite idleSprite;
-        private Spritesheet spritesheet;
+        private GameContent content;
 
-        public PlayerStateIdle(Spritesheet sprite, Player player)
+        public PlayerStateIdle(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered idle state");
-            spritesheet = sprite;
+            this.content = content;
             this.player = player;
-            idleSprite = new Sprite(sprite.ContentSpritesheetLink);
+            idleSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                new Rectangle(1, 11, 15, 15)
+            });
             // TODO: set frame data of idleSprite
         }
 
@@ -26,13 +29,13 @@ namespace cse3902
             if (controller.isPlayerMoveLeftPress() == true || controller.isPlayerMoveUpPress() == true ||
                 controller.isPlayerMoveDownPress() ==true || controller.isPlayerMoveRightPress() == true)
             {
-                player.State = new PlayerStateMove(spritesheet, player);
+                player.State = new PlayerStateMove(content, player);
             }
 
             /* enter attack state if attack key is pressed */
             else if (controller.isPlayerAttackPress())
             {
-                player.State = new PlayerStateAttack(spritesheet, player);
+                player.State = new PlayerStateAttack(content, player);
             }
 
             /* enter item state if any item use keys are pressed */
@@ -51,7 +54,7 @@ namespace cse3902
             }
         
             /* play idle sprite animation */
-            idleSprite.Update(spritesheet, gameTime);
+            idleSprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

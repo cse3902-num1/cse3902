@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace cse3902
 {
-    public class Spritesheet
+    public class GameContent
     {
         public Texture2D ContentSpritesheetLink;
-        public Spritesheet(ContentManager content) 
+        public GameContent(ContentManager content) 
         {
             ContentSpritesheetLink = content.Load<Texture2D>("spritesheet_link");
             ContentSpritesheetLink = content.Load<Texture2D>("spritesheet")

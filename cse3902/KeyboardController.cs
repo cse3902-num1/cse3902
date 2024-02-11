@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using cse3902.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,15 +9,20 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    //private Enermy enermy;
-    //private Block block;
-    //private IItem item;
+    private List<Block> blocks;
+    private List<Item> items;
+    private List<Enemy> enemies;
+
+
+    private int currentBlockIndex;
+    private int currentItemIndex;
+    private int currentEnemyIndex;
+    private int currentNPCIndex;
+
     private KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
     {
-     
-
         if (keyboardState.IsKeyDown(Keys.W)){
             return true;
         }
@@ -80,45 +86,138 @@ public class KeyboardController : IController
         }
         return false;
     }
-
-    /* TODO: make functions to check inputs for:
-     * - cycling the block
-     * - cycling the item
-     * - cycling the enemy
-     * - quitting the game
-     * - resetting the game
+    public bool isDamaged() {
+        if (keyboardState.IsKeyDown(Keys.E)) {
+            return true;
+        }
+        return false;
+    }
+    /*
+     *  initialize the lists of game entities (blocks, items, enemies) 
+     *  that KeyboardController will interact with
      */
+    public void SetBlocks(List<Block> blockList)
+    {
+        blocks = blockList;
+        currentBlockIndex = 0;
+    }
 
-public void Update(GameTime gameTime)
+    public void SetItems(List<Item> itemList)
+    {
+        items = itemList;
+        currentItemIndex = 0;
+    }
+
+    public void SetEnemies(List<Enemy> enemyList)
+    {
+        enemies = enemyList;
+        currentEnemyIndex = 0;
+    }
+
+    /*
+     * for block control: "t" switches to the previous item and "y" switches to the next
+     */
+    public bool isCycleBlockPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.T))
+        {
+            currentBlockIndex = (currentBlockIndex - 1 + blocks.Count) % blocks.Count;
+            return true;
+        }
+        else if (keyboardState.IsKeyDown(Keys.Y))
+        {
+            currentBlockIndex = (currentBlockIndex + 1) % blocks.Count;
+            return true;
+        }
+        return false;
+    }
+
+    /*
+    * for Item control: "u" switches to the previous item and "i" switches to the next
+    */
+
+    public bool isCycleItemPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.U))
+        {
+            currentItemIndex = (currentItemIndex - 1 + items.Count) % items.Count;
+            return true;
+        }
+        else if (keyboardState.IsKeyDown(Keys.I))
+        {
+            currentItemIndex = (currentItemIndex + 1) % items.Count;
+            return true;
+        }
+        return false;
+    }
+
+    /*
+    * for Enemy control: "o" switches to the previous item and "p" switches to the next
+    */
+    public bool isCycleEnemyPress()
+    {
+        if (keyboardState.IsKeyDown(Keys.O))
+        {
+            currentEnemyIndex = (currentEnemyIndex - 1 + enemies.Count) % enemies.Count;
+            return true;
+        }
+        else if (keyboardState.IsKeyDown(Keys.P))
+        {
+            currentEnemyIndex = (currentEnemyIndex + 1) % enemies.Count;
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public void Update(GameTime gameTime)
     {
         keyboardState = Keyboard.GetState();
 
-        /*
-        if (keyboardState.IsKeyDown(Keys.T) || keyboardState.IsKeyDown(Keys.Y))
-            block.BlockCycle();
+        if (isCycleBlockPress())
+        {
+            blocks[currentBlockIndex].BlockCycle();
+        }
 
-        if (keyboardState.IsKeyDown(Keys.U) || keyboardState.IsKeyDown(Keys.I))
-            item.ItemCycle();
+        if (isCycleItemPress())
+        {
+            items[currentItemIndex].ItemCycle();
+        }
 
-        if (keyboardState.IsKeyDown(Keys.O) || keyboardState.IsKeyDown(Keys.P))
-            enermy.CharacterCycle();
-        */
+        if (isCycleEnemyPress())
+        {
+            enemies[currentEnemyIndex].CharacterCycle();
+        }
+
         if (keyboardState.IsKeyDown(Keys.Q))
+        {
             QuitGame();
+        }
 
         if (keyboardState.IsKeyDown(Keys.R))
+        {
             ResetGame();
+        }
     }
-
+    /*
+     * quit the game
+     */
     private void QuitGame()
     {
-        
-        // Implement logic to quit the game
-    }
 
+        Environment.Exit(0);
+   
+    }
+    /*
+     *  reset the program back to its initial state
+     */
     private void ResetGame()
     {
-        // Implement logic to reset the game
+        // Reset entity indices to their initial values
+        currentBlockIndex = 0;
+        currentItemIndex = 0;
+        currentEnemyIndex = 0;
     }
 
 }
