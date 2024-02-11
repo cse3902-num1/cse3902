@@ -33,7 +33,7 @@ namespace cse3902
             get { return position.Y; }
             set { position.Y = value; }
         }
-        //need sprite
+
         public Sprite(Texture2D texture, List<Rectangle> frames)
         {
             this.position = Vector2.Zero;
@@ -58,11 +58,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            /* calculate destination rectangle based on position and scale */
-            float width = frames[Frame].Width * 1.0f; // TODO: have some way to control the scale.
-            float height = frames[Frame].Height * 1.0f;
-            Rectangle destination = new Rectangle((int) position.X, (int) position.Y, (int) width, (int) height);
-            spriteBatch.Draw(texture, destination, frames[Frame], Color.White);
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, new Vector2(0, 0), 2.0f, SpriteEffects.None, 1.0f);
         }
 
         // Set the position of the sprite
