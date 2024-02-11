@@ -1,22 +1,49 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace cse3902
 {
     public class PlayerStateIdle : IPlayerState
     {
-        private Game1 game;
+        
         private Player player;
-        private Sprite idleSprite;
-    
-        public PlayerStateIdle(Game1 game, Player player)
+        private Dictionary<Direction, ISprite> sprites;
+        private GameContent content;
+
+        public PlayerStateIdle(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered idle state");
-            this.game = game;
+            this.content = content;
             this.player = player;
-            idleSprite = new Sprite(game.ContentSpritesheetLink);
-            // TODO: set frame data of idleSprite
+
+            sprites = new Dictionary<Direction, ISprite>() {
+                {
+                    Direction.Left,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(35, 11, 15, 15)
+                    })
+                },
+                {
+                    Direction.Right,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(35, 11, 15, 15)
+                    })
+                },
+                {
+                    Direction.Up,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(69, 11, 15, 15)
+                    })
+                },
+                {
+                    Direction.Down,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(1, 11, 15, 15)
+                    })
+                },
+            };
         }
 
         public void Update(GameTime gameTime, IController controller)
@@ -25,13 +52,13 @@ namespace cse3902
             if (controller.isPlayerMoveLeftPress() == true || controller.isPlayerMoveUpPress() == true ||
                 controller.isPlayerMoveDownPress() ==true || controller.isPlayerMoveRightPress() == true)
             {
-                player.State = new PlayerStateMove(game, player);
+                player.State = new PlayerStateMove(content, player);
             }
 
             /* enter attack state if attack key is pressed */
             else if (controller.isPlayerAttackPress())
             {
-                player.State = new PlayerStateAttack(game, player);
+                player.State = new PlayerStateAttack(content, player);
             }
 
             /* enter item state if any item use keys are pressed */
@@ -50,13 +77,13 @@ namespace cse3902
             }
         
             /* play idle sprite animation */
-            idleSprite.Update(game, gameTime);
+            sprites[player.Facing].Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            idleSprite.SetPosition(player.Position.X, player.Position.Y);
-            idleSprite.Draw(spriteBatch);
+            sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
+            sprites[player.Facing].Draw(spriteBatch);
         }
     }
 }

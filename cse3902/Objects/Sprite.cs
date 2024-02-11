@@ -11,10 +11,12 @@ namespace cse3902
         private Vector2 position;
         private Texture2D texture;
         private List<Rectangle> frames; /* source rectangles */
+
+        private int frame = 0;
         public int Frame /* index of current frame's source rectangle */
         {
-            get { return Frame; }
-            set { Frame = value % frames.Count; }
+            get { return frame; }
+            set { frame = value % frames.Count; }
         }
 
         private double frameTimerThreshold = 1.0 / 5.0; /* how long to spend on each frame (seconds) */
@@ -31,7 +33,7 @@ namespace cse3902
             get { return position.Y; }
             set { position.Y = value; }
         }
-        //need sprite
+
         public Sprite(Texture2D texture, List<Rectangle> frames)
         {
             this.position = Vector2.Zero;
@@ -40,7 +42,7 @@ namespace cse3902
         }
 
 
-        public void Update(Game game, GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (frameTimer < frameTimerThreshold) return;
@@ -56,7 +58,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, frames[Frame], Color.White);
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, new Vector2(0, 0), 2.0f, SpriteEffects.None, 1.0f);
         }
 
         // Set the position of the sprite
@@ -65,13 +67,6 @@ namespace cse3902
             X = x;
             Y = y;
         }
-
-        // Set the state of the sprite
-        public void SetState(string state)
-        {
-            // Implement logic to change the state of the sprite
-        }
-
     }
 }
 

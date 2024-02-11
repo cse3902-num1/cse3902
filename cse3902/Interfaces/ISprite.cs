@@ -8,7 +8,9 @@ namespace cse3902;
 public interface ISprite
 {
  
-    public void Update(Game game, GameTime gameTime);
+    public void Update(GameTime gameTime);
 
     public void Draw(SpriteBatch spriteBatch);
+
+    public void SetPosition(float x, float y);
 }

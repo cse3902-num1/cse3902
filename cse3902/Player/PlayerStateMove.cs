@@ -1,31 +1,52 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace cse3902
 {
     public class PlayerStateMove : IPlayerState
     {
-        private Game1 game;
         private Player player;
-        private Sprite movingLeftSprite;
-        private Sprite movingRightSprite;
-        private Sprite movingUpSprite;
-        private Sprite movingDownSprite;
-        private Sprite currentSprite; // will reference one of the above sprites
+        private Dictionary<Direction, ISprite> sprites;
+        private GameContent content;
 
-
-        public PlayerStateMove(Game1 game, Player player)
+        public PlayerStateMove(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered move state");
-            this.game = game;
+            this.content = content;
             this.player = player;
-            movingLeftSprite = new Sprite(game.ContentSpritesheetLink);
-            movingRightSprite = new Sprite(game.ContentSpritesheetLink);
-            movingUpSprite = new Sprite(game.ContentSpritesheetLink);
-            movingDownSprite = new Sprite(game.ContentSpritesheetLink);
-            // TODO: set frame data of MovingLeftSprite, spriteMovingRightSprite, MovingUpSprite, and MovingDownSprite
-            currentSprite = movingRightSprite; // just a default value
+
+            sprites = new Dictionary<Direction, ISprite>() {
+                {
+                    Direction.Left,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(35, 11, 15, 15),
+                        new Rectangle(52, 11, 15, 15),
+                    })
+                },
+                {
+                    Direction.Right,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(35, 11, 15, 15),
+                        new Rectangle(52, 11, 15, 15),
+                    })
+                },
+                {
+                    Direction.Up,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(69, 11, 15, 15),
+                        new Rectangle(86, 11, 15, 15),
+                    })
+                },
+                {
+                    Direction.Down,
+                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
+                        new Rectangle(1, 11, 15, 15),
+                        new Rectangle(18, 11, 15, 15),
+                    })
+                },
+            };
         }
 
         public void Update(GameTime gameTime, IController controller)
@@ -33,38 +54,38 @@ namespace cse3902
             /* move player if any movement key is pressed */
             if (controller.isPlayerMoveLeftPress() == true)
             {
-                currentSprite  = movingLeftSprite;
+                player.Facing = Direction.Left;
                 player.Position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controller.isPlayerMoveRightPress() == true)
             {
-                currentSprite = movingRightSprite;
+                player.Facing = Direction.Right;
                 player.Position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if(controller.isPlayerMoveUpPress() == true)
+            else if (controller.isPlayerMoveUpPress() == true)
             {
-                currentSprite = movingUpSprite;
+                player.Facing = Direction.Up;
                 player.Position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if( controller.isPlayerMoveDownPress() == true)
+            else if (controller.isPlayerMoveDownPress() == true)
             {
-                currentSprite = movingDownSprite;
+                player.Facing = Direction.Down;
                 player.Position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             /* change to idle state if no movement keys are pressed */
             else
             {
-                player.State = new PlayerStateIdle(game, player);
+                player.State = new PlayerStateIdle(content, player);
             }
 
-            currentSprite.Update(game, gameTime);
+            sprites[player.Facing].Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentSprite.SetPosition(player.Position.X, player.Position.Y);
-            currentSprite.Draw(spriteBatch);
+            sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
+            sprites[player.Facing].Draw(spriteBatch);
         }
     }
 }
