@@ -31,7 +31,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
-        
+
         ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
 
         player = new Player(this);

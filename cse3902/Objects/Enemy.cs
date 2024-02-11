@@ -7,7 +7,7 @@ namespace cse3902.Objects
 		{
 
 		}
-		public void CharacterCycle() {
+		public void update() {
 
 		}
     }

@@ -9,15 +9,9 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    /*
-    *  initialize the lists of game entities (blocks, items, enemies) 
-    *  that KeyboardController will interact with
-    */
-    public KeyboardController(List<Enemy> enemies,List<Item> items,List<Block> blocks) {
 
-    }
 
-    private KeyboardState keyboardState;
+    public KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
     {
@@ -90,22 +84,16 @@ public class KeyboardController : IController
         }
         return false;
     }
-   
-    
+
 
     /*
      * for block control: "t" switches to the previous item and "y" switches to the next
      */
     public bool isCycleBlockPress()
     {
-        if (keyboardState.IsKeyDown(Keys.T))
+        if (keyboardState.IsKeyDown(Keys.T) || keyboardState.IsKeyDown(Keys.Y))
         {
-         
-            return true;
-        }
-        else if (keyboardState.IsKeyDown(Keys.Y))
-        {
-           
+
             return true;
         }
         return false;
@@ -117,13 +105,9 @@ public class KeyboardController : IController
 
     public bool isCycleItemPress()
     {
-        if (keyboardState.IsKeyDown(Keys.U))
-        {
-            return true;
-        }
-        else if (keyboardState.IsKeyDown(Keys.I))
+        if (keyboardState.IsKeyDown(Keys.U) || keyboardState.IsKeyDown(Keys.I))
         { 
-            return true;
+             return true;
         }
         return false;
     }
@@ -131,14 +115,13 @@ public class KeyboardController : IController
     /*
     * for Enemy control: "o" switches to the previous item and "p" switches to the next
     */
-    public bool isCycleEnemyPress()
+
+
+    public bool isEnemyPressP()
     {
-        if (keyboardState.IsKeyDown(Keys.O))
+        if (keyboardState.IsKeyDown(Keys.P))
         {
-            return true;
-        }
-        else if (keyboardState.IsKeyDown(Keys.P))
-        { 
+
             return true;
         }
         return false;
@@ -148,6 +131,8 @@ public class KeyboardController : IController
 
     public void Update(GameTime gameTime)
     { 
+        keyboardState = Keyboard.GetState();
+
 
         if (keyboardState.IsKeyDown(Keys.Q))
         {
@@ -173,9 +158,12 @@ public class KeyboardController : IController
      */
     private void ResetGame()
     {
-        // Reset entity indices to their initial values
         
     }
 
+    public bool isEnemyPressO()
+    {
+        throw new NotImplementedException();
+    }
 }
    
