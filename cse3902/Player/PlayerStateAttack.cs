@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,12 +10,15 @@ namespace cse3902
         private Game1 game;
         private Player player;
         private Sprite attackSprite;
-        public PlayerStateAttack(Game1 game, Player player)
+        private GameContent content;
+        public PlayerStateAttack(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered attack state");
-            this.game = game;
+            this.content = content;
             this.player = player;
-            attackSprite = new Sprite(game.ContentSpritesheetLink);
+            attackSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                new Rectangle(107, 11, 15, 15)
+            });
             // TODO: set frame data of attackSprite
         }
 
@@ -29,7 +33,7 @@ namespace cse3902
                 player.State = new PlayerStateIdle(game, player);
             }
            comment end  */
-            attackSprite.Update(game, gameTime);
+            attackSprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

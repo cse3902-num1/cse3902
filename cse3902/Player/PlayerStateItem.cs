@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace cse3902
@@ -10,15 +11,19 @@ namespace cse3902
         private Player player;
         private IItem item;
         private Sprite itemUsageSprite;
+        private GameContent content;
 
-
-        public PlayerStateItem(Game1 game, Player player, IItem item)
+        public PlayerStateItem(GameContent content, Player player, IItem item)
         {
             Debug.WriteLine("[info] player entered item state");
-            this.game = game;
+            this.content = content;
             this.player = player;
             this.item = item;
-            itemUsageSprite = new Sprite(game.ContentSpritesheetLink);
+            itemUsageSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
+                new Rectangle(107, 11, 15, 15),
+                new Rectangle(124, 11, 15, 15),
+                new Rectangle(141, 11, 15, 15)
+            });
             // TODO: set frame data of itemUsageSprite
 
             this.item.Use(player);
@@ -31,7 +36,7 @@ namespace cse3902
             // item.Update();
 
             /* play idle sprite animation */
-            itemUsageSprite.Update(game, gameTime);
+            itemUsageSprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -11,10 +11,12 @@ namespace cse3902
         private Vector2 position;
         private Texture2D texture;
         private List<Rectangle> frames; /* source rectangles */
+
+        private int frame = 0;
         public int Frame /* index of current frame's source rectangle */
         {
-            get { return Frame; }
-            set { Frame = value % frames.Count; }
+            get { return frame; }
+            set { frame = value % frames.Count; }
         }
 
         private double frameTimerThreshold = 1.0 / 5.0; /* how long to spend on each frame (seconds) */
@@ -40,7 +42,7 @@ namespace cse3902
         }
 
 
-        public void Update(Game game, GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (frameTimer < frameTimerThreshold) return;

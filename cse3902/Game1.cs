@@ -10,7 +10,7 @@ namespace cse3902;
 public class Game1 : Game
 {
     /* loaded game content accessible by anyone with a reference to this Game1 */
-    public Texture2D ContentSpritesheetLink;
+    
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
@@ -22,7 +22,8 @@ public class Game1 : Game
     private KeyboardState previousKbState;
 
     private Player player;
-
+    private GameContent gameContent;
+    
     public Game1()
     {
         graphics = new GraphicsDeviceManager(this);
@@ -38,7 +39,6 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _enemy = new List<IEnemy>
@@ -53,8 +53,10 @@ public class Game1 : Game
 
 
 
-        ContentSpritesheetLink = Content.Load<Texture2D>("spritesheet_link");
-        player = new Player(this);
+        
+        gameContent = new GameContent(Content);
+
+        player = new Player(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
