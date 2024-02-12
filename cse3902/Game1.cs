@@ -30,7 +30,7 @@ public class Game1 : Game
     private Block block;
  
 
-    private KeyboardState previousKbState;
+    
     
     public Game1()
     {

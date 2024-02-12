@@ -20,6 +20,7 @@ namespace cse3902.Objects
         public bool isVisible = false;
         private KeyboardController keyboardcontroller;
         private KeyboardState KbState;
+        private KeyboardState previousState;
         private bool[] animationVisibility; // Array to track visibility for each animation index
 
         public Block(ContentManager content,KeyboardController keyboard)
@@ -76,17 +77,20 @@ namespace cse3902.Objects
             KbState = Keyboard.GetState();
             if (keyboardcontroller.isCycleBlockPress())
             {
-                if (KbState.IsKeyDown(Keys.T))
+                if (KbState.IsKeyDown(Keys.T)  && !previousState.IsKeyDown(Keys.T))
                 {
                     // Switch to the previous block
                     SwitchToPreviousBlock();
                 }
-                else if (KbState.IsKeyDown(Keys.Y))
+                else if (KbState.IsKeyDown(Keys.Y) && !previousState.IsKeyDown(Keys.Y))
                 {
                     // Switch to the next block
                     SwitchToNextBlock();
                 }
+
+                
             }
+            previousState = KbState;
         }
         private void SwitchToPreviousBlock()
         {
