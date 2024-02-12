@@ -20,30 +20,30 @@ namespace cse3902
             sprites = new Dictionary<Direction, ISprite>() {
                 {
                     Direction.Left,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(35, 11, 15, 15),
-                        new Rectangle(52, 11, 15, 15),
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 0 * 16, 16, 16),
+                        new Rectangle(1 * 16, 0 * 16, 16, 16),
                     })
                 },
                 {
                     Direction.Right,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(35, 11, 15, 15),
-                        new Rectangle(52, 11, 15, 15),
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 1 * 16, 16, 16),
+                        new Rectangle(1 * 16, 1 * 16, 16, 16),
                     })
                 },
                 {
                     Direction.Up,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(69, 11, 15, 15),
-                        new Rectangle(86, 11, 15, 15),
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 2 * 16, 16, 16),
+                        new Rectangle(1 * 16, 2 * 16, 16, 16),
                     })
                 },
                 {
                     Direction.Down,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(1, 11, 15, 15),
-                        new Rectangle(18, 11, 15, 15),
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 3 * 16, 16, 16),
+                        new Rectangle(1 * 16, 3 * 16, 16, 16),
                     })
                 },
             };

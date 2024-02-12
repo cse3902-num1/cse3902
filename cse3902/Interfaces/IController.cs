@@ -17,6 +17,5 @@ public interface IController
     public bool isItem3Press();
     public bool isEnemyPressO();
     public bool isEnemyPressP();
-
-
+    public bool isDamaged();
 }

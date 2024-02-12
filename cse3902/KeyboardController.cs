@@ -10,11 +10,22 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
+    /*
+    *  initialize the lists of game entities (blocks, items, enemies) 
+    *  that KeyboardController will interact with
+    */
+    /*
+    public KeyboardController(List<IEnemy> enemies,List<Item> items,List<Block> blocks) {
+
+    }
+    */
+
     public KeyboardState keyboardState;
 
     public bool isPlayerMoveUpPress()
     {
-        if (keyboardState.IsKeyDown(Keys.W)){
+        if (keyboardState.IsKeyDown(Keys.W))
+        {
             return true;
         }
         return false;
@@ -77,20 +88,26 @@ public class KeyboardController : IController
         }
         return false;
     }
-    public bool isDamaged() {
-        if (keyboardState.IsKeyDown(Keys.E)) {
+    public bool isDamaged()
+    {
+        if (keyboardState.IsKeyDown(Keys.E))
+        {
             return true;
         }
         return false;
     }
+
     /*
      * for block control: "t" switches to the previous item and "y" switches to the next
      */
     public bool isCycleBlockPress()
     {
-        if (keyboardState.IsKeyDown(Keys.T) || keyboardState.IsKeyDown(Keys.Y))
+        if (keyboardState.IsKeyDown(Keys.T))
         {
-
+            return true;
+        }
+        else if (keyboardState.IsKeyDown(Keys.Y))
+        {
             return true;
         }
         return false;
@@ -102,9 +119,13 @@ public class KeyboardController : IController
 
     public bool isCycleItemPress()
     {
-        if (keyboardState.IsKeyDown(Keys.U) || keyboardState.IsKeyDown(Keys.I))
-        { 
-             return true;
+        if (keyboardState.IsKeyDown(Keys.U))
+        {
+            return true;
+        }
+        else if (keyboardState.IsKeyDown(Keys.I))
+        {
+            return true;
         }
         return false;
     }
@@ -125,7 +146,6 @@ public class KeyboardController : IController
     {
         if (keyboardState.IsKeyDown(Keys.P))
         {
-
             return true;
         }
         return false;
@@ -134,9 +154,8 @@ public class KeyboardController : IController
 
 
     public void Update(GameTime gameTime)
-    { 
+    {
         keyboardState = Keyboard.GetState();
-
 
         if (keyboardState.IsKeyDown(Keys.Q))
         {
@@ -155,14 +174,14 @@ public class KeyboardController : IController
     {
 
         Environment.Exit(0);
-   
+
     }
     /*
      *  reset the program back to its initial state
      */
     private void ResetGame()
     {
-        
+
     }
+
 }
-   

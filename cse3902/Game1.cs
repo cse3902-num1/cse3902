@@ -1,7 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.Interfaces;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using cse3902.Objects;
 
 namespace cse3902;
+
+
 
 public class Game1 : Game
 {
@@ -11,16 +17,21 @@ public class Game1 : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
 
-    private IController controller;
+    public KeyboardController controller;
 
     private Player player;
+   
     private GameContent gameContent;
+
+    private Block block;
+ 
+
+    
     
     public Game1()
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
         controller = new KeyboardController();
     }
 
@@ -50,6 +61,12 @@ public class Game1 : Game
 
 
         player = new Player(gameContent);
+
+
+        // Initialize the list of blocks and add a block
+        block = new Block(gameContent, controller);
+       
+
     }
 
     protected override void Update(GameTime gameTime)
@@ -57,6 +74,9 @@ public class Game1 : Game
         controller.Update(gameTime);
 
         player.Update(gameTime, controller);
+
+        // Update the current block
+        block.update(gameTime);
 
         base.Update(gameTime);
     }
@@ -72,7 +92,9 @@ public class Game1 : Game
         spriteBatch.Begin(samplerState: s);
 
         player.Draw(spriteBatch);
-       
+        // Draw the current block
+        block.draw(spriteBatch);
+
         spriteBatch.End();
 
         base.Draw(gameTime);
