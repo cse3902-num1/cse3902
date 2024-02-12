@@ -14,8 +14,7 @@ namespace cse3902.Enemy
         private Rectangle[] sourceRectangles;
         private float timer = 0;
         private int threshold = 250;
-        private byte previousAnimationIndex = 2;
-        private byte currentAnimationIndex = 1;
+        private int currentAnimationIndex = 1;
         private float x = 200, y = 200;
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
@@ -106,42 +105,7 @@ namespace cse3902.Enemy
 
             if (timer > threshold)
             {
-                if (currentAnimationIndex == 1)
-                {
-                    if (previousAnimationIndex == 0)
-                    {
-                        currentAnimationIndex = 2;
-                    }
-                    else if (previousAnimationIndex == 2)
-                    {
-                        currentAnimationIndex = 3;
-                    }
-                    else
-                    {
-                        currentAnimationIndex = 0;
-                    }
-                }
-                else if (currentAnimationIndex == 2)
-                {
-                    if (previousAnimationIndex == 1)
-                    {
-                        currentAnimationIndex = 0;
-                    }
-                    else if (previousAnimationIndex == 0)
-                    {
-                        currentAnimationIndex = 3;
-                    }
-                    else
-                    {
-                        currentAnimationIndex = 1;
-                    }
-                }
-                else
-                {
-                    currentAnimationIndex = 1;
-                }
-
-                previousAnimationIndex = currentAnimationIndex;
+                currentAnimationIndex = (currentAnimationIndex + 1) % 4;
                 timer = 0;
             }
             else
