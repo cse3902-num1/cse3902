@@ -34,7 +34,6 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
         gameContent = new GameContent(Content);
 
-
         player = new Player(gameContent);
 
     }

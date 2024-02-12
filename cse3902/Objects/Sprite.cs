@@ -58,7 +58,11 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, frames[Frame], Color.White);
+            /* calculate destination rectangle based on position and scale */
+            float width = frames[Frame].Width * 1.0f; // TODO: have some way to control the scale.
+            float height = frames[Frame].Height * 1.0f;
+            Rectangle destination = new Rectangle((int) position.X, (int) position.Y, (int) width, (int) height);
+            spriteBatch.Draw(texture, destination, frames[Frame], Color.White);
         }
 
         // Set the position of the sprite
@@ -67,13 +71,6 @@ namespace cse3902
             X = x;
             Y = y;
         }
-
-        // Set the state of the sprite
-        public void SetState(string state)
-        {
-            // Implement logic to change the state of the sprite
-        }
-
     }
 }
 
