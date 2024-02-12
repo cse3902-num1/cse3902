@@ -20,15 +20,25 @@ namespace cse3902.Objects
         public bool isVisible = false;
         private KeyboardController keyboardcontroller;
         private KeyboardState KbState;
+        private bool[] animationVisibility; // Array to track visibility for each animation index
 
         public Block(ContentManager content,KeyboardController keyboard)
 		{
            
             //sprite = new Sprite();
-            sourceRectangles = new Rectangle[2];
+            sourceRectangles = new Rectangle[3];
             sourceRectangles[0] = new Rectangle(2, 11, 16, 16);
-            sourceRectangles[1] = new Rectangle(2, 11, 33, 16);
+            sourceRectangles[1] = new Rectangle(19, 11, 16, 16);
+            sourceRectangles[2] = new Rectangle(36, 11, 16, 16);
 
+            animationVisibility = new bool[sourceRectangles.Length];
+
+            for (int i = 0; i < animationVisibility.Length; i++)
+            {
+                animationVisibility[i] = false;
+            }
+
+            animationVisibility[0] = true; // Set the initial index to be visible
             keyboardcontroller = keyboard;
 
 
@@ -38,17 +48,21 @@ namespace cse3902.Objects
      
         public void draw(SpriteBatch spriteBatch)
         {
-            
-                spriteBatch.Draw(texture,
-                    new Vector2(x, y),
-                    sourceRectangles[GameData.BlockIndex],
-                    Color.White,
-                    0f,
-                    new Vector2(0, 0),
-                    3f,
-                    SpriteEffects.None, 1f
-                );
-            
+            for (int i = 0; i < sourceRectangles.Length; i++)
+            {
+                if (animationVisibility[i])
+                {
+                    spriteBatch.Draw(texture,
+                        new Vector2(x, y),
+                        sourceRectangles[i],
+                        Color.White,
+                        0f,
+                        new Vector2(0, 0),
+                        3f,
+                        SpriteEffects.None, 1f
+                    );
+                }
+            }
         }
 
         public void update(GameTime gameTime)
@@ -76,6 +90,8 @@ namespace cse3902.Objects
         }
         private void SwitchToPreviousBlock()
         {
+            animationVisibility[GameData.BlockIndex] = false;
+
             GameData.BlockIndex--;
 
             if (GameData.BlockIndex < 0)
@@ -84,11 +100,14 @@ namespace cse3902.Objects
                 GameData.BlockIndex = (byte)(sourceRectangles.Length - 1);
             }
 
-            // Additional logic if needed when switching to the previous block
+            animationVisibility[GameData.BlockIndex] = true;
+
         }
 
         private void SwitchToNextBlock()
         {
+            animationVisibility[GameData.BlockIndex] = false;
+
             GameData.BlockIndex++;
 
             if (GameData.BlockIndex >= sourceRectangles.Length)
@@ -96,8 +115,8 @@ namespace cse3902.Objects
                 // Wrap around to the first block if at the end
                 GameData.BlockIndex = 0;
             }
+            animationVisibility[GameData.BlockIndex] = true;
 
-            // Additional logic if needed when switching to the next block
         }
 
     }
