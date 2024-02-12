@@ -7,10 +7,14 @@ namespace cse3902
 {
     public class PlayerStateIdle : IPlayerState
     {
-        
         private Player player;
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+
+        private bool wasAttackPressed = true;
+        private bool wasItem1Pressed = true;
+        private bool wasItem2Pressed = true;
+        private bool wasItem3Pressed = true;
 
         public PlayerStateIdle(GameContent content, Player player)
         {
@@ -56,28 +60,33 @@ namespace cse3902
             }
 
             /* enter attack state if attack key is pressed */
-            else if (controller.isPlayerAttackPress())
+            else if (!wasAttackPressed && controller.isPlayerAttackPress())
             {
                 player.State = new PlayerStateAttack(content, player);
             }
 
             /* enter item state if any item use keys are pressed */
             /* TODO: finish once items classes are created */
-            if (controller.isItem1Press())
+            if (!wasItem1Pressed && controller.isItem1Press())
             {
                 player.State = new PlayerStateItem(content, player, null);
                 // player.State = new PlayerStateItem(game, player, new ExampleItem());
             }
-            else if (controller.isItem2Press())
+            else if (!wasItem2Pressed && controller.isItem2Press())
             {
                 player.State = new PlayerStateItem(content, player, null);
                 // player.State = new PlayerStateItem(game, player, new ExampleItem());
             }
-            else if (controller.isItem3Press())
+            else if (!wasItem3Pressed && controller.isItem3Press())
             {
                 player.State = new PlayerStateItem(content, player, null);
                 // player.State = new PlayerStateItem(game, player, new ExampleItem());
             }
+
+            wasAttackPressed = controller.isPlayerAttackPress();
+            wasItem1Pressed = controller.isItem1Press();
+            wasItem2Pressed = controller.isItem2Press();
+            wasItem3Pressed = controller.isItem3Press();
         
             /* play idle sprite animation */
             sprites[player.Facing].Update(gameTime);
