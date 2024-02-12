@@ -17,32 +17,32 @@ namespace cse3902
             this.player = player;
 
             sprites = new Dictionary<Direction, Sprite>() {
-                {Direction.Left, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                    new Rectangle(1, 77, 27, 16),
-                    new Rectangle(18, 77, 27, 16),
-                    new Rectangle(46, 77, 27, 16),
-                    new Rectangle(70, 77, 27, 16),
+                {Direction.Left, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 0 * 28, 27, 28),
+                    new Rectangle(1 * 27, 0 * 28, 27, 28),
+                    new Rectangle(2 * 27, 0 * 28, 27, 28),
+                    new Rectangle(3 * 27, 0 * 28, 27, 28),
                 })},
 
-                {Direction.Right, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                    new Rectangle(1, 77, 27, 16),
-                    new Rectangle(18, 77, 27, 16),
-                    new Rectangle(46, 77, 27, 16),
-                    new Rectangle(70, 77, 27, 16),
+                {Direction.Right, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 1 * 28, 27, 28),
+                    new Rectangle(1 * 27, 1 * 28, 27, 28),
+                    new Rectangle(2 * 27, 1 * 28, 27, 28),
+                    new Rectangle(3 * 27, 1 * 28, 27, 28),
                 })},
 
-                {Direction.Up, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                    new Rectangle(1, 97, 16, 28),
-                    new Rectangle(18, 97, 16, 28),
-                    new Rectangle(35, 97, 16, 28),
-                    new Rectangle(52, 97, 16, 28),
+                {Direction.Up, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 2 * 28, 27, 28),
+                    new Rectangle(1 * 27, 2 * 28, 27, 28),
+                    new Rectangle(2 * 27, 2 * 28, 27, 28),
+                    new Rectangle(3 * 27, 2 * 28, 27, 28),
                 })},
 
-                {Direction.Down, new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                    new Rectangle(1, 47, 16, 27),
-                    new Rectangle(18, 47, 16, 27),
-                    new Rectangle(35, 47, 16, 27),
-                    new Rectangle(52, 47, 16, 27),
+                {Direction.Down, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 3 * 28, 27, 28),
+                    new Rectangle(1 * 27, 3 * 28, 27, 28),
+                    new Rectangle(2 * 27, 3 * 28, 27, 28),
+                    new Rectangle(3 * 27, 3 * 28, 27, 28),
                 })}
             };
         }
