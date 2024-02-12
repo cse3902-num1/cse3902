@@ -10,10 +10,12 @@ namespace cse3902
     {
         public Texture2D LinkSpritesheet;
         public Texture2D NewLinkSpritesheet;
+        public Texture2D TilesSheet;
         public GameContent(ContentManager content) 
         {
             LinkSpritesheet = content.Load<Texture2D>("spritesheet_link");
             NewLinkSpritesheet = content.Load<Texture2D>("spritesheet");
+            TilesSheet = content.Load<Texture2D>("Tileset");
         }
     }
 }

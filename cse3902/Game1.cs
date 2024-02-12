@@ -53,7 +53,7 @@ public class Game1 : Game
         player = new Player(gameContent);
 
         // Initialize the list of blocks and add a block
-        block = new Block(Content, controller);
+        block = new Block(gameContent, controller);
        
     }
 

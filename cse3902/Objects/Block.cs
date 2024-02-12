@@ -23,18 +23,18 @@ namespace cse3902.Objects
         private KeyboardState previousState;
         private bool[] animationVisibility; // Array to track visibility for each animation index
 
-        public Block(ContentManager content,KeyboardController keyboard)
+        public Block(GameContent content,KeyboardController keyboard)
 		{
            
             //sprite = new Sprite();
-            sourceRectangles = new Rectangle[3];
+            sourceRectangles = new Rectangle[7];
             sourceRectangles[0] = new Rectangle(2, 11, 16, 16);
             sourceRectangles[1] = new Rectangle(19, 11, 16, 16);
             sourceRectangles[2] = new Rectangle(36, 11, 16, 16);
             sourceRectangles[3] = new Rectangle(53, 11, 16, 16);
-            sourceRectangles[4] = new Rectangle(2, 28, 16, 16);
-            sourceRectangles[4] = new Rectangle(2, 28, 16, 16);
-
+            sourceRectangles[4] = new Rectangle(19, 28, 16, 16);
+            sourceRectangles[5] = new Rectangle(36, 28, 16, 16);
+            sourceRectangles[6] = new Rectangle(53, 28, 16, 16);
 
             animationVisibility = new bool[sourceRectangles.Length];
 
@@ -47,7 +47,7 @@ namespace cse3902.Objects
             keyboardcontroller = keyboard;
 
 
-            texture = content.Load<Texture2D>("Tileset");
+            texture = content.TilesSheet;
         }
 
      
