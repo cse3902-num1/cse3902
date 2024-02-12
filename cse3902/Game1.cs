@@ -13,7 +13,8 @@ public class Game1 : Game
 
     private IController controller;
 
-    private Player player;
+    private Level level;
+
     private GameContent gameContent;
     
     public Game1()
@@ -34,14 +35,16 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
         gameContent = new GameContent(Content);
 
-        player = new Player(gameContent);
+        level = new Level(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
     {
         controller.Update(gameTime);
 
-        player.Update(gameTime, controller);
+        /* TODO: replace level with fresh copy if reset key is pressed */
+
+        level.Update(gameTime, controller);
 
         base.Update(gameTime);
     }
@@ -56,7 +59,7 @@ public class Game1 : Game
 
         spriteBatch.Begin(samplerState: s);
 
-        player.Draw(spriteBatch);
+        level.Draw(spriteBatch);
        
         spriteBatch.End();
 
