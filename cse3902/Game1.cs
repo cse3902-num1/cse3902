@@ -7,11 +7,7 @@ using cse3902.Objects;
 
 namespace cse3902;
 
-// Shared data class
-public static class GameData
-{
-    public static int BlockIndex { get; set; }
-}
+
 
 public class Game1 : Game
 {
