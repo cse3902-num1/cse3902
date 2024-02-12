@@ -31,6 +31,10 @@ namespace cse3902.Objects
             sourceRectangles[0] = new Rectangle(2, 11, 16, 16);
             sourceRectangles[1] = new Rectangle(19, 11, 16, 16);
             sourceRectangles[2] = new Rectangle(36, 11, 16, 16);
+            sourceRectangles[3] = new Rectangle(53, 11, 16, 16);
+            sourceRectangles[4] = new Rectangle(2, 28, 16, 16);
+            sourceRectangles[4] = new Rectangle(2, 28, 16, 16);
+
 
             animationVisibility = new bool[sourceRectangles.Length];
 
