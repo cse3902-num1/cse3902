@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,21 +11,28 @@ namespace cse3902
         public Direction Facing;
         public IPlayerState State;
         public IItem Item;
-
+        public KeyboardController Controller;
+        private int health = 5;
+        private int timeDamaged = 0;
         public Player(GameContent content)
         {
             State = new PlayerStateIdle(content,this);
+
         }
 
         public void Update(GameTime gameTime, IController controller)
         {
             State.Update(gameTime, controller);
-
+            if (controller.isDamaged() )
+            {
+                TakeDamage();
+                
+            }
             /* TODO: take damage if damage player button is pressed */
         }
 
         public void Draw(SpriteBatch spriteBatch)
-        {
+        {   
             State.Draw(spriteBatch);
         }
 
@@ -58,7 +66,16 @@ namespace cse3902
 
         public void TakeDamage()
         {
-            throw new NotImplementedException();
+                if(health > 0)
+                {
+                    health -= 1;
+                
+                    Debug.WriteLine("player health is: " + health);
+                }
+                if(health == 0)
+                {
+                    Debug.WriteLine("YOU ARE DEAD!!!!!");
+                }
         }
     }
 }

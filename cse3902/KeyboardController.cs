@@ -20,19 +20,25 @@ public class KeyboardController : IController
     }
     */
 
-    public KeyboardState keyboardState;
 
+    private KeyboardState currentKeyboardState;
+    private KeyboardState previousKeyboardState;
+    public KeyboardController()
+    {
+        currentKeyboardState = Keyboard.GetState();
+        previousKeyboardState = currentKeyboardState; // Initialize both to the same state
+    }
     public bool isPlayerMoveUpPress()
     {
-        if (keyboardState.IsKeyDown(Keys.W))
-        {
+        if (currentKeyboardState.IsKeyDown(Keys.W)){
+
             return true;
         }
         return false;
     }
     public bool isPlayerMoveDownPress()
     {
-        if (keyboardState.IsKeyDown(Keys.S))
+        if (currentKeyboardState.IsKeyDown(Keys.S))
         {
             return true;
         }
@@ -40,7 +46,7 @@ public class KeyboardController : IController
     }
     public bool isPlayerMoveLeftPress()
     {
-        if (keyboardState.IsKeyDown(Keys.A))
+        if (currentKeyboardState.IsKeyDown(Keys.A))
         {
             return true;
         }
@@ -48,7 +54,7 @@ public class KeyboardController : IController
     }
     public bool isPlayerMoveRightPress()
     {
-        if (keyboardState.IsKeyDown(Keys.D))
+        if (currentKeyboardState.IsKeyDown(Keys.D))
         {
             return true;
         }
@@ -56,7 +62,7 @@ public class KeyboardController : IController
     }
     public bool isPlayerAttackPress()
     {
-        if (keyboardState.IsKeyDown(Keys.Z) || keyboardState.IsKeyDown(Keys.N))
+        if (currentKeyboardState.IsKeyDown(Keys.Z) || currentKeyboardState.IsKeyDown(Keys.N))
         {
             return true;
         }
@@ -64,7 +70,7 @@ public class KeyboardController : IController
     }
     public bool isItem1Press()
     {
-        if (keyboardState.IsKeyDown(Keys.NumPad1))
+        if (currentKeyboardState.IsKeyDown(Keys.NumPad1))
         {
             return true;
         }
@@ -73,7 +79,7 @@ public class KeyboardController : IController
 
     public bool isItem2Press()
     {
-        if (keyboardState.IsKeyDown(Keys.NumPad2))
+        if (currentKeyboardState.IsKeyDown(Keys.NumPad2))
         {
             return true;
         }
@@ -82,19 +88,16 @@ public class KeyboardController : IController
 
     public bool isItem3Press()
     {
-        if (keyboardState.IsKeyDown(Keys.NumPad3))
+        if (currentKeyboardState.IsKeyDown(Keys.NumPad3))
         {
             return true;
         }
         return false;
     }
-    public bool isDamaged()
-    {
-        if (keyboardState.IsKeyDown(Keys.E))
-        {
-            return true;
-        }
-        return false;
+
+    public bool isDamaged() {
+        return previousKeyboardState.IsKeyUp(Keys.E) && currentKeyboardState.IsKeyDown(Keys.E);
+
     }
 
     /*
@@ -102,11 +105,11 @@ public class KeyboardController : IController
      */
     public bool isCycleBlockPress()
     {
-        if (keyboardState.IsKeyDown(Keys.T))
+        if (currentKeyboardState.IsKeyDown(Keys.T))
         {
             return true;
         }
-        else if (keyboardState.IsKeyDown(Keys.Y))
+        else if (currentKeyboardState.IsKeyDown(Keys.Y))
         {
             return true;
         }
@@ -119,11 +122,11 @@ public class KeyboardController : IController
 
     public bool isCycleItemPress()
     {
-        if (keyboardState.IsKeyDown(Keys.U))
+        if (currentKeyboardState.IsKeyDown(Keys.U))
         {
             return true;
         }
-        else if (keyboardState.IsKeyDown(Keys.I))
+        else if (currentKeyboardState.IsKeyDown(Keys.I))
         {
             return true;
         }
@@ -135,16 +138,19 @@ public class KeyboardController : IController
     */
     public bool isEnemyPressO()
     {
-        if (keyboardState.IsKeyDown(Keys.O))
+        if (currentKeyboardState.IsKeyDown(Keys.O) && !previousKeyboardState.IsKeyDown(Keys.O))
         {
             return true;
         }
+
         return false;
     }
 
     public bool isEnemyPressP()
     {
-        if (keyboardState.IsKeyDown(Keys.P))
+
+        if (currentKeyboardState.IsKeyDown(Keys.P) && !previousKeyboardState.IsKeyDown(Keys.P))
+
         {
             return true;
         }
@@ -155,14 +161,32 @@ public class KeyboardController : IController
 
     public void Update(GameTime gameTime)
     {
-        keyboardState = Keyboard.GetState();
 
-        if (keyboardState.IsKeyDown(Keys.Q))
+        previousKeyboardState = currentKeyboardState;
+        currentKeyboardState = Keyboard.GetState();
+        
+        if (isCycleBlockPress())
+        {
+            blocks[currentBlockIndex].BlockCycle();
+        }
+
+        if (isCycleItemPress())
+        {
+            items[currentItemIndex].ItemCycle();
+        }
+
+        if (isCycleEnemyPress())
+        {
+            enemies[currentEnemyIndex].CharacterCycle();
+        }
+
+        if (currentKeyboardState.IsKeyDown(Keys.Q))
+
         {
             QuitGame();
         }
 
-        if (keyboardState.IsKeyDown(Keys.R))
+        if (currentKeyboardState.IsKeyDown(Keys.R))
         {
             ResetGame();
         }
