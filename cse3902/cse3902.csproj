@@ -15,6 +15,7 @@
     <None Remove="Icon.bmp" />
     <None Remove="Interfaces\" />
     <None Remove="Objects\" />
+    <None Remove="Blocks\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
@@ -27,6 +28,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Objects\" />
+    <Folder Include="Blocks\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

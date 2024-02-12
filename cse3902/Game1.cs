@@ -1,7 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.Interfaces;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using cse3902.Objects;
 
 namespace cse3902;
+
+// Shared data class
+public static class GameData
+{
+    public static int BlockIndex { get; set; }
+}
 
 public class Game1 : Game
 {
@@ -11,10 +21,16 @@ public class Game1 : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
 
-    private IController controller;
+    public KeyboardController controller;
 
     private Player player;
+   
     private GameContent gameContent;
+
+    private Block block;
+ 
+
+    private KeyboardState previousKbState;
     
     public Game1()
     {
@@ -35,6 +51,10 @@ public class Game1 : Game
         gameContent = new GameContent(Content);
 
         player = new Player(gameContent);
+
+        // Initialize the list of blocks and add a block
+        block = new Block(Content, controller);
+       
     }
 
     protected override void Update(GameTime gameTime)
@@ -42,6 +62,9 @@ public class Game1 : Game
         controller.Update(gameTime);
 
         player.Update(gameTime, controller);
+
+        // Update the current block
+        block.update(gameTime);
 
         base.Update(gameTime);
     }
@@ -57,7 +80,9 @@ public class Game1 : Game
         spriteBatch.Begin(samplerState: s);
 
         player.Draw(spriteBatch);
-       
+        // Draw the current block
+        block.draw(spriteBatch);
+
         spriteBatch.End();
 
         base.Draw(gameTime);
