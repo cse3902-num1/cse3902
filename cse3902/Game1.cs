@@ -34,6 +34,7 @@ public class Game1 : Game
         gameContent = new GameContent(Content);
 
         player = new Player(gameContent);
+
     }
 
     protected override void Update(GameTime gameTime)
