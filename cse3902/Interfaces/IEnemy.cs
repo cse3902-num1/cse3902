@@ -5,14 +5,13 @@ namespace cse3902.Interfaces;
 
 public interface IEnemy
 {
-    public bool IsVisible { get; set; }
-    public void move(GameTime gameTime, int randomNum);
+    public void Move(GameTime gameTime, int randomNum);
 
-    public void attack();
+    public void Attack();
 
-    public void takeDmg();
+    public void TakeDmg();
 
-    public void draw(SpriteBatch spriteBatch);
+    public void Draw(SpriteBatch spriteBatch);
 
-    public void update(GameTime gameTime);
+    public void Update(GameTime gameTime);
 }

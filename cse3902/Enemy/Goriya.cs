@@ -13,159 +13,136 @@ namespace cse3902.Enemy
 {
     public class Goriya : IEnemy
     {
-        //private ISprite sprite;
-        private Texture2D texture;
-        private Rectangle[] sourceRectangles;
-        private float timer = 0;
-        private int threshold = 250;
-        private int currentIdx = 0;
-        //private byte previousAnimationIndex = 3;
-        private byte currentAnimationIndex = 2;
-        private float x = 200, y = 200;
+        private enum GoriyaState { Left, Right, Up, Down }
+        private GoriyaState currentState = GoriyaState.Down;
+        private Sprite spriteUp;
+        private Sprite spriteDown;
+        private Sprite spriteLeft;
+        private Sprite spriteRight;
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
         private int randomNum = 1;
-        private bool flipped = false;
-        private enum GoriyaState { Left, Right, Up, Down }
-        private GoriyaState state;
-        public bool isVisible = false;
 
-        public bool IsVisible
+
+
+        public Goriya(GameContent content)
         {
-            get { return isVisible; }
-            set { isVisible = value; }
+            spriteUp = new Sprite(content.goriya,
+                new List<Rectangle>()
+                {
+                    new Rectangle(0, 32, 16, 16),
+                    new Rectangle(16, 32, 16, 16)
+                }
+            );
+            spriteDown = new Sprite(content.goriya,
+                new List<Rectangle>()
+                {
+                    new Rectangle(0, 48, 16, 16),
+                    new Rectangle(16, 48, 16, 16)
+                }
+            );
+            spriteRight = new Sprite(content.goriya,
+                new List<Rectangle>()
+                {
+                    new Rectangle(0, 16, 16, 16),
+                    new Rectangle(16, 16, 16, 16)
+                }
+            );
+            spriteLeft = new Sprite(content.goriya,
+                new List<Rectangle>()
+                {
+                    new Rectangle(0, 0, 16, 16),
+                    new Rectangle(16, 0, 16, 16)
+                }
+            );
+            spriteDown.SetPosition(200, 200);
+            spriteUp.SetPosition(200, 200);
+            spriteLeft.SetPosition(200, 200);
+            spriteRight.SetPosition(200, 200);
         }
 
-        public Goriya(ContentManager content)
+        public void Move(GameTime gameTime, int randomNum)
         {
-            //sprite = new Sprite();
-            sourceRectangles = new Rectangle[4];
-            sourceRectangles[0] = new Rectangle(222, 11, 16, 16);
-            sourceRectangles[1] = new Rectangle(239, 11, 16, 16);
-            sourceRectangles[2] = new Rectangle(256, 11, 16, 16);
-            sourceRectangles[3] = new Rectangle(273, 11, 16, 16);
-            texture = content.Load<Texture2D>("enemiesSheet");
-        }
-
-        public void move(GameTime gameTime, int randomNum)
-        {
-            switch (state)
+            float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            switch (currentState)
             {
                 case GoriyaState.Up:
-                    //sprite.moveUp();
-                    y -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    spriteUp.Y -= 100f * totalTime;
+                    spriteDown.Y -= 100f * totalTime;
+                    spriteLeft.Y -= 100f * totalTime;
+                    spriteRight.Y -= 100f * totalTime;
                     break;
                 case GoriyaState.Left:
-                    //sprite.moveLeft();
-                    x -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    spriteUp.X -= 100f * totalTime;
+                    spriteDown.X -= 100f * totalTime;
+                    spriteLeft.X -= 100f * totalTime;
+                    spriteRight.X -= 100f * totalTime;
                     break;
                 case GoriyaState.Right:
-                    //sprite.moveRight();
-                    x += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    spriteUp.X += 100f * totalTime;
+                    spriteDown.X += 100f * totalTime;
+                    spriteLeft.X += 100f * totalTime;
+                    spriteRight.X += 100f * totalTime;
                     break;
                 case GoriyaState.Down:
-                    //sprite.moveDown();
-                    y += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    spriteUp.Y += 100f * totalTime;
+                    spriteDown.Y += 100f * totalTime;
+                    spriteLeft.Y += 100f * totalTime;
+                    spriteRight.Y += 100f * totalTime;
                     break;
             }
         }
 
-        public void changeDirection(int randomNum)
+        public void ChangeDirection(int randomNum)
         {
             switch (randomNum)
             {
                 case 1:
-                    state = GoriyaState.Up;
-                    currentIdx = 1;
+                    currentState = GoriyaState.Up;
                     break;
                 case 2:
-                    state = GoriyaState.Down;
-                    currentIdx = 0;
+                    currentState = GoriyaState.Down;
                     break;
                 case 3:
-                    state = GoriyaState.Left;
-                    currentIdx = 1;
+                    currentState = GoriyaState.Left;
                     break;
                 case 4:
-                    state = GoriyaState.Right;
-                    currentIdx = 0;
+                    currentState = GoriyaState.Right;
                     break;
             }
         }
 
-        public void attack()
+        public void Attack()
         {
 
         }
 
-        public void takeDmg()
+        public void TakeDmg()
         {
 
         }
 
-        public void draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            if (isVisible)
+            if (currentState == GoriyaState.Up)
             {
-                if (state == GoriyaState.Up || state == GoriyaState.Down)
-                {
-                    if (flipped)
-                    {
-                        spriteBatch.Draw(texture,
-                            new Vector2(x, y),
-                            sourceRectangles[currentIdx],
-                            Color.White,
-                            0f,
-                            new Vector2(0, 0),
-                            3f,
-                            SpriteEffects.None,
-                            1f
-                        );
-                    }
-                    else
-                    {
-                        spriteBatch.Draw(texture,
-                            new Vector2(x, y),
-                            sourceRectangles[currentIdx],
-                            Color.White,
-                            0f,
-                            new Vector2(0, 0),
-                            3f,
-                            SpriteEffects.FlipHorizontally,
-                            1f
-                        );
-                    }
-                }
-                else if (state == GoriyaState.Right)
-                {
-                    spriteBatch.Draw(texture,
-                            new Vector2(x, y),
-                            sourceRectangles[currentAnimationIndex],
-                            Color.White,
-                            0f,
-                            new Vector2(0, 0),
-                            3f,
-                            SpriteEffects.None,
-                            1f
-                        );
-                }
-                else
-                {
-                    spriteBatch.Draw(texture,
-                            new Vector2(x, y),
-                            sourceRectangles[currentAnimationIndex],
-                            Color.White,
-                            0f,
-                            new Vector2(0, 0),
-                            3f,
-                            SpriteEffects.FlipHorizontally,
-                            1f
-                        );
-                }
+                spriteUp.Draw(spriteBatch);
+            } 
+            else if (currentState == GoriyaState.Down)
+            {
+                spriteDown.Draw(spriteBatch);
+            } 
+            else if (currentState == GoriyaState.Left)
+            {
+                spriteLeft.Draw(spriteBatch);
+            }
+            else if (currentState == GoriyaState.Right)
+            {
+                spriteRight.Draw(spriteBatch);
             }
         }
 
-        public void update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             randomChangeTimer.Start();
 
@@ -176,35 +153,24 @@ namespace cse3902.Enemy
                 randomNum = random.Next(1, 5);
             }
 
-            changeDirection(randomNum);
-            move(gameTime, randomNum);
+            ChangeDirection(randomNum);
+            Move(gameTime, randomNum);
 
-
-            if (timer > threshold)
+            if (currentState == GoriyaState.Up)
             {
-                if (!flipped)
-                {
-                    flipped = true;
-                }
-                else
-                {
-                    flipped = false;
-                }
-
-                if (currentAnimationIndex == 2)
-                {
-                    currentAnimationIndex = 3;
-                }
-                else
-                {
-                    currentAnimationIndex = 2;
-                }
-
-                timer = 0;
+                spriteUp.Update(gameTime);
             }
-            else
+            else if (currentState == GoriyaState.Down)
             {
-                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                spriteDown.Update(gameTime);
+            }
+            else if (currentState == GoriyaState.Left)
+            {
+                spriteLeft.Update(gameTime);
+            }
+            else if (currentState == GoriyaState.Right)
+            {
+                spriteRight.Update(gameTime);
             }
         }
     }

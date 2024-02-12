@@ -41,20 +41,17 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        gameContent = new GameContent(Content);
+
         _enemy = new List<IEnemy>
         {
-            new Skeleton(Content),
-            new Dragon(Content),
-            new Gel(Content),
-            new Keese(Content),
-            new Goriya(Content),
+            new Skeleton(gameContent),
+            new Dragon(gameContent),
+            new Gel(gameContent),
+            new Keese(gameContent),
+            new Goriya(gameContent),
         };
         enemyIdx = 0;
-
-
-
-        
-        gameContent = new GameContent(Content);
 
         player = new Player(gameContent);
     }
@@ -65,26 +62,16 @@ public class Game1 : Game
 
         if (controller.isEnemyPressP() && !previousKbState.IsKeyDown(Keys.P))
         { 
-            foreach (IEnemy enemy in _enemy)
-            {
-                enemy.IsVisible = false;
-            }
             enemyIdx = (enemyIdx + 1) % _enemy.Count;
-            _enemy[enemyIdx].IsVisible = true;
         }
 
         if (controller.isEnemyPressO() && !previousKbState.IsKeyDown(Keys.O))
         {
-            foreach (IEnemy enemy in _enemy)
-            {
-                enemy.IsVisible = false;
-            }
             enemyIdx--;
             if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
-            _enemy[enemyIdx].IsVisible = true;
         }
         previousKbState = controller.keyboardState;
-        _enemy[enemyIdx].update(gameTime);
+        _enemy[enemyIdx].Update(gameTime);
 
 
         player.Update(gameTime, controller);
@@ -102,10 +89,8 @@ public class Game1 : Game
 
         spriteBatch.Begin(samplerState: s);
 
-        foreach (IEnemy enemy in _enemy)
-        {
-            enemy.draw(spriteBatch);
-        }
+        _enemy[enemyIdx].Draw(spriteBatch);
+
         player.Draw(spriteBatch);
         
         spriteBatch.End();
