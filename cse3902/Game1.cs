@@ -20,7 +20,6 @@ public class Game1 : Game
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
         controller = new KeyboardController();
     }
 
