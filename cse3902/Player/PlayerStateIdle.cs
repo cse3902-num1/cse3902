@@ -7,20 +7,47 @@ namespace cse3902
 {
     public class PlayerStateIdle : IPlayerState
     {
-        
         private Player player;
-        private Sprite idleSprite;
+        private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+
+        private bool wasAttackPressed = true;
+        private bool wasItem1Pressed = true;
+        private bool wasItem2Pressed = true;
+        private bool wasItem3Pressed = true;
 
         public PlayerStateIdle(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered idle state");
             this.content = content;
             this.player = player;
-            idleSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(1, 11, 15, 15)
-            });
-            // TODO: set frame data of idleSprite
+
+            sprites = new Dictionary<Direction, ISprite>() {
+                {
+                    Direction.Left,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 0 * 16, 16, 16)
+                    })
+                },
+                {
+                    Direction.Right,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 1 * 16, 16, 16)
+                    })
+                },
+                {
+                    Direction.Up,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 2 * 16, 16, 16)
+                    })
+                },
+                {
+                    Direction.Down,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 3 * 16, 16, 16)
+                    })
+                },
+            };
         }
 
         public void Update(GameTime gameTime, IController controller)
@@ -33,34 +60,42 @@ namespace cse3902
             }
 
             /* enter attack state if attack key is pressed */
-            else if (controller.isPlayerAttackPress())
+            else if (!wasAttackPressed && controller.isPlayerAttackPress())
             {
                 player.State = new PlayerStateAttack(content, player);
             }
 
             /* enter item state if any item use keys are pressed */
             /* TODO: finish once items classes are created */
-            if (controller.isItem1Press())
+            if (!wasItem1Pressed && controller.isItem1Press())
             {
+                player.State = new PlayerStateItem(content, player, null);
                 // player.State = new PlayerStateItem(game, player, new ExampleItem());
             }
-            else if (controller.isItem2Press())
+            else if (!wasItem2Pressed && controller.isItem2Press())
             {
+                player.State = new PlayerStateItem(content, player, null);
                 // player.State = new PlayerStateItem(game, player, new ExampleItem());
             }
-            else if (controller.isItem3Press())
+            else if (!wasItem3Pressed && controller.isItem3Press())
             {
+                player.State = new PlayerStateItem(content, player, null);
                 // player.State = new PlayerStateItem(game, player, new ExampleItem());
             }
+
+            wasAttackPressed = controller.isPlayerAttackPress();
+            wasItem1Pressed = controller.isItem1Press();
+            wasItem2Pressed = controller.isItem2Press();
+            wasItem3Pressed = controller.isItem3Press();
         
             /* play idle sprite animation */
-            idleSprite.Update(gameTime);
+            sprites[player.Facing].Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            idleSprite.SetPosition(player.Position.X, player.Position.Y);
-            idleSprite.Draw(spriteBatch);
+            sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
+            sprites[player.Facing].Draw(spriteBatch);
         }
     }
 }

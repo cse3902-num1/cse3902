@@ -7,13 +7,8 @@ namespace cse3902
 {
     public class PlayerStateMove : IPlayerState
     {
-        private Game1 game;
         private Player player;
-        private Sprite movingLeftSprite;
-        private Sprite movingRightSprite;
-        private Sprite movingUpSprite;
-        private Sprite movingDownSprite;
-        private Sprite currentSprite; // will reference one of the above sprites
+        private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
 
         public PlayerStateMove(GameContent content, Player player)
@@ -21,23 +16,37 @@ namespace cse3902
             Debug.WriteLine("[info] player entered move state");
             this.content = content;
             this.player = player;
-            movingLeftSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(97, 1, 15, 15),
-                new Rectangle(113, 1, 15, 15)
-            });
-            movingRightSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(33, 1, 15, 15),
-                new Rectangle(49, 1, 15, 15)
-            });
-            movingUpSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(65, 1, 15, 15),
-                new Rectangle(81, 1, 15, 15)
-            });
-            movingDownSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(1, 1, 15, 15),
-                new Rectangle(17, 1, 15, 15)
-            });
-            currentSprite = movingRightSprite; // just a default value
+
+            sprites = new Dictionary<Direction, ISprite>() {
+                {
+                    Direction.Left,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 0 * 16, 16, 16),
+                        new Rectangle(1 * 16, 0 * 16, 16, 16),
+                    })
+                },
+                {
+                    Direction.Right,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 1 * 16, 16, 16),
+                        new Rectangle(1 * 16, 1 * 16, 16, 16),
+                    })
+                },
+                {
+                    Direction.Up,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 2 * 16, 16, 16),
+                        new Rectangle(1 * 16, 2 * 16, 16, 16),
+                    })
+                },
+                {
+                    Direction.Down,
+                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 3 * 16, 16, 16),
+                        new Rectangle(1 * 16, 3 * 16, 16, 16),
+                    })
+                },
+            };
         }
 
         public void Update(GameTime gameTime, IController controller)
@@ -45,22 +54,22 @@ namespace cse3902
             /* move player if any movement key is pressed */
             if (controller.isPlayerMoveLeftPress() == true)
             {
-                currentSprite = movingLeftSprite;
+                player.Facing = Direction.Left;
                 player.Position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controller.isPlayerMoveRightPress() == true)
             {
-                currentSprite = movingRightSprite;
+                player.Facing = Direction.Right;
                 player.Position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controller.isPlayerMoveUpPress() == true)
             {
-                currentSprite = movingUpSprite;
+                player.Facing = Direction.Up;
                 player.Position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controller.isPlayerMoveDownPress() == true)
             {
-                currentSprite = movingDownSprite;
+                player.Facing = Direction.Down;
                 player.Position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
@@ -70,13 +79,13 @@ namespace cse3902
                 player.State = new PlayerStateIdle(content, player);
             }
 
-            currentSprite.Update(gameTime);
+            sprites[player.Facing].Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentSprite.SetPosition(player.Position.X, player.Position.Y);
-            currentSprite.Draw(spriteBatch);
+            sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
+            sprites[player.Facing].Draw(spriteBatch);
         }
     }
 }

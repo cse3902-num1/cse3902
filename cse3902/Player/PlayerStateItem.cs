@@ -7,10 +7,9 @@ namespace cse3902
 {
     public class PlayerStateItem : IPlayerState
     {
-        private Game1 game;
         private Player player;
         private IItem item;
-        private Sprite itemUsageSprite;
+        private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
 
         public PlayerStateItem(GameContent content, Player player, IItem item)
@@ -19,30 +18,56 @@ namespace cse3902
             this.content = content;
             this.player = player;
             this.item = item;
-            itemUsageSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(107, 11, 15, 15),
-                new Rectangle(124, 11, 15, 15),
-                new Rectangle(141, 11, 15, 15)
-            });
-            // TODO: set frame data of itemUsageSprite
 
-            this.item.Use(player);
+            sprites = new Dictionary<Direction, Sprite>() {
+                {
+                    Direction.Left,
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 0 * 16, 16, 16)
+                    })
+                },
+                {
+                    Direction.Right,
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 1 * 16, 16, 16)
+                    })
+                },
+                {
+                    Direction.Up,
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 2 * 16, 16, 16)
+                    })
+                },
+                {
+                    Direction.Down,
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 3 * 16, 16, 16)
+                    })
+                },
+            };
+
+            /* TODO: use the item */
+            //this.item.Use(player);
         }
         public void Update(GameTime gameTime, IController controller)
         {
             /* TODO: change to idle state if itemUsageSprite animation is done */
+            if (sprites[player.Facing].Frame == 0)
+            {
+                player.State = new PlayerStateIdle(content, player);
+            }
 
             /* TODO: depending on how we implement items, we might need to update them */
             // item.Update();
 
             /* play idle sprite animation */
-            itemUsageSprite.Update(gameTime);
+            sprites[player.Facing].Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            itemUsageSprite.SetPosition(player.Position.X, player.Position.Y);
-            itemUsageSprite.Draw(spriteBatch);
+            sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
+            sprites[player.Facing].Draw(spriteBatch);
         }
     }
 }

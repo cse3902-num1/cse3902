@@ -7,39 +7,61 @@ namespace cse3902
 {
     public class PlayerStateAttack : IPlayerState
     {
-        private Game1 game;
         private Player player;
-        private Sprite attackSprite;
+        private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
         public PlayerStateAttack(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered attack state");
             this.content = content;
             this.player = player;
-            attackSprite = new Sprite(content.ContentSpritesheetLink, new List<Rectangle>() {
-                new Rectangle(107, 11, 15, 15)
-            });
-            // TODO: set frame data of attackSprite
+
+            sprites = new Dictionary<Direction, Sprite>() {
+                {Direction.Left, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 0 * 28, 27, 28),
+                    new Rectangle(1 * 27, 0 * 28, 27, 28),
+                    new Rectangle(2 * 27, 0 * 28, 27, 28),
+                    new Rectangle(3 * 27, 0 * 28, 27, 28),
+                })},
+
+                {Direction.Right, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 1 * 28, 27, 28),
+                    new Rectangle(1 * 27, 1 * 28, 27, 28),
+                    new Rectangle(2 * 27, 1 * 28, 27, 28),
+                    new Rectangle(3 * 27, 1 * 28, 27, 28),
+                })},
+
+                {Direction.Up, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 2 * 28, 27, 28),
+                    new Rectangle(1 * 27, 2 * 28, 27, 28),
+                    new Rectangle(2 * 27, 2 * 28, 27, 28),
+                    new Rectangle(3 * 27, 2 * 28, 27, 28),
+                })},
+
+                {Direction.Down, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
+                    new Rectangle(0 * 27, 3 * 28, 27, 28),
+                    new Rectangle(1 * 27, 3 * 28, 27, 28),
+                    new Rectangle(2 * 27, 3 * 28, 27, 28),
+                    new Rectangle(3 * 27, 3 * 28, 27, 28),
+                })}
+            };
         }
 
         public void Update(GameTime gameTime, IController controller)
         {
-
-            // TODO: return to idle state if attackSprite animation is done
-            // something like:
-            /* Temperary comment
-            if (attackSprite.isDone())
+            /* go to idle state if attack animation is done */
+            if (sprites[player.Facing].Frame == 3)
             {
-                player.State = new PlayerStateIdle(game, player);
+                player.State = new PlayerStateIdle(content, player);
             }
-           comment end  */
-            attackSprite.Update(gameTime);
+
+            sprites[player.Facing].Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            attackSprite.SetPosition(player.Position.X, player.Position.Y);
-            attackSprite.Draw(spriteBatch);
+            sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
+            sprites[player.Facing].Draw(spriteBatch);
         }
     }
 }
