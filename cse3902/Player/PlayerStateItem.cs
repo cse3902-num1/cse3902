@@ -9,7 +9,7 @@ namespace cse3902
     {
         private Player player;
         private IItem item;
-        private Dictionary<Direction, ISprite> sprites;
+        private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
 
         public PlayerStateItem(GameContent content, Player player, IItem item)
@@ -19,38 +19,43 @@ namespace cse3902
             this.player = player;
             this.item = item;
 
-            sprites = new Dictionary<Direction, ISprite>() {
+            sprites = new Dictionary<Direction, Sprite>() {
                 {
                     Direction.Left,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(107, 11, 15, 15)
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 0 * 16, 16, 16)
                     })
                 },
                 {
                     Direction.Right,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(124, 11, 15, 15)
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 1 * 16, 16, 16)
                     })
                 },
                 {
                     Direction.Up,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(141, 11, 15, 15)
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 2 * 16, 16, 16)
                     })
                 },
                 {
                     Direction.Down,
-                    new Sprite(content.LinkSpritesheet, new List<Rectangle>() {
-                        new Rectangle(124, 11, 15, 15)
+                    new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
+                        new Rectangle(0 * 16, 3 * 16, 16, 16)
                     })
                 },
             };
 
-            this.item.Use(player);
+            /* TODO: use the item */
+            //this.item.Use(player);
         }
         public void Update(GameTime gameTime, IController controller)
         {
             /* TODO: change to idle state if itemUsageSprite animation is done */
+            if (sprites[player.Facing].Frame == 0)
+            {
+                player.State = new PlayerStateIdle(content, player);
+            }
 
             /* TODO: depending on how we implement items, we might need to update them */
             // item.Update();

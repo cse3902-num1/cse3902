@@ -36,7 +36,6 @@ public class Game1 : Game
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
         controller = new KeyboardController();
     }
 
@@ -52,9 +51,11 @@ public class Game1 : Game
 
         player = new Player(gameContent);
 
+
         // Initialize the list of blocks and add a block
         block = new Block(gameContent, controller);
        
+
     }
 
     protected override void Update(GameTime gameTime)
