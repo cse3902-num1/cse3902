@@ -1,28 +1,26 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902;
 
 public class Game1 : Game
 {
-    private GraphicsDeviceManager _graphics;
-    private SpriteBatch _spriteBatch;
+    /* loaded game content accessible by anyone with a reference to this Game1 */
+    
 
-    private List<IController> _controllers;
+    private GraphicsDeviceManager graphics;
+    private SpriteBatch spriteBatch;
 
-    private List<ISprite> _sprites;
+    private IController controller;
 
+    private Player player;
+    private GameContent gameContent;
+    
     public Game1()
     {
-        _graphics = new GraphicsDeviceManager(this);
+        graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
-
-        _controllers = new List<IController> {
-            new KeyboardController(),
-            new MouseController(Window)
-        };
+        controller = new KeyboardController();
     }
 
     protected override void Initialize()
@@ -32,53 +30,17 @@ public class Game1 : Game
 
     protected override void LoadContent()
     {
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        spriteBatch = new SpriteBatch(GraphicsDevice);
+        gameContent = new GameContent(Content);
 
-        _sprites = new List<ISprite> {
-            new NonMovingNonAnimatedSprite(GetScreenCenter()),
-            new NonMovingAnimatedSprite(   GetScreenCenter()),
-            new MovingNonAnimatedSprite(   GetScreenCenter()),
-            new MovingAnimatedSprite(      GetScreenCenter()),
-            new TextSprite(Vector2.One * 10),
-        };
-
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.LoadContent(Content);
-        }
-    }
-
-    private Vector2 GetScreenCenter()
-    {
-        return new Vector2(
-            Window.ClientBounds.Width / 2,
-            Window.ClientBounds.Height / 2
-        );
+        player = new Player(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        foreach (IController controller in _controllers)
-        {
-            controller.Update(gameTime);
-        }
+        controller.Update(gameTime);
 
-        /* collect input states */
-        List<InputState> inputStates = new List<InputState>();
-        foreach (IController controller in _controllers)
-        {
-            inputStates.Add(controller.GetState());
-        }
-
-        if (InputState.IsAnyPressed(inputStates, InputAction.Quit))
-        {
-            Exit();
-        }
-
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.Update(this, gameTime, inputStates);
-        }
+        player.Update(gameTime, controller);
 
         base.Update(gameTime);
     }
@@ -91,13 +53,11 @@ public class Game1 : Game
         SamplerState s = new SamplerState();
         s.Filter = TextureFilter.Point;
 
-        _spriteBatch.Begin(samplerState: s);
+        spriteBatch.Begin(samplerState: s);
 
-        foreach (ISprite sprite in _sprites)
-        {
-            sprite.Draw(this, gameTime, _spriteBatch);
-        }
-        _spriteBatch.End();
+        player.Draw(spriteBatch);
+       
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }
