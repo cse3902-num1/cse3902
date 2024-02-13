@@ -28,7 +28,6 @@ public class Game1 : Game
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
         controller = new KeyboardController();
     }
 
@@ -54,6 +53,7 @@ public class Game1 : Game
         enemyIdx = 0;
 
         player = new Player(gameContent);
+
     }
 
     protected override void Update(GameTime gameTime)
