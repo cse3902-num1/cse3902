@@ -19,7 +19,6 @@ public class Game1 : Game
 
     private List<IEnemy> _enemy;
     private int enemyIdx;
-    private KeyboardState previousKbState;
 
     private Player player;
     private GameContent gameContent;
