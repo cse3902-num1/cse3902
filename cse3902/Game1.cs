@@ -17,7 +17,11 @@ public class Game1 : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
 
+    private List<IEnemy> _enemy;
+    private int enemyIdx;
+
     public KeyboardController controller;
+
 
     private Player player;
    
@@ -44,20 +48,17 @@ public class Game1 : Game
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        gameContent = new GameContent(Content);
+
         _enemy = new List<IEnemy>
         {
-            new Skeleton(Content),
-            new Dragon(Content),
-            new Gel(Content),
-            new Keese(Content),
-            new Goriya(Content),
+            new Skeleton(gameContent),
+            new Dragon(gameContent),
+            new Gel(gameContent),
+            new Keese(gameContent),
+            new Goriya(gameContent),
         };
         enemyIdx = 0;
-
-
-
-        
-        gameContent = new GameContent(Content);
 
 
         player = new Player(gameContent);
@@ -66,12 +67,23 @@ public class Game1 : Game
         // Initialize the list of blocks and add a block
         block = new Block(gameContent, controller);
        
-
     }
 
     protected override void Update(GameTime gameTime)
     {
         controller.Update(gameTime);
+
+        if (controller.isEnemyPressP())
+        { 
+            enemyIdx = (enemyIdx + 1) % _enemy.Count;
+        }
+
+        if (controller.isEnemyPressO())
+        {
+            enemyIdx--;
+            if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
+        }
+        _enemy[enemyIdx].Update(gameTime);
 
         player.Update(gameTime, controller);
 
@@ -90,6 +102,8 @@ public class Game1 : Game
         s.Filter = TextureFilter.Point;
 
         spriteBatch.Begin(samplerState: s);
+
+        _enemy[enemyIdx].Draw(spriteBatch);
 
         player.Draw(spriteBatch);
         // Draw the current block

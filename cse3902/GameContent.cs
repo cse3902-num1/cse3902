@@ -14,7 +14,6 @@ namespace cse3902
         public Texture2D NewLinkSpritesheet;
 
         public Texture2D TilesSheet;
-       
 
         public Texture2D SpritesheetLinkAttackMagicRodMagicShield;
         public Texture2D SpritesheetLinkAttackMagicRod;
@@ -28,6 +27,11 @@ namespace cse3902
         public Texture2D SpritesheetLinkUseItem;
         public Texture2D SpritesheetLinkWalkMagicShield;
         public Texture2D SpritesheetLinkWalk;
+
+        public Texture2D enemies;
+        public Texture2D enemiesSheet;
+        public Texture2D skeleton;
+        public Texture2D goriya;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -56,6 +60,10 @@ namespace cse3902
             SpritesheetLinkWalkMagicShield = LoadTexture2D("spritesheet_link_walk_magicshield");
             SpritesheetLinkWalk = LoadTexture2D("spritesheet_link_walk");
 
+            enemies = LoadTexture2D("enemies");
+            enemiesSheet = LoadTexture2D("enemiesSheet");
+            skeleton = LoadTexture2D("skeleton");
+            goriya = LoadTexture2D("spritesheet_goriya_walk");
         }
     }
 }
