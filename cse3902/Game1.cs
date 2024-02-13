@@ -60,17 +60,16 @@ public class Game1 : Game
     {
         controller.Update(gameTime);
 
-        if (controller.isEnemyPressP() && !previousKbState.IsKeyDown(Keys.P))
+        if (controller.isEnemyPressP())
         { 
             enemyIdx = (enemyIdx + 1) % _enemy.Count;
         }
 
-        if (controller.isEnemyPressO() && !previousKbState.IsKeyDown(Keys.O))
+        if (controller.isEnemyPressO())
         {
             enemyIdx--;
             if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
         }
-        previousKbState = controller.keyboardState;
         _enemy[enemyIdx].Update(gameTime);
 
 

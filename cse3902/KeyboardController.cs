@@ -134,7 +134,7 @@ public class KeyboardController : IController
     */
     public bool isEnemyPressO()
     {
-        if (currentKeyboardState.IsKeyDown(Keys.O))
+        if (currentKeyboardState.IsKeyDown(Keys.O) && !previousKeyboardState.IsKeyDown(Keys.O))
         {
             return true;
         }
@@ -143,7 +143,7 @@ public class KeyboardController : IController
 
     public bool isEnemyPressP()
     {
-        if (keyboardState.IsKeyDown(Keys.P))
+        if (currentKeyboardState.IsKeyDown(Keys.P) && !previousKeyboardState.IsKeyDown(Keys.P))
         {
             return true;
         }
@@ -156,21 +156,6 @@ public class KeyboardController : IController
     {
         previousKeyboardState = currentKeyboardState;
         currentKeyboardState = Keyboard.GetState();
-        
-        if (isCycleBlockPress())
-        {
-            blocks[currentBlockIndex].BlockCycle();
-        }
-
-        if (isCycleItemPress())
-        {
-            items[currentItemIndex].ItemCycle();
-        }
-
-        if (isCycleEnemyPress())
-        {
-            enemies[currentEnemyIndex].CharacterCycle();
-        }
 
         if (currentKeyboardState.IsKeyDown(Keys.Q))
         {
