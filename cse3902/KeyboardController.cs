@@ -29,6 +29,7 @@ public class KeyboardController : IController
     }
     public bool isPlayerMoveUpPress()
     {
+
         if (currentKeyboardState.IsKeyDown(Keys.W)){
             return true;
         }
@@ -92,6 +93,7 @@ public class KeyboardController : IController
         }
         return false;
     }
+
     public bool isDamaged() {
         return previousKeyboardState.IsKeyUp(Keys.E) && currentKeyboardState.IsKeyDown(Keys.E);
     }
@@ -174,15 +176,14 @@ public class KeyboardController : IController
     {
 
         Environment.Exit(0);
-   
+
     }
     /*
      *  reset the program back to its initial state
      */
     private void ResetGame()
     {
-        
+
     }
 
 }
-   

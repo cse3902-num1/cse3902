@@ -13,6 +13,8 @@ namespace cse3902
         public Texture2D LinkSpritesheet;
         public Texture2D NewLinkSpritesheet;
 
+        public Texture2D TilesSheet;
+
         public Texture2D SpritesheetLinkAttackMagicRodMagicShield;
         public Texture2D SpritesheetLinkAttackMagicRod;
         public Texture2D SpritesheetLinkAttackMagicSwordMagicShield;
@@ -42,6 +44,8 @@ namespace cse3902
 
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
+          
+            TilesSheet = content.Load<Texture2D>("Tileset");
 
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");
