@@ -7,7 +7,7 @@ public interface IEnemy
 {
     public void Move(GameTime gameTime, int randomNum);
 
-    public void Attack();
+    public void Attack(GameTime gameTime);
 
     public void TakeDmg();
 

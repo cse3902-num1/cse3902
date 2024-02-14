@@ -46,7 +46,7 @@ namespace cse3902.Enemy
             }
         }
 
-        public void Attack()
+        public void Attack(GameTime gameTime)
         {
 
         }
