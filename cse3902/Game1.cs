@@ -1,7 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.Interfaces;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using cse3902.Objects;
+using cse3902.Enemy;
 
 namespace cse3902;
+
+
 
 public class Game1 : Game
 {
@@ -10,18 +17,15 @@ public class Game1 : Game
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
-
-    private IController controller;
+    public KeyboardController controller;
+    private GameContent gameContent;
 
     private Level level;
-
-    private GameContent gameContent;
     
     public Game1()
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
         controller = new KeyboardController();
     }
 
@@ -33,9 +37,10 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
+
         gameContent = new GameContent(Content);
 
-        level = new Level(gameContent);
+        level = new Level(gameContent, controller);
     }
 
     protected override void Update(GameTime gameTime)
