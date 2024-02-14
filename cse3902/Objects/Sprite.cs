@@ -22,6 +22,8 @@ namespace cse3902
         private double frameTimerThreshold = 1.0 / 5.0; /* how long to spend on each frame (seconds) */
         private double frameTimer = 0.0; /* how long we've spent on current frame (seconds) */
 
+        private Vector2 origin = new Vector2(0, 0);
+
         public float X
         {
             get { return position.X; }
@@ -41,6 +43,14 @@ namespace cse3902
             this.frames = frames;
         }
 
+        public Sprite(Texture2D texture, List<Rectangle> frames, Vector2 origin)
+        {
+            this.position = Vector2.Zero;
+            this.texture = texture;
+            this.frames = frames;
+            this.origin = origin;
+        }
+
 
         public void Update(GameTime gameTime)
         {
@@ -58,7 +68,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, new Vector2(0, 0), 2.0f, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, origin, 2.0f, SpriteEffects.None, 1.0f);
         }
 
         // Set the position of the sprite
