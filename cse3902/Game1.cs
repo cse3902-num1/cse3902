@@ -47,7 +47,11 @@ public class Game1 : Game
     {
         controller.Update(gameTime);
 
-        /* TODO: replace level with fresh copy if reset key is pressed */
+        /* reset level if R is pressed */
+        if (controller.isResetPressed())
+        {
+            level = new Level(gameContent, controller);
+        }
 
         level.Update(gameTime, controller);
 

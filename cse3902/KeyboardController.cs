@@ -152,7 +152,10 @@ public class KeyboardController : IController
         return false;
     }
 
-
+    public bool isResetPressed()
+    {
+        return currentKeyboardState.IsKeyDown(Keys.R);
+    }
 
     public void Update(GameTime gameTime)
     {
