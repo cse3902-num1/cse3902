@@ -157,36 +157,14 @@ public class KeyboardController : IController
         return currentKeyboardState.IsKeyDown(Keys.R);
     }
 
+    public bool isQuitPressed()
+    {
+        return currentKeyboardState.IsKeyDown(Keys.Q);
+    }
+
     public void Update(GameTime gameTime)
     {
         previousKeyboardState = currentKeyboardState;
         currentKeyboardState = Keyboard.GetState();
-
-        if (currentKeyboardState.IsKeyDown(Keys.Q))
-        {
-            QuitGame();
-        }
-
-        if (currentKeyboardState.IsKeyDown(Keys.R))
-        {
-            ResetGame();
-        }
     }
-    /*
-     * quit the game
-     */
-    private void QuitGame()
-    {
-
-        Environment.Exit(0);
-
-    }
-    /*
-     *  reset the program back to its initial state
-     */
-    private void ResetGame()
-    {
-
-    }
-
 }

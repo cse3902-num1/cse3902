@@ -19,4 +19,5 @@ public interface IController
     public bool isEnemyPressP();
     public bool isDamaged();
     public bool isResetPressed();
+    public bool isQuitPressed();
 }

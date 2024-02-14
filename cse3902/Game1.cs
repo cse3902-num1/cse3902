@@ -53,6 +53,12 @@ public class Game1 : Game
             level = new Level(gameContent, controller);
         }
 
+        /* quit game if Q is pressed */
+        if (controller.isQuitPressed())
+        {
+            Exit();
+        }
+
         level.Update(gameTime, controller);
 
         base.Update(gameTime);
