@@ -65,7 +65,7 @@ namespace cse3902.Enemy
             }
         }
 
-        public void Attack(GameTime gameTime)
+        public void Attack()
         {
             ballUp.Position = new Vector2(sprite.X, sprite.Y);
             ballDown.Position = new Vector2(sprite.X, sprite.Y);
@@ -101,7 +101,7 @@ namespace cse3902.Enemy
             if (attackTimer.ElapsedMilliseconds >= 3000)
             {
                 attackTimer.Restart();
-                Attack(gameTime);
+                Attack();
             }
             ballUp.Update(gameTime);
             ballDown.Update(gameTime);

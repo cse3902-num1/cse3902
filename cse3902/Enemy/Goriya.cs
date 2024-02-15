@@ -1,13 +1,10 @@
 ﻿using cse3902.Interfaces;
+using cse3902.Projectiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cse3902.Enemy
 {
@@ -22,8 +19,9 @@ namespace cse3902.Enemy
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
         private int randomNum = 1;
-
-
+        private GreenBoomerang greenBoomerang;
+        private bool isAttack;
+        private bool goingBack = false;
 
         public Goriya(GameContent content)
         {
@@ -55,10 +53,14 @@ namespace cse3902.Enemy
                     new Rectangle(16, 0, 16, 16)
                 }
             );
-            spriteDown.SetPosition(200, 200);
-            spriteUp.SetPosition(200, 200);
-            spriteLeft.SetPosition(200, 200);
-            spriteRight.SetPosition(200, 200);
+            spriteDown.SetPosition(400, 200);
+            spriteUp.SetPosition(400, 200);
+            spriteLeft.SetPosition(400, 200);
+            spriteRight.SetPosition(400, 200);
+            greenBoomerang = new GreenBoomerang(content,
+                new Vector2(0f, 0f),
+                new Vector2(0f, 0f)
+            );
         }
 
         public void Move(GameTime gameTime, int randomNum)
@@ -93,28 +95,22 @@ namespace cse3902.Enemy
             }
         }
 
-        public void ChangeDirection(int randomNum)
+        public void ChangeAction(int randomNum)
         {
             switch (randomNum)
             {
-                case 1:
-                    currentState = GoriyaState.Up;
-                    break;
-                case 2:
-                    currentState = GoriyaState.Down;
-                    break;
-                case 3:
-                    currentState = GoriyaState.Left;
-                    break;
-                case 4:
-                    currentState = GoriyaState.Right;
-                    break;
+                case 1: currentState = GoriyaState.Up; break;
+                case 2: currentState = GoriyaState.Down; break;
+                case 3: currentState = GoriyaState.Left; break;
+                case 4: currentState = GoriyaState.Right; break;
+                case 5: Attack(); break;
             }
         }
 
-        public void Attack(GameTime gameTime)
+        public void Attack()
         {
-
+            isAttack = true;
+            greenBoomerang.Position = new Vector2(spriteUp.X, spriteUp.Y);
         }
 
         public void TakeDmg()
@@ -124,21 +120,16 @@ namespace cse3902.Enemy
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (currentState == GoriyaState.Up)
+            switch (currentState)
             {
-                spriteUp.Draw(spriteBatch);
-            } 
-            else if (currentState == GoriyaState.Down)
-            {
-                spriteDown.Draw(spriteBatch);
-            } 
-            else if (currentState == GoriyaState.Left)
-            {
-                spriteLeft.Draw(spriteBatch);
+                case GoriyaState.Up: spriteUp.Draw(spriteBatch); break;
+                case GoriyaState.Down: spriteDown.Draw(spriteBatch); break;
+                case GoriyaState.Left: spriteLeft.Draw(spriteBatch); break;
+                case GoriyaState.Right: spriteRight.Draw(spriteBatch); break;
             }
-            else if (currentState == GoriyaState.Right)
+            if (isAttack)
             {
-                spriteRight.Draw(spriteBatch);
+                greenBoomerang.Draw(spriteBatch);
             }
         }
 
@@ -150,27 +141,56 @@ namespace cse3902.Enemy
             {
                 randomChangeTimer.Restart();
 
-                randomNum = random.Next(1, 5);
+                randomNum = random.Next(1, 6);
             }
 
-            ChangeDirection(randomNum);
-            Move(gameTime, randomNum);
+            if (isAttack)
+            {
+                if (!goingBack)
+                {
+                    switch (currentState)
+                    {
+                        case GoriyaState.Up: greenBoomerang.Velocity = new Vector2(0f, -100f); break;
+                        case GoriyaState.Down: greenBoomerang.Velocity = new Vector2(0f, 100f); break;
+                        case GoriyaState.Left: greenBoomerang.Velocity = new Vector2(-100f, 0f); break;
+                        case GoriyaState.Right: greenBoomerang.Velocity = new Vector2(100f, 0f); break;
+                    }
+                }
+                else
+                {
+                    switch (currentState)
+                    {
+                        case GoriyaState.Up: greenBoomerang.Velocity = new Vector2(0f, 100f); break;
+                        case GoriyaState.Down: greenBoomerang.Velocity = new Vector2(0f, -100f); break;
+                        case GoriyaState.Left: greenBoomerang.Velocity = new Vector2(100f, 0f); break;
+                        case GoriyaState.Right: greenBoomerang.Velocity = new Vector2(-100f, 0f); break;
+                    }
+                }
 
-            if (currentState == GoriyaState.Up)
-            {
-                spriteUp.Update(gameTime);
+                if (Math.Abs(greenBoomerang.Position.X - spriteUp.X) > 100f
+                    || Math.Abs(greenBoomerang.Position.Y - spriteUp.Y) > 100f)
+                {
+                    goingBack = true;
+                }
+                if (goingBack && greenBoomerang.Position == spriteUp.Position)
+                {
+                    isAttack = false;
+                    goingBack = false;
+                }
+                greenBoomerang.Update(gameTime);
             }
-            else if (currentState == GoriyaState.Down)
+            else
             {
-                spriteDown.Update(gameTime);
+                Move(gameTime, randomNum);
+                ChangeAction(randomNum);
             }
-            else if (currentState == GoriyaState.Left)
+
+            switch(currentState)
             {
-                spriteLeft.Update(gameTime);
-            }
-            else if (currentState == GoriyaState.Right)
-            {
-                spriteRight.Update(gameTime);
+                case GoriyaState.Up: spriteUp.Update(gameTime); break;
+                case GoriyaState.Down: spriteDown.Update(gameTime); break;
+                case GoriyaState.Left: spriteLeft.Update(gameTime); break;
+                case GoriyaState.Right: spriteRight.Update(gameTime); break;
             }
         }
     }
