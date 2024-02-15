@@ -30,14 +30,13 @@ namespace cse3902.Projectiles
         }
         public Vector2 Position
         {
-            get { return new Vector2(fireBall.X, fireBall.Y); }
-            set { fireBall.X = value.X; fireBall.Y = value.Y; }
+            get { return fireBall.Position; }
+            set { fireBall.Position = value; }
         }
 
         public void Update(GameTime gameTime)
         {
-            fireBall.X += velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            fireBall.Y += velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            fireBall.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             fireBall.Update(gameTime);
         }
 

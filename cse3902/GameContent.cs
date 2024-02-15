@@ -36,6 +36,8 @@ namespace cse3902
         public Texture2D goriya;
 
         public Texture2D blueBoomerang;
+        public Texture2D weapon;
+        public Texture2D weapon2;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -71,6 +73,8 @@ namespace cse3902
             goriya = LoadTexture2D("spritesheet_goriya_walk");
 
             blueBoomerang = LoadTexture2D("BlueBoomerang");
+            weapon = LoadTexture2D("Weapon");
+            weapon2 = LoadTexture2D("Weapon2");
         }
     }
 }
