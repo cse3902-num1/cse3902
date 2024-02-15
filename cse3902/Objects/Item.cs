@@ -30,6 +30,9 @@ namespace cse3902.Objects
                         new Rectangle(71, 16, 9, 16) }) 
                 },
                 { new Sprite(content.ItemSheet,new List<Rectangle>() {
+                        new Rectangle(71, 0, 9, 16) })
+                },
+                { new Sprite(content.ItemSheet,new List<Rectangle>() {
                         new Rectangle(274, 3, 11, 12) })
                 },
                 { new Sprite(content.ItemSheet,new List<Rectangle>() {
