@@ -172,7 +172,8 @@ namespace cse3902.Enemy
                 {
                     goingBack = true;
                 }
-                if (goingBack && greenBoomerang.Position == spriteUp.Position)
+                if (goingBack && Math.Abs(greenBoomerang.Position.X - spriteUp.X) < 10f
+                    && Math.Abs(greenBoomerang.Position.Y - spriteUp.Y) < 10f)
                 {
                     isAttack = false;
                     goingBack = false;
