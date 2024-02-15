@@ -24,7 +24,7 @@ namespace cse3902.Objects
        
         private float x = 200, y = 200;
        
-        public bool isVisible = false;
+        private bool isVisible = false;
         private KeyboardController keyboardcontroller;
         private KeyboardState KbState;
         private KeyboardState previousState;
@@ -69,6 +69,7 @@ namespace cse3902.Objects
 
         public void update(GameTime gameTime)
         {
+            
             KbState = Keyboard.GetState();
             if (keyboardcontroller.isCycleBlockPress())
             {

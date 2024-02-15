@@ -29,7 +29,7 @@ public class Game1 : Game
     private GameContent gameContent;
 
     private Block block;
- 
+    private Item item;
 
     
     
@@ -67,6 +67,7 @@ public class Game1 : Game
 
         // Initialize the list of blocks and add a block
         block = new Block(gameContent, controller);
+        item = new Item(gameContent, controller);
        
     }
 
@@ -90,6 +91,7 @@ public class Game1 : Game
 
         // Update the current block
         block.update(gameTime);
+        item.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -109,6 +111,7 @@ public class Game1 : Game
         player.Draw(spriteBatch);
         // Draw the current block
         block.draw(spriteBatch);
+        item.Draw(spriteBatch);
 
         spriteBatch.End();
 
