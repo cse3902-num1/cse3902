@@ -21,7 +21,7 @@ public class KeyboardController : IController
     */
 
     private KeyboardState currentKeyboardState;
-    private KeyboardState previousKeyboardState;
+    private  KeyboardState previousKeyboardState;
     public KeyboardController()
     {
         currentKeyboardState = Keyboard.GetState();
@@ -93,7 +93,14 @@ public class KeyboardController : IController
         }
         return false;
     }
-
+    public bool isPreviousItemKeyPress()
+    {
+        return currentKeyboardState.IsKeyDown(Keys.I) && !previousKeyboardState.IsKeyDown(Keys.I);
+    }
+    public bool isNextItemKeyPress()
+    {
+        return currentKeyboardState.IsKeyDown(Keys.U) && !previousKeyboardState.IsKeyDown(Keys.U);
+    }
     public bool isDamaged() {
         return previousKeyboardState.IsKeyUp(Keys.E) && currentKeyboardState.IsKeyDown(Keys.E);
     }
