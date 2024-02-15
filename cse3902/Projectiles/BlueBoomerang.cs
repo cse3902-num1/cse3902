@@ -13,12 +13,12 @@ namespace cse3902.Projectiles
         private Sprite boomerang;
         public BlueBoomerang(GameContent content, Vector2 velocity, Vector2 charPos)
         {
-            boomerang = new Sprite(content.enemiesSheet,
+            boomerang = new Sprite(content.blueBoomerang,
                 new List<Rectangle>()
                 {
-                    new Rectangle(290, 11, 8, 16),
-                    new Rectangle(299, 11, 8, 16),
-                    new Rectangle(308, 11, 8, 16)
+                    new Rectangle(0, 0, 20, 32),
+                    new Rectangle(20, 0, 20, 32),
+                    new Rectangle(0, 32, 20, 32)
                 }
             );
             this.velocity = velocity;
