@@ -25,11 +25,8 @@ namespace cse3902.Objects
         private float x = 200, y = 200;
        
         public bool isVisible = false;
-        private KeyboardController keyboardcontroller;
-        private KeyboardState KbState;
-        private KeyboardState previousState;
       
-        public Block(GameContent content, KeyboardController keyboard)
+        public Block(GameContent content)
         {
 
             blocks = new List<Sprite>() {
@@ -57,36 +54,26 @@ namespace cse3902.Objects
                 }
 
             };
-            keyboardcontroller = keyboard;
         }
 
      
-        public void draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             blocks[GameData.BlockIndex].SetPosition(x, y);
             blocks[GameData.BlockIndex].Draw(spriteBatch);
         }
 
-        public void update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController controller)
         {
-            KbState = Keyboard.GetState();
-            if (keyboardcontroller.isCycleBlockPress())
+            if (controller.isNextBlockPressed())
             {
-                if (KbState.IsKeyDown(Keys.T) && !previousState.IsKeyDown(Keys.T))
-                {
-                    // Switch to the previous block
-                    SwitchToPreviousBlock();
-                }
-                else if (KbState.IsKeyDown(Keys.Y) && !previousState.IsKeyDown(Keys.Y))
-                {
-                    // Switch to the next block
-                    SwitchToNextBlock();
-                }
-
-
+                SwitchToNextBlock();
             }
-            previousState = KbState;
 
+            if (controller.isPreviousBlockPressed())
+            {
+                SwitchToPreviousBlock();
+            }
         }
 
      

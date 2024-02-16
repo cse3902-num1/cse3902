@@ -17,6 +17,8 @@ public interface IController
     public bool isItem3Press();
     public bool isEnemyPressO();
     public bool isEnemyPressP();
+    public bool isNextBlockPressed();
+    public bool isPreviousBlockPressed();
     public bool isDamaged();
     public bool isResetPressed();
     public bool isQuitPressed();

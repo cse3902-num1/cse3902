@@ -115,23 +115,6 @@ public class KeyboardController : IController
     }
 
     /*
-    * for Item control: "u" switches to the previous item and "i" switches to the next
-    */
-
-    public bool isCycleItemPress()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.U))
-        {
-            return true;
-        }
-        else if (currentKeyboardState.IsKeyDown(Keys.I))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /*
     * for Enemy control: "o" switches to the previous item and "p" switches to the next
     */
     public bool isEnemyPressO()
@@ -166,5 +149,15 @@ public class KeyboardController : IController
     {
         previousKeyboardState = currentKeyboardState;
         currentKeyboardState = Keyboard.GetState();
+    }
+
+    public bool isNextBlockPressed()
+    {
+        return !previousKeyboardState.IsKeyDown(Keys.I) && currentKeyboardState.IsKeyDown(Keys.I);
+    }
+
+    public bool isPreviousBlockPressed()
+    {
+        return !previousKeyboardState.IsKeyDown(Keys.U) && currentKeyboardState.IsKeyDown(Keys.U);
     }
 }

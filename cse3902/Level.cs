@@ -14,8 +14,7 @@ namespace cse3902
         private int idxEnemy;
         private IBlock block;
 
-        /* TODO: remove KeyboardController dependency from Block so we don't have to pass it in here */
-        public Level(GameContent content, KeyboardController controller)
+        public Level(GameContent content, IController controller)
         {
             player = new Player(content);
             player.Position = new Vector2(100, 100);
@@ -30,7 +29,7 @@ namespace cse3902
             };
             idxEnemy = 0;
 
-            block = new Block(content, controller);
+            block = new Block(content);
 
             /* TODO: create items */
         }
@@ -50,14 +49,14 @@ namespace cse3902
 
             player.Update(gameTime, controller);
             enemies[idxEnemy].Update(gameTime);
-            block.update(gameTime);
+            block.Update(gameTime, controller);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             player.Draw(spriteBatch);
             enemies[idxEnemy].Draw(spriteBatch);
-            block.draw(spriteBatch);
+            block.Draw(spriteBatch);
         }
     }
 }
