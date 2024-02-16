@@ -19,7 +19,9 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
 
     private List<IEnemy> _enemy;
+    private List<IItemPickup> item;
     private int enemyIdx;
+    private int itemIdx;
 
     public KeyboardController controller;
 
@@ -29,7 +31,7 @@ public class Game1 : Game
     private GameContent gameContent;
 
     private Block block;
-    private Item item;
+    //private Item item;
 
     
     
@@ -59,6 +61,29 @@ public class Game1 : Game
             new Keese(gameContent),
             new Goriya(gameContent),
         };
+        item = new List<IItemPickup>
+        {
+            new PurpleRupeeItemPickup(gameContent),
+            new FireItemPickUp(gameContent),
+            new PurpleRupeeItemPickup(gameContent),
+            new YellowRupeeItemPickup(gameContent),
+            new YellowTriangleItemPickUp(gameContent),
+            new PurpleTriangleItemPickUp(gameContent),
+            new YellowDragonItemPickUp(gameContent),
+            new YellowKeyItemPickUp(gameContent),
+            new RedHeartItemPickUp(gameContent),
+            new BlueHeartItemPickUp(gameContent),
+            new RedHeartContainerItemPickUp(gameContent),
+            new FairyTailItemPickUp(gameContent),
+            new CompassItemPickUp(gameContent),
+            new ClockItemPickUp(gameContent),
+            new ArrowItemPickUp(gameContent),
+            new YellowBoomerangItemPickup(gameContent),
+            new BombItemPickup(gameContent),
+
+
+        };
+        itemIdx = 0; 
         enemyIdx = 0;
 
 
@@ -67,7 +92,7 @@ public class Game1 : Game
 
         // Initialize the list of blocks and add a block
         block = new Block(gameContent, controller);
-        item = new Item(gameContent, controller);
+        //item = new Item(gameContent, controller);
        
     }
 
@@ -86,12 +111,22 @@ public class Game1 : Game
             if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
         }
         _enemy[enemyIdx].Update(gameTime);
+        if (controller.isNextItemKeyPress())
+        {
+            itemIdx = (itemIdx + 1) % item.Count;
+        }
+
+        if(controller.isPreviousItemKeyPress()) 
+        {
+            itemIdx = (itemIdx - 1 + item.Count) % item.Count;
+        }
+        item[itemIdx].Update(gameTime);
 
         player.Update(gameTime, controller);
 
         // Update the current block
         block.update(gameTime);
-        item.Update(gameTime);
+        //item.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -111,7 +146,7 @@ public class Game1 : Game
         player.Draw(spriteBatch);
         // Draw the current block
         block.draw(spriteBatch);
-        item.Draw(spriteBatch);
+        item[itemIdx].Draw(spriteBatch);
 
         spriteBatch.End();
 

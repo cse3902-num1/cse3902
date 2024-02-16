@@ -7,27 +7,24 @@ namespace cse3902;
 public class FireItemPickUp : IItemPickup
 {
     private Sprite FireItem;
-    private IPlayer player;
-    private static int itemIndex = 0; // Consider making this a static property if needed across instances
-    private float x = 300, y = 200; // Example positions
-    private KeyboardController keyboard;
-    public FireItemPickUp(GameContent content, KeyboardController keyboard)
+    private Vector2 itemPosition = new Vector2(300, 200); // Example positions
+
+    public FireItemPickUp(GameContent content)
     {
-        FireItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(71, 16, 9, 16) });
+        FireItem = new Sprite(content.SpriteSheetLinkAdditionItems, new List<Rectangle>() {
+                        new Rectangle(191, 185, 16, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        FireItem.SetPosition(x, y);
+        FireItem.SetPosition(itemPosition);
 
         FireItem.Draw(spriteBatch);
     }
 
     public void Update(GameTime gameTime)
     {
-        throw new System.NotImplementedException();
     }
 
 

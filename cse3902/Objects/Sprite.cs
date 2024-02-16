@@ -67,6 +67,11 @@ namespace cse3902
             X = x;
             Y = y;
         }
+        public void SetPosition(Vector2 position)
+        {
+            X = position.X;
+            Y = position.Y;
+        }
     }
 }
 

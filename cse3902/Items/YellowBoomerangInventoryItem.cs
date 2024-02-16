@@ -1,10 +1,10 @@
 namespace cse3902;
 
-public class BoomerangInventoryItem : IInventoryItem
+public class YellowBoomerangInventoryItem : IInventoryItem
 {
     private IPlayer player;
 
-    public BoomerangInventoryItem(IPlayer player)
+    public YellowBoomerangInventoryItem(IPlayer player)
     {
         this.player = player;
     }
