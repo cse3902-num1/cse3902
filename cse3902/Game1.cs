@@ -1,10 +1,6 @@
-﻿using cse3902.Interfaces;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using cse3902.Objects;
-using cse3902.Enemy;
 
 namespace cse3902;
 
