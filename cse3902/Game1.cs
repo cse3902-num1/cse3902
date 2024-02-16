@@ -110,7 +110,9 @@ public class Game1 : Game
             enemyIdx--;
             if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
         }
+
         _enemy[enemyIdx].Update(gameTime);
+
         if (controller.isNextItemKeyPress())
         {
             itemIdx = (itemIdx + 1) % item.Count;
@@ -120,7 +122,9 @@ public class Game1 : Game
         {
             itemIdx = (itemIdx - 1 + item.Count) % item.Count;
         }
+
         item[itemIdx].Update(gameTime);
+
 
         player.Update(gameTime, controller);
 

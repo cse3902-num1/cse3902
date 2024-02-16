@@ -15,7 +15,7 @@ namespace cse3902.Objects
         // Shared data class
         public static class GameData
         {
-            public static int BlockIndex { get; set; } = 1;
+            public static int BlockIndex { get; set; } = 0;
 
         }
 
