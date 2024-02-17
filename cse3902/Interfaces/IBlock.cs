@@ -7,9 +7,9 @@ namespace cse3902.Interfaces
 	public interface IBlock
 	{
        
-       public void draw(SpriteBatch spriteBatch);
+       public void Draw(SpriteBatch spriteBatch);
 
-       public void update(GameTime gameTime);
+       public void Update(GameTime gameTime, IController controller);
     }
 }
 

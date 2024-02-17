@@ -17,21 +17,10 @@ public class Game1 : Game
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
-
-    private List<IEnemy> _enemy;
-    private int enemyIdx;
-
     public KeyboardController controller;
-
-
-    private Player player;
-   
     private GameContent gameContent;
 
-    private Block block;
-    private Item item;
-
-    
+    private Level level;
     
     public Game1()
     {
@@ -51,47 +40,26 @@ public class Game1 : Game
 
         gameContent = new GameContent(Content);
 
-        _enemy = new List<IEnemy>
-        {
-            new Skeleton(gameContent),
-            new Dragon(gameContent),
-            new Gel(gameContent),
-            new Keese(gameContent),
-            new Goriya(gameContent),
-        };
-        enemyIdx = 0;
-
-
-        player = new Player(gameContent);
-
-
-        // Initialize the list of blocks and add a block
-        block = new Block(gameContent, controller);
-        item = new Item(gameContent, controller);
-       
+        level = new Level(gameContent, controller);
     }
 
     protected override void Update(GameTime gameTime)
     {
         controller.Update(gameTime);
 
-        if (controller.isEnemyPressP())
-        { 
-            enemyIdx = (enemyIdx + 1) % _enemy.Count;
-        }
-
-        if (controller.isEnemyPressO())
+        /* reset level if R is pressed */
+        if (controller.isResetPressed())
         {
-            enemyIdx--;
-            if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
+            level = new Level(gameContent, controller);
         }
-        _enemy[enemyIdx].Update(gameTime);
 
-        player.Update(gameTime, controller);
+        /* quit game if Q is pressed */
+        if (controller.isQuitPressed())
+        {
+            Exit();
+        }
 
-        // Update the current block
-        block.update(gameTime);
-        item.Update(gameTime);
+        level.Update(gameTime, controller);
 
         base.Update(gameTime);
     }
@@ -106,13 +74,8 @@ public class Game1 : Game
 
         spriteBatch.Begin(samplerState: s);
 
-        _enemy[enemyIdx].Draw(spriteBatch);
-
-        player.Draw(spriteBatch);
-        // Draw the current block
-        block.draw(spriteBatch);
-        item.Draw(spriteBatch);
-
+        level.Draw(spriteBatch);
+       
         spriteBatch.End();
 
         base.Draw(gameTime);
