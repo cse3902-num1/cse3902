@@ -34,6 +34,12 @@ namespace cse3902
             set { position.Y = value; }
         }
 
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
         public Sprite(Texture2D texture, List<Rectangle> frames)
         {
             this.position = Vector2.Zero;

@@ -10,7 +10,7 @@ namespace cse3902
         public Vector2 Position = Vector2.Zero;
         public Direction Facing;
         public IPlayerState State;
-        public IItem Item;
+        public IItemPickup Item;
         public KeyboardController Controller;
         private int health = 5;
         private int timeDamaged = 0;

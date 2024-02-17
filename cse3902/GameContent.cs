@@ -14,6 +14,7 @@ namespace cse3902
         public Texture2D NewLinkSpritesheet;
 
         public Texture2D TilesSheet;
+        public Texture2D ItemSheet;
 
         public Texture2D SpritesheetLinkAttackMagicRodMagicShield;
         public Texture2D SpritesheetLinkAttackMagicRod;
@@ -27,11 +28,16 @@ namespace cse3902
         public Texture2D SpritesheetLinkUseItem;
         public Texture2D SpritesheetLinkWalkMagicShield;
         public Texture2D SpritesheetLinkWalk;
+        public Texture2D SpriteSheetLinkAdditionItems;
 
         public Texture2D enemies;
         public Texture2D enemiesSheet;
         public Texture2D skeleton;
         public Texture2D goriya;
+
+        public Texture2D blueBoomerang;
+        public Texture2D weapon;
+        public Texture2D weapon2;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -46,7 +52,8 @@ namespace cse3902
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
           
             TilesSheet = content.Load<Texture2D>("Tileset");
-
+            ItemSheet = content.Load<Texture2D>("Items");
+            SpriteSheetLinkAdditionItems = content.Load<Texture2D>("spritesheet_link");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");
             SpritesheetLinkAttackMagicSwordMagicShield = LoadTexture2D("spritesheet_link_attack_magicsword_magicshield");
@@ -64,6 +71,10 @@ namespace cse3902
             enemiesSheet = LoadTexture2D("enemiesSheet");
             skeleton = LoadTexture2D("skeleton");
             goriya = LoadTexture2D("spritesheet_goriya_walk");
+
+            blueBoomerang = LoadTexture2D("BlueBoomerang");
+            weapon = LoadTexture2D("Weapon");
+            weapon2 = LoadTexture2D("Weapon2");
         }
     }
 }

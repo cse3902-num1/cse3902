@@ -8,11 +8,11 @@ namespace cse3902
     public class PlayerStateItem : IPlayerState
     {
         private Player player;
-        private IItem item;
+        private IInventoryItem item;
         private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
 
-        public PlayerStateItem(GameContent content, Player player, IItem item)
+        public PlayerStateItem(GameContent content, Player player, IInventoryItem item)
         {
             Debug.WriteLine("[info] player entered item state");
             this.content = content;
