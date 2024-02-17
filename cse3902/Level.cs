@@ -44,7 +44,7 @@ namespace cse3902
             if (controller.isEnemyPressO())
             {
                 idxEnemy--;
-                idxEnemy %= enemies.Count;
+                if (idxEnemy < 0) idxEnemy = enemies.Count - 1;
             }
 
             player.Update(gameTime, controller);
