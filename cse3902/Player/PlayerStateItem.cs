@@ -24,25 +24,25 @@ namespace cse3902
                     Direction.Left,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
                         new Rectangle(0 * 16, 0 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
                         new Rectangle(0 * 16, 1 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
                         new Rectangle(0 * 16, 2 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
                         new Rectangle(0 * 16, 3 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
             };
 

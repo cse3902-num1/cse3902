@@ -19,7 +19,8 @@ namespace cse3902.Projectiles
                     new Rectangle(0, 0, 20, 32),
                     new Rectangle(20, 0, 20, 32),
                     new Rectangle(0, 32, 20, 32)
-                }
+                },
+                new Vector2(10, 16)
             );
             this.velocity = velocity;
             boomerang.SetPosition(charPos.X, charPos.Y);

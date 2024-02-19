@@ -20,7 +20,8 @@ namespace cse3902.Projectiles
                 new List<Rectangle>()
                 {
                     new Rectangle(53, 185, 7, 15)
-                }
+                },
+                new Vector2(3.5f, 7.5f)
             );
         }
 

@@ -18,7 +18,8 @@ namespace cse3902.Projectiles
                     new Rectangle(109, 11, 9, 18),
                     new Rectangle(118, 11, 9, 18),
                     new Rectangle(127, 11, 9, 18)
-                }
+                },
+                new Vector2(4.5f, 9)
             );
             this.velocity = velocity;
             fireBall.SetPosition(charPos.X, charPos.Y);

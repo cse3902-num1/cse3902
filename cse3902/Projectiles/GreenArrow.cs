@@ -15,10 +15,10 @@ namespace cse3902.Projectiles
 
         public GreenArrow(GameContent content, Vector2 velocity)
         {
-            greenArrowUp = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(1, 185, 7, 15) });
-            greenArrowDown = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 0, 15, 15) });
-            greenArrowLeft = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 0, 15, 15) });
-            greenArrowRight = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(10, 185, 15, 15) });
+            greenArrowUp = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(1, 185, 7, 15) }, new Vector2(3.5f, 7.5f));
+            greenArrowDown = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 0, 15, 15) }, new Vector2(7.5f, 7.5f));
+            greenArrowLeft = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 0, 15, 15) }, new Vector2(7.5f, 7.5f));
+            greenArrowRight = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(10, 185, 15, 15) }, new Vector2(7.5f, 7.5f));
             this.velocity = velocity;
         }
         public Vector2 Velocity

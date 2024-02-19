@@ -22,7 +22,8 @@ namespace cse3902.Projectiles
                     new Rectangle(138, 185, 15, 15),
                     new Rectangle(155, 185, 15, 15),
                     new Rectangle(172, 185, 15, 15)
-                }
+                },
+                new Vector2(7.5f, 7.5f)
             );
         }
 

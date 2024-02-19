@@ -23,28 +23,28 @@ namespace cse3902
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 0 * 16, 16, 16),
                         new Rectangle(1 * 16, 0 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 1 * 16, 16, 16),
                         new Rectangle(1 * 16, 1 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 2 * 16, 16, 16),
                         new Rectangle(1 * 16, 2 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 3 * 16, 16, 16),
                         new Rectangle(1 * 16, 3 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
             };
         }
