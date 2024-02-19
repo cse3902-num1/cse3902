@@ -17,23 +17,10 @@ public class Game1 : Game
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
-
-    private List<IEnemy> _enemy;
-    private List<IItemPickup> item;
-    private int enemyIdx;
-    private int itemIdx;
-
     public KeyboardController controller;
-
-
-    private Player player;
-   
     private GameContent gameContent;
-
-    private Block block;
-    //private Item item;
-
     
+    private Level level;
     
     public Game1()
     {
@@ -52,85 +39,27 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         gameContent = new GameContent(Content);
-
-        _enemy = new List<IEnemy>
-        {
-            new Skeleton(gameContent),
-            new Dragon(gameContent),
-            new Gel(gameContent),
-            new Keese(gameContent),
-            new Goriya(gameContent),
-        };
-        item = new List<IItemPickup>
-        {
-            new PurpleRupeeItemPickup(gameContent),
-            new FireItemPickUp(gameContent),
-            new PurpleRupeeItemPickup(gameContent),
-            new YellowRupeeItemPickup(gameContent),
-            new YellowTriangleItemPickUp(gameContent),
-            new PurpleTriangleItemPickUp(gameContent),
-            new YellowDragonItemPickUp(gameContent),
-            new YellowKeyItemPickUp(gameContent),
-            new RedHeartItemPickUp(gameContent),
-            new BlueHeartItemPickUp(gameContent),
-            new RedHeartContainerItemPickUp(gameContent),
-            new FairyTailItemPickUp(gameContent),
-            new CompassItemPickUp(gameContent),
-            new ClockItemPickUp(gameContent),
-            new ArrowItemPickUp(gameContent),
-            new YellowBoomerangItemPickup(gameContent),
-            new BombItemPickup(gameContent),
-
-
-        };
-        itemIdx = 0; 
-        enemyIdx = 0;
-
-
-        player = new Player(gameContent);
-
-
-        // Initialize the list of blocks and add a block
-        block = new Block(gameContent, controller);
-        //item = new Item(gameContent, controller);
        
+        level = new Level(gameContent, controller);
     }
 
     protected override void Update(GameTime gameTime)
     {
         controller.Update(gameTime);
 
-        if (controller.isEnemyPressP())
-        { 
-            enemyIdx = (enemyIdx + 1) % _enemy.Count;
-        }
-
-        if (controller.isEnemyPressO())
+        /* reset level if R is pressed */
+        if (controller.isResetPressed())
         {
-            enemyIdx--;
-            if (enemyIdx < 0) enemyIdx = _enemy.Count - 1;
+            level = new Level(gameContent, controller);
         }
 
-        _enemy[enemyIdx].Update(gameTime);
-
-        if (controller.isNextItemKeyPress())
+        /* quit game if Q is pressed */
+        if (controller.isQuitPressed())
         {
-            itemIdx = (itemIdx + 1) % item.Count;
+            Exit();
         }
 
-        if(controller.isPreviousItemKeyPress()) 
-        {
-            itemIdx = (itemIdx - 1 + item.Count) % item.Count;
-        }
-
-        item[itemIdx].Update(gameTime);
-
-
-        player.Update(gameTime, controller);
-
-        // Update the current block
-        block.update(gameTime);
-        //item.Update(gameTime);
+        level.Update(gameTime, controller);
 
         base.Update(gameTime);
     }
@@ -145,13 +74,8 @@ public class Game1 : Game
 
         spriteBatch.Begin(samplerState: s);
 
-        _enemy[enemyIdx].Draw(spriteBatch);
-
-        player.Draw(spriteBatch);
-        // Draw the current block
-        block.draw(spriteBatch);
-        item[itemIdx].Draw(spriteBatch);
-
+        level.Draw(spriteBatch);
+       
         spriteBatch.End();
 
         base.Draw(gameTime);
