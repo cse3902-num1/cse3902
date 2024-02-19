@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,7 @@ namespace cse3902
         public Vector2 Position = Vector2.Zero;
         public Direction Facing;
         public IPlayerState State;
-        public IItemPickup Item;
+        public List<IInventoryItem> Inventory;
         public KeyboardController Controller;
         private int health = 5;
         private int timeDamaged = 0;
@@ -49,19 +50,12 @@ namespace cse3902
         /* Sets the current item, which is used by PlayerStateItem. */
         public void UseItem(int idx)
         {
-            /* TODO: finish this once item classes are done */
-            if (idx == 0)
+            if (idx < 0 || idx >= Inventory.Count)
             {
-                // this.Item = new ExampleItem();
+                return;
             }
-            else if (idx == 1)
-            {
-                // this.Item = new ExampleItem();
-            }
-            else if (idx == 2)
-            {
-                // this.Item = new ExampleItem();
-            }
+
+            Inventory[idx].Use();
         }
 
         public void TakeDamage()
