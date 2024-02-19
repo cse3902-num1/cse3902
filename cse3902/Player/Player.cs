@@ -24,7 +24,7 @@ namespace cse3902
         public void Update(GameTime gameTime, IController controller)
         {
             State.Update(gameTime, controller);
-            if (controller.isDamaged() )
+            if (controller.isPlayerTakeDamageJustPressed() )
             {
                 TakeDamage();
                 
