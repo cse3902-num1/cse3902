@@ -16,8 +16,8 @@ namespace cse3902.Projectiles
         public BlueArrow(GameContent content, Vector2 velocity)
         {
             blueArrowUp = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(27, 185, 7, 15) });
-            blueArrowDown = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) });
-            blueArrowLeft = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 15, 15, 15) });
+            blueArrowDown = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 15, 15, 15) });
+            blueArrowLeft = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) });
             blueArrowRight = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(36, 185, 15, 15) });
             this.velocity = velocity;
         }
@@ -55,11 +55,11 @@ namespace cse3902.Projectiles
             {
                 blueArrowLeft.Draw(spriteBatch);
             }
-            else if (velocity.Y > 0)
+            else if (velocity.Y < 0)
             {
                 blueArrowUp.Draw(spriteBatch);
             }
-            else if (velocity.Y < 0)
+            else if (velocity.Y > 0)
             {
                 blueArrowDown.Draw(spriteBatch);
             }

@@ -2,14 +2,7 @@ namespace cse3902;
 
 public class PurpleCystleInventoryItem : IInventoryItem
 {
-    private IPlayer player;
-
-    public PurpleCystleInventoryItem(IPlayer player)
-    {
-        this.player = player;
-    }
-
-    public void Use()
+    public void Use(IPlayer player)
     {
         /* TODO: instantiate the projectile */
         /* TODO: call something like SpawnProjectile() on player */

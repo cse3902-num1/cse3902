@@ -64,20 +64,19 @@ namespace cse3902
 
             /* enter item state if any item use keys are pressed */
             /* TODO: finish once items classes are created */
-            if (controller.isPlayerUseItem1JustPressed())
+            IInventoryItem item = null;
+            if      (controller.isPlayerUseItem1JustPressed()) item = new BlueBombInventoryItem();
+            else if (controller.isPlayerUseItem2JustPressed()) item = new BlueBoomerangInventoryItem(content);
+            else if (controller.isPlayerUseItem3JustPressed()) item = new BlueBowInventoryItem(content);
+            else if (controller.isPlayerUseItem4JustPressed()) item = new FireballInventoryItem(content);
+            else if (controller.isPlayerUseItem5JustPressed()) item = new FireInventoryItem();
+            else if (controller.isPlayerUseItem6JustPressed()) item = new GreenBoomerangInventoryItem(content);
+            else if (controller.isPlayerUseItem7JustPressed()) item = new GreenBowInventoryItem(content);
+            else if (controller.isPlayerUseItem8JustPressed()) item = new PurpleCystleInventoryItem();
+            else if (controller.isPlayerUseItem9JustPressed()) item = new YellowBoomerangInventoryItem(content);
+            if (item != null)
             {
-                player.State = new PlayerStateItem(content, player, null);
-                // player.State = new PlayerStateItem(game, player, new ExampleItem());
-            }
-            else if (controller.isPlayerUseItem2JustPressed())
-            {
-                player.State = new PlayerStateItem(content, player, null);
-                // player.State = new PlayerStateItem(game, player, new ExampleItem());
-            }
-            else if (controller.isPlayerUseItem3JustPressed())
-            {
-                player.State = new PlayerStateItem(content, player, null);
-                // player.State = new PlayerStateItem(game, player, new ExampleItem());
+                player.State = new PlayerStateItem(content, player, item);
             }
         
             /* play idle sprite animation */

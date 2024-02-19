@@ -1,17 +1,20 @@
+using Microsoft.Xna.Framework;
+
 namespace cse3902;
 
 public class YellowBoomerangInventoryItem : IInventoryItem
 {
-    private IPlayer player;
+    private GameContent content;
 
-    public YellowBoomerangInventoryItem(IPlayer player)
+    public YellowBoomerangInventoryItem(GameContent content)
     {
-        this.player = player;
+        this.content = content;
     }
 
-    public void Use()
+    public void Use(IPlayer player)
     {
-        /* TODO: instantiate the projectile */
-        /* TODO: call something like SpawnProjectile() on player */
+        // Vector2 direction = player.Facing.asVector2();
+        // YellowBoomerang projectile = new YellowBoomerang(content, direction * 400f, player.Position);
+        // player.SpawnProjectile(projectile);
     }
 }

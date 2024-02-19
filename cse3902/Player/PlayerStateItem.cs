@@ -47,7 +47,7 @@ namespace cse3902
             };
 
             /* TODO: use the item */
-            //this.item.Use(player);
+            player.UseItem(item);
         }
         public void Update(GameTime gameTime, IController controller)
         {

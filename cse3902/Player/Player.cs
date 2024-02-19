@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,33 +9,40 @@ namespace cse3902
 {    
     public class Player : IPlayer
     {
-        public Vector2 Position = Vector2.Zero;
-        public Direction Facing;
+        public Vector2 Position {set;get;} = Vector2.Zero;
+        public Direction Facing {set;get;}
         public IPlayerState State;
-        public List<IInventoryItem> Inventory;
-        public KeyboardController Controller;
+        private List<IProjectile> projectiles;
         private int health = 5;
-        private int timeDamaged = 0;
         public Player(GameContent content)
         {
             State = new PlayerStateIdle(content,this);
-
+            projectiles = new List<IProjectile>();
         }
 
         public void Update(GameTime gameTime, IController controller)
         {
-            State.Update(gameTime, controller);
             if (controller.isPlayerTakeDamageJustPressed() )
             {
                 TakeDamage();
-                
             }
-            /* TODO: take damage if damage player button is pressed */
+
+            State.Update(gameTime, controller);
+
+            foreach (IProjectile projectile in projectiles)
+            {
+                projectile.Update(gameTime);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {   
             State.Draw(spriteBatch);
+
+            foreach (IProjectile projectile in projectiles)
+            {
+                projectile.Draw(spriteBatch);
+            }
         }
 
         public void Move(Vector2 direction)
@@ -48,28 +56,28 @@ namespace cse3902
         }
 
         /* Sets the current item, which is used by PlayerStateItem. */
-        public void UseItem(int idx)
+        public void UseItem(IInventoryItem item)
         {
-            if (idx < 0 || idx >= Inventory.Count)
-            {
-                return;
-            }
+            item.Use(this);
+        }
 
-            Inventory[idx].Use();
+        public void SpawnProjectile(IProjectile projectile)
+        {
+            projectiles.Add(projectile);
         }
 
         public void TakeDamage()
         {
-                if(health > 0)
-                {
-                    health -= 1;
-                
-                    Debug.WriteLine("player health is: " + health);
-                }
-                if(health == 0)
-                {
-                    Debug.WriteLine("YOU ARE DEAD!!!!!");
-                }
+            if(health > 0)
+            {
+                health -= 1;
+            
+                Debug.WriteLine("player health is: " + health);
+            }
+            if(health == 0)
+            {
+                Debug.WriteLine("YOU ARE DEAD!!!!!");
+            }
         }
     }
 }

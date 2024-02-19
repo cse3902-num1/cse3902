@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902.Interfaces
 {
-    internal interface IProjectile
+    public interface IProjectile
     {
         public Vector2 Velocity { get; set; }
         public void Update(GameTime gameTime);

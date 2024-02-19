@@ -1,16 +1,12 @@
+using System.Diagnostics;
+
 namespace cse3902;
 
 public class FireInventoryItem : IInventoryItem
 {
-    private IPlayer player;
-
-    public FireInventoryItem(IPlayer player)
+    public void Use(IPlayer player)
     {
-        this.player = player;
-    }
-
-    public void Use()
-    {
+        Debug.WriteLine("[info] using fire item");
         /* TODO: instantiate the projectile */
         /* TODO: call something like SpawnProjectile() on player */
     }
