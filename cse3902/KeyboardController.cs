@@ -10,16 +10,6 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    /*
-    *  initialize the lists of game entities (blocks, items, enemies) 
-    *  that KeyboardController will interact with
-    */
-    /*
-    public KeyboardController(List<IEnemy> enemies,List<Item> items,List<Block> blocks) {
-
-    }
-    */
-
     private KeyboardState currentKeyboardState;
     private  KeyboardState previousKeyboardState;
     public KeyboardController()
@@ -78,8 +68,8 @@ public class KeyboardController : IController
     public bool isNextItemKeyPress()            { return isKeyJustPressed(Keys.U); }
 
     /* block keys */
-    public bool isNextBlockPressed()            { return isKeyJustPressed(Keys.I); }
-    public bool isPreviousBlockPressed()        { return isKeyJustPressed(Keys.U); }
+    public bool isNextBlockPressed()            { return isKeyJustPressed(Keys.T); }
+    public bool isPreviousBlockPressed()        { return isKeyJustPressed(Keys.Y); }
 
     /* gameplay keys */
     public bool isResetPressed()                { return isKeyJustPressed(Keys.R); }
