@@ -53,11 +53,11 @@ public class KeyboardController : IController
     public bool isPlayerUseItem2JustPressed()   { return isKeyJustPressed(Keys.NumPad2) || isKeyJustPressed(Keys.D2); }
     public bool isPlayerUseItem3JustPressed()   { return isKeyJustPressed(Keys.NumPad3) || isKeyJustPressed(Keys.D3); }
     public bool isPlayerUseItem4JustPressed()   { return isKeyJustPressed(Keys.NumPad4) || isKeyJustPressed(Keys.D4); }
-    public bool isPlayerUseItem5JustPressed()   { return isKeyJustPressed(Keys.NumPad5) || isKeyJustPressed(Keys.D5); ; }
-    public bool isPlayerUseItem6JustPressed()   { return isKeyJustPressed(Keys.NumPad6) || isKeyJustPressed(Keys.D6); ; }
-    public bool isPlayerUseItem7JustPressed()   { return isKeyJustPressed(Keys.NumPad7) || isKeyJustPressed(Keys.D7); ; }
-    public bool isPlayerUseItem8JustPressed()   { return isKeyJustPressed(Keys.NumPad8) || isKeyJustPressed(Keys.D8); ; }
-    public bool isPlayerUseItem9JustPressed()   { return isKeyJustPressed(Keys.NumPad9) || isKeyJustPressed(Keys.D9); ; }
+    public bool isPlayerUseItem5JustPressed()   { return isKeyJustPressed(Keys.NumPad5) || isKeyJustPressed(Keys.D5); }
+    public bool isPlayerUseItem6JustPressed()   { return isKeyJustPressed(Keys.NumPad6) || isKeyJustPressed(Keys.D6); }
+    public bool isPlayerUseItem7JustPressed()   { return isKeyJustPressed(Keys.NumPad7) || isKeyJustPressed(Keys.D7); }
+    public bool isPlayerUseItem8JustPressed()   { return isKeyJustPressed(Keys.NumPad8) || isKeyJustPressed(Keys.D8); }
+    public bool isPlayerUseItem9JustPressed()   { return isKeyJustPressed(Keys.NumPad9) || isKeyJustPressed(Keys.D9); }
 
     /* enemy keys */
     public bool isEnemyPressO()                 { return isKeyJustPressed(Keys.O); }
