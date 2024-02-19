@@ -13,11 +13,10 @@ public class FireItemPickUp : IItemPickup
 
     public FireItemPickUp(GameContent content)
     {
-        FireItem = new Sprite(content.SpriteSheetFlipped, new List<Rectangle>() {
-            new Rectangle(164, 185, 16, 16),
-             new Rectangle(183, 185, 16, 16),
-              new Rectangle(200,185,16,16),
-             new  Rectangle(217,185,16,16),
+        FireItem = new Sprite(content.mergedSheet, new List<Rectangle>() {
+            new Rectangle(192, 236, 16, 16),
+             new Rectangle(535, 237, 16, 16),
+             
         });
     }
 

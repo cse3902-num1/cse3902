@@ -15,6 +15,7 @@ namespace cse3902
 
         public Texture2D TilesSheet;
         public Texture2D ItemSheet;
+        public Texture2D mergedSheet;
 
         public Texture2D SpritesheetLinkAttackMagicRodMagicShield;
         public Texture2D SpritesheetLinkAttackMagicRod;
@@ -51,7 +52,7 @@ namespace cse3902
 
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
-          
+            mergedSheet = content.Load<Texture2D>("merged");
             TilesSheet = content.Load<Texture2D>("Tileset");
             ItemSheet = content.Load<Texture2D>("Items");
             SpriteSheetFlipped = content.Load<Texture2D>("flipped");
