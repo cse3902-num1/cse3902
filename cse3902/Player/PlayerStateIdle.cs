@@ -11,11 +11,6 @@ namespace cse3902
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
 
-        private bool wasAttackPressed = true;
-        private bool wasItem1Pressed = true;
-        private bool wasItem2Pressed = true;
-        private bool wasItem3Pressed = true;
-
         public PlayerStateIdle(GameContent content, Player player)
         {
             Debug.WriteLine("[info] player entered idle state");
@@ -27,25 +22,25 @@ namespace cse3902
                     Direction.Left,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 0 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 1 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 2 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 3 * 16, 16, 16)
-                    })
+                    }, new Vector2(8, 8))
                 },
             };
         }
@@ -53,40 +48,36 @@ namespace cse3902
         public void Update(GameTime gameTime, IController controller)
         {
             /* enter move state if any movement keys are pressed */
-            if (controller.isPlayerMoveLeftPress() == true || controller.isPlayerMoveUpPress() == true ||
-                controller.isPlayerMoveDownPress() ==true || controller.isPlayerMoveRightPress() == true)
+            if (controller.isPlayerMoveLeftPressed()
+                || controller.isPlayerMoveUpPressed()
+                || controller.isPlayerMoveDownPressed()
+                || controller.isPlayerMoveRightPressed())
             {
                 player.State = new PlayerStateMove(content, player);
             }
 
             /* enter attack state if attack key is pressed */
-            else if (!wasAttackPressed && controller.isPlayerAttackPress())
+            else if (controller.isPlayerAttackJustPressed())
             {
                 player.State = new PlayerStateAttack(content, player);
             }
 
             /* enter item state if any item use keys are pressed */
             /* TODO: finish once items classes are created */
-            if (!wasItem1Pressed && controller.isItem1Press())
+            IInventoryItem item = null;
+            if      (controller.isPlayerUseItem1JustPressed()) item = new BlueBombInventoryItem(content);
+            else if (controller.isPlayerUseItem2JustPressed()) item = new BlueBoomerangInventoryItem(content);
+            else if (controller.isPlayerUseItem3JustPressed()) item = new BlueBowInventoryItem(content);
+            else if (controller.isPlayerUseItem4JustPressed()) item = new FireballInventoryItem(content);
+            else if (controller.isPlayerUseItem5JustPressed()) item = new FireInventoryItem();
+            else if (controller.isPlayerUseItem6JustPressed()) item = new GreenBoomerangInventoryItem(content);
+            else if (controller.isPlayerUseItem7JustPressed()) item = new GreenBowInventoryItem(content);
+            else if (controller.isPlayerUseItem8JustPressed()) item = new PurpleCystleInventoryItem();
+            else if (controller.isPlayerUseItem9JustPressed()) item = new YellowBoomerangInventoryItem(content);
+            if (item != null)
             {
-                player.State = new PlayerStateItem(content, player, null);
-                // player.State = new PlayerStateItem(game, player, new ExampleItem());
+                player.State = new PlayerStateItem(content, player, item);
             }
-            else if (!wasItem2Pressed && controller.isItem2Press())
-            {
-                player.State = new PlayerStateItem(content, player, null);
-                // player.State = new PlayerStateItem(game, player, new ExampleItem());
-            }
-            else if (!wasItem3Pressed && controller.isItem3Press())
-            {
-                player.State = new PlayerStateItem(content, player, null);
-                // player.State = new PlayerStateItem(game, player, new ExampleItem());
-            }
-
-            wasAttackPressed = controller.isPlayerAttackPress();
-            wasItem1Pressed = controller.isItem1Press();
-            wasItem2Pressed = controller.isItem2Press();
-            wasItem3Pressed = controller.isItem3Press();
         
             /* play idle sprite animation */
             sprites[player.Facing].Update(gameTime);

@@ -11,6 +11,7 @@ namespace cse3902.Projectiles
 {
     internal class ArrowExplode : IProjectile
     {
+        public bool IsDead {set;get;}
         private Vector2 velocity;
         private Sprite explode;
 
@@ -20,8 +21,10 @@ namespace cse3902.Projectiles
                 new List<Rectangle>()
                 {
                     new Rectangle(53, 185, 7, 15)
-                }
+                },
+                new Vector2(3.5f, 7.5f)
             );
+            this.IsDead = false;
         }
 
         public Vector2 Velocity

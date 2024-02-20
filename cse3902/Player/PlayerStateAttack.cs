@@ -22,28 +22,28 @@ namespace cse3902
                     new Rectangle(1 * 27, 0 * 28, 27, 28),
                     new Rectangle(2 * 27, 0 * 28, 27, 28),
                     new Rectangle(3 * 27, 0 * 28, 27, 28),
-                }, new Vector2(11, 0))},
+                }, new Vector2(18, 8))},
 
                 {Direction.Right, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
                     new Rectangle(0 * 27, 1 * 28, 27, 28),
                     new Rectangle(1 * 27, 1 * 28, 27, 28),
                     new Rectangle(2 * 27, 1 * 28, 27, 28),
                     new Rectangle(3 * 27, 1 * 28, 27, 28),
-                }, new Vector2(0, 0))},
+                }, new Vector2(8, 8))},
 
                 {Direction.Up, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
                     new Rectangle(0 * 27, 2 * 28, 27, 28),
                     new Rectangle(1 * 27, 2 * 28, 27, 28),
                     new Rectangle(2 * 27, 2 * 28, 27, 28),
                     new Rectangle(3 * 27, 2 * 28, 27, 28),
-                }, new Vector2(0, 12))},
+                }, new Vector2(8, 20))},
 
                 {Direction.Down, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
                     new Rectangle(0 * 27, 3 * 28, 27, 28),
                     new Rectangle(1 * 27, 3 * 28, 27, 28),
                     new Rectangle(2 * 27, 3 * 28, 27, 28),
                     new Rectangle(3 * 27, 3 * 28, 27, 28),
-                }, new Vector2(0, 0))}
+                }, new Vector2(8, 8))}
             };
         }
 

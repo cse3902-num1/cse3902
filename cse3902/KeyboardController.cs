@@ -10,146 +10,12 @@ namespace cse3902;
 
 public class KeyboardController : IController
 {
-    /*
-    *  initialize the lists of game entities (blocks, items, enemies) 
-    *  that KeyboardController will interact with
-    */
-    /*
-    public KeyboardController(List<IEnemy> enemies,List<Item> items,List<Block> blocks) {
-
-    }
-    */
-
     private KeyboardState currentKeyboardState;
     private  KeyboardState previousKeyboardState;
     public KeyboardController()
     {
         currentKeyboardState = Keyboard.GetState();
         previousKeyboardState = currentKeyboardState; // Initialize both to the same state
-    }
-    public bool isPlayerMoveUpPress()
-    {
-
-        if (currentKeyboardState.IsKeyDown(Keys.W)){
-            return true;
-        }
-        return false;
-    }
-    public bool isPlayerMoveDownPress()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.S))
-        {
-            return true;
-        }
-        return false;
-    }
-    public bool isPlayerMoveLeftPress()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.A))
-        {
-            return true;
-        }
-        return false;
-    }
-    public bool isPlayerMoveRightPress()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.D))
-        {
-            return true;
-        }
-        return false;
-    }
-    public bool isPlayerAttackPress()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.Z) || currentKeyboardState.IsKeyDown(Keys.N))
-        {
-            return true;
-        }
-        return false;
-    }
-    public bool isItem1Press()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.NumPad1))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool isItem2Press()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.NumPad2))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool isItem3Press()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.NumPad3))
-        {
-            return true;
-        }
-        return false;
-    }
-    public bool isPreviousItemKeyPress()
-    {
-        return currentKeyboardState.IsKeyDown(Keys.I) && !previousKeyboardState.IsKeyDown(Keys.I);
-    }
-    public bool isNextItemKeyPress()
-    {
-        return currentKeyboardState.IsKeyDown(Keys.U) && !previousKeyboardState.IsKeyDown(Keys.U);
-    }
-    public bool isDamaged() {
-        return previousKeyboardState.IsKeyUp(Keys.E) && currentKeyboardState.IsKeyDown(Keys.E);
-    }
-
-    /*
-     * for block control: "t" switches to the previous item and "y" switches to the next
-     */
-    public bool isCycleBlockPress()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.T))
-        {
-            return true;
-        }
-        else if (currentKeyboardState.IsKeyDown(Keys.Y))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /*
-    * for Enemy control: "o" switches to the previous item and "p" switches to the next
-    */
-    public bool isEnemyPressO()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.O) && !previousKeyboardState.IsKeyDown(Keys.O))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool isEnemyPressP()
-    {
-        if (currentKeyboardState.IsKeyDown(Keys.P) && !previousKeyboardState.IsKeyDown(Keys.P))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool isResetPressed()
-    {
-        return currentKeyboardState.IsKeyDown(Keys.R);
-    }
-
-    public bool isQuitPressed()
-    {
-        return currentKeyboardState.IsKeyDown(Keys.Q);
     }
 
     public void Update(GameTime gameTime)
@@ -158,13 +24,54 @@ public class KeyboardController : IController
         currentKeyboardState = Keyboard.GetState();
     }
 
-    public bool isNextBlockPressed()
+    /* Returns true if the key is currently down. */
+    private bool isKeyPressed(Keys key)
     {
-        return !previousKeyboardState.IsKeyDown(Keys.I) && currentKeyboardState.IsKeyDown(Keys.I);
+        return currentKeyboardState.IsKeyDown(key);
     }
 
-    public bool isPreviousBlockPressed()
+    /* Returns true if the key was pressed during this Update() call,
+       but not during the last Update() call. Use this when you want
+       to check if a key has just been pressed, as it will return true
+       initially, but as the key continues to be held down it will
+       return false. */
+    private bool isKeyJustPressed(Keys key)
     {
-        return !previousKeyboardState.IsKeyDown(Keys.U) && currentKeyboardState.IsKeyDown(Keys.U);
+        return !previousKeyboardState.IsKeyDown(key) && currentKeyboardState.IsKeyDown(key);
     }
+
+    /* player keys */
+    public bool isPlayerMoveUpPressed()         { return isKeyPressed(Keys.W); }
+    public bool isPlayerMoveDownPressed()       { return isKeyPressed(Keys.S); }
+    public bool isPlayerMoveLeftPressed()       { return isKeyPressed(Keys.A); }
+    public bool isPlayerMoveRightPressed()      { return isKeyPressed(Keys.D); }
+    public bool isPlayerAttackJustPressed()     { return isKeyJustPressed(Keys.Z) || isKeyJustPressed(Keys.N); }
+    public bool isPlayerTakeDamageJustPressed() { return isKeyJustPressed(Keys.E); }
+
+    /* player item use keys */
+    public bool isPlayerUseItem1JustPressed()   { return isKeyJustPressed(Keys.NumPad1) || isKeyJustPressed(Keys.D1); }
+    public bool isPlayerUseItem2JustPressed()   { return isKeyJustPressed(Keys.NumPad2) || isKeyJustPressed(Keys.D2); }
+    public bool isPlayerUseItem3JustPressed()   { return isKeyJustPressed(Keys.NumPad3) || isKeyJustPressed(Keys.D3); }
+    public bool isPlayerUseItem4JustPressed()   { return isKeyJustPressed(Keys.NumPad4) || isKeyJustPressed(Keys.D4); }
+    public bool isPlayerUseItem5JustPressed()   { return isKeyJustPressed(Keys.NumPad5) || isKeyJustPressed(Keys.D5); }
+    public bool isPlayerUseItem6JustPressed()   { return isKeyJustPressed(Keys.NumPad6) || isKeyJustPressed(Keys.D6); }
+    public bool isPlayerUseItem7JustPressed()   { return isKeyJustPressed(Keys.NumPad7) || isKeyJustPressed(Keys.D7); }
+    public bool isPlayerUseItem8JustPressed()   { return isKeyJustPressed(Keys.NumPad8) || isKeyJustPressed(Keys.D8); }
+    public bool isPlayerUseItem9JustPressed()   { return isKeyJustPressed(Keys.NumPad9) || isKeyJustPressed(Keys.D9); }
+
+    /* enemy keys */
+    public bool isEnemyPressO()                 { return isKeyJustPressed(Keys.O); }
+    public bool isEnemyPressP()                 { return isKeyJustPressed(Keys.P); }
+    
+    /* item keys */
+    public bool isPreviousItemKeyPress()        { return isKeyJustPressed(Keys.I); }
+    public bool isNextItemKeyPress()            { return isKeyJustPressed(Keys.U); }
+
+    /* block keys */
+    public bool isNextBlockPressed()            { return isKeyJustPressed(Keys.T); }
+    public bool isPreviousBlockPressed()        { return isKeyJustPressed(Keys.Y); }
+
+    /* gameplay keys */
+    public bool isResetPressed()                { return isKeyJustPressed(Keys.R); }
+    public bool isQuitPressed()                 { return isKeyJustPressed(Keys.Q); }
 }

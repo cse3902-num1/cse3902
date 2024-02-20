@@ -23,28 +23,28 @@ namespace cse3902
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 0 * 16, 16, 16),
                         new Rectangle(1 * 16, 0 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 1 * 16, 16, 16),
                         new Rectangle(1 * 16, 1 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 2 * 16, 16, 16),
                         new Rectangle(1 * 16, 2 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
                         new Rectangle(0 * 16, 3 * 16, 16, 16),
                         new Rectangle(1 * 16, 3 * 16, 16, 16),
-                    })
+                    }, new Vector2(8, 8))
                 },
             };
         }
@@ -52,25 +52,26 @@ namespace cse3902
         public void Update(GameTime gameTime, IController controller)
         {
             /* move player if any movement key is pressed */
-            if (controller.isPlayerMoveLeftPress() == true)
+            Vector2 position = player.Position;
+            if (controller.isPlayerMoveLeftPressed() == true)
             {
                 player.Facing = Direction.Left;
-                player.Position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (controller.isPlayerMoveRightPress() == true)
+            else if (controller.isPlayerMoveRightPressed() == true)
             {
                 player.Facing = Direction.Right;
-                player.Position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (controller.isPlayerMoveUpPress() == true)
+            else if (controller.isPlayerMoveUpPressed() == true)
             {
                 player.Facing = Direction.Up;
-                player.Position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (controller.isPlayerMoveDownPress() == true)
+            else if (controller.isPlayerMoveDownPressed() == true)
             {
                 player.Facing = Direction.Down;
-                player.Position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             /* change to idle state if no movement keys are pressed */
@@ -78,6 +79,8 @@ namespace cse3902
             {
                 player.State = new PlayerStateIdle(content, player);
             }
+
+            player.Position = position;
 
             sprites[player.Facing].Update(gameTime);
         }

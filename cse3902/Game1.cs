@@ -19,7 +19,7 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
     public KeyboardController controller;
     private GameContent gameContent;
-
+    
     private Level level;
     
     public Game1()
@@ -39,7 +39,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
 
         gameContent = new GameContent(Content);
-
+       
         level = new Level(gameContent, controller);
     }
 

@@ -10,8 +10,7 @@ namespace cse3902.Objects
     public class Item
     {
         private List<Sprite> items;
-        private static int itemIndex = 0; // Consider making this a static property if needed across instances
-        private float x = 300, y = 200; // Example positions
+        private static int itemIndex = 0; // Consider making this a static property if needed across instances 
         private KeyboardController keyboard;
         
         public Item(GameContent content,KeyboardController keyboard)
@@ -82,7 +81,7 @@ namespace cse3902.Objects
         {
          
             // Draw the current item based on itemIndex
-            items[itemIndex].SetPosition(x, y);
+            items[itemIndex].SetPosition(new Vector2(300,200));
 
             items[itemIndex].Draw(spriteBatch);
 

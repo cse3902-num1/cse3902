@@ -12,6 +12,8 @@ namespace cse3902
         private Player player;
         private List<IEnemy> enemies;
         private int idxEnemy;
+        private List<IItemPickup> items;
+        private int idxItem;
         private IBlock block;
 
         public Level(GameContent content, IController controller)
@@ -28,6 +30,28 @@ namespace cse3902
                 new Goriya(content),
             };
             idxEnemy = 0;
+
+            items = new List<IItemPickup>
+            {
+                new PurpleRupeeItemPickup(content),
+                new FireItemPickUp(content),
+                new PurpleRupeeItemPickup(content),
+                new YellowRupeeItemPickup(content),
+                new YellowTriangleItemPickUp(content),
+                new PurpleTriangleItemPickUp(content),
+                new YellowDragonItemPickUp(content),
+                new YellowKeyItemPickUp(content),
+                new RedHeartItemPickUp(content),
+                new BlueHeartItemPickUp(content),
+                new RedHeartContainerItemPickUp(content),
+                new FairyTailItemPickUp(content),
+                new CompassItemPickUp(content),
+                new ClockItemPickUp(content),
+                new ArrowItemPickUp(content),
+                new YellowBoomerangItemPickup(content),
+                new BombItemPickup(content),
+            };
+            idxItem = 0;
 
             block = new Block(content);
 
@@ -47,8 +71,21 @@ namespace cse3902
                 if (idxEnemy < 0) idxEnemy = enemies.Count - 1;
             }
 
+            if (controller.isNextItemKeyPress())
+            {
+                idxItem++;
+                idxItem %= items.Count;
+            }
+
+            if(controller.isPreviousItemKeyPress()) 
+            {
+                idxItem--;
+                if (idxItem < 0) idxItem = items.Count - 1;
+            }
+
             player.Update(gameTime, controller);
             enemies[idxEnemy].Update(gameTime);
+            items[idxItem].Update(gameTime);
             block.Update(gameTime, controller);
         }
 
@@ -56,6 +93,7 @@ namespace cse3902
         {
             player.Draw(spriteBatch);
             enemies[idxEnemy].Draw(spriteBatch);
+            items[idxItem].Draw(spriteBatch);
             block.Draw(spriteBatch);
         }
     }
