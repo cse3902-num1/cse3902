@@ -46,8 +46,8 @@ namespace cse3902.Projectiles
         }
         public void Update(GameTime gameTime)
         {
-            if (Math.Abs(Position.X - playerPos.X) < 300f
-                && Math.Abs(Position.Y - playerPos.Y) < 300f)
+            if (Math.Abs(Position.X - playerPos.X) <= 300f
+                && Math.Abs(Position.Y - playerPos.Y) <= 300f)
             {
                 greenArrowUp.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 greenArrowDown.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -58,8 +58,8 @@ namespace cse3902.Projectiles
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (Math.Abs(Position.X - playerPos.X) > 300f
-                || Math.Abs(Position.Y - playerPos.Y) > 300f)
+            if (Math.Abs(Position.X - playerPos.X) >= 300f
+                || Math.Abs(Position.Y - playerPos.Y) >= 300f)
             {
                 arrowExplode.Position = greenArrowUp.Position;
                 explodeTimer.Start();
