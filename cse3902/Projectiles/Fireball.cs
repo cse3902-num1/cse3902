@@ -7,6 +7,7 @@ namespace cse3902.Projectiles
 {
     internal class Fireball : IProjectile
     {
+        public bool IsDead {set;get;}
         private Vector2 velocity;
         private Sprite fireBall;
         public Fireball(GameContent content, Vector2 velocity, Vector2 charPos)
@@ -23,6 +24,7 @@ namespace cse3902.Projectiles
             );
             this.velocity = velocity;
             fireBall.SetPosition(charPos.X, charPos.Y);
+            this.IsDead = false;
         }
         public Vector2 Velocity
         {

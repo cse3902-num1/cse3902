@@ -15,8 +15,7 @@ public class BlueBowInventoryItem: IInventoryItem
     public void Use(IPlayer player)
     {
         Vector2 direction = player.Facing.asVector2();
-        BlueArrow projectile = new BlueArrow(content, direction * 400f);
-        projectile.Position = player.Position;
+        BlueArrow projectile = new BlueArrow(content, direction * 400f, player.Position);
         player.SpawnProjectile(projectile);
     }
 }

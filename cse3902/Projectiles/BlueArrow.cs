@@ -7,19 +7,25 @@ namespace cse3902.Projectiles
 {
     internal class BlueArrow : IProjectile
     {
+        public bool IsDead {set;get;}
         private Vector2 velocity;
         private Sprite blueArrowUp;
         private Sprite blueArrowDown;
         private Sprite blueArrowLeft;
         private Sprite blueArrowRight;
+        private Vector2 initialPosition;
+        private const float maxDistance = 400f;
 
-        public BlueArrow(GameContent content, Vector2 velocity)
+        public BlueArrow(GameContent content, Vector2 velocity, Vector2 initialPosition)
         {
             blueArrowUp = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(27, 185, 7, 15) }, new Vector2(3.5f, 8.5f));
             blueArrowDown = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
             blueArrowLeft = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
             blueArrowRight = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(36, 185, 15, 15) }, new Vector2(7.5f, 7.5f));
             this.velocity = velocity;
+            this.IsDead = false;
+            this.initialPosition = initialPosition;
+            Position = initialPosition;
         }
         public Vector2 Velocity
         {
@@ -39,10 +45,12 @@ namespace cse3902.Projectiles
         }
         public void Update(GameTime gameTime)
         {
-            blueArrowUp.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            blueArrowDown.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            blueArrowLeft.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            blueArrowRight.Position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (Vector2.Distance(initialPosition, Position) > maxDistance)
+            {
+                this.IsDead = true;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

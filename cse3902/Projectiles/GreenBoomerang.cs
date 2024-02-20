@@ -9,11 +9,15 @@ namespace cse3902.Projectiles
 {
     internal class GreenBoomerang : IProjectile
     {
+        public bool IsDead {set;get;}
         private Vector2 velocity;
-        private Sprite boomerang;
-        public GreenBoomerang(GameContent content, Vector2 velocity, Vector2 charPos)
+        private Sprite sprite;
+        private Vector2 initialPosition;
+        private bool isReturning;
+        private const float maxDistance = 200f;
+        public GreenBoomerang(GameContent content, Vector2 velocity, Vector2 initialPosition)
         {
-            boomerang = new Sprite(content.enemiesSheet,
+            sprite = new Sprite(content.enemiesSheet,
                 new List<Rectangle>()
                 {
                     new Rectangle(290, 11, 8, 16),
@@ -23,7 +27,9 @@ namespace cse3902.Projectiles
                 new Vector2(4, 8)
             );
             this.velocity = velocity;
-            boomerang.SetPosition(charPos.X, charPos.Y);
+            this.initialPosition = initialPosition;
+            this.isReturning = false;
+            Position = initialPosition;
         }
         public Vector2 Velocity
         {
@@ -32,19 +38,33 @@ namespace cse3902.Projectiles
         }
         public Vector2 Position
         {
-            get { return boomerang.Position; }
-            set { boomerang.Position = value; }
+            get { return sprite.Position; }
+            set { sprite.Position = value; }
         }
         public void Update(GameTime gameTime)
         {
-            boomerang.X += velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            boomerang.Y += velocity.Y * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            boomerang.Update(gameTime);
+            Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
+
+            /* flip direction once we reach max distance */
+            if (Vector2.Distance(initialPosition, Position) >= maxDistance)
+            {
+                isReturning = true;
+                Velocity = -Velocity;
+            }
+
+            /* finish once we return to original position */
+            if (isReturning && Vector2.Distance(initialPosition, Position) <= 10)
+            {
+                IsDead = true;
+            }
+            sprite.Update(gameTime);
+
+            sprite.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            boomerang.Draw(spriteBatch);
+            sprite.Draw(spriteBatch);
         }
     }
 }

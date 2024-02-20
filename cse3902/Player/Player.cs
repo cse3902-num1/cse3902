@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,10 +30,14 @@ namespace cse3902
 
             State.Update(gameTime, controller);
 
-            foreach (IProjectile projectile in projectiles)
-            {
-                projectile.Update(gameTime);
-            }
+            // foreach (IProjectile projectile in projectiles)
+            // {
+            //     projectile.Update(gameTime);
+            // }
+            projectiles.ForEach(p => p.Update(gameTime));
+
+            /* remove dead projectiles */
+            projectiles = projectiles.Where(p => !p.IsDead).ToList();
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -7,6 +7,7 @@ namespace cse3902.Projectiles
 {
     internal class Fire : IProjectile
     {
+        public bool IsDead {set;get;}
         private Vector2 velocity;
         private Sprite fire;
 
@@ -20,6 +21,7 @@ namespace cse3902.Projectiles
                 },
                 new Vector2(7.5f, 7.5f)
             );
+            this.IsDead = false;
         }
 
         public Vector2 Velocity
