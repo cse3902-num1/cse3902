@@ -14,7 +14,7 @@ namespace cse3902.Projectiles
         private Vector2 velocity;
         private Sprite bomb;
 
-        public BombExplode(GameContent content)
+        public BombExplode(GameContent content, Vector2 charPos)
         {
             bomb = new Sprite(content.weapon,
                 new List<Rectangle>()
@@ -25,6 +25,7 @@ namespace cse3902.Projectiles
                 },
                 new Vector2(7.5f, 7.5f)
             );
+            bomb.SetPosition(charPos.X, charPos.Y);
         }
 
         public Vector2 Velocity
