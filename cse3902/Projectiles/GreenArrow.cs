@@ -55,11 +55,11 @@ namespace cse3902.Projectiles
             {
                 greenArrowLeft.Draw(spriteBatch);
             }
-            else if (velocity.Y > 0)
+            else if (velocity.Y < 0)
             {
                 greenArrowUp.Draw(spriteBatch);
             }
-            else if (velocity.Y < 0)
+            else if (velocity.Y > 0)
             {
                 greenArrowDown.Draw(spriteBatch);
             }
