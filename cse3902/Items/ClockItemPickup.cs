@@ -6,21 +6,21 @@ namespace cse3902;
 
 public class ClockItemPickUp : IItemPickup
 {
-    private Sprite ClockItem;
+    private Sprite ClockSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
     public ClockItemPickUp(GameContent content)
     {
-        ClockItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
+        ClockSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         new Rectangle(57, 0, 12, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        ClockItem.SetPosition(itemPosition);
+        ClockSprite.SetPosition(itemPosition);
 
-        ClockItem.Draw(spriteBatch);
+        ClockSprite.Draw(spriteBatch);
     }
 
     public void Update(GameTime gameTime)

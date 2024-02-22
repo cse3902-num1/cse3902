@@ -4,23 +4,23 @@ using System.Collections.Generic;
 
 namespace cse3902;
 
-public class ArrowItemPickUp : IItemPickup
+public class BowItemPickup : IItemPickup
 {
-    private Sprite ArrowItem;
+    private Sprite BowSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public ArrowItemPickUp(GameContent content)
+    public BowItemPickup(GameContent content)
     {
-        ArrowItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
+        BowSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         new Rectangle(144, 0, 8, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        ArrowItem.SetPosition(itemPosition);
+        BowSprite.SetPosition(itemPosition);
 
-        ArrowItem.Draw(spriteBatch);
+        BowSprite.Draw(spriteBatch);
     }
 
     public void Update(GameTime gameTime)

@@ -5,23 +5,25 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class BlueHeartItemPickUp : IItemPickup
+public class FiveRupiesItemPickup : IItemPickup
+
 {
-    private Sprite BlueHeartItem;
+    private Sprite FiveRupiesSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public BlueHeartItemPickUp(GameContent content)
+    public FiveRupiesItemPickup(GameContent content)
     {
-        BlueHeartItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(0, 8, 7, 7) });
+        FiveRupiesSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(71, 16, 9, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        BlueHeartItem.SetPosition(itemPosition);
 
-        BlueHeartItem.Draw(spriteBatch);
+        FiveRupiesSprite.SetPosition(itemPosition);
+
+        FiveRupiesSprite.Draw(spriteBatch);
     }
     
     public void Update(GameTime gameTime)

@@ -5,25 +5,25 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class FairyTailItemPickUp : IItemPickup
+public class RedRingItemPickup : IItemPickup
 {
-    private Sprite FairyTailItem;
+    private Sprite RedRingSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public FairyTailItemPickUp(GameContent content)
+    public RedRingItemPickup(GameContent content)
     {
-        FairyTailItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(39, 0, 7, 15) });
+        RedRingSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(168, 2, 8, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        FairyTailItem.SetPosition(itemPosition);
+        RedRingSprite.SetPosition(itemPosition);
 
-        FairyTailItem.Draw(spriteBatch);
+        RedRingSprite.Draw(spriteBatch);
     }
-    
+
     public void Update(GameTime gameTime)
     {
     }

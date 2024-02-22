@@ -5,23 +5,24 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class YellowDragonItemPickUp : IItemPickup
+public class MagicalKeyItemPickup : IItemPickup
 {
-    private Sprite YellowDragonItem;
+    private Sprite MagicalKeySprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public YellowDragonItemPickUp(GameContent content)
+    public MagicalKeyItemPickup(GameContent content)
     {
-        YellowDragonItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(87, 0, 8, 15) });
+        MagicalKeySprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(248, 0, 8, 16)});
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        YellowDragonItem.SetPosition(itemPosition);
 
-        YellowDragonItem.Draw(spriteBatch);
+        MagicalKeySprite.SetPosition(itemPosition);
+
+        MagicalKeySprite.Draw(spriteBatch);
     }
     
     public void Update(GameTime gameTime)

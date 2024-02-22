@@ -6,21 +6,21 @@ namespace cse3902;
 
 public class BombItemPickup : IItemPickup
 {
-    private Sprite BombItem;
+    private Sprite BombSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
     public BombItemPickup(GameContent content)
     {
-        BombItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
+        BombSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         new Rectangle(135, 0, 9, 14) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        BombItem.SetPosition(itemPosition);
+        BombSprite.SetPosition(itemPosition);
 
-        BombItem.Draw(spriteBatch);
+        BombSprite.Draw(spriteBatch);
     }
 
     public void Update(GameTime gameTime)

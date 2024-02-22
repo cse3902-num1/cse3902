@@ -5,23 +5,23 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class YellowKeyItemPickUp : IItemPickup
+public class LetterItemPickup : IItemPickup
 {
-    private Sprite YellowKeyItem;
+    private Sprite LetterSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public YellowKeyItemPickUp(GameContent content)
+    public LetterItemPickup(GameContent content)
     {
-        YellowKeyItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(240, 0, 8, 15) });
+        LetterSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(87, 16, 8, 15) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        YellowKeyItem.SetPosition(itemPosition);
+        LetterSprite.SetPosition(itemPosition);
 
-        YellowKeyItem.Draw(spriteBatch);
+        LetterSprite.Draw(spriteBatch);
     }
     
     public void Update(GameTime gameTime)

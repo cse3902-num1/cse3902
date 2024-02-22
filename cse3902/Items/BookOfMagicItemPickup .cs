@@ -5,23 +5,23 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class RedHeartItemPickUp : IItemPickup
+public class BookOfMagicItemPickup : IItemPickup
 {
-    private Sprite RedHeartItem;
+    private Sprite BookOfMagicSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public RedHeartItemPickUp(GameContent content)
+    public BookOfMagicItemPickup(GameContent content)
     {
-        RedHeartItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(0, 0, 7, 7) });
+        BookOfMagicSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(230, 0, 11, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        RedHeartItem.SetPosition(itemPosition);
+        BookOfMagicSprite.SetPosition(itemPosition);
 
-        RedHeartItem.Draw(spriteBatch);
+        BookOfMagicSprite.Draw(spriteBatch);
     }
     
     public void Update(GameTime gameTime)

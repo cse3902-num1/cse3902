@@ -5,24 +5,23 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class PurpleRupeeItemPickup : IItemPickup
+public class FoodItemPickup : IItemPickup
 {
-    private Sprite PurpleRupeeItem;
+    private Sprite FoodSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public PurpleRupeeItemPickup(GameContent content)
+    public FoodItemPickup(GameContent content)
     {
-        PurpleRupeeItem = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(71, 16, 9, 16) });
+        FoodSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(96, 0, 8, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        
-        PurpleRupeeItem.SetPosition(itemPosition);
+        FoodSprite.SetPosition(itemPosition);
 
-        PurpleRupeeItem.Draw(spriteBatch);
+        FoodSprite.Draw(spriteBatch);
     }
     
     public void Update(GameTime gameTime)

@@ -7,13 +7,13 @@ namespace cse3902;
 public class FireItemPickUp : IItemPickup
 {
  
-    private Sprite FireItem;
+    private Sprite FireSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
     
 
     public FireItemPickUp(GameContent content)
     {
-        FireItem = new Sprite(content.mergedSheet, new List<Rectangle>() {
+        FireSprite = new Sprite(content.mergedSheet, new List<Rectangle>() {
             new Rectangle(192, 236, 16, 16),
              new Rectangle(535, 237, 16, 16),
              
@@ -23,12 +23,12 @@ public class FireItemPickUp : IItemPickup
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        FireItem.SetPosition(itemPosition);
-        FireItem.Draw(spriteBatch); 
+        FireSprite.SetPosition(itemPosition);
+        FireSprite.Draw(spriteBatch); 
     }
 
     public void Update(GameTime gameTime)
     {
-        FireItem.Update(gameTime);
+        FireSprite.Update(gameTime);
     }
 }

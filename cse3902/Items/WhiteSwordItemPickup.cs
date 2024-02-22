@@ -5,23 +5,23 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace cse3902;
 
-public class YellowRupeeItemPickup : IItemPickup
+public class WhiteSwordItemPickup : IItemPickup
 {
-    private Sprite YellowRupeeItem;
+    private Sprite WhiteSwordSprite;
     private Vector2 itemPosition = new Vector2(300, 200); // Example positions
 
-    public YellowRupeeItemPickup(GameContent content)
+    public WhiteSwordItemPickup(GameContent content)
     {
-        YellowRupeeItem =  new Sprite(content.ItemSheet,new List<Rectangle>() {
-                        new Rectangle(71, 0, 9, 16) });
+        WhiteSwordSprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(104, 16, 8, 16) });
     }
 
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        YellowRupeeItem.SetPosition(itemPosition);
+        WhiteSwordSprite.SetPosition(itemPosition);
 
-        YellowRupeeItem.Draw(spriteBatch);
+        WhiteSwordSprite.Draw(spriteBatch);
     }
     
     public void Update(GameTime gameTime)

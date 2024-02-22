@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902.Projectiles
 {
-    internal class BlueBoomerang : IProjectile
+    internal class MagicalBoomerang : IProjectile
     {
         public bool IsDead {get;set;}
         private Vector2 velocity;
@@ -13,7 +13,7 @@ namespace cse3902.Projectiles
         private Vector2 initialPosition;
         private bool isReturning;
         private const float maxDistance = 300f;
-        public BlueBoomerang(GameContent content, Vector2 velocity, Vector2 initialPosition)
+        public MagicalBoomerang(GameContent content, Vector2 velocity, Vector2 initialPosition)
         {
             sprite = new Sprite(content.blueBoomerang,
                 new List<Rectangle>()

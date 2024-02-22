@@ -66,7 +66,7 @@ namespace cse3902
             /* TODO: finish once items classes are created */
             IInventoryItem item = null;
             if      (controller.isPlayerUseItem1JustPressed()) item = new BlueBombInventoryItem(content);
-            else if (controller.isPlayerUseItem2JustPressed()) item = new BlueBoomerangInventoryItem(content);
+            else if (controller.isPlayerUseItem2JustPressed()) item = new MagicalBoomerangInventoryItem(content);
             else if (controller.isPlayerUseItem3JustPressed()) item = new BlueBowInventoryItem(content);
             else if (controller.isPlayerUseItem4JustPressed()) item = new FireballInventoryItem(content);
             else if (controller.isPlayerUseItem5JustPressed()) item = new FireInventoryItem();
