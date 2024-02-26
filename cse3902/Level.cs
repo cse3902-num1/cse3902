@@ -11,7 +11,7 @@ namespace cse3902
     public class Level
     {
         private Player player;
-        private List<Room> rooms;
+        //rivate List<Room> rooms;
     
 
         public Level(GameContent content, IController controller)
@@ -27,20 +27,20 @@ namespace cse3902
            
             //add room update
             player.Update(gameTime, controller);
-            foreach(Room r in rooms){
+            /*foreach(Room r in rooms){
                 r.Update(gameTime, controller);
             }
-            
+            */
            
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             player.Draw(spriteBatch);
-            foreach (Room r in rooms)
+            /*foreach (Room r in rooms)
             {
                 r.Draw(spriteBatch);
-            }
+            }*/
 
         }
     }

@@ -6,11 +6,11 @@ using cse3902.Enemy;
 using cse3902.Objects;
 using System.Numerics;
 
-namespace cse3902
+namespace cse3902.RoomClasses
 {
 
     public class Room
-	{
+    {
         private List<IEnemy> enemies;
         private int idxEnemy;
         private List<IItemPickup> items;
@@ -19,7 +19,7 @@ namespace cse3902
 
 
         public Room(GameContent content, IController controller)
-	    {
+        {
             enemies = new List<IEnemy>()
             {
                 new Skeleton(content),
@@ -96,7 +96,7 @@ namespace cse3902
                 if (idxItem < 0) idxItem = items.Count - 1;
             }
 
-          
+
             enemies[idxEnemy].Update(gameTime);
             items[idxItem].Update(gameTime);
             block.Update(gameTime, controller);
@@ -105,7 +105,7 @@ namespace cse3902
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-           
+
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);
             block.Draw(spriteBatch);
