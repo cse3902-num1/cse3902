@@ -4,18 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
+using System;
 
 namespace cse3902
 {
     public class Level
     {
         private Player player;
-
-        private List<IEnemy> enemies;
-        private int idxEnemy;
-        private List<IItemPickup> items;
-        private int idxItem;
-        private IBlock block;
+        private List<Room> rooms;
+    
 
         public Level(GameContent content, IController controller)
         {
@@ -30,17 +27,21 @@ namespace cse3902
            
             //add room update
             player.Update(gameTime, controller);
-            enemies[idxEnemy].Update(gameTime);
-            items[idxItem].Update(gameTime);
-            block.Update(gameTime, controller);
+            foreach(Room r in rooms){
+                r.Update(gameTime, controller);
+            }
+            
+           
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             player.Draw(spriteBatch);
-            enemies[idxEnemy].Draw(spriteBatch);
-            items[idxItem].Draw(spriteBatch);
-            block.Draw(spriteBatch);
+            foreach (Room r in rooms)
+            {
+                r.Draw(spriteBatch);
+            }
+
         }
     }
 }

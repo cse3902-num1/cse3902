@@ -16,6 +16,8 @@ namespace cse3902
         private List<IItemPickup> items;
         private int idxItem;
         private IBlock block;
+
+
         public Room(GameContent content, IController controller)
 	    {
             enemies = new List<IEnemy>()
@@ -98,6 +100,15 @@ namespace cse3902
             enemies[idxEnemy].Update(gameTime);
             items[idxItem].Update(gameTime);
             block.Update(gameTime, controller);
+
+
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+           
+            enemies[idxEnemy].Draw(spriteBatch);
+            items[idxItem].Draw(spriteBatch);
+            block.Draw(spriteBatch);
         }
 
 
