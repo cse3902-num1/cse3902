@@ -15,7 +15,7 @@ public class MagicalBoomerangInventoryItem : IInventoryItem
     public void Use(IPlayer player)
     {
         Vector2 direction = player.Facing.asVector2();
-        MagicalBoomerang projectile = new MagicalBoomerang(content, direction * 400f, player.Position);
+        MagicalBoomerang projectile = new MagicalBoomerang(content, player.Position, direction * 400f);
         player.SpawnProjectile(projectile);
     }
 }

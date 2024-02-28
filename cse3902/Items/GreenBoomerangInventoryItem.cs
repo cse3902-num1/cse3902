@@ -15,7 +15,7 @@ public class GreenBoomerangInventoryItem : IInventoryItem
     public void Use(IPlayer player)
     {
         Vector2 direction = player.Facing.asVector2();
-        GreenBoomerang projectile = new GreenBoomerang(content, direction * 200f, player.Position);
+        GreenBoomerang projectile = new GreenBoomerang(content, player.Position, direction * 200f);
         player.SpawnProjectile(projectile);
     }
 }
