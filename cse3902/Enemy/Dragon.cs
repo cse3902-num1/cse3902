@@ -1,7 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ namespace cse3902.Enemy
 {
     public class Dragon : IEnemy
     {
+        public Vector2 Position {set;get;}
         private Sprite sprite;
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Stopwatch attackTimer = new Stopwatch();
@@ -31,7 +31,7 @@ namespace cse3902.Enemy
                     new Rectangle(76, 11, 25, 32)
                 }
             );
-            sprite.SetPosition(500, 200);
+
             ballUp = new Fireball(content, 
                 new Vector2(-200f, -50f), 
                 new Vector2(sprite.X, sprite.Y)
@@ -44,25 +44,29 @@ namespace cse3902.Enemy
                 new Vector2(-200f, 0f),
                 new Vector2(sprite.X, sprite.Y)
             );
+
+            Position = new Vector2(500, 200);
         }
 
         public void Move(GameTime gameTime, int randomNum)
         {
+            Vector2 newPosition = Position;
             switch (randomNum)
             {
                 case 1:
-                    sprite.Y -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 2:
-                    sprite.X -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 3:
-                    sprite.X += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 4:
-                    sprite.Y += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
+            Position = newPosition;
         }
 
         public void Attack()
@@ -79,13 +83,15 @@ namespace cse3902.Enemy
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            sprite.Position = Position;
             sprite.Draw(spriteBatch);
+
             ballUp.Draw(spriteBatch);
             ballDown.Draw(spriteBatch);
             ballMid.Draw(spriteBatch);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController controller)
         {
 
             randomChangeTimer.Start();
@@ -103,13 +109,13 @@ namespace cse3902.Enemy
                 attackTimer.Restart();
                 Attack();
             }
-            ballUp.Update(gameTime);
-            ballDown.Update(gameTime);
-            ballMid.Update(gameTime);
+            ballUp.Update(gameTime, controller);
+            ballDown.Update(gameTime, controller);
+            ballMid.Update(gameTime, controller);
 
             Move(gameTime, randomNum);
 
-            sprite.Update(gameTime);
+            sprite.Update(gameTime, controller);
         }
     }
 }

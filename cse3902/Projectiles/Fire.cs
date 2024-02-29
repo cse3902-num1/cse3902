@@ -3,47 +3,39 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace cse3902.Projectiles
+namespace cse3902.Projectiles;
+
+public class Fire : IProjectile
 {
-    internal class Fire : IProjectile
+    public bool IsDead {set;get;}
+    public Vector2 Position {set;get;}
+    public Vector2 Velocity {set;get;}
+    private Sprite sprite;
+
+    public Fire(GameContent content, Vector2 position)
     {
-        public bool IsDead {set;get;}
-        private Vector2 velocity;
-        private Sprite fire;
+        sprite = new Sprite(content.weapon2,
+            new List<Rectangle>()
+            {
+                new Rectangle(0, 30, 15, 15),
+                new Rectangle(15, 30 , 15, 15)
+            },
+            new Vector2(7.5f, 7.5f)
+        );
 
-        public Fire(GameContent content, Vector2 velocity)
-        {
-            fire = new Sprite(content.weapon2,
-                new List<Rectangle>()
-                {
-                    new Rectangle(0, 30, 15, 15),
-                    new Rectangle(15, 30 , 15, 15)
-                },
-                new Vector2(7.5f, 7.5f)
-            );
-            this.IsDead = false;
-        }
+        Position = position;
+        Velocity = new Vector2(0, 0);
+        IsDead = false;
+    }
 
-        public Vector2 Velocity
-        {
-            get { return velocity; }
-            set { velocity = value; }
-        }
-        public Vector2 Position
-        {
-            get { return fire.Position; }
-            set { fire.Position = value; }
-        }
+    public void Update(GameTime gameTime, IController controller)
+    {
+        sprite.Position = Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        sprite.Update(gameTime, controller);
+    }
 
-        public void Update(GameTime gameTime)
-        {
-            fire.Position = velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            fire.Update(gameTime);
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            fire.Draw(spriteBatch);
-        }
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        sprite.Draw(spriteBatch);
     }
 }

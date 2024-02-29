@@ -15,7 +15,7 @@ public class FireballInventoryItem : IInventoryItem
     public void Use(IPlayer player)
     {
         Vector2 direction = player.Facing.asVector2();
-        Fireball projectile = new Fireball(content, direction * 400f, player.Position);
+        Fireball projectile = new Fireball(content, player.Position, direction * 400f);
         player.SpawnProjectile(projectile);
     }
 }

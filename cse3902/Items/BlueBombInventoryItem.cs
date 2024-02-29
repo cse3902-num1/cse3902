@@ -14,7 +14,8 @@ public class BlueBombInventoryItem : IInventoryItem
     public void Use(IPlayer player)
     {
         Vector2 direction = player.Facing.asVector2();
-        Bomb bomb = new Bomb(content, direction, player);
+        Vector2 position = player.Position + direction * 20f;
+        Bomb bomb = new Bomb(content, position);
         player.SpawnProjectile(bomb);
     }
 }

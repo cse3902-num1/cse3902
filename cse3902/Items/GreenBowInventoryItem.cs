@@ -15,7 +15,7 @@ public class GreenBowInventoryItem : IInventoryItem
     public void Use(IPlayer player)
     {
         Vector2 direction = player.Facing.asVector2();
-        GreenArrow projectile = new GreenArrow(content, direction * 300f, player.Position);
+        GreenArrow projectile = new GreenArrow(content, player.Position, direction * 300f);
         player.SpawnProjectile(projectile);
     }
 }

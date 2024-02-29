@@ -1,97 +1,41 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using cse3902.Interfaces;
-using System;
-using System.Diagnostics;
 
-namespace cse3902.Projectiles
+namespace cse3902.Projectiles;
+
+public class BlueArrow : BasicDirectionalProjectile
 {
-    internal class BlueArrow : IProjectile
+    private Vector2 initialPosition;
+    private const float maxDistance = 400f;
+    private GameContent content;
+
+    public BlueArrow(GameContent content, Vector2 position, Vector2 velocity) : base(position, velocity)
     {
-        public bool IsDead {set;get;}
-        private Vector2 velocity;
-        private Sprite blueArrowUp;
-        private Sprite blueArrowDown;
-        private Sprite blueArrowLeft;
-        private Sprite blueArrowRight;
-        private Vector2 initialPosition;
-        private const float maxDistance = 400f;
-        private ArrowExplode arrowExplode;
-        private Stopwatch explodeTimer = new Stopwatch();
+        leftSprite = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
+        rightSprite = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(36, 185, 15, 15) }, new Vector2(7.5f, 7.5f));
+        upSprite = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(27, 185, 7, 15) }, new Vector2(3.5f, 8.5f));
+        downSprite = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
 
-        public BlueArrow(GameContent content, Vector2 velocity, Vector2 initialPosition)
-        {
-            blueArrowUp = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(27, 185, 7, 15) }, new Vector2(3.5f, 8.5f));
-            blueArrowDown = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
-            blueArrowLeft = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
-            blueArrowRight = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(36, 185, 15, 15) }, new Vector2(7.5f, 7.5f));
-            arrowExplode = new ArrowExplode(content);
-            this.velocity = velocity;
-            this.IsDead = false;
-            this.initialPosition = initialPosition;
-            Position = initialPosition;
-        }
-        public Vector2 Velocity
-        {
-            get { return velocity; }
-            set { velocity = value; }
-        }
-        public Vector2 Position
-        {
-            get { return blueArrowUp.Position; }
-            set
-            {
-                blueArrowUp.Position = value;
-                blueArrowDown.Position = value;
-                blueArrowLeft.Position = value;
-                blueArrowRight.Position = value;
-            }
-        }
-        public void Update(GameTime gameTime)
-        {
-            if (!explodeTimer.IsRunning)
-            {
-                Position += velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
-            }
+        initialPosition = position;
 
-            if (Vector2.Distance(initialPosition, Position) > maxDistance)
-            {
-                arrowExplode.Position = Position;
-                explodeTimer.Start();
-            }
-        }
+        this.content = content;
+    }
 
-        public void Draw(SpriteBatch spriteBatch)
+    private void Die()
+    {
+        IsDead = true;
+        IParticleEffect fx = new ArrowExplode(content, Position);
+        /* TODO: "spawn" the particle effect in the level */
+    }
+
+    public override void Update(GameTime gameTime, IController controller)
+    {
+        base.Update(gameTime, controller);
+
+        if (Vector2.Distance(initialPosition, Position) > maxDistance)
         {
-            if (explodeTimer.IsRunning)
-            {
-                arrowExplode.Draw(spriteBatch);
-                if (explodeTimer.ElapsedMilliseconds > 500)
-                {
-                    IsDead = true;
-                }
-            }
-
-            else
-            {
-                if (velocity.X > 0)
-                {
-                    blueArrowRight.Draw(spriteBatch);
-                }
-                else if (velocity.X < 0)
-                {
-                    blueArrowLeft.Draw(spriteBatch);
-                }
-                else if (velocity.Y < 0)
-                {
-                    blueArrowUp.Draw(spriteBatch);
-                }
-                else if (velocity.Y > 0)
-                {
-                    blueArrowDown.Draw(spriteBatch);
-                }
-            }
+            Die();
         }
     }
 }
