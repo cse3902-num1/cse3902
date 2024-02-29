@@ -80,14 +80,14 @@ public class Game1 : Game
         s.Filter = TextureFilter.Point;
 
         spriteBatch.Begin(samplerState: s);
-
+        /*
         int screenWidth = GraphicsDevice.Viewport.Width;
         int screenHeight = GraphicsDevice.Viewport.Height;
         int roomWidth = 256 * 3; // Considering the scale factor of 3.0f
         int roomHeight = 176 * 3; // Considering the scale factor of 3.0f
-        Vector2 position = new Vector2((screenWidth - roomWidth) / 2, (screenHeight - roomHeight) / 2);
+        Vector2 position = new Vector2((screenWidth - roomWidth) / 2, (screenHeight - roomHeight) / 2);*/
 
-        /* Draw the room texture */
+        /* Draw the room texture *//*
         spriteBatch.Draw(room,
             position,
             new Rectangle(258, 886, 256, 176),
@@ -97,7 +97,7 @@ public class Game1 : Game
             3.0f,
             SpriteEffects.None,
             1.0f);
-
+        */
 
         level.Draw(spriteBatch);
        

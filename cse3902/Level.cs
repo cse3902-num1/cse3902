@@ -5,13 +5,15 @@ using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
 using System;
+using cse3902.RoomClasses;
+using cse3902.WallClasses;
 
 namespace cse3902
 {
     public class Level
     {
         private Player player;
-        //rivate List<Room> rooms;
+        private Wall wall;
     
 
         public Level(GameContent content, IController controller)
@@ -19,7 +21,7 @@ namespace cse3902
             player = new Player(content);
             player.Position = new Vector2(100, 100);
 
-             
+            wall = new Wall(content); 
         }
 
         public void Update(GameTime gameTime, IController controller)
@@ -36,12 +38,13 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            wall.Draw(spriteBatch);
             player.Draw(spriteBatch);
             /*foreach (Room r in rooms)
             {
                 r.Draw(spriteBatch);
             }*/
-
+            
         }
     }
 }

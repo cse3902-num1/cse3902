@@ -42,6 +42,7 @@ namespace cse3902
         public Texture2D weapon2;
 
         public Texture2D rooms;
+        public Texture2D walls;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -82,6 +83,7 @@ namespace cse3902
             weapon2 = LoadTexture2D("Weapon2");
 
             rooms = LoadTexture2D("rooms");
+            walls = LoadTexture2D("walls");
         }
     }
 }
