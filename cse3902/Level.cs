@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
+using cse3902.RoomClasses;
 using System;
 
 namespace cse3902
@@ -11,7 +12,7 @@ namespace cse3902
     public class Level
     {
         private Player player;
-        //rivate List<Room> rooms;
+        private List<Room> rooms;
     
 
         public Level(GameContent content, IController controller)

@@ -16,9 +16,10 @@ namespace cse3902.RoomClasses
         private List<IItemPickup> items;
         private int idxItem;
         private IBlock block;
+        List<List<int>> TileIds;
+        MapLoader ml;
 
-
-        public Room(GameContent content, IController controller)
+        public Room(GameContent content, IController controller, string xmlFilePath)
         {
             enemies = new List<IEnemy>()
             {
@@ -69,6 +70,11 @@ namespace cse3902.RoomClasses
             idxItem = 0;
 
             block = new Block(content);
+
+            //handle loading map
+            ml = new MapLoader(xmlFilePath);
+            TileIds = ml.LoadMap();
+
         }
 
         public void Update(GameTime gameTime, IController controller)
