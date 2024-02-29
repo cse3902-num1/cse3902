@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
+using cse3902.RoomClasses;
 using System;
 using cse3902.RoomClasses;
 using cse3902.WallClasses;
@@ -13,6 +14,7 @@ namespace cse3902
     public class Level
     {
         private Player player;
+        private List<Room> rooms;
         private Wall wall;
     
 
@@ -44,7 +46,7 @@ namespace cse3902
             {
                 r.Draw(spriteBatch);
             }*/
-            
+
         }
     }
 }
