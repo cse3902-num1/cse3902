@@ -81,7 +81,7 @@ namespace cse3902.RoomClasses
             //handle loading map
             ml = new MapLoader(xmlFilePath);
             tileIds = ml.LoadMap();
-            Debug.WriteLine(tileIds);
+            //Debug.WriteLine(tileIds[0][0]);
 
         }
 

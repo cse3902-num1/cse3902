@@ -43,6 +43,10 @@ namespace cse3902
 
         public Texture2D rooms;
         public Texture2D walls;
+        public Texture2D topDoors;
+        public Texture2D rightDoors;
+        public Texture2D bottomDoors;
+        public Texture2D leftDoors;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -84,6 +88,10 @@ namespace cse3902
 
             rooms = LoadTexture2D("rooms");
             walls = LoadTexture2D("walls");
+            topDoors = LoadTexture2D("topDoors");
+            bottomDoors = LoadTexture2D("bottomDoors");
+            leftDoors = LoadTexture2D("leftDoors");
+            rightDoors = LoadTexture2D("rightDoors");
         }
     }
 }

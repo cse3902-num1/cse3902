@@ -6,8 +6,7 @@ using cse3902.Enemy;
 using cse3902.Objects;
 using cse3902.RoomClasses;
 using System;
-using cse3902.RoomClasses;
-using cse3902.WallClasses;
+using cse3902.DoorClasses;
 
 namespace cse3902
 {
@@ -15,7 +14,7 @@ namespace cse3902
     {
         private Player player;
         private List<Room> rooms;
-     
+        private Doors doors;
     
 
         public Level(GameContent content, IController controller)
@@ -24,9 +23,9 @@ namespace cse3902
             player.Position = new Vector2(100, 100);
             rooms = new List<Room>
             {
-                new Room(content, controller, "./TilesData/Tile0.xml")
+                new Room(content, controller, "C:\\Users\\weilu\\OneDrive\\Desktop\\college\\Junior\\CSE 3902\\project\\cse3902\\TilesData\\Tile0.xml")
             };
-
+            doors = new Doors(content);
 
 
         }
@@ -46,11 +45,12 @@ namespace cse3902
         public void Draw(SpriteBatch spriteBatch)
         {
            
-            player.Draw(spriteBatch);
+            doors.Draw(spriteBatch);
             foreach (Room r in rooms)
             {
                 r.Draw(spriteBatch);
             }
+            player.Draw(spriteBatch);
 
         }
     }
