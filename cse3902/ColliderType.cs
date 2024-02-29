@@ -35,6 +35,7 @@ public static partial class Extensions
         if (a == ColliderType.PROJECTILE && b == ColliderType.PLAYER) return true;
         if (a == ColliderType.PROJECTILE && b == ColliderType.ENEMY) return true;
 
+
         return false;
     }
 }

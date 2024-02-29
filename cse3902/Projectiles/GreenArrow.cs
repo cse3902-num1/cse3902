@@ -9,6 +9,7 @@ public class GreenArrow : BasicDirectionalProjectile
     private Vector2 initialPosition;
     private const float maxDistance = 400f;
     private GameContent content;
+    
 
     public GreenArrow(GameContent content, Vector2 position, Vector2 velocity) : base(position, velocity)
     {

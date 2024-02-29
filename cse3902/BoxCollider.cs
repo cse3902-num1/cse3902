@@ -7,7 +7,7 @@ public class BoxCollider : ICollider
 {
     public ColliderType ColliderType {set;get;}
     private Rectangle rectangle;
-
+    
     public BoxCollider(Rectangle rectangle, ColliderType type)
     {
         this.rectangle = rectangle;

@@ -9,21 +9,24 @@ public abstract class BasicDirectionalProjectile : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Velocity {set;get;}
     public Vector2 Position {set;get;}
-
+    
     /* set in constructor */
     protected ISprite leftSprite;
     protected ISprite rightSprite;
     protected ISprite upSprite;
     protected ISprite downSprite;
+    protected ICollider collider;
 
     private ISprite currentSprite;
+    
 
     /* need to call this super constructor in the subclass's constructor */
-    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity)
+    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity, ICollider collider)
     {
         IsDead = false;
         Position = position;
         Velocity = velocity;
+        this.collider = collider; 
         currentSprite = downSprite; /* currentSprite can't be null */
     }
 
