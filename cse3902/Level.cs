@@ -15,37 +15,42 @@ namespace cse3902
     {
         private Player player;
         private List<Room> rooms;
-        private Wall wall;
+     
     
 
         public Level(GameContent content, IController controller)
         {
             player = new Player(content);
             player.Position = new Vector2(100, 100);
+            rooms = new List<Room>
+            {
+                new Room(content, controller, "./TilesData/Tile0.xml")
+            };
 
-            wall = new Wall(content); 
+
+
         }
 
         public void Update(GameTime gameTime, IController controller)
         {
-           
+
             //add room update
             player.Update(gameTime, controller);
-            /*foreach(Room r in rooms){
+            foreach(Room r in rooms){
                 r.Update(gameTime, controller);
             }
-            */
-           
+            
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            wall.Draw(spriteBatch);
+           
             player.Draw(spriteBatch);
-            /*foreach (Room r in rooms)
+            foreach (Room r in rooms)
             {
                 r.Draw(spriteBatch);
-            }*/
+            }
 
         }
     }

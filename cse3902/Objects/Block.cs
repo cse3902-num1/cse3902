@@ -20,14 +20,18 @@ namespace cse3902.Objects
         }
 
         //private ISprite sprite
+        private int BlockIndex;
         private List<Sprite> blocks;
+        private Vector2 position;
        
         private float x = 200, y = 200;
        
         public bool isVisible = false;
       
-        public Block(GameContent content)
+        public Block(GameContent content, int index, Vector2 position)
         {
+            BlockIndex = index;
+            this.position = position;
 
             blocks = new List<Sprite>() {
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
@@ -59,47 +63,16 @@ namespace cse3902.Objects
      
         public void Draw(SpriteBatch spriteBatch)
         {
-            blocks[GameData.BlockIndex].SetPosition(x, y);
-            blocks[GameData.BlockIndex].Draw(spriteBatch);
+            blocks[BlockIndex].Position = position;
+            blocks[BlockIndex].Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime, IController controller)
         {
-            if (controller.isNextBlockPressed())
-            {
-                SwitchToNextBlock();
-            }
-
-            if (controller.isPreviousBlockPressed())
-            {
-                SwitchToPreviousBlock();
-            }
+            
         }
 
-     
-        private void SwitchToPreviousBlock()
-        {
-          
-            GameData.BlockIndex--;
 
-            if (GameData.BlockIndex < 0)
-            {
-                // Wrap around to the last block if at the beginning
-                GameData.BlockIndex = (byte)(blocks.Count - 1);
-            }
-        }
-
-        private void SwitchToNextBlock()
-        {
-            GameData.BlockIndex++;
-
-            if (GameData.BlockIndex >= blocks.Count)
-            {
-                // Wrap around to the first block if at the end
-                GameData.BlockIndex = 0;
-            }
-          
-        }
 
     }
 }

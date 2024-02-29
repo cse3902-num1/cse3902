@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
-using System.Numerics;
+using cse3902.WallClasses;
+using System.Diagnostics;
+
 
 namespace cse3902.RoomClasses
 {
@@ -15,12 +17,17 @@ namespace cse3902.RoomClasses
         private int idxEnemy;
         private List<IItemPickup> items;
         private int idxItem;
-        private IBlock block;
-        List<List<int>> TileIds;
-        MapLoader ml;
+        private GameContent content;
+
+        private List<List<int>> tileIds;
+        private int blockIndex;
+        private MapLoader ml;
+        private Vector2 position = new Vector2(96,96);
+        private Wall wall;
 
         public Room(GameContent content, IController controller, string xmlFilePath)
         {
+            this.content = content;
             enemies = new List<IEnemy>()
             {
                 new Skeleton(content),
@@ -69,11 +76,12 @@ namespace cse3902.RoomClasses
             };
             idxItem = 0;
 
-            block = new Block(content);
+            wall = new Wall(content);
 
             //handle loading map
             ml = new MapLoader(xmlFilePath);
-            TileIds = ml.LoadMap();
+            tileIds = ml.LoadMap();
+            Debug.WriteLine(tileIds);
 
         }
 
@@ -105,7 +113,7 @@ namespace cse3902.RoomClasses
 
             enemies[idxEnemy].Update(gameTime);
             items[idxItem].Update(gameTime);
-            block.Update(gameTime, controller);
+           
 
 
         }
@@ -114,7 +122,23 @@ namespace cse3902.RoomClasses
 
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);
-            block.Draw(spriteBatch);
+            wall.Draw(spriteBatch);
+
+            foreach (List<int> row in tileIds)
+            {
+                position.X = 96;
+
+                foreach (int element in row)
+                {
+                   
+                    Block block = new Block(content, element, position);
+                    block.Draw(spriteBatch);
+                    position.X += 48;
+
+                }
+                position.Y += 48;
+            }
+           
         }
 
 
