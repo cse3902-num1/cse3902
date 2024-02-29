@@ -41,6 +41,8 @@ namespace cse3902
         public Texture2D weapon;
         public Texture2D weapon2;
 
+        public Texture2D rooms;
+
         private Texture2D LoadTexture2D(String name)
         {
             return content.Load<Texture2D>(name);
@@ -78,6 +80,8 @@ namespace cse3902
             blueBoomerang = LoadTexture2D("BlueBoomerang");
             weapon = LoadTexture2D("Weapon");
             weapon2 = LoadTexture2D("Weapon2");
+
+            rooms = LoadTexture2D("rooms");
         }
     }
 }
