@@ -14,7 +14,7 @@ public enum ColliderType
 /* see https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/how-to-create-a-new-method-for-an-enumeration */
 public static partial class Extensions
 {
-    public static bool CollidesWith(this ColliderType a, ColliderType b)
+    public static bool CanCollideWith(this ColliderType a, ColliderType b)
     {
         /* wall collisions */
         if (a == ColliderType.PLAYER && b == ColliderType.WALL) return true;

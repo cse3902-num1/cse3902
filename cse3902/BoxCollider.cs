@@ -16,7 +16,7 @@ public class BoxCollider : ICollider
 
     public bool IsColliding(ICollider collider)
     {
-        if (!ColliderType.CollidesWith(collider.ColliderType)) return false;
+        if (!ColliderType.CanCollideWith(collider.ColliderType)) return false;
 
         switch (collider)
         {
