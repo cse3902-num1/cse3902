@@ -3,15 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902.Interfaces;
 
-public interface IEnemy
+public interface IEnemy : IGameObject
 {
     public void Move(GameTime gameTime, int randomNum);
 
     public void Attack();
 
     public void TakeDmg();
-
-    public void Draw(SpriteBatch spriteBatch);
-
-    public void Update(GameTime gameTime);
 }

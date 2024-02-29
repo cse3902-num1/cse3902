@@ -4,80 +4,53 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace cse3902.Projectiles
+namespace cse3902.Projectiles;
+
+public class Bomb : IProjectile
 {
-    internal class Bomb : IProjectile
+    public bool IsDead {set;get;}
+    public Vector2 Position {set;get;}
+    public Vector2 Velocity {set;get;}
+    private ISprite sprite;
+    private Stopwatch explodeTimer = new Stopwatch();
+    private GameContent content;
+    
+    public Bomb(GameContent content, Vector2 position)
     {
-        public bool IsDead {set;get;}
-        private Vector2 velocity;
-        private Sprite bomb;
-        private BombExplode explode;
-        private Stopwatch explodeTimer = new Stopwatch();
-        
-        public Bomb(GameContent content, Vector2 velocity, IPlayer player)
-        {
-            bomb = new Sprite(content.weapon, 
-                new List<Rectangle>()
-                {
-                    new Rectangle(129, 185, 7, 15)
-                },
-                new Vector2(3.5f, 7.5f)
-            );
-            this.IsDead = false;
-            if (velocity.X > 0)
+        sprite = new Sprite(content.weapon, 
+            new List<Rectangle>()
             {
-                bomb.Position = player.Position + new Vector2(20, 0);
-            }
-            if (velocity.X < 0)
-            {
-                bomb.Position = player.Position + new Vector2(-20, 0);
-            }
-            if (velocity.Y > 0)
-            {
-                bomb.Position = player.Position + new Vector2(0, 20);
-            }
-            if (velocity.Y < 0)
-            {
-                bomb.Position = player.Position + new Vector2(0, -20);
-            }
-            explode = new BombExplode(content, bomb.Position);
-        }
+                new Rectangle(129, 185, 7, 15)
+            },
+            new Vector2(3.5f, 7.5f)
+        );
 
-        public Vector2 Velocity
-        {
-            get { return velocity; }
-            set { velocity = value; }
-        }
-        public Vector2 Position
-        {
-            get { return bomb.Position; }
-            set { bomb.Position = value; }
-        }
+        Position = position;
+        explodeTimer.Start();
 
-        public void Update(GameTime gameTime)
-        {
-            
-            bomb.Update(gameTime);
-        }
+        this.content = content;
+    }
 
-        public void Draw(SpriteBatch spriteBatch)
+    private void Die()
+    {
+        IsDead = true;
+        IParticleEffect fx = new BombExplode(content, Position);
+        /* TODO: "spawn" the particle effect in the level */
+    }
+
+    public void Update(GameTime gameTime, IController controller)
+    {
+        sprite.Update(gameTime, controller);
+
+        if (explodeTimer.ElapsedMilliseconds >= 1500)
         {
-            explodeTimer.Start();
-            if (explodeTimer.ElapsedMilliseconds <= 1500)
-            {
-                bomb.Draw(spriteBatch);
-            }
-            else
-            {
-                if (explodeTimer.ElapsedMilliseconds <= 1700)
-                {
-                    explode.Draw(spriteBatch);
-                }
-                else
-                {
-                    IsDead = true;
-                }
-            }
+            Die();
         }
+    }
+
+    public void Draw(SpriteBatch spriteBatch)
+    {
+        sprite.Position = Position;
+        sprite.Draw(spriteBatch);
     }
 }

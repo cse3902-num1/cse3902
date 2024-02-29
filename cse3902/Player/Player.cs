@@ -30,11 +30,7 @@ namespace cse3902
 
             State.Update(gameTime, controller);
 
-            // foreach (IProjectile projectile in projectiles)
-            // {
-            //     projectile.Update(gameTime);
-            // }
-            projectiles.ForEach(p => p.Update(gameTime));
+            projectiles.ForEach(p => p.Update(gameTime, controller));
 
             /* remove dead projectiles */
             projectiles = projectiles.Where(p => !p.IsDead).ToList();

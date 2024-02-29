@@ -58,7 +58,7 @@ namespace cse3902
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController controller)
         {
             frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (frameTimer < frameTimerThreshold) return;
@@ -87,6 +87,11 @@ namespace cse3902
         {
             X = position.X;
             Y = position.Y;
+        }
+
+        public bool IsAnimationDone()
+        {
+            return Frame >= frames.Count - 1; /* TODO: fully display last frame before returning true */
         }
     }
 }

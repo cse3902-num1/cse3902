@@ -14,7 +14,8 @@ namespace cse3902
         private int idxEnemy;
         private List<IItemPickup> items;
         private int idxItem;
-        private IBlock block;
+        private List<IBlock> blocks;
+        private int idxBlock;
 
         public Level(GameContent content, IController controller)
         {
@@ -68,10 +69,19 @@ namespace cse3902
                 new MagicalKeyItemPickup(content),
             };
             idxItem = 0;
+            items.ForEach(i => i.Position = new Vector2(300, 200));
 
-            block = new Block(content);
-
-            /* TODO: create items */
+            blocks = new List<IBlock>() {
+                new Block1(content),
+                new Block2(content),
+                new Block3(content),
+                new Block4(content),
+                new Block5(content),
+                new Block6(content),
+                new Block7(content),
+            };
+            idxBlock = 0;
+            blocks.ForEach(b => b.Position = new Vector2(200, 200));
         }
 
         public void Update(GameTime gameTime, IController controller)
@@ -99,10 +109,22 @@ namespace cse3902
                 if (idxItem < 0) idxItem = items.Count - 1;
             }
 
+            if (controller.isNextBlockPressed())
+            {
+                idxBlock++;
+                idxBlock %= blocks.Count;
+            }
+
+            if (controller.isPreviousBlockPressed())
+            {
+                idxBlock--;
+                if (idxBlock < 0) idxBlock = blocks.Count - 1;
+            }
+
             player.Update(gameTime, controller);
-            enemies[idxEnemy].Update(gameTime);
-            items[idxItem].Update(gameTime);
-            block.Update(gameTime, controller);
+            enemies[idxEnemy].Update(gameTime, controller);
+            items[idxItem].Update(gameTime, controller);
+            blocks[idxBlock].Update(gameTime, controller);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -110,7 +132,7 @@ namespace cse3902
             player.Draw(spriteBatch);
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);
-            block.Draw(spriteBatch);
+            blocks[idxBlock].Draw(spriteBatch);
         }
     }
 }
