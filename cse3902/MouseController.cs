@@ -34,5 +34,29 @@ namespace cse3902
         {
             return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
         }
+
+        public bool isPlayerMoveLeftPressed() { return false; }
+        public bool isPlayerMoveRightPressed() { return false; }
+        public bool isPlayerMoveUpPressed() { return false; }
+        public bool isPlayerMoveDownPressed() { return false; }
+        public bool isPlayerAttackJustPressed() { return false; }
+        public bool isPlayerTakeDamageJustPressed() { return false; }
+        public bool isPlayerUseItem1JustPressed() { return false; }
+        public bool isPlayerUseItem2JustPressed() { return false; }
+        public bool isPlayerUseItem3JustPressed() { return false; }
+        public bool isPlayerUseItem4JustPressed() { return false; }
+        public bool isPlayerUseItem5JustPressed() { return false; }
+        public bool isPlayerUseItem6JustPressed() { return false; }
+        public bool isPlayerUseItem7JustPressed() { return false; }
+        public bool isPlayerUseItem8JustPressed() { return false; }
+        public bool isPlayerUseItem9JustPressed() { return false; }
+        public bool isEnemyPressO() { return false; }
+        public bool isEnemyPressP() { return false; }
+        public bool isPreviousItemKeyPress() { return false; }
+        public bool isNextItemKeyPress() { return false; }
+        public bool isNextBlockPressed() { return false; }
+        public bool isPreviousBlockPressed() { return false; }
+        public bool isResetPressed() { return false; }
+        public bool isQuitPressed() { return false; }
     }
 }
