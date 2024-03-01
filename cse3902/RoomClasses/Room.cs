@@ -6,6 +6,7 @@ using cse3902.Enemy;
 using cse3902.Objects;
 using cse3902.WallClasses;
 using System.Diagnostics;
+using cse3902.DoorClasses;
 
 
 namespace cse3902.RoomClasses
@@ -17,17 +18,23 @@ namespace cse3902.RoomClasses
         private int idxEnemy;
         private List<IItemPickup> items;
         private int idxItem;
+        private List<Block> blocks = new List<Block>();
         private GameContent content;
 
         private List<List<int>> tileIds;
-        private int blockIndex;
         private MapLoader ml;
         private Vector2 position = new Vector2(96,96);
         private Wall wall;
+        private Doors doors;
 
         public Room(GameContent content, IController controller, string xmlFilePath)
         {
             this.content = content;
+            for (int i = 0; i < 84; i++)
+            {
+                Block b = new Block(content, 0, new Vector2(0, 0));
+                blocks.Add(b);
+            }
             enemies = new List<IEnemy>()
             {
                 new Skeleton(content),
@@ -77,11 +84,29 @@ namespace cse3902.RoomClasses
             idxItem = 0;
 
             wall = new Wall(content);
+            doors = new Doors(content);
 
             //handle loading map
             ml = new MapLoader(xmlFilePath);
             tileIds = ml.LoadMap();
-            //Debug.WriteLine(tileIds[0][0]);
+            Debug.WriteLine(tileIds[0][0]);
+
+            int idx = 0;
+            foreach (List<int> row in tileIds)
+            {
+                position.X = 96;
+
+                foreach (int element in row)
+                {
+                    blocks[idx].BlockIndex = element;
+                    blocks[idx].Position = position;
+
+                    idx++;
+                    position.X += 48;
+
+                }
+                position.Y += 48;
+            }
 
         }
 
@@ -119,25 +144,16 @@ namespace cse3902.RoomClasses
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            foreach (Block block in blocks)
+            {
+                block.Draw(spriteBatch);
+            }
+            doors.Draw(spriteBatch);
+            wall.Draw(spriteBatch);
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);
-            wall.Draw(spriteBatch);
 
-            foreach (List<int> row in tileIds)
-            {
-                position.X = 96;
-
-                foreach (int element in row)
-                {
-                   
-                    Block block = new Block(content, element, position);
-                    block.Draw(spriteBatch);
-                    position.X += 48;
-
-                }
-                position.Y += 48;
-            }
+            
            
         }
 
