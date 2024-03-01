@@ -4,8 +4,10 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
-using System.Numerics;
+using cse3902.WallClasses;
 using System.Diagnostics;
+using cse3902.DoorClasses;
+
 
 namespace cse3902.RoomClasses
 {
@@ -16,12 +18,30 @@ namespace cse3902.RoomClasses
         private int idxEnemy;
         public List<IItemPickup> items;
         private int idxItem;
-        private IBlock block;
-        List<List<int>> TileIds;
-        MapLoader ml;
+        private List<Block> blocks = new List<Block>();
+        private List<Doors> doors = new List<Doors>();
+        private GameContent content;
 
-        public Room(GameContent content, IController controller, string xmlFilePath)
+        private List<List<int>> tileIds;
+        private List<List<int>> doorIds;
+        private MapLoader ml;
+        private MapLoader doorML;
+        private Vector2 position = new Vector2(96,96);
+        private Wall wall;
+
+        public Room(GameContent content, string xmlFilePath, string doorFilePath)
         {
+            this.content = content;
+            for (int i = 0; i < 84; i++)
+            {
+                Block b = new Block(content, 0, new Vector2(0, 0));
+                blocks.Add(b);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Doors d = new Doors(content, 0, 0);
+                doors.Add(d);
+            }
             enemies = new List<IEnemy>()
             {
                 new Skeleton(content),
@@ -70,15 +90,47 @@ namespace cse3902.RoomClasses
             };
             idxItem = 0;
 
-          //  block = new Block(content);
+            wall = new Wall(content);
+            //doors = new Doors(content);
 
             //handle loading map
             ml = new MapLoader(xmlFilePath);
-            TileIds = ml.LoadMap();
+            tileIds = ml.LoadMap();
+
+            doorML = new MapLoader(doorFilePath);
+            doorIds = doorML.LoadMap();
+
+            int idx = 0;
+            foreach (List<int> row in tileIds)
+            {
+                position.X = 96;
+
+                foreach (int element in row)
+                {
+                    blocks[idx].BlockIndex = element;
+                    blocks[idx].Position = position;
+
+                    idx++;
+                    position.X += 48;
+
+                }
+                position.Y += 48;
+            }
+
+            int type = 0;
+            foreach (List<int> row in doorIds)
+            {
+                foreach (int element in row)
+                {
+                    doors[type].Idx = element;
+                    doors[type].DoorType = type;
+                    type++;
+                }
+            }
 
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             if (controller.isEnemyPressP())
             {
@@ -103,22 +155,19 @@ namespace cse3902.RoomClasses
                 if (idxItem < 0) idxItem = items.Count - 1;
             }
 
-
-            enemies[idxEnemy].Update(gameTime,controller);
+            enemies[idxEnemy].Update(gameTime, controller);
             items[idxItem].Update(gameTime, controller);
-            block.Update(gameTime, controller);
-
-
+            blocks.ForEach(b => b.Update(gameTime, controller));
         }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+            blocks.ForEach(b => b.Draw(spriteBatch));
+            doors.ForEach(d => d.Draw(spriteBatch));
+            wall.Draw(spriteBatch);
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);
-            block.Draw(spriteBatch);
         }
-
-
     }
 }
 

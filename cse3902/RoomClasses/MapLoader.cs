@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace cse3902.RoomClasses
 {
@@ -18,28 +22,40 @@ namespace cse3902.RoomClasses
         {
             List<List<int>> tileIds = new List<List<int>>();
 
-            try
+            // Get the directory where the solution file resides
+            string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+
+            // Define the relative path to the XML file
+            string relativePath = xmlFilePath;
+
+            // Combine to get the full path
+            string filePath = Path.Combine(solutionDir, relativePath);
+            
+            XmlDocument doc = new XmlDocument();
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
             {
-                XDocument doc = XDocument.Load(xmlFilePath);
-
-                foreach (XElement settingElement in doc.Descendants("Setting"))
-                {
-                    if (settingElement.Attribute("name")?.Value == "TileIds")
-                    {
-                        foreach (XElement rowElement in settingElement.Value.Split('\n').Select(line => new XElement("Row", line)).ToList())
-                        {
-                            List<int> row = rowElement.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                                .Select(value => int.Parse(value))
-                                .ToList();
-
-                            tileIds.Add(row);
-                        }
-                    }
-                }
+                doc.Load(fs);
             }
-            catch (Exception e)
+
+            // Find the Setting node
+            XmlNode settingNode = doc.SelectSingleNode("/Settings/Setting");
+
+            // Get the inner text containing the matrix
+            string matrixText = settingNode.InnerText.Trim();
+
+            // Split the matrix text into rows
+            string[] rows = matrixText.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            // Iterate through rows and columns to fill the matrix
+            foreach (string row in rows)
             {
-                Console.WriteLine($"Error loading map: {e.Message}");
+                List<int> newRow = new List<int>();
+                string[] values = row.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                foreach (string value in values)
+                {
+                    newRow.Add(int.Parse(value));
+                }
+                tileIds.Add(newRow);
             }
 
             return tileIds;

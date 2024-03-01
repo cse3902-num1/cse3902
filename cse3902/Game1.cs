@@ -1,6 +1,12 @@
 ﻿using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using cse3902.Objects;
+using cse3902.Enemy;
+using System;
+using System.IO;
+
 
 namespace cse3902;
 
@@ -14,6 +20,7 @@ public class Game1 : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     public KeyboardController controller;
+    private MouseController mouseController;
     private GameContent gameContent;
     //public static Room currRoom;
     private Level level;
@@ -25,10 +32,12 @@ public class Game1 : Game
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         controller = new KeyboardController();
+        mouseController = new MouseController();
     }
 
     protected override void Initialize()
     {
+        this.IsMouseVisible = true;
         graphics.PreferredBackBufferWidth = 768; // Change this to your desired width
         graphics.PreferredBackBufferHeight = 528; // Change this to your desired height
         graphics.ApplyChanges();
@@ -49,6 +58,7 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         controller.Update(gameTime);
+        mouseController.Update(gameTime);
 
         /* reset level if R is pressed */
         if (controller.isResetPressed())
@@ -62,7 +72,7 @@ public class Game1 : Game
             Exit();
         }
 
-        level.Update(gameTime, controller);
+        level.Update(gameTime, controller, mouseController);
 
         base.Update(gameTime);
     }
@@ -76,14 +86,14 @@ public class Game1 : Game
         s.Filter = TextureFilter.Point;
 
         spriteBatch.Begin(samplerState: s);
-
+        /*
         int screenWidth = GraphicsDevice.Viewport.Width;
         int screenHeight = GraphicsDevice.Viewport.Height;
         int roomWidth = 256 * 3; // Considering the scale factor of 3.0f
         int roomHeight = 176 * 3; // Considering the scale factor of 3.0f
-        Vector2 position = new Vector2((screenWidth - roomWidth) / 2, (screenHeight - roomHeight) / 2);
+        Vector2 position = new Vector2((screenWidth - roomWidth) / 2, (screenHeight - roomHeight) / 2);*/
 
-        /* Draw the room texture */
+        /* Draw the room texture *//*
         spriteBatch.Draw(room,
             position,
             new Rectangle(258, 886, 256, 176),
@@ -93,7 +103,7 @@ public class Game1 : Game
             3.0f,
             SpriteEffects.None,
             1.0f);
-
+        */
 
         level.Draw(spriteBatch);
        
