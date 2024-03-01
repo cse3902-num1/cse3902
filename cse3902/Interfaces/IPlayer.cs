@@ -8,7 +8,7 @@ namespace cse3902
 	{
         public Vector2 Position {set;get;}
         public Direction Facing {set;get;}
-        public void Update(GameTime gameTime,IController keyboard);
+        public void Update(GameTime gameTime, KeyboardController keyboard);
         public void Draw(SpriteBatch spriteBatch);
         public void Move(Vector2 direction);
         public void Attack();

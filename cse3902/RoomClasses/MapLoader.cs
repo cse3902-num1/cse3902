@@ -26,13 +26,13 @@ namespace cse3902.RoomClasses
             string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
 
             // Define the relative path to the XML file
-            string relativePath = @"TilesData/Tile0.xml";
+            string relativePath = xmlFilePath;
 
             // Combine to get the full path
-            string xmlFilePath = Path.Combine(solutionDir, relativePath);
+            string filePath = Path.Combine(solutionDir, relativePath);
             
             XmlDocument doc = new XmlDocument();
-            using (FileStream fs = new FileStream(xmlFilePath, FileMode.Open))
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
             {
                 doc.Load(fs);
             }

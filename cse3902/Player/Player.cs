@@ -21,7 +21,7 @@ namespace cse3902
             projectiles = new List<IProjectile>();
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             if (controller.isPlayerTakeDamageJustPressed() )
             {

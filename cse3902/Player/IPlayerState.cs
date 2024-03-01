@@ -5,7 +5,7 @@ namespace cse3902
 {
     public interface IPlayerState
     {
-        public void Update(GameTime gameTime, IController controller);
+        public void Update(GameTime gameTime, KeyboardController controller);
         public void Draw(SpriteBatch spriteBatch);
     }
 }

@@ -49,7 +49,7 @@ namespace cse3902
             /* TODO: use the item */
             player.UseItem(item);
         }
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             /* TODO: change to idle state if itemUsageSprite animation is done */
             if (sprites[player.Facing].Frame == 0)

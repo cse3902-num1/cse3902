@@ -47,7 +47,7 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             /* go to idle state if attack animation is done */
             if (sprites[player.Facing].Frame == 3)

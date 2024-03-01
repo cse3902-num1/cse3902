@@ -24,7 +24,6 @@ namespace cse3902.Objects
         private List<Sprite> blocks;
         private Vector2 position;
        
-        private float x = 200, y = 200;
        
         public bool isVisible = true;
 

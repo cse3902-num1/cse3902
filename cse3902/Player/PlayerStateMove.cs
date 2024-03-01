@@ -49,7 +49,7 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             /* move player if any movement key is pressed */
             Vector2 position = player.Position;

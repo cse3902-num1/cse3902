@@ -21,6 +21,7 @@ public class Game1 : Game
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     public KeyboardController controller;
+    private MouseController mouseController;
     private GameContent gameContent;
     
     private Level level;
@@ -32,10 +33,12 @@ public class Game1 : Game
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         controller = new KeyboardController();
+        mouseController = new MouseController();
     }
 
     protected override void Initialize()
     {
+        this.IsMouseVisible = true;
         graphics.PreferredBackBufferWidth = 768; // Change this to your desired width
         graphics.PreferredBackBufferHeight = 528; // Change this to your desired height
         graphics.ApplyChanges();
@@ -56,6 +59,7 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         controller.Update(gameTime);
+        mouseController.Update(gameTime);
 
         /* reset level if R is pressed */
         if (controller.isResetPressed())
@@ -69,7 +73,7 @@ public class Game1 : Game
             Exit();
         }
 
-        level.Update(gameTime, controller);
+        level.Update(gameTime, controller, mouseController);
 
         base.Update(gameTime);
     }

@@ -45,7 +45,7 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             /* enter move state if any movement keys are pressed */
             if (controller.isPlayerMoveLeftPressed()

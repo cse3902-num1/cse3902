@@ -8,15 +8,16 @@ public interface IController
 
     public void Update(GameTime gameTime);
 
-    /* player keys */
+    /* player keys *//*
     public bool isPlayerMoveLeftPressed();
     public bool isPlayerMoveRightPressed();
     public bool isPlayerMoveUpPressed();
     public bool isPlayerMoveDownPressed();
     public bool isPlayerAttackJustPressed();
-    public bool isPlayerTakeDamageJustPressed();
+    public bool isPlayerTakeDamageJustPressed();*/
 
     /* player item use keys */
+    /*
     public bool isPlayerUseItem1JustPressed();
     public bool isPlayerUseItem2JustPressed();
     public bool isPlayerUseItem3JustPressed();
@@ -26,20 +27,30 @@ public interface IController
     public bool isPlayerUseItem7JustPressed();
     public bool isPlayerUseItem8JustPressed();
     public bool isPlayerUseItem9JustPressed();
+    */
 
     /* enemy keys */
+    /*
     public bool isEnemyPressO();
     public bool isEnemyPressP();
+    */
 
     /* item keys */
+    /*
     public bool isPreviousItemKeyPress();
     public bool isNextItemKeyPress();
+    */
 
     /* block keys */
+    /*
     public bool isNextBlockPressed();
     public bool isPreviousBlockPressed();
+    */
 
     /* gameplay keys */
+    /*
     public bool isResetPressed();
     public bool isQuitPressed();
+    */
+    
 }

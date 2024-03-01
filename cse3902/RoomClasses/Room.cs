@@ -19,21 +19,28 @@ namespace cse3902.RoomClasses
         private List<IItemPickup> items;
         private int idxItem;
         private List<Block> blocks = new List<Block>();
+        private List<Doors> doors = new List<Doors>();
         private GameContent content;
 
         private List<List<int>> tileIds;
+        private List<List<int>> doorIds;
         private MapLoader ml;
+        private MapLoader doorML;
         private Vector2 position = new Vector2(96,96);
         private Wall wall;
-        private Doors doors;
 
-        public Room(GameContent content, IController controller, string xmlFilePath)
+        public Room(GameContent content, string xmlFilePath, string doorFilePath)
         {
             this.content = content;
             for (int i = 0; i < 84; i++)
             {
                 Block b = new Block(content, 0, new Vector2(0, 0));
                 blocks.Add(b);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Doors d = new Doors(content, 0, 0);
+                doors.Add(d);
             }
             enemies = new List<IEnemy>()
             {
@@ -84,12 +91,14 @@ namespace cse3902.RoomClasses
             idxItem = 0;
 
             wall = new Wall(content);
-            doors = new Doors(content);
+            //doors = new Doors(content);
 
             //handle loading map
             ml = new MapLoader(xmlFilePath);
             tileIds = ml.LoadMap();
-            Debug.WriteLine(tileIds[0][0]);
+
+            doorML = new MapLoader(doorFilePath);
+            doorIds = doorML.LoadMap();
 
             int idx = 0;
             foreach (List<int> row in tileIds)
@@ -108,9 +117,20 @@ namespace cse3902.RoomClasses
                 position.Y += 48;
             }
 
+            int type = 0;
+            foreach (List<int> row in doorIds)
+            {
+                foreach (int element in row)
+                {
+                    doors[type].Idx = element;
+                    doors[type].DoorType = type;
+                    type++;
+                }
+            }
+
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller)
         {
             if (controller.isEnemyPressP())
             {
@@ -148,7 +168,10 @@ namespace cse3902.RoomClasses
             {
                 block.Draw(spriteBatch);
             }
-            doors.Draw(spriteBatch);
+            foreach (Doors door in doors)
+            {
+                door.Draw(spriteBatch);
+            }
             wall.Draw(spriteBatch);
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);

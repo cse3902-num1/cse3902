@@ -7,6 +7,7 @@ using cse3902.Objects;
 using cse3902.RoomClasses;
 using System;
 using cse3902.DoorClasses;
+using Microsoft.Xna.Framework.Input;
 
 namespace cse3902
 {
@@ -14,7 +15,7 @@ namespace cse3902
     {
         private Player player;
         private List<Room> rooms;
-        
+        private int roomIdx = 0;
     
 
         public Level(GameContent content, IController controller)
@@ -23,14 +24,19 @@ namespace cse3902
             player.Position = new Vector2(100, 100);
             rooms = new List<Room>
             {
-                new Room(content, controller, "./TilesData/Tile0.xml")
+                new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml"),
+                new Room(content, @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml"),
+                new Room(content, @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml"),
+                new Room(content, @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml"),
+                new Room(content, @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml")
+
             };
             
 
 
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, KeyboardController controller, MouseController mouseController)
         {
 
             //add room update
@@ -38,18 +44,22 @@ namespace cse3902
             foreach(Room r in rooms){
                 r.Update(gameTime, controller);
             }
-            
+            if (mouseController.isLeftClick())
+            {
+                roomIdx++;
+                roomIdx %= rooms.Count;
+            }
+            if (mouseController.isRightClick())
+            {
+                roomIdx--;
+                if (roomIdx < 0) roomIdx = rooms.Count - 1;
+            }
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-           
-            
-            foreach (Room r in rooms)
-            {
-                r.Draw(spriteBatch);
-            }
+            rooms[roomIdx].Draw(spriteBatch);
             player.Draw(spriteBatch);
 
         }
