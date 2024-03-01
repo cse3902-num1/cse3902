@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,7 +33,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
         IsDead = true;
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public void Update(GameTime gameTime, List<IController> controllers)
     {
         Position += Velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
         totalDistance += Velocity.Length() * (float) gameTime.ElapsedGameTime.TotalSeconds; /* slow but should be fine for now */
@@ -48,7 +49,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
             Die();
         }
 
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
     }
 
     public void Draw(SpriteBatch spriteBatch)

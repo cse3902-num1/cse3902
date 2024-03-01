@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
@@ -16,9 +17,9 @@ namespace cse3902.Objects
             Position = new Vector2(0, 0);
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
-            sprite.Update(gameTime, controller);
+            sprite.Update(gameTime, controllers);
         }
 
         public void Draw(SpriteBatch spriteBatch)

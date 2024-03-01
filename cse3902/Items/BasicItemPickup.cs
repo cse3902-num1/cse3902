@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,8 +20,8 @@ public abstract class BasicItemPickup : IItemPickup
         sprite.Draw(spriteBatch);
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public void Update(GameTime gameTime, List<IController> controllers)
     {
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
     }
 }

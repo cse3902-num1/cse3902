@@ -22,16 +22,16 @@ namespace cse3902
             projectiles = new List<IProjectile>();
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
-            if (controller.isPlayerTakeDamageJustPressed() )
+            if (controllers.Any(c => c.isPlayerTakeDamageJustPressed()))
             {
                 TakeDamage();
             }
 
-            State.Update(gameTime, controller);
+            State.Update(gameTime, controllers);
 
-            projectiles.ForEach(p => p.Update(gameTime, controller));
+            projectiles.ForEach(p => p.Update(gameTime, controllers));
 
             /* remove dead projectiles */
             projectiles = projectiles.Where(p => !p.IsDead).ToList();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
@@ -36,7 +37,7 @@ public abstract class BasicDirectionalProjectile : IProjectile
         currentSprite.Draw(spriteBatch);
     }
 
-    public virtual void Update(GameTime gameTime, IController controller)
+    public virtual void Update(GameTime gameTime, List<IController> controllers)
     {
         Position += Velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -45,6 +46,6 @@ public abstract class BasicDirectionalProjectile : IProjectile
         if (Velocity.Y >= 0) currentSprite = downSprite;
         if (Velocity.Y < 0)  currentSprite = upSprite;
 
-        currentSprite.Update(gameTime, controller);
+        currentSprite.Update(gameTime, controllers);
     }
 }

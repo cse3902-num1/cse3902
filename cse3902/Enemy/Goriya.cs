@@ -127,7 +127,7 @@ namespace cse3902.Enemy
             }
         }
 
-        public override void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, List<IController> controllers)
         {
             randomChangeTimer.Start();
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
@@ -171,7 +171,7 @@ namespace cse3902.Enemy
                     isAttack = false;
                     goingBack = false;
                 }
-                greenBoomerang.Update(gameTime, controller);
+                greenBoomerang.Update(gameTime, controllers);
             }
             else
             {
@@ -179,7 +179,7 @@ namespace cse3902.Enemy
                 ChangeAction(randomNum);
             }
 
-            currentSprite.Update(gameTime, controller);
+            currentSprite.Update(gameTime, controllers);
         }
     }
 }

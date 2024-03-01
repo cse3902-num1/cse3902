@@ -67,7 +67,7 @@ namespace cse3902
         }
 
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (frameTimer < frameTimerThreshold) return;

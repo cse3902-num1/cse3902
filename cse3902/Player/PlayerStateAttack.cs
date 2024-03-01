@@ -47,7 +47,7 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             /* go to idle state if attack animation is done */
             if (sprites[player.Facing].IsAnimationDone())
@@ -55,7 +55,7 @@ namespace cse3902
                 player.State = new PlayerStateIdle(content, player);
             }
 
-            sprites[player.Facing].Update(gameTime, controller);
+            sprites[player.Facing].Update(gameTime, controllers);
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace cse3902
 {
@@ -49,26 +50,26 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             /* move player if any movement key is pressed */
             Vector2 position = player.Position;
-            if (controller.isPlayerMoveLeftPressed() == true)
+            if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
                 player.Facing = Direction.Left;
                 position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (controller.isPlayerMoveRightPressed() == true)
+            else if (controllers.Any(c => c.isPlayerMoveRightPressed()) == true)
             {
                 player.Facing = Direction.Right;
                 position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (controller.isPlayerMoveUpPressed() == true)
+            else if (controllers.Any(c => c.isPlayerMoveUpPressed()) == true)
             {
                 player.Facing = Direction.Up;
                 position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (controller.isPlayerMoveDownPressed() == true)
+            else if (controllers.Any(c => c.isPlayerMoveDownPressed()) == true)
             {
                 player.Facing = Direction.Down;
                 position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -82,7 +83,7 @@ namespace cse3902
 
             player.Position = position;
 
-            sprites[player.Facing].Update(gameTime, controller);
+            sprites[player.Facing].Update(gameTime, controllers);
         }
 
         public void Draw(SpriteBatch spriteBatch)

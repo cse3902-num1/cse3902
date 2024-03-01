@@ -78,13 +78,10 @@ namespace cse3902.Objects
             blocks[blockIndex].Draw(spriteBatch);
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             
         }
-
-
-
     }
 }
 

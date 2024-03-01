@@ -29,9 +29,9 @@ public class BlueArrow : BasicDirectionalProjectile
         /* TODO: "spawn" the particle effect in the level */
     }
 
-    public override void Update(GameTime gameTime, IController controller)
+    public override void Update(GameTime gameTime, List<IController> controllers)
     {
-        base.Update(gameTime, controller);
+        base.Update(gameTime, controllers);
 
         if (Vector2.Distance(initialPosition, Position) > maxDistance)
         {

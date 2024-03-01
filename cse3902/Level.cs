@@ -8,6 +8,7 @@ using cse3902.RoomClasses;
 using System;
 using cse3902.DoorClasses;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace cse3902
 {
@@ -18,7 +19,7 @@ namespace cse3902
         private int roomIdx = 0;
     
 
-        public Level(GameContent content, IController controller)
+        public Level(GameContent content)
         {
             player = new Player(content);
             player.Position = new Vector2(100, 100);
@@ -33,22 +34,22 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, KeyboardController controller, MouseController mouseController)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
 
             //add room update
-            player.Update(gameTime, controller);
-            rooms.ForEach(r => r.Update(gameTime, controller));
+            player.Update(gameTime, controllers);
+            rooms.ForEach(r => r.Update(gameTime, controllers));
             foreach(Room r in rooms){
-                r.Update(gameTime, controller);
+                r.Update(gameTime, controllers);
             }
 
-            if (mouseController.isLeftClick())
+            if (controllers.Any(c => c.isLeftClick()))
             {
                 roomIdx++;
                 roomIdx %= rooms.Count;
             }
-            if (mouseController.isRightClick())
+            if (controllers.Any(c => c.isRightClick()))
             {
                 roomIdx--;
                 if (roomIdx < 0) roomIdx = rooms.Count - 1;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,9 +18,9 @@ public abstract class BasicParticleEffect : IParticleEffect
         IsDead = false;
     }
 
-    public virtual void Update(GameTime gameTime, IController controller)
+    public virtual void Update(GameTime gameTime, List<IController> controllers)
     {
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
 
         if (sprite.IsAnimationDone())
         {

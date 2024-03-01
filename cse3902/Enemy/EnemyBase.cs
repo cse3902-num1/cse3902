@@ -45,9 +45,6 @@ namespace cse3902.Enemy
           
         }
 
-        
-
-        public abstract void Update(GameTime gameTime, IController controller);
-
+        public abstract void Update(GameTime gameTime, List<IController> controllers);
     }
 }

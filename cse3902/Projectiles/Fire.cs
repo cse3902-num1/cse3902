@@ -28,10 +28,10 @@ public class Fire : IProjectile
         IsDead = false;
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public void Update(GameTime gameTime, List<IController> controllers)
     {
         sprite.Position = Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
     }
 
     public void Draw(SpriteBatch spriteBatch)

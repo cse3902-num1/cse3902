@@ -38,9 +38,9 @@ public class Bomb : IProjectile
         /* TODO: "spawn" the particle effect in the level */
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public void Update(GameTime gameTime, List<IController> controllers)
     {
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
 
         if (explodeTimer.ElapsedMilliseconds >= 1500)
         {

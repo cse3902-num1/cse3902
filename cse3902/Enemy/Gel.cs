@@ -57,7 +57,7 @@ namespace cse3902.Enemy
         }
 
 
-        public override void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, List<IController> controllers)
         {
 
             randomChangeTimer.Start();
@@ -70,7 +70,7 @@ namespace cse3902.Enemy
 
             Move(gameTime, randomNum);
 
-            sprite.Update(gameTime, controller);
+            sprite.Update(gameTime, controllers);
         }
     }
 }

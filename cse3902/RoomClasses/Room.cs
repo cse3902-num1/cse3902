@@ -7,6 +7,7 @@ using cse3902.Objects;
 using cse3902.WallClasses;
 using System.Diagnostics;
 using cse3902.DoorClasses;
+using System.Linq;
 
 
 namespace cse3902.RoomClasses
@@ -130,34 +131,34 @@ namespace cse3902.RoomClasses
 
         }
 
-        public void Update(GameTime gameTime, KeyboardController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
-            if (controller.isEnemyPressP())
+            if (controllers.Any(c => c.isEnemyPressP()))
             {
                 idxEnemy++;
                 idxEnemy %= enemies.Count;
             }
-            if (controller.isEnemyPressO())
+            if (controllers.Any(c => c.isEnemyPressO()))
             {
                 idxEnemy--;
                 if (idxEnemy < 0) idxEnemy = enemies.Count - 1;
             }
 
-            if (controller.isNextItemKeyPress())
+            if (controllers.Any(c => c.isNextItemKeyPress()))
             {
                 idxItem++;
                 idxItem %= items.Count;
             }
 
-            if (controller.isPreviousItemKeyPress())
+            if (controllers.Any(c => c.isPreviousItemKeyPress()))
             {
                 idxItem--;
                 if (idxItem < 0) idxItem = items.Count - 1;
             }
 
-            enemies[idxEnemy].Update(gameTime, controller);
-            items[idxItem].Update(gameTime, controller);
-            blocks.ForEach(b => b.Update(gameTime, controller));
+            enemies[idxEnemy].Update(gameTime, controllers);
+            items[idxItem].Update(gameTime, controllers);
+            blocks.ForEach(b => b.Update(gameTime, controllers));
         }
 
         public void Draw(SpriteBatch spriteBatch)

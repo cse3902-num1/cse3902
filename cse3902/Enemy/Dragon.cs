@@ -89,7 +89,7 @@ namespace cse3902.Enemy
             ballMid.Draw(spriteBatch);
         }
 
-        public override void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, List<IController> controllers)
         {
             randomChangeTimer.Start();
             attackTimer.Start();
@@ -108,13 +108,13 @@ namespace cse3902.Enemy
                 attackTimer.Restart();
                 Attack();
             }
-            ballUp.Update(gameTime, controller);
-            ballDown.Update(gameTime, controller);
-            ballMid.Update(gameTime, controller);
+            ballUp.Update(gameTime, controllers);
+            ballDown.Update(gameTime, controllers);
+            ballMid.Update(gameTime, controllers);
 
             Move(gameTime, randomNum);
 
-            sprite.Update(gameTime, controller);
+            sprite.Update(gameTime, controllers);
             /*if (BoxCollider.IsColliding(dragon.collider)) // Assuming you have a reference to the dragon
             {
                 dragon.TakeDamage(damageAmount); // damageAmount is the damage this projectile does
