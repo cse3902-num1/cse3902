@@ -8,15 +8,10 @@ using System.Diagnostics;
 
 namespace cse3902.Enemy
 {
-    public class Skeleton : IEnemy
+    public class Skeleton : EnemyBase
     {
-        public Vector2 Position {set;get;}
-        private Sprite sprite;
-        private Stopwatch randomChangeTimer = new Stopwatch();
-        private Random random = new Random();
-        private int randomNum = 1;
 
-        public Skeleton(GameContent content)
+        public Skeleton(GameContent content):base(content)
         {
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
@@ -29,7 +24,7 @@ namespace cse3902.Enemy
             Position = new Vector2(200, 200);
         }
 
-        public void Move(GameTime gameTime, int randomNum)
+        public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
             switch (randomNum)
@@ -50,27 +45,21 @@ namespace cse3902.Enemy
             Position = newPosition;
         }
 
-        public void Attack()
+        public override void Attack()
         {
 
         }
 
-        public void TakeDmg()
+        public override void TakeDmg(int damage)
         {
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            sprite.Position = Position;
-            sprite.Draw(spriteBatch);
-        }
 
-        public void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, IController controller)
         {
 
             randomChangeTimer.Start();
-
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
             {
                 randomChangeTimer.Restart();

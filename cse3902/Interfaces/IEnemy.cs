@@ -9,5 +9,6 @@ public interface IEnemy : IGameObject
 
     public void Attack();
 
-    public void TakeDmg();
+    public void TakeDmg(int damage);
+    
 }

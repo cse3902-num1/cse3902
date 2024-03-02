@@ -21,6 +21,7 @@ public class BoxCollider : ICollider
         switch (collider)
         {
             case BoxCollider boxCollider: return rectangle.Contains(boxCollider.rectangle);
+            
             /* if we had other collider types, their collision checks would be added here */
         }
 

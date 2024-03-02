@@ -5,15 +5,16 @@ using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
 using System.Numerics;
+using System.Diagnostics;
 
 namespace cse3902.RoomClasses
 {
 
     public class Room
     {
-        private List<IEnemy> enemies;
+        public List<IEnemy> enemies;
         private int idxEnemy;
-        private List<IItemPickup> items;
+        public List<IItemPickup> items;
         private int idxItem;
         private IBlock block;
         List<List<int>> TileIds;
@@ -69,7 +70,7 @@ namespace cse3902.RoomClasses
             };
             idxItem = 0;
 
-            block = new Block(content);
+          //  block = new Block(content);
 
             //handle loading map
             ml = new MapLoader(xmlFilePath);
@@ -103,15 +104,15 @@ namespace cse3902.RoomClasses
             }
 
 
-            enemies[idxEnemy].Update(gameTime);
-            items[idxItem].Update(gameTime);
+            enemies[idxEnemy].Update(gameTime,controller);
+            items[idxItem].Update(gameTime, controller);
             block.Update(gameTime, controller);
 
 
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            
             enemies[idxEnemy].Draw(spriteBatch);
             items[idxItem].Draw(spriteBatch);
             block.Draw(spriteBatch);

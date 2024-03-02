@@ -12,6 +12,7 @@ namespace cse3902
     {
         public Vector2 Position {set;get;} = Vector2.Zero;
         public Direction Facing {set;get;}
+        public ICollider collider;
         public IPlayerState State;
         private List<IProjectile> projectiles;
         private int health = 5;

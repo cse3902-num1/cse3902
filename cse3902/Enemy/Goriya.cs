@@ -8,9 +8,8 @@ using System.Diagnostics;
 
 namespace cse3902.Enemy
 {
-    public class Goriya : IEnemy
+    public class Goriya : EnemyBase
     {
-        public Vector2 Position {set;get;}
         private enum GoriyaState { Left, Right, Up, Down }
         private GoriyaState currentState = GoriyaState.Down;
         private Sprite spriteUp;
@@ -18,14 +17,11 @@ namespace cse3902.Enemy
         private Sprite spriteLeft;
         private Sprite spriteRight;
         private Sprite currentSprite;
-        private Stopwatch randomChangeTimer = new Stopwatch();
-        private Random random = new Random();
-        private int randomNum = 1;
         private GreenBoomerang greenBoomerang;
         private bool isAttack;
         private bool goingBack = false;
 
-        public Goriya(GameContent content)
+        public Goriya(GameContent content) : base(content)
         {
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
@@ -65,7 +61,7 @@ namespace cse3902.Enemy
             Position = new Vector2(400, 200);
         }
 
-        public void Move(GameTime gameTime, int randomNum)
+        public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             switch (currentState)
@@ -109,18 +105,18 @@ namespace cse3902.Enemy
             }
         }
 
-        public void Attack()
+        public override void Attack()
         {
             isAttack = true;
             greenBoomerang.Position = Position;
         }
 
-        public void TakeDmg()
+        public override void TakeDmg(int damage)
         {
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.Position = Position;
             currentSprite.Draw(spriteBatch);
@@ -131,15 +127,14 @@ namespace cse3902.Enemy
             }
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, IController controller)
         {
             randomChangeTimer.Start();
-
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
             {
                 randomChangeTimer.Restart();
 
-                randomNum = random.Next(1, 6);
+                randomNum = random.Next(1, 5);
             }
 
             if (isAttack)

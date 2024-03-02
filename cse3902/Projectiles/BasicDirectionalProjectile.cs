@@ -1,7 +1,7 @@
 using cse3902.Interfaces;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 namespace cse3902.Projectiles;
 
 public abstract class BasicDirectionalProjectile : IProjectile
@@ -15,18 +15,18 @@ public abstract class BasicDirectionalProjectile : IProjectile
     protected ISprite rightSprite;
     protected ISprite upSprite;
     protected ISprite downSprite;
-    protected ICollider collider;
-
+    public ICollider collider;
+    
     private ISprite currentSprite;
     
 
     /* need to call this super constructor in the subclass's constructor */
-    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity, ICollider collider)
+    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity)
     {
         IsDead = false;
         Position = position;
         Velocity = velocity;
-        this.collider = collider; 
+        //this.collider = collider;
         currentSprite = downSprite; /* currentSprite can't be null */
     }
 

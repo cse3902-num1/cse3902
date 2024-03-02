@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.RoomClasses;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902;
@@ -14,7 +15,7 @@ public class Game1 : Game
     private SpriteBatch spriteBatch;
     public KeyboardController controller;
     private GameContent gameContent;
-    
+    //public static Room currRoom;
     private Level level;
 
     private Texture2D room;

@@ -19,6 +19,7 @@ namespace cse3902
         {
             player = new Player(content);
             player.Position = new Vector2(100, 100);
+           
 
              
         }
@@ -28,20 +29,20 @@ namespace cse3902
            
             //add room update
             player.Update(gameTime, controller);
-            /*foreach(Room r in rooms){
+            foreach(Room r in rooms){
                 r.Update(gameTime, controller);
             }
-            */
+            
            
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             player.Draw(spriteBatch);
-            /*foreach (Room r in rooms)
+            foreach (Room r in rooms)
             {
                 r.Draw(spriteBatch);
-            }*/
+            }
 
         }
     }
