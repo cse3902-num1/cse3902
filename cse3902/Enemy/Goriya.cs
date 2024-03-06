@@ -63,6 +63,15 @@ namespace cse3902.Enemy
             );
         }
 
+        public Vector2 Position
+        {
+            get { return spriteUp.Position; }
+            set { spriteUp.Position = value;
+                spriteDown.Position = value;
+                spriteLeft.Position = value;
+                spriteRight.Position = value;
+            }
+        }
         public void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

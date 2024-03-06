@@ -7,6 +7,7 @@ using cse3902.Objects;
 using cse3902.WallClasses;
 using System.Diagnostics;
 using cse3902.DoorClasses;
+using System;
 
 
 namespace cse3902.RoomClasses
@@ -42,14 +43,7 @@ namespace cse3902.RoomClasses
                 Doors d = new Doors(content, 0, 0);
                 doors.Add(d);
             }
-            enemies = new List<IEnemy>()
-            {
-                new Skeleton(content),
-                new Dragon(content),
-                new Gel(content),
-                new Keese(content),
-                new Goriya(content),
-            };
+            enemies = new List<IEnemy>() {};
             idxEnemy = 0;
 
             items = new List<IItemPickup>
@@ -109,6 +103,18 @@ namespace cse3902.RoomClasses
                 {
                     blocks[idx].BlockIndex = element;
                     blocks[idx].Position = position;
+                    if (element >= 10)
+                    {
+                        switch(element)
+                        {
+                            case 10: enemies.Add(new Skeleton(content)); enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 11: enemies.Add(new Dragon(content)); enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 12: enemies.Add(new Keese(content)); enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 13: enemies.Add(new Gel(content)); enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 14: enemies.Add(new Goriya(content)); enemies[idxEnemy].Position = position; idxEnemy++; break;
+                        }
+                        blocks[idx].BlockIndex = 0;
+                    }
 
                     idx++;
                     position.X += 48;
@@ -132,17 +138,6 @@ namespace cse3902.RoomClasses
 
         public void Update(GameTime gameTime, KeyboardController controller)
         {
-            if (controller.isEnemyPressP())
-            {
-                idxEnemy++;
-                idxEnemy %= enemies.Count;
-            }
-            if (controller.isEnemyPressO())
-            {
-                idxEnemy--;
-                if (idxEnemy < 0) idxEnemy = enemies.Count - 1;
-            }
-
             if (controller.isNextItemKeyPress())
             {
                 idxItem++;
@@ -155,8 +150,10 @@ namespace cse3902.RoomClasses
                 if (idxItem < 0) idxItem = items.Count - 1;
             }
 
-
-            enemies[idxEnemy].Update(gameTime);
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Update(gameTime);
+            }
             items[idxItem].Update(gameTime);
            
 
@@ -173,7 +170,10 @@ namespace cse3902.RoomClasses
                 door.Draw(spriteBatch);
             }
             wall.Draw(spriteBatch);
-            enemies[idxEnemy].Draw(spriteBatch);
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Draw(spriteBatch);
+            }
             items[idxItem].Draw(spriteBatch);
 
             

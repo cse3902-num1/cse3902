@@ -41,9 +41,7 @@ namespace cse3902
 
             //add room update
             player.Update(gameTime, controller);
-            foreach(Room r in rooms){
-                r.Update(gameTime, controller);
-            }
+            rooms[roomIdx].Update(gameTime, controller);
             if (mouseController.isLeftClick())
             {
                 roomIdx++;

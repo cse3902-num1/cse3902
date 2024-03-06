@@ -27,6 +27,12 @@ namespace cse3902.Enemy
             sprite.SetPosition(200, 200);
         }
 
+        public Vector2 Position
+        {
+            get { return sprite.Position; }
+            set { sprite.Position = value; }
+        }
+
         public void Move(GameTime gameTime, int randomNum)
         {
             switch (randomNum)
