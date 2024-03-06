@@ -27,6 +27,7 @@ namespace cse3902.Enemy
                     new Rectangle(51, 11, 25, 32),
                     new Rectangle(76, 11, 25, 32)
                 }
+                
             );
 
             projectiles = new List<IProjectile>();
@@ -45,7 +46,7 @@ namespace cse3902.Enemy
             // );
 
             Position = new Vector2(500, 200);
-
+            collider = new BoxCollider(Position, Size, ColliderType.ENEMY);
             this.content = content;
         }
 

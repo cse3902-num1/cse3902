@@ -10,11 +10,15 @@ namespace cse3902.Objects
     public abstract class BasicBlock : IBlock
 	{
         public Vector2 Position {set;get;}
-        protected ISprite sprite; /* set in constructor */
+        public Vector2 Size { set; get; }
+        public ColliderType ColliderType { set; get; }
 
+        protected ISprite sprite; /* set in constructor */
+        public ICollider collider;
         public BasicBlock()
         {
             Position = new Vector2(0, 0);
+            
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

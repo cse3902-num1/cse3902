@@ -5,12 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace cse3902.Enemy
 {
     public abstract class EnemyBase : IEnemy
     {
         public Vector2 Position { get; set; }
+        public Vector2 Size { set; get; }
+        public ColliderType ColliderType { set; get; }
         public int HP { get; set; } = 100;
         protected Sprite sprite;
         public ICollider collider;
@@ -18,7 +21,7 @@ namespace cse3902.Enemy
         protected Stopwatch attackTimer = new Stopwatch();
         protected Random random = new Random();
         protected int randomNum;
-
+        
         protected EnemyBase(GameContent content)
         {
 
