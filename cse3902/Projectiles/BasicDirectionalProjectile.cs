@@ -10,24 +10,26 @@ public abstract class BasicDirectionalProjectile : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Velocity {set;get;}
     public Vector2 Position {set;get;}
+    //public Player player;
     
     /* set in constructor */
     protected ISprite leftSprite;
     protected ISprite rightSprite;
     protected ISprite upSprite;
     protected ISprite downSprite;
-    public ICollider collider;
     
     private ISprite currentSprite;
-    
+    public ICollider collider2;
+    public Player player;
 
     /* need to call this super constructor in the subclass's constructor */
-    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity)
+    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity, Player player)
     {
         IsDead = false;
         Position = position;
         Velocity = velocity;
-        //this.collider = collider;
+        this.player = player;
+      
         currentSprite = downSprite; /* currentSprite can't be null */
     }
 
@@ -48,6 +50,12 @@ public abstract class BasicDirectionalProjectile : IProjectile
         if (Velocity.Y < 0)  currentSprite = upSprite;
 
         currentSprite.Update(gameTime, controllers);
-        
+
+        if (collider2.IsColliding(player.collider)) {
+            this.IsDead = true;
+            
+            player.TakeDamage();
+            
+        }
     }
 }

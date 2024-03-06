@@ -18,6 +18,8 @@ public abstract class BasicBoomerangProjectile : IProjectile
     protected bool isReturning;
     protected Vector2 initialPosition;
 
+    public ICollider collider1;
+
     public BasicBoomerangProjectile(Vector2 position, Vector2 velocity, float range)
     {
         IsDead = false;

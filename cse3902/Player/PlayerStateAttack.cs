@@ -55,6 +55,9 @@ namespace cse3902
                 player.State = new PlayerStateIdle(content, player);
             }
 
+
+
+
             sprites[player.Facing].Update(gameTime, controllers);
         }
 

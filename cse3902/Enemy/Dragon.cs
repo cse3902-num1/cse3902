@@ -75,7 +75,7 @@ namespace cse3902.Enemy
         {
             Fireball ballUp = new Fireball(content, 
                 Position,
-                new Vector2(-200f, -50f)
+                new Vector2(-200f, -50f),
             );
             Fireball ballDown = new Fireball(content,
                 Position,

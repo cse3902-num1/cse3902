@@ -5,21 +5,38 @@ namespace cse3902.Projectiles;
 
 public class Fireball : BasicDirectionalProjectile
 {
-    public Fireball(GameContent content, Vector2 position, Vector2 velocity) : base(position, velocity)
+    public Fireball(GameContent content, Vector2 position, Vector2 velocity, Player player) : base(position, velocity, player)
     {
-        leftSprite= new Sprite(content.enemies, 
+        leftSprite = new Sprite(content.enemies,
             new List<Rectangle>()
             {
-                new Rectangle(100, 11, 9, 18),
-                new Rectangle(109, 11, 9, 18),
-                new Rectangle(118, 11, 9, 18),
-                new Rectangle(127, 11, 9, 18)
+                new Rectangle(101, 14, 8, 10),
+                new Rectangle(110, 14, 8, 10),
+                new Rectangle(119, 14, 8, 10),
+                new Rectangle(128, 14, 8, 10)
             },
             new Vector2(4.5f, 9)
         );
         rightSprite = leftSprite; /* lazy but should be fine for now */
         upSprite = leftSprite;
         downSprite = leftSprite;
+        this.collider2 = new BoxCollider(position, new Vector2(8, 10), ColliderType.PROJECTILE);
     }
-
+    public Fireball(GameContent content, Vector2 position, Vector2 velocity) : base(position, velocity)
+    {
+        leftSprite = new Sprite(content.enemies,
+            new List<Rectangle>()
+            {
+                new Rectangle(101, 14, 8, 10),
+                new Rectangle(110, 14, 8, 10),
+                new Rectangle(119, 14, 8, 10),
+                new Rectangle(128, 14, 8, 10)
+            },
+            new Vector2(4.5f, 9)
+        );
+        rightSprite = leftSprite; /* lazy but should be fine for now */
+        upSprite = leftSprite;
+        downSprite = leftSprite;
+        this.collider2 = new BoxCollider(position, new Vector2(8, 10), ColliderType.PROJECTILE);
+    }
 }

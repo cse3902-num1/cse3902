@@ -15,11 +15,12 @@ namespace cse3902
         public ICollider collider;
         public IPlayerState State;
         private List<IProjectile> projectiles;
-        private int health = 5;
+        public int health = 5;
         public Player(GameContent content)
         {
             State = new PlayerStateIdle(content,this);
             projectiles = new List<IProjectile>();
+            collider = new BoxCollider(Position,new Vector2(16,16),ColliderType.PLAYER);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

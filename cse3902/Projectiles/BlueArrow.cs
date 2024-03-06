@@ -20,6 +20,7 @@ public class BlueArrow : BasicDirectionalProjectile
         initialPosition = position;
 
         this.content = content;
+        //this.collider2 = new BoxCollider(position,new Vector2(),ColliderType.PROJECTILE);
     }
 
     private void Die()
