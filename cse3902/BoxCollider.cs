@@ -1,17 +1,20 @@
 using System.Drawing;
+using System.Numerics;
 using cse3902.Interfaces;
 
 namespace cse3902;
 
 public class BoxCollider : ICollider
 {
+    public Vector2 Position {set;get;}
+    public Vector2 Size {set;get;}
     public ColliderType ColliderType {set;get;}
-    private Rectangle rectangle;
     
-    public BoxCollider(Rectangle rectangle, ColliderType type)
+    public BoxCollider(Vector2 position, Vector2 size, ColliderType type)
     {
-        this.rectangle = rectangle;
-        this.ColliderType = type;
+        Position = position;
+        Size = size;
+        ColliderType = type;
     }
 
     public bool IsColliding(ICollider collider)
@@ -20,7 +23,8 @@ public class BoxCollider : ICollider
 
         switch (collider)
         {
-            case BoxCollider boxCollider: return rectangle.Contains(boxCollider.rectangle);
+            // case BoxCollider boxCollider: return rectangle.Contains(boxCollider.rectangle);
+            /* TODO: use position and size instead of rectangles */
             
             /* if we had other collider types, their collision checks would be added here */
         }
