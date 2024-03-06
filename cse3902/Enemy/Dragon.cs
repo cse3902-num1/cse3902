@@ -5,15 +5,17 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace cse3902.Enemy
 {
     public class Dragon : EnemyBase
     {
         
-        private Fireball ballUp;
-        private Fireball ballDown;
-        private Fireball ballMid;
+        private List<IProjectile> projectiles;
+
+        private GameContent content;
+
         public Dragon(GameContent content): base(content)
         {
             this.HP = 20;
@@ -27,20 +29,24 @@ namespace cse3902.Enemy
                 }
             );
 
-            ballUp = new Fireball(content, 
-                new Vector2(-200f, -50f), 
-                new Vector2(sprite.X, sprite.Y)
-            );
-            ballDown = new Fireball(content,
-                new Vector2(-200f, +50f),
-                new Vector2(sprite.X, sprite.Y)
-            );
-            ballMid = new Fireball(content,
-                new Vector2(-200f, 0f),
-                new Vector2(sprite.X, sprite.Y)
-            );
+            projectiles = new List<IProjectile>();
+
+            // ballUp = new Fireball(content, 
+            //     new Vector2(-200f, -50f), 
+            //     new Vector2(sprite.X, sprite.Y)
+            // );
+            // ballDown = new Fireball(content,
+            //     new Vector2(-200f, +50f),
+            //     new Vector2(sprite.X, sprite.Y)
+            // );
+            // ballMid = new Fireball(content,
+            //     new Vector2(-200f, 0f),
+            //     new Vector2(sprite.X, sprite.Y)
+            // );
 
             Position = new Vector2(500, 200);
+
+            this.content = content;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -66,9 +72,21 @@ namespace cse3902.Enemy
 
         public override void Attack()
         {
-            ballUp.Position = new Vector2(sprite.X, sprite.Y);
-            ballDown.Position = new Vector2(sprite.X, sprite.Y);
-            ballMid.Position = new Vector2(sprite.X, sprite.Y);
+            Fireball ballUp = new Fireball(content, 
+                Position,
+                new Vector2(-200f, -50f)
+            );
+            Fireball ballDown = new Fireball(content,
+                Position,
+                new Vector2(-200f, +50f)
+            );
+            Fireball ballMid = new Fireball(content,
+                Position,
+                new Vector2(-200f, 0f)
+            );
+            projectiles.Add(ballUp);
+            projectiles.Add(ballMid);
+            projectiles.Add(ballDown);
         }
         public override void TakeDmg(int damage)
         {
@@ -84,9 +102,7 @@ namespace cse3902.Enemy
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
 
-            ballUp.Draw(spriteBatch);
-            ballDown.Draw(spriteBatch);
-            ballMid.Draw(spriteBatch);
+            projectiles.ForEach(p => p.Draw(spriteBatch));
         }
 
         public override void Update(GameTime gameTime, List<IController> controllers)
@@ -108,9 +124,11 @@ namespace cse3902.Enemy
                 attackTimer.Restart();
                 Attack();
             }
-            ballUp.Update(gameTime, controllers);
-            ballDown.Update(gameTime, controllers);
-            ballMid.Update(gameTime, controllers);
+
+            projectiles.ForEach(p => p.Update(gameTime, controllers));
+            
+            /* remove dead projectiles */
+            projectiles = projectiles.Where(p => !p.IsDead).ToList();
 
             Move(gameTime, randomNum);
 

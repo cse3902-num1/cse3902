@@ -33,7 +33,7 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        //currentSprite.Position = Position;
+        currentSprite.Position = Position;
         currentSprite.Draw(spriteBatch);
     }
 
