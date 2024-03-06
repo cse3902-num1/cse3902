@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace cse3902.Enemy
 {
@@ -17,9 +18,9 @@ namespace cse3902.Enemy
         private Sprite spriteLeft;
         private Sprite spriteRight;
         private Sprite currentSprite;
-        private GreenBoomerang greenBoomerang;
-        private bool isAttack;
-        private bool goingBack = false;
+        private IProjectile projectile;
+
+        private GameContent content;
 
         public Goriya(GameContent content) : base(content)
         {
@@ -53,12 +54,11 @@ namespace cse3902.Enemy
             );
             currentSprite = spriteDown;
 
-            greenBoomerang = new GreenBoomerang(content,
-                new Vector2(0f, 0f),
-                new Vector2(0f, 0f)
-            );
-
             Position = new Vector2(400, 200);
+
+            projectile = null;
+
+            this.content = content;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -107,8 +107,28 @@ namespace cse3902.Enemy
 
         public override void Attack()
         {
-            isAttack = true;
-            greenBoomerang.Position = Position;
+            if (projectile != null) {
+                return;
+            }
+
+            Vector2 velocity = new Vector2(0, 0);
+            switch (currentState)
+            {
+                case GoriyaState.Left:
+                    velocity = new Vector2(-1, 0);
+                    break;
+                case GoriyaState.Right:
+                    velocity = new Vector2(1, 0);
+                    break;
+                case GoriyaState.Up:
+                    velocity = new Vector2(0, -1);
+                    break;
+                case GoriyaState.Down:
+                    velocity = new Vector2(0, 1);
+                    break;
+            }
+            velocity *= 200f;
+            projectile = new GreenBoomerang(content, Position, velocity);
         }
 
         public override void TakeDmg(int damage)
@@ -120,10 +140,8 @@ namespace cse3902.Enemy
         {
             currentSprite.Position = Position;
             currentSprite.Draw(spriteBatch);
-
-            if (isAttack)
-            {
-                greenBoomerang.Draw(spriteBatch);
+            if (projectile is not null) {
+                projectile.Draw(spriteBatch);
             }
         }
 
@@ -137,47 +155,20 @@ namespace cse3902.Enemy
                 randomNum = random.Next(1, 6);
             }
 
-            if (isAttack)
-            {
-                if (!goingBack)
-                {
-                    switch (currentState)
-                    {
-                        case GoriyaState.Up: greenBoomerang.Velocity = new Vector2(0f, -100f); break;
-                        case GoriyaState.Down: greenBoomerang.Velocity = new Vector2(0f, 100f); break;
-                        case GoriyaState.Left: greenBoomerang.Velocity = new Vector2(-100f, 0f); break;
-                        case GoriyaState.Right: greenBoomerang.Velocity = new Vector2(100f, 0f); break;
-                    }
-                }
-                else
-                {
-                    switch (currentState)
-                    {
-                        case GoriyaState.Up: greenBoomerang.Velocity = new Vector2(0f, 100f); break;
-                        case GoriyaState.Down: greenBoomerang.Velocity = new Vector2(0f, -100f); break;
-                        case GoriyaState.Left: greenBoomerang.Velocity = new Vector2(100f, 0f); break;
-                        case GoriyaState.Right: greenBoomerang.Velocity = new Vector2(-100f, 0f); break;
-                    }
-                }
+            if (projectile is not null) {
+                projectile.Update(gameTime, controllers);
 
-                if (Math.Abs(greenBoomerang.Position.X - spriteUp.X) > 100f
-                    || Math.Abs(greenBoomerang.Position.Y - spriteUp.Y) > 100f)
-                {
-                    goingBack = true;
+                /* filter out dead projectiles */
+                if (projectile.IsDead) {
+                    projectile = null;
                 }
-                if (goingBack && Math.Abs(greenBoomerang.Position.X - spriteUp.X) < 10f
-                    && Math.Abs(greenBoomerang.Position.Y - spriteUp.Y) < 10f)
-                {
-                    isAttack = false;
-                    goingBack = false;
-                }
-                greenBoomerang.Update(gameTime, controllers);
             }
-            else
-            {
+
+            /* only move if boomerang has returned */
+            // if (projectiles.Count == 0) {
                 Move(gameTime, randomNum);
                 ChangeAction(randomNum);
-            }
+            // }
 
             currentSprite.Update(gameTime, controllers);
         }

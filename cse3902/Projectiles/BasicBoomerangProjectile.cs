@@ -40,23 +40,24 @@ public abstract class BasicBoomerangProjectile : IProjectile
         Position += Velocity * deltaTime;
 
         // Calculate the straight-line displacement from the starting point to the current position
-        float displacement = Vector2.Distance(initialPosition, Position);
-        Debug.WriteLine("position" + Position + "displacement" + displacement);
+        // totalDistance += Vector2.Distance(initialPosition, Position);
+        totalDistance += (Velocity * deltaTime).Length();
 
         // Check if the boomerang has reached its maximum range and should start returning
-        if (!isReturning && displacement >= range)
+        if (!isReturning && totalDistance >= range && totalDistance < range * 2)
         {
-            Debug.WriteLine("displacement" + displacement + "range" + range);
+            // Debug.WriteLine("displacement" + displacement + "range" + range);
             isReturning = true;
             // Instead of simply inverting the velocity, calculate the direction back to the initial position
-            Velocity = (initialPosition - Position);
-            if (Velocity != Vector2.Zero)
-                Velocity.Normalize();
-            Velocity *= Velocity.Length(); // Set the return speed (might be different from initial speed)
+            // Velocity = (initialPosition - Position);
+            // if (Velocity != Vector2.Zero)
+            //     Velocity.Normalize();
+            // Velocity *= Velocity.Length(); // Set the return speed (might be different from initial speed)
+            Velocity *= -1f;
         }
 
         // Check if the boomerang has returned close enough to the initial position
-        if (isReturning && displacement <= 0.1f)
+        if (totalDistance >= range * 2)
         {
             Die();
         }
