@@ -15,13 +15,15 @@ namespace cse3902
         public Room CurrentRoom {set;get;}
         public Vector2 Position {set;get;} = Vector2.Zero;
         public Direction Facing {set;get;}
+        public Vector2 Origin { set;get;} = new Vector2(8,8);
+        public Vector2 Size { set;get;} = new Vector2(16,16);
         public ICollider Pushbox {set;get;}
         public IPlayerState State;
         public int health = 5;
         public Player(GameContent content)
         {
             State = new PlayerStateIdle(content,this);
-            Pushbox = new BoxCollider(Position,new Vector2(16,16), new Vector2(8, 8), ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,Size, Origin, ColliderType.PLAYER);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -34,9 +36,7 @@ namespace cse3902
             State.Update(gameTime, controllers);
 
             Pushbox.Position = Position;
-            foreach ( Wall wall in CurrentRoom.wall){
-
-            }
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)

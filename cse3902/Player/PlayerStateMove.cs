@@ -1,7 +1,10 @@
+using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using System.Linq;
 
 namespace cse3902
@@ -84,6 +87,45 @@ namespace cse3902
             player.Position = position;
 
             sprites[player.Facing].Update(gameTime, controllers);
+        }
+        public void CollisionMove(ICollider collider, int width,int height)
+        {
+            // a is subject b is object
+            BoxCollider b = (BoxCollider)collider;
+                    float aleft = player.Position.X - player.Origin.X;
+                    float aright = aleft + player.Size.X;
+                    float atop = player.Position.Y - player.Origin.Y;
+                    float abottom = atop + player.Size.Y;
+
+                    float bleft = b.Position.X - b.Origin.X;
+                    float bright = bleft + b.Size.X;
+                    float btop = b.Position.Y - b.Origin.Y;
+                    float bbottom = btop + b.Size.Y;
+            Vector2 Position = player.Position;
+                    if(height > width)
+                    {
+                        if(aleft >= bleft)
+                        {
+                           Position.X -= 200;
+                        }
+                        else
+                        {
+                            Position.X += 200;
+                        }
+                    }
+                    else
+                    {
+                        if (atop >= btop)
+                        {
+                            Position.Y += 200;
+
+                        }
+                        else
+                        {
+                            Position.Y -= 200;
+                        }
+                    }
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)

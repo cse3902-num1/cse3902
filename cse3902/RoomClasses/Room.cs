@@ -33,7 +33,7 @@ namespace cse3902.RoomClasses
         private MapLoader doorML;
         private Vector2 position = new Vector2(96,96);
         public Wall wall;
-
+        private BoxCollider collider;
         public IPlayer Player;
 
         public Room(GameContent content, string xmlFilePath, string doorFilePath, IPlayer player)
@@ -170,8 +170,12 @@ namespace cse3902.RoomClasses
 
             ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
             ParticleEffects = ParticleEffects.Where(p => !p.IsDead).ToList();
-
+            
             Blocks.ForEach(b => b.Update(gameTime, controllers));
+            //wall.colliders.ForEach(w => w.IsColliding(Player.Pushbox){
+
+            //}
+
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -2,7 +2,8 @@ using System.Drawing;
 using Microsoft.Xna.Framework;
 using cse3902.Interfaces;
 using System.Diagnostics;
-
+using System.Security.Cryptography.X509Certificates;
+using System;
 namespace cse3902;
 
 public class BoxCollider : ICollider
@@ -50,10 +51,28 @@ public class BoxCollider : ICollider
                 if (abottom <= btop) return false;
 
                 return true;
-            
-            /* if we had other collider types, their collision checks would be added here */
+
+                /* if we had other collider types, their collision checks would be added here */
+        }
+        return false;
+    }
+    public Vector2 intersect(ICollider collider)
+        {
+            switch (collider)
+            {
+                case BoxCollider b:
+                    float aleft = Position.X - Origin.X;
+                    float aright = aleft + Size.X;
+                    float atop = Position.Y - Origin.Y;
+                    float abottom = atop + Size.Y;
+
+                    float bleft = b.Position.X - b.Origin.X;
+                    float bright = bleft + b.Size.X;
+                    float btop = b.Position.Y - b.Origin.Y;
+                    float bbottom = btop + b.Size.Y;
+            return new Vector2(Math.Abs(aright - bleft), Math.Abs(atop - bbottom));
         }
 
-        return false;
+        return new Vector2(0,0); // placeHolder
     }
 }
