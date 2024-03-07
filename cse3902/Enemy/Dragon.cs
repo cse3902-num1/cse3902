@@ -95,16 +95,6 @@ namespace cse3902.Enemy
             projectiles.Add(ballMid);
             projectiles.Add(ballDown);
         }
-        public override void TakeDmg(int damage)
-        {
-            HP -= damage;
-            Debug.Write("OUCH!");
-            if (HP <= 0)
-            {
-                // Handle enemy's death like death animation
-                Die();
-            }
-        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

@@ -61,7 +61,6 @@ namespace cse3902
         {
             rooms[roomIdx].Draw(spriteBatch);
            
-            // rooms.ForEach(r => r.Draw(spriteBatch));
             player.Draw(spriteBatch);
         }
     }

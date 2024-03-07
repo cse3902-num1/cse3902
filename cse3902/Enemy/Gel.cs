@@ -14,7 +14,7 @@ namespace cse3902.Enemy
         
         public Gel(GameContent content, Room room) : base(content, room)
         {
-
+            this.HP = 1;
             sprite = new Sprite(content.enemiesSheet, 
                 new List<Rectangle>()
                 {
@@ -53,12 +53,6 @@ namespace cse3902.Enemy
         {
 
         }
-
-        public override void TakeDmg(int damage)
-        {
-
-        }
-
 
         public override void Update(GameTime gameTime, List<IController> controllers)
         {

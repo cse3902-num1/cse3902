@@ -14,6 +14,7 @@ namespace cse3902.Enemy
 
         public Skeleton(GameContent content, Room room) : base(content, room)
         {
+            this.HP = 3;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {
@@ -47,17 +48,6 @@ namespace cse3902.Enemy
             }
             Position = newPosition;
         }
-
-        public override void Attack()
-        {
-
-        }
-
-        public override void TakeDmg(int damage)
-        {
-
-        }
-
 
         public override void Update(GameTime gameTime, List<IController> controllers)
         {

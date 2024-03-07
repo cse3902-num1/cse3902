@@ -11,11 +11,9 @@ namespace cse3902.Enemy
 {
     public class Keese : EnemyBase
     {
-
-
         public Keese(GameContent content, Room room) : base(content, room)
-
         {
+            this.HP = 5;
             sprite = new Sprite(content.enemiesSheet,
                 new List<Rectangle>()
                 {
@@ -51,11 +49,6 @@ namespace cse3902.Enemy
         }
 
         public override void Attack()
-        {
-
-        }
-
-        public override void TakeDmg(int damage)
         {
 
         }

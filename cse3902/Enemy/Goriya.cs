@@ -25,6 +25,7 @@ namespace cse3902.Enemy
 
         public Goriya(GameContent content, Room room) : base(content, room)
         {
+            this.HP = 7;
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
@@ -134,11 +135,6 @@ namespace cse3902.Enemy
             }
             velocity *= 200f;
             projectile = new GreenBoomerang(content, room, Position, velocity);
-        }
-
-        public override void TakeDmg(int damage)
-        {
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)

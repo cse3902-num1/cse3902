@@ -43,6 +43,12 @@ namespace cse3902.Enemy
 
         public virtual void TakeDmg(int damage)
         {
+            HP -= damage;
+            Debug.Write("OUCH!");
+            if (HP <= 0)
+            {
+                Die();
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
