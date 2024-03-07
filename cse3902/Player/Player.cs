@@ -6,6 +6,7 @@ using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using cse3902.WallClasses;
 
 namespace cse3902
 {    
@@ -33,6 +34,9 @@ namespace cse3902
             State.Update(gameTime, controllers);
 
             Pushbox.Position = Position;
+            foreach ( Wall wall in CurrentRoom.wall){
+
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

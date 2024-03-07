@@ -9,7 +9,8 @@ namespace cse3902.WallClasses
     public class Wall
     {
         private List<Sprite> walls;
-        private Room room;
+        protected Room room;
+        public List<BoxCollider> colliders;
 
         public Wall(GameContent content, Room room)
         {

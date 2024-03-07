@@ -11,6 +11,7 @@ namespace cse3902
         private Player player;
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+        
 
         public PlayerStateMove(GameContent content, Player player)
         {

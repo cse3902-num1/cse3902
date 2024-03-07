@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.RoomClasses;
+using cse3902.Enemy;
 
 namespace cse3902.Projectiles;
 
@@ -13,7 +14,7 @@ public class Bomb : IProjectile
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
     public bool isEnermyProjectile { get; set; }
-
+    public ICollider Hitbox; /* set in constructor */
     private ISprite sprite;
     private Stopwatch explodeTimer = new Stopwatch();
     private GameContent content;
@@ -34,6 +35,7 @@ public class Bomb : IProjectile
 
         this.content = content;
         this.room = room;
+        Hitbox = new BoxCollider(position, new Vector2(7, 15), new Vector2(3.5f, 7.5f), ColliderType.ITEM_PICKUP);
     }
 
     private void Die()
@@ -41,10 +43,26 @@ public class Bomb : IProjectile
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
         room.ParticleEffects.Add(fx);
+        Hitbox.Position = Position;
+        foreach (IEnemy e in room.Enemies)
+        {
+            switch (e)
+            {
+                case EnemyBase enemyBase:
+                    if (Hitbox.IsColliding(enemyBase.Collider))
+                    {
+                        IsDead = true;
+                        e.TakeDmg(1000);
+
+                    }
+                    break;
+            }
+        }
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)
     {
+        
         sprite.Update(gameTime, controllers);
 
         if (explodeTimer.ElapsedMilliseconds >= 1500)
