@@ -15,8 +15,9 @@ namespace cse3902.Enemy
         private List<IProjectile> projectiles;
 
         private GameContent content;
+        private IPlayer player;
 
-        public Dragon(GameContent content): base(content)
+        public Dragon(GameContent content, IPlayer player): base(content)
         {
             this.HP = 20;
             sprite = new Sprite(content.enemies,
@@ -48,6 +49,8 @@ namespace cse3902.Enemy
             Position = new Vector2(500, 200);
             collider = new BoxCollider(Position, Size, ColliderType.ENEMY);
             this.content = content;
+
+            this.player = player;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -76,14 +79,17 @@ namespace cse3902.Enemy
             Fireball ballUp = new Fireball(content, 
                 Position,
                 new Vector2(-200f, -50f),
+                player
             );
             Fireball ballDown = new Fireball(content,
                 Position,
-                new Vector2(-200f, +50f)
+                new Vector2(-200f, +50f),
+                player
             );
             Fireball ballMid = new Fireball(content,
                 Position,
-                new Vector2(-200f, 0f)
+                new Vector2(-200f, 0f),
+                player
             );
             projectiles.Add(ballUp);
             projectiles.Add(ballMid);

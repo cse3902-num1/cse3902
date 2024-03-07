@@ -15,12 +15,12 @@ namespace cse3902.RoomClasses
 
     public class Room
     {
-        public List<IEnemy> enemies;
+        public List<IEnemy> Enemies;
         private int idxEnemy;
-        public List<IItemPickup> items;
+        public List<IItemPickup> Items;
         private int idxItem;
-        private List<Block> blocks = new List<Block>();
-        private List<Doors> doors = new List<Doors>();
+        public List<Block> Blocks = new List<Block>();
+        public List<Doors> Doors = new List<Doors>();
         private GameContent content;
 
         private List<List<int>> tileIds;
@@ -28,32 +28,36 @@ namespace cse3902.RoomClasses
         private MapLoader ml;
         private MapLoader doorML;
         private Vector2 position = new Vector2(96,96);
-        private Wall wall;
+        public Wall wall;
 
-        public Room(GameContent content, string xmlFilePath, string doorFilePath)
+        public IPlayer Player;
+
+        public Room(GameContent content, string xmlFilePath, string doorFilePath, IPlayer player)
         {
             this.content = content;
+            this.Player = player;
+
             for (int i = 0; i < 84; i++)
             {
                 Block b = new Block(content, 0, new Vector2(0, 0));
-                blocks.Add(b);
+                Blocks.Add(b);
             }
             for (int i = 0; i < 4; i++)
             {
                 Doors d = new Doors(content, 0, 0);
-                doors.Add(d);
+                Doors.Add(d);
             }
-            enemies = new List<IEnemy>()
+            Enemies = new List<IEnemy>()
             {
                 new Skeleton(content),
-                new Dragon(content),
+                new Dragon(content, player),
                 new Gel(content),
                 new Keese(content),
                 new Goriya(content),
             };
             idxEnemy = 0;
 
-            items = new List<IItemPickup>
+            Items = new List<IItemPickup>
             {
                 new FiveRupiesItemPickup(content),
                 new FireItemPickUp(content),
@@ -108,8 +112,8 @@ namespace cse3902.RoomClasses
 
                 foreach (int element in row)
                 {
-                    blocks[idx].BlockIndex = element;
-                    blocks[idx].Position = position;
+                    Blocks[idx].BlockIndex = element;
+                    Blocks[idx].Position = position;
 
                     idx++;
                     position.X += 48;
@@ -123,8 +127,8 @@ namespace cse3902.RoomClasses
             {
                 foreach (int element in row)
                 {
-                    doors[type].Idx = element;
-                    doors[type].DoorType = type;
+                    Doors[type].Idx = element;
+                    Doors[type].DoorType = type;
                     type++;
                 }
             }
@@ -136,38 +140,38 @@ namespace cse3902.RoomClasses
             if (controllers.Any(c => c.isEnemyPressP()))
             {
                 idxEnemy++;
-                idxEnemy %= enemies.Count;
+                idxEnemy %= Enemies.Count;
             }
             if (controllers.Any(c => c.isEnemyPressO()))
             {
                 idxEnemy--;
-                if (idxEnemy < 0) idxEnemy = enemies.Count - 1;
+                if (idxEnemy < 0) idxEnemy = Enemies.Count - 1;
             }
 
             if (controllers.Any(c => c.isNextItemKeyPress()))
             {
                 idxItem++;
-                idxItem %= items.Count;
+                idxItem %= Items.Count;
             }
 
             if (controllers.Any(c => c.isPreviousItemKeyPress()))
             {
                 idxItem--;
-                if (idxItem < 0) idxItem = items.Count - 1;
+                if (idxItem < 0) idxItem = Items.Count - 1;
             }
 
-            enemies[idxEnemy].Update(gameTime, controllers);
-            items[idxItem].Update(gameTime, controllers);
-            blocks.ForEach(b => b.Update(gameTime, controllers));
+            Enemies[idxEnemy].Update(gameTime, controllers);
+            Items[idxItem].Update(gameTime, controllers);
+            Blocks.ForEach(b => b.Update(gameTime, controllers));
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            blocks.ForEach(b => b.Draw(spriteBatch));
-            doors.ForEach(d => d.Draw(spriteBatch));
+            Blocks.ForEach(b => b.Draw(spriteBatch));
+            Doors.ForEach(d => d.Draw(spriteBatch));
             wall.Draw(spriteBatch);
-            enemies[idxEnemy].Draw(spriteBatch);
-            items[idxItem].Draw(spriteBatch);
+            Enemies[idxEnemy].Draw(spriteBatch);
+            Items[idxItem].Draw(spriteBatch);
         }
     }
 }

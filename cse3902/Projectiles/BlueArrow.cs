@@ -10,7 +10,7 @@ public class BlueArrow : BasicDirectionalProjectile
     private const float maxDistance = 400f;
     private GameContent content;
     
-    public BlueArrow(GameContent content, Vector2 position, Vector2 velocity) : base(position, velocity)
+    public BlueArrow(GameContent content, Vector2 position, Vector2 velocity, IPlayer player) : base(position, velocity, player)
     {
         leftSprite = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
         rightSprite = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(36, 185, 15, 15) }, new Vector2(7.5f, 7.5f));

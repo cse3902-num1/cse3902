@@ -19,11 +19,11 @@ public abstract class BasicDirectionalProjectile : IProjectile
     protected ISprite downSprite;
     
     private ISprite currentSprite;
-    public ICollider collider2;
-    public Player player;
+    public ICollider Hitbox;
+    public IPlayer player;
 
     /* need to call this super constructor in the subclass's constructor */
-    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity, Player player)
+    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity, IPlayer player)
     {
         IsDead = false;
         Position = position;
@@ -51,7 +51,7 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
         currentSprite.Update(gameTime, controllers);
 
-        if (collider2.IsColliding(player.collider)) {
+        if (Hitbox.IsColliding(player.Pushbox)) {
             this.IsDead = true;
             
             player.TakeDamage();

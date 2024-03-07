@@ -6,8 +6,8 @@ namespace cse3902;
 
 public class BoxCollider : ICollider
 {
-    private Microsoft.Xna.Framework.Vector2 position;
-    private Microsoft.Xna.Framework.Vector2 size;
+    private Vector2 position;
+    private Vector2 size;
 
     public Vector2 Position {set;get;}
     public Vector2 Size {set;get;}
@@ -18,13 +18,6 @@ public class BoxCollider : ICollider
         Position = position;
         Size = size;
         ColliderType = type;
-    }
-
-    public BoxCollider(Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Vector2 size, ColliderType colliderType)
-    {
-        this.position = position;
-        this.size = size;
-        ColliderType = colliderType;
     }
 
     public bool IsColliding(ICollider collider)

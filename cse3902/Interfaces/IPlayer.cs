@@ -7,6 +7,7 @@ namespace cse3902
 	public interface IPlayer : IGameObject
 	{
         public Direction Facing {set;get;}
+        public ICollider Pushbox {set;get;}
         public void Move(Vector2 direction);
         public void Attack();
         public void UseItem(IInventoryItem item);

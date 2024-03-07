@@ -25,11 +25,11 @@ namespace cse3902
             player.Position = new Vector2(100, 100);
             rooms = new List<Room>
             {
-                new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml"),
-                new Room(content, @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml"),
-                new Room(content, @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml"),
-                new Room(content, @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml"),
-                new Room(content, @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml")
+                new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
+                new Room(content, @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml", player),
+                new Room(content, @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml", player),
+                new Room(content, @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml", player),
+                new Room(content, @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml", player)
 
             };
         }

@@ -12,7 +12,7 @@ namespace cse3902
     {
         public Vector2 Position {set;get;} = Vector2.Zero;
         public Direction Facing {set;get;}
-        public ICollider collider;
+        public ICollider Pushbox {set;get;}
         public IPlayerState State;
         private List<IProjectile> projectiles;
         public int health = 5;
@@ -20,7 +20,7 @@ namespace cse3902
         {
             State = new PlayerStateIdle(content,this);
             projectiles = new List<IProjectile>();
-            collider = new BoxCollider(Position,new Vector2(16,16),ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,new Vector2(16,16),ColliderType.PLAYER);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
