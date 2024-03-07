@@ -18,5 +18,6 @@ public class BlueBombInventoryItem : IInventoryItem
         Vector2 position = player.Position + direction * 20f;
         Bomb bomb = new Bomb(content, room, position);
         room.Projectiles.Add(bomb);
+        bomb.isEnermyProjectile = false;
     }
 }

@@ -13,6 +13,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
+    public bool isEnermyProjectile { get; set; }
 
     protected ISprite sprite; /* set in constructor */
     protected float range;
@@ -69,15 +70,31 @@ public abstract class BasicBoomerangProjectile : IProjectile
         }
 
         /* check for collisions */
-        Hitbox.Position = Position;
-        foreach (IEnemy e in room.Enemies) {
-            switch (e) {
-                case EnemyBase enemyBase:
-                    if (Hitbox.IsColliding(enemyBase.Collider)) {
-                        e.TakeDmg(1);
-                        Die();
-                    }
-                    break;
+        if (isEnermyProjectile == false)
+        {
+            Hitbox.Position = Position;
+            foreach (IEnemy e in room.Enemies)
+            {
+                switch (e)
+                {
+                    case EnemyBase enemyBase:
+                        if (Hitbox.IsColliding(enemyBase.Collider))
+                        {
+                            e.TakeDmg(1);
+                            Die();
+                        }
+                        break;
+                }
+            }
+        }
+        else
+        {
+            Hitbox.Position = Position;
+            if (Hitbox.IsColliding(room.Player.Pushbox))
+            {
+                this.IsDead = true;
+
+                room.Player.TakeDamage();
             }
         }
 

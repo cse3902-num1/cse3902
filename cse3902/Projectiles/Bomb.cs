@@ -12,6 +12,8 @@ public class Bomb : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
+    public bool isEnermyProjectile { get; set; }
+
     private ISprite sprite;
     private Stopwatch explodeTimer = new Stopwatch();
     private GameContent content;

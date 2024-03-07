@@ -135,6 +135,8 @@ namespace cse3902.Enemy
             }
             velocity *= 200f;
             projectile = new GreenBoomerang(content, room, Position, velocity);
+            projectile.isEnermyProjectile = true;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)

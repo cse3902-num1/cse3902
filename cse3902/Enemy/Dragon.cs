@@ -16,6 +16,7 @@ namespace cse3902.Enemy
         private List<IProjectile> projectiles;
 
         private GameContent content;
+        
 
         public Dragon(GameContent content, Room room): base(content, room)
         {
@@ -92,8 +93,11 @@ namespace cse3902.Enemy
                 new Vector2(-200f, 0f)
             );
             projectiles.Add(ballUp);
+            ballUp.isEnermyProjectile = true;
             projectiles.Add(ballMid);
+            ballMid.isEnermyProjectile = true;
             projectiles.Add(ballDown);
+            ballDown.isEnermyProjectile = true;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

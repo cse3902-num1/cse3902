@@ -11,8 +11,10 @@ public abstract class BasicDirectionalProjectile : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Velocity {set;get;}
     public Vector2 Position {set;get;}
+    public bool isEnermyProjectile { set; get; }
+
     //public Player player;
-    
+
     /* set in constructor */
     protected ISprite leftSprite;
     protected ISprite rightSprite;
@@ -55,22 +57,32 @@ public abstract class BasicDirectionalProjectile : IProjectile
         Hitbox.Position = Position;
 
         /* check for enemy collisions */
-        foreach (IEnemy e in room.Enemies) {
-            switch (e) {
-                case EnemyBase enemyBase:
-                    if (Hitbox.IsColliding(enemyBase.Collider)) {
-                        IsDead = true;
-                        e.TakeDmg(1);
-                    }
-                    break;
+        if (isEnermyProjectile == false)
+        {
+            foreach (IEnemy e in room.Enemies)
+            {
+                switch (e)
+                {
+                    case EnemyBase enemyBase:
+                        if (Hitbox.IsColliding(enemyBase.Collider))
+                        {
+                            IsDead = true;
+                            e.TakeDmg(1);
+
+                        }
+                        break;
+                }
             }
         }
+        else
+        {
+            /* check for player collisions */
+            if (Hitbox.IsColliding(room.Player.Pushbox))
+            {
+                 this.IsDead = true;
 
-        /* check for player collisions */
-        if (Hitbox.IsColliding(room.Player.Pushbox)) {
-            // this.IsDead = true;
-            
-            // room.Player.TakeDamage();
+                 room.Player.TakeDamage();
+            }
         }
     }
 }
