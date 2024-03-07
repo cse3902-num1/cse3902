@@ -38,4 +38,5 @@ public class Fire : IProjectile
     {
         sprite.Draw(spriteBatch);
     }
+
 }

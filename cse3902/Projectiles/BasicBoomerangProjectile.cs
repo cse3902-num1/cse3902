@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,29 +29,41 @@ public abstract class BasicBoomerangProjectile : IProjectile
         initialPosition = position;
     }
 
-    private void Die()
+    public void Die()
     {
         IsDead = true;
     }
 
-    public void Update(GameTime gameTime, List<IController> controllers)
+    public virtual void Update(GameTime gameTime, List<IController> controllers)
     {
-        Position += Velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
-        totalDistance += Velocity.Length() * (float) gameTime.ElapsedGameTime.TotalSeconds; /* slow but should be fine for now */
+        float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Position += Velocity * deltaTime;
 
-        if (!isReturning && totalDistance > range && totalDistance <= range * 2)
+        // Calculate the straight-line displacement from the starting point to the current position
+        float displacement = Vector2.Distance(initialPosition, Position);
+        Debug.WriteLine("position" + Position + "displacement" + displacement);
+
+        // Check if the boomerang has reached its maximum range and should start returning
+        if (!isReturning && displacement >= range)
         {
+            Debug.WriteLine("displacement" + displacement + "range" + range);
             isReturning = true;
-            Velocity *= -1;
+            // Instead of simply inverting the velocity, calculate the direction back to the initial position
+            Velocity = (initialPosition - Position);
+            if (Velocity != Vector2.Zero)
+                Velocity.Normalize();
+            Velocity *= Velocity.Length(); // Set the return speed (might be different from initial speed)
         }
 
-        if (totalDistance > range * 2)
+        // Check if the boomerang has returned close enough to the initial position
+        if (isReturning && displacement <= 0.1f)
         {
             Die();
         }
 
         sprite.Update(gameTime, controllers);
     }
+
 
     public void Draw(SpriteBatch spriteBatch)
     {

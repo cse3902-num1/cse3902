@@ -134,7 +134,7 @@ namespace cse3902.Enemy
             {
                 randomChangeTimer.Restart();
 
-                randomNum = random.Next(1, 5);
+                randomNum = random.Next(1, 6);
             }
 
             if (isAttack)

@@ -21,4 +21,5 @@ public class Fireball : BasicDirectionalProjectile
         upSprite = leftSprite;
         downSprite = leftSprite;
     }
+
 }

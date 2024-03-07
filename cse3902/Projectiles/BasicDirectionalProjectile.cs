@@ -33,12 +33,13 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        currentSprite.Position = Position;
+        //currentSprite.Position = Position;
         currentSprite.Draw(spriteBatch);
     }
 
     public virtual void Update(GameTime gameTime, List<IController> controllers)
     {
+        
         Position += Velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
 
         if (Velocity.X >= 0) currentSprite = rightSprite;
@@ -47,5 +48,6 @@ public abstract class BasicDirectionalProjectile : IProjectile
         if (Velocity.Y < 0)  currentSprite = upSprite;
 
         currentSprite.Update(gameTime, controllers);
+        
     }
 }

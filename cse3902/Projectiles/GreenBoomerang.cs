@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace cse3902.Projectiles;
@@ -18,4 +20,30 @@ internal class GreenBoomerang : BasicBoomerangProjectile
             new Vector2(4, 8)
         );
     }
+    /*
+    public override void Update(GameTime gameTime, List<IController> controllers)
+    {
+        Debug.WriteLine($"Updating Boomerang: Position={Position}, Velocity={Velocity}, IsReturning={isReturning}, Distance={Vector2.Distance(initialPosition, Position)}");
+        Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        if (isReturning && Vector2.Distance(initialPosition, Position) <= 10)
+        {
+            IsDead = true;
+        }
+        /* flip direction once we reach max distance */
+    /*
+        if (Vector2.Distance(initialPosition, Position) >= maxDistance)
+        {
+            isReturning = true;
+            Velocity = -Velocity;
+        }
+
+        /* finish once we return to original position */
+    /*
+        sprite.Update(gameTime,controllers);
+
+      
+        
+    }
+    */
+
 }

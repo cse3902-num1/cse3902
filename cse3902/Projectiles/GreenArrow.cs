@@ -32,6 +32,7 @@ public class GreenArrow : BasicDirectionalProjectile
 
     public override void Update(GameTime gameTime, List<IController> controllers)
     {
+
         base.Update(gameTime, controllers);
 
         if (Vector2.Distance(initialPosition, Position) > maxDistance)

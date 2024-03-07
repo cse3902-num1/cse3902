@@ -27,6 +27,11 @@ namespace cse3902.Objects
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
         }
+
+        public void Update(GameTime gameTime, IController controller)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

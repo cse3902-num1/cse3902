@@ -21,6 +21,7 @@ namespace cse3902.Enemy
 
         protected EnemyBase(GameContent content)
         {
+
             // Initialize sprite and collider here based on specific enemy content
         }
 
@@ -39,7 +40,6 @@ namespace cse3902.Enemy
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Debug.WriteLine("testing");
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
           

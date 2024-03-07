@@ -53,4 +53,6 @@ public class Bomb : IProjectile
         sprite.Position = Position;
         sprite.Draw(spriteBatch);
     }
+
+
 }
