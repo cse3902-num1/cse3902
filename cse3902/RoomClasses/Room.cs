@@ -19,8 +19,10 @@ namespace cse3902.RoomClasses
         private int idxEnemy;
         public List<IItemPickup> Items;
         private int idxItem;
+        public List<IParticleEffect> ParticleEffects = new List<IParticleEffect>();
         public List<Block> Blocks = new List<Block>();
         public List<Doors> Doors = new List<Doors>();
+
         private GameContent content;
 
         private List<List<int>> tileIds;
@@ -161,17 +163,25 @@ namespace cse3902.RoomClasses
             }
 
             Enemies[idxEnemy].Update(gameTime, controllers);
+            // Enemies = Enemies.Where(e => !e.IsDead).ToList();
+
             Items[idxItem].Update(gameTime, controllers);
+            // Items = Items.Where(e => !e.IsDead).ToList();
+
+            ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
+            ParticleEffects = ParticleEffects.Where(p => !p.IsDead).ToList();
+
             Blocks.ForEach(b => b.Update(gameTime, controllers));
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Blocks.ForEach(b => b.Draw(spriteBatch));
-            Doors.ForEach(d => d.Draw(spriteBatch));
             wall.Draw(spriteBatch);
+            Doors.ForEach(d => d.Draw(spriteBatch));
+            Blocks.ForEach(b => b.Draw(spriteBatch));
             Enemies[idxEnemy].Draw(spriteBatch);
             Items[idxItem].Draw(spriteBatch);
+            ParticleEffects.ForEach(p => p.Draw(spriteBatch));
         }
     }
 }

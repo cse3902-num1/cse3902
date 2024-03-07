@@ -83,7 +83,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, origin, scale, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, origin, scale, SpriteEffects.None, 1f);
         }
 
         // Set the position of the sprite

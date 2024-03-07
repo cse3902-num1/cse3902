@@ -38,7 +38,7 @@ public class Bomb : IProjectile
     {
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
-        /* TODO: "spawn" the particle effect in the level */
+        room.ParticleEffects.Add(fx);
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)
@@ -56,6 +56,4 @@ public class Bomb : IProjectile
         sprite.Position = Position;
         sprite.Draw(spriteBatch);
     }
-
-
 }
