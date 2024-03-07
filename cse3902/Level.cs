@@ -47,11 +47,13 @@ namespace cse3902
             {
                 roomIdx++;
                 roomIdx %= rooms.Count;
+                player.CurrentRoom = rooms[roomIdx];
             }
             if (controllers.Any(c => c.isRightClick()))
             {
                 roomIdx--;
                 if (roomIdx < 0) roomIdx = rooms.Count - 1;
+                player.CurrentRoom = rooms[roomIdx];
             }
         }
 
@@ -59,7 +61,7 @@ namespace cse3902
         {
             rooms[roomIdx].Draw(spriteBatch);
            
-            rooms.ForEach(r => r.Draw(spriteBatch));
+            // rooms.ForEach(r => r.Draw(spriteBatch));
             player.Draw(spriteBatch);
         }
     }

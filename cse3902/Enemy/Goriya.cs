@@ -68,7 +68,6 @@ namespace cse3902.Enemy
 
         public override void Move(GameTime gameTime, int randomNum)
         {
-            return;
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             switch (currentState)
             {
