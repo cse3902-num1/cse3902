@@ -55,7 +55,6 @@ namespace cse3902.Enemy
 
         public override void Move(GameTime gameTime, int randomNum)
         {
-            return;
             Vector2 newPosition = Position;
             switch (randomNum)
             {
@@ -92,9 +91,9 @@ namespace cse3902.Enemy
                 Position,
                 new Vector2(-200f, 0f)
             );
-            // projectiles.Add(ballUp);
+            projectiles.Add(ballUp);
             projectiles.Add(ballMid);
-            // projectiles.Add(ballDown);
+            projectiles.Add(ballDown);
         }
         public override void TakeDmg(int damage)
         {

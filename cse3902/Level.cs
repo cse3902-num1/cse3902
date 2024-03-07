@@ -39,13 +39,9 @@ namespace cse3902
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-
-            //add room update
             player.Update(gameTime, controllers);
-            rooms.ForEach(r => r.Update(gameTime, controllers));
-            foreach(Room r in rooms){
-                r.Update(gameTime, controllers);
-            }
+
+            rooms[roomIdx].Update(gameTime, controllers);
 
             if (controllers.Any(c => c.isLeftClick()))
             {

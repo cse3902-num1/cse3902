@@ -8,6 +8,7 @@ using cse3902.WallClasses;
 using System.Diagnostics;
 using cse3902.DoorClasses;
 using System.Linq;
+using System;
 
 
 namespace cse3902.RoomClasses
@@ -49,14 +50,7 @@ namespace cse3902.RoomClasses
                 Doors d = new Doors(content, 0, 0);
                 Doors.Add(d);
             }
-            Enemies = new List<IEnemy>()
-            {
-                new Skeleton(content, this),
-                new Dragon(content, this),
-                new Gel(content, this),
-                new Keese(content, this),
-                new Goriya(content, this),
-            };
+            Enemies = new List<IEnemy>() {};
             idxEnemy = 0;
 
             Items = new List<IItemPickup>
@@ -116,6 +110,18 @@ namespace cse3902.RoomClasses
                 {
                     Blocks[idx].BlockIndex = element;
                     Blocks[idx].Position = position;
+                    if (element >= 10)
+                    {
+                        switch(element)
+                        {
+                            case 10: Enemies.Add(new Skeleton(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 11: Enemies.Add(new Dragon(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 12: Enemies.Add(new Keese(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 13: Enemies.Add(new Gel(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 14: Enemies.Add(new Goriya(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                        }
+                        Blocks[idx].BlockIndex = 0;
+                    }
 
                     idx++;
                     position.X += 48;
@@ -139,17 +145,6 @@ namespace cse3902.RoomClasses
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-            if (controllers.Any(c => c.isEnemyPressP()))
-            {
-                idxEnemy++;
-                idxEnemy %= Enemies.Count;
-            }
-            if (controllers.Any(c => c.isEnemyPressO()))
-            {
-                idxEnemy--;
-                if (idxEnemy < 0) idxEnemy = Enemies.Count - 1;
-            }
-
             if (controllers.Any(c => c.isNextItemKeyPress()))
             {
                 idxItem++;
@@ -180,7 +175,6 @@ namespace cse3902.RoomClasses
             wall.Draw(spriteBatch);
             Doors.ForEach(d => d.Draw(spriteBatch));
             Blocks.ForEach(b => b.Draw(spriteBatch));
-            // Enemies[idxEnemy].Draw(spriteBatch);
             Enemies.ForEach(e => e.Draw(spriteBatch));
             Items[idxItem].Draw(spriteBatch);
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
