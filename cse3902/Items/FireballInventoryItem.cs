@@ -19,6 +19,6 @@ public class FireballInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         Fireball projectile = new Fireball(content, room, player.Position, direction * 400f);
-        player.SpawnProjectile(projectile);
+        room.Projectiles.Add(projectile);
     }
 }

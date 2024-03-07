@@ -21,6 +21,6 @@ public class Fireball : BasicDirectionalProjectile
         rightSprite = leftSprite; /* lazy but should be fine for now */
         upSprite = leftSprite;
         downSprite = leftSprite;
-        Hitbox = new BoxCollider(position, new Vector2(8, 10), new Vector2(4.5f, 9), ColliderType.PROJECTILE);
+        Hitbox = new BoxCollider(position, new Vector2(8, 10), new Vector2(4, 5), ColliderType.PROJECTILE);
     }
 }

@@ -17,6 +17,6 @@ public class GreenBowInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         GreenArrow projectile = new GreenArrow(content, room, player.Position, direction * 300f);
-        player.SpawnProjectile(projectile);
+        room.Projectiles.Add(projectile);
     }
 }

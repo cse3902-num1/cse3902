@@ -20,6 +20,7 @@ namespace cse3902.RoomClasses
         private int idxEnemy;
         public List<IItemPickup> Items;
         private int idxItem;
+        public List<IProjectile> Projectiles = new List<IProjectile>();
         public List<IParticleEffect> ParticleEffects = new List<IParticleEffect>();
         public List<Block> Blocks = new List<Block>();
         public List<Doors> Doors = new List<Doors>();
@@ -164,6 +165,9 @@ namespace cse3902.RoomClasses
             Items[idxItem].Update(gameTime, controllers);
             // Items = Items.Where(e => !e.IsDead).ToList();
 
+            Projectiles.ForEach(p => p.Update(gameTime, controllers));
+            Projectiles = Projectiles.Where(p => !p.IsDead).ToList();
+
             ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
             ParticleEffects = ParticleEffects.Where(p => !p.IsDead).ToList();
 
@@ -177,6 +181,7 @@ namespace cse3902.RoomClasses
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
             Items[idxItem].Draw(spriteBatch);
+            Projectiles.ForEach(p => p.Draw(spriteBatch));
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
         }
     }
