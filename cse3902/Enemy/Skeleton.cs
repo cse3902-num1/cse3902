@@ -1,4 +1,5 @@
 ﻿using cse3902.Interfaces;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,7 +12,7 @@ namespace cse3902.Enemy
     public class Skeleton : EnemyBase
     {
 
-        public Skeleton(GameContent content):base(content)
+        public Skeleton(GameContent content, Room room) : base(content, room)
         {
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()

@@ -1,5 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -22,7 +23,7 @@ namespace cse3902.Enemy
 
         private GameContent content;
 
-        public Goriya(GameContent content) : base(content)
+        public Goriya(GameContent content, Room room) : base(content, room)
         {
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
@@ -128,7 +129,7 @@ namespace cse3902.Enemy
                     break;
             }
             velocity *= 200f;
-            projectile = new GreenBoomerang(content, Position, velocity);
+            projectile = new GreenBoomerang(content, room, Position, velocity);
         }
 
         public override void TakeDmg(int damage)

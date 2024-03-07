@@ -1,4 +1,5 @@
 ﻿using cse3902.Interfaces;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ public class GreenArrow : BasicDirectionalProjectile
     private GameContent content;
     
 
-    public GreenArrow(GameContent content, Vector2 position, Vector2 velocity, IPlayer player) : base(position, velocity, player)
+    public GreenArrow(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
     {
         leftSprite = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 0, 15, 15) }, new Vector2(7.5f, 7.5f));
         rightSprite = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(10, 185, 15, 15) }, new Vector2(7.5f, 7.5f));

@@ -20,15 +20,15 @@ public abstract class BasicDirectionalProjectile : IProjectile
     
     private ISprite currentSprite;
     public ICollider Hitbox;
-    public IPlayer player;
+    public Room room;
 
     /* need to call this super constructor in the subclass's constructor */
-    public BasicDirectionalProjectile(Vector2 position, Vector2 velocity, IPlayer player)
+    public BasicDirectionalProjectile(Room room, Vector2 position, Vector2 velocity)
     {
         IsDead = false;
         Position = position;
         Velocity = velocity;
-        this.player = player;
+        this.room = room;
       
         currentSprite = downSprite; /* currentSprite can't be null */
     }
@@ -51,11 +51,10 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
         currentSprite.Update(gameTime, controllers);
 
-        if (Hitbox.IsColliding(player.Pushbox)) {
+        if (Hitbox.IsColliding(room.Player.Pushbox)) {
             this.IsDead = true;
             
-            player.TakeDamage();
-            
+            room.Player.TakeDamage();
         }
     }
 }

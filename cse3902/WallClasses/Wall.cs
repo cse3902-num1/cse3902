@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,8 +9,9 @@ namespace cse3902.WallClasses
     public class Wall
     {
         private List<Sprite> walls;
+        private Room room;
 
-        public Wall(GameContent content)
+        public Wall(GameContent content, Room room)
         {
             walls = new List<Sprite>() {
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 0, 112, 32) }, 3.0f),
@@ -29,6 +31,8 @@ namespace cse3902.WallClasses
             walls[5].Position = new Vector2(0, 432);
             walls[6].Position = new Vector2(672, 312);
             walls[7].Position = new Vector2(432, 432);
+
+            this.room = room;
         }
 
         public void Update()

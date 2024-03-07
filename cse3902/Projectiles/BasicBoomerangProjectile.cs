@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.Interfaces;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,8 +20,9 @@ public abstract class BasicBoomerangProjectile : IProjectile
     protected Vector2 initialPosition;
 
     public ICollider Hitbox;
+    protected Room room;
 
-    public BasicBoomerangProjectile(Vector2 position, Vector2 velocity, float range)
+    public BasicBoomerangProjectile(Room room, Vector2 position, Vector2 velocity, float range)
     {
         IsDead = false;
         Position = position;
@@ -29,6 +31,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
         totalDistance = 0;
         isReturning = false;
         initialPosition = position;
+        this.room = room;
     }
 
     public void Die()

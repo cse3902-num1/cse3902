@@ -1,5 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,9 +16,8 @@ namespace cse3902.Enemy
         private List<IProjectile> projectiles;
 
         private GameContent content;
-        private IPlayer player;
 
-        public Dragon(GameContent content, IPlayer player): base(content)
+        public Dragon(GameContent content, Room room): base(content, room)
         {
             this.HP = 20;
             sprite = new Sprite(content.enemies,
@@ -50,7 +50,7 @@ namespace cse3902.Enemy
             collider = new BoxCollider(Position, Size, ColliderType.ENEMY);
             this.content = content;
 
-            this.player = player;
+            this.room = room;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -77,19 +77,19 @@ namespace cse3902.Enemy
         public override void Attack()
         {
             Fireball ballUp = new Fireball(content, 
+                room,
                 Position,
-                new Vector2(-200f, -50f),
-                player
+                new Vector2(-200f, -50f)
             );
             Fireball ballDown = new Fireball(content,
+                room,
                 Position,
-                new Vector2(-200f, +50f),
-                player
+                new Vector2(-200f, +50f)
             );
             Fireball ballMid = new Fireball(content,
+                room,
                 Position,
-                new Vector2(-200f, 0f),
-                player
+                new Vector2(-200f, 0f)
             );
             projectiles.Add(ballUp);
             projectiles.Add(ballMid);

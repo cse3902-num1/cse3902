@@ -1,5 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -21,10 +22,12 @@ namespace cse3902.Enemy
         protected Stopwatch attackTimer = new Stopwatch();
         protected Random random = new Random();
         protected int randomNum;
-        
-        protected EnemyBase(GameContent content)
-        {
 
+        protected Room room;
+        
+        protected EnemyBase(GameContent content, Room room)
+        {
+            this.room = room;
             // Initialize sprite and collider here based on specific enemy content
         }
 

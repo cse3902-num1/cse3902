@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
+using cse3902.RoomClasses;
 
 namespace cse3902.Projectiles;
 
@@ -14,8 +15,9 @@ public class Bomb : IProjectile
     private ISprite sprite;
     private Stopwatch explodeTimer = new Stopwatch();
     private GameContent content;
+    private Room room;
     
-    public Bomb(GameContent content, Vector2 position)
+    public Bomb(GameContent content, Room room, Vector2 position)
     {
         sprite = new Sprite(content.weapon, 
             new List<Rectangle>()
@@ -29,6 +31,7 @@ public class Bomb : IProjectile
         explodeTimer.Start();
 
         this.content = content;
+        this.room = room;
     }
 
     private void Die()

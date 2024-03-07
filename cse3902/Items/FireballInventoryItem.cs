@@ -1,4 +1,5 @@
 using cse3902.Projectiles;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 
 namespace cse3902;
@@ -6,16 +7,18 @@ namespace cse3902;
 public class FireballInventoryItem : IInventoryItem
 {
     private GameContent content;
+    private Room room;
 
     public FireballInventoryItem(GameContent content)
     {
         this.content = content;
+        this.room = room;
     }
 
-    public void Use(IPlayer player)
+    public void Use(IPlayer player, Room room)
     {
         Vector2 direction = player.Facing.asVector2();
-        Fireball projectile = new Fireball(content, player.Position, direction * 400f, player);
+        Fireball projectile = new Fireball(content, room, player.Position, direction * 400f);
         player.SpawnProjectile(projectile);
     }
 }

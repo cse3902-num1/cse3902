@@ -5,13 +5,14 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using cse3902.RoomClasses;
 
 namespace cse3902.Enemy
 {
     public class Gel : EnemyBase
     {
         
-        public Gel(GameContent content) : base(content)
+        public Gel(GameContent content, Room room) : base(content, room)
         {
 
             sprite = new Sprite(content.enemiesSheet, 

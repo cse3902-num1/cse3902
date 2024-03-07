@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using cse3902.RoomClasses;
 
 namespace cse3902.Enemy
 {
@@ -12,7 +13,7 @@ namespace cse3902.Enemy
     {
 
 
-        public Keese(GameContent content):base(content)
+        public Keese(GameContent content, Room room) : base(content, room)
 
         {
             sprite = new Sprite(content.enemiesSheet,
