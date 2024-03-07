@@ -20,6 +20,7 @@ internal class GreenBoomerang : BasicBoomerangProjectile
             },
             new Vector2(4, 8)
         );
+        Hitbox = new BoxCollider(position, new Vector2(8, 16), new Vector2(4, 8), ColliderType.PROJECTILE);
     }
     /*
     public override void Update(GameTime gameTime, List<IController> controllers)

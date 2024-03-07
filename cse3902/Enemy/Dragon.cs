@@ -26,9 +26,9 @@ namespace cse3902.Enemy
                     new Rectangle(1, 11, 25, 32),
                     new Rectangle(26, 11, 25, 32),
                     new Rectangle(51, 11, 25, 32),
-                    new Rectangle(76, 11, 25, 32)
-                }
-                
+                    new Rectangle(76, 11, 25, 32),
+                },
+                new Vector2(12.5f, 16f)
             );
 
             projectiles = new List<IProjectile>();
@@ -47,7 +47,7 @@ namespace cse3902.Enemy
             // );
 
             Position = new Vector2(500, 200);
-            collider = new BoxCollider(Position, Size, ColliderType.ENEMY);
+            Collider = new BoxCollider(Position, new Vector2(25, 32), new Vector2(12.5f, 16f), ColliderType.ENEMY);
             this.content = content;
 
             this.room = room;
@@ -55,6 +55,7 @@ namespace cse3902.Enemy
 
         public override void Move(GameTime gameTime, int randomNum)
         {
+            return;
             Vector2 newPosition = Position;
             switch (randomNum)
             {
@@ -91,16 +92,18 @@ namespace cse3902.Enemy
                 Position,
                 new Vector2(-200f, 0f)
             );
-            projectiles.Add(ballUp);
+            // projectiles.Add(ballUp);
             projectiles.Add(ballMid);
-            projectiles.Add(ballDown);
+            // projectiles.Add(ballDown);
         }
         public override void TakeDmg(int damage)
         {
             HP -= damage;
+            Debug.Write("OUCH!");
             if (HP <= 0)
             {
                 // Handle enemy's death like death animation
+                Die();
             }
         }
 
@@ -114,6 +117,8 @@ namespace cse3902.Enemy
 
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
+            base.Update(gameTime, controllers);
+
             randomChangeTimer.Start();
             attackTimer.Start();
 

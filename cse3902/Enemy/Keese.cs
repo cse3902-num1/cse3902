@@ -21,11 +21,12 @@ namespace cse3902.Enemy
                 {
                     new Rectangle(184, 11, 15, 16),
                     new Rectangle(200, 11, 15, 16)
-                }
+                },
+                new Vector2(7.5f, 8f)
             );
 
             Position = new Vector2(200, 200);
-            collider = new BoxCollider(Position, Size, ColliderType);
+            Collider = new BoxCollider(Position, new Vector2(15, 16), new Vector2(7.5f, 8f), ColliderType);
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -61,6 +62,7 @@ namespace cse3902.Enemy
 
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
+            base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
             if (randomChangeTimer.ElapsedMilliseconds >= 500)

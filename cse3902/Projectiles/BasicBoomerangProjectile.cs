@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
@@ -19,7 +20,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
     protected bool isReturning;
     protected Vector2 initialPosition;
 
-    public ICollider Hitbox;
+    public ICollider Hitbox; /* set in constructor */
     protected Room room;
 
     public BasicBoomerangProjectile(Room room, Vector2 position, Vector2 velocity, float range)
@@ -65,6 +66,19 @@ public abstract class BasicBoomerangProjectile : IProjectile
         if (totalDistance >= range * 2)
         {
             Die();
+        }
+
+        /* check for collisions */
+        Hitbox.Position = Position;
+        foreach (IEnemy e in room.Enemies) {
+            switch (e) {
+                case EnemyBase enemyBase:
+                    if (Hitbox.IsColliding(enemyBase.Collider)) {
+                        e.TakeDmg(1);
+                        Die();
+                    }
+                    break;
+            }
         }
 
         sprite.Update(gameTime, controllers);

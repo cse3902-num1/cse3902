@@ -162,8 +162,9 @@ namespace cse3902.RoomClasses
                 if (idxItem < 0) idxItem = Items.Count - 1;
             }
 
-            Enemies[idxEnemy].Update(gameTime, controllers);
-            // Enemies = Enemies.Where(e => !e.IsDead).ToList();
+            // Enemies[idxEnemy].Update(gameTime, controllers);
+            Enemies.ForEach(e => e.Update(gameTime, controllers));
+            Enemies = Enemies.Where(e => !e.IsDead).ToList();
 
             Items[idxItem].Update(gameTime, controllers);
             // Items = Items.Where(e => !e.IsDead).ToList();
@@ -179,7 +180,8 @@ namespace cse3902.RoomClasses
             wall.Draw(spriteBatch);
             Doors.ForEach(d => d.Draw(spriteBatch));
             Blocks.ForEach(b => b.Draw(spriteBatch));
-            Enemies[idxEnemy].Draw(spriteBatch);
+            // Enemies[idxEnemy].Draw(spriteBatch);
+            Enemies.ForEach(e => e.Draw(spriteBatch));
             Items[idxItem].Draw(spriteBatch);
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
         }

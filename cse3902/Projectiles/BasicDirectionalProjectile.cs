@@ -51,6 +51,7 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
         currentSprite.Update(gameTime, controllers);
 
+        Hitbox.Position = Position;
         if (Hitbox.IsColliding(room.Player.Pushbox)) {
             this.IsDead = true;
             

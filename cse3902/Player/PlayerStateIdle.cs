@@ -14,7 +14,6 @@ namespace cse3902
 
         public PlayerStateIdle(GameContent content, Player player)
         {
-            Debug.WriteLine("[info] player entered idle state");
             this.content = content;
             this.player = player;
 

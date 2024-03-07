@@ -12,12 +12,12 @@ namespace cse3902.Enemy
 {
     public abstract class EnemyBase : IEnemy
     {
+        public bool IsDead {set;get;}
         public Vector2 Position { get; set; }
-        public Vector2 Size { set; get; }
         public ColliderType ColliderType { set; get; }
         public int HP { get; set; } = 100;
         protected Sprite sprite;
-        public ICollider collider;
+        public ICollider Collider;
         protected Stopwatch randomChangeTimer = new Stopwatch();
         protected Stopwatch attackTimer = new Stopwatch();
         protected Random random = new Random();
@@ -28,6 +28,7 @@ namespace cse3902.Enemy
         protected EnemyBase(GameContent content, Room room)
         {
             this.room = room;
+            IsDead = false;
             // Initialize sprite and collider here based on specific enemy content
         }
 
@@ -48,9 +49,16 @@ namespace cse3902.Enemy
         {
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
-          
         }
 
-        public abstract void Update(GameTime gameTime, List<IController> controllers);
+        public virtual void Update(GameTime gameTime, List<IController> controllers)
+        {
+            Collider.Position = Position;
+        }
+
+        public virtual void Die()
+        {
+            IsDead = true;
+        }
     }
 }

@@ -14,7 +14,6 @@ namespace cse3902
 
         public PlayerStateMove(GameContent content, Player player)
         {
-            Debug.WriteLine("[info] player entered move state");
             this.content = content;
             this.player = player;
 
@@ -57,22 +56,22 @@ namespace cse3902
             if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
                 player.Facing = Direction.Left;
-                position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveRightPressed()) == true)
             {
                 player.Facing = Direction.Right;
-                position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveUpPressed()) == true)
             {
                 player.Facing = Direction.Up;
-                position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveDownPressed()) == true)
             {
                 player.Facing = Direction.Down;
-                position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             /* change to idle state if no movement keys are pressed */

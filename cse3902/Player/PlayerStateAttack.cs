@@ -12,7 +12,6 @@ namespace cse3902
         private GameContent content;
         public PlayerStateAttack(GameContent content, Player player)
         {
-            Debug.WriteLine("[info] player entered attack state");
             this.content = content;
             this.player = player;
 

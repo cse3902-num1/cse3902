@@ -18,12 +18,11 @@ namespace cse3902
         public IPlayerState State;
         private List<IProjectile> projectiles;
         public int health = 5;
-        public Player(GameContent content, Room room)
+        public Player(GameContent content)
         {
-            CurrentRoom = room;
             State = new PlayerStateIdle(content,this);
             projectiles = new List<IProjectile>();
-            Pushbox = new BoxCollider(Position,new Vector2(16,16),ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,new Vector2(16,16), new Vector2(8, 8), ColliderType.PLAYER);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -39,6 +38,8 @@ namespace cse3902
 
             /* remove dead projectiles */
             projectiles = projectiles.Where(p => !p.IsDead).ToList();
+
+            Pushbox.Position = Position;
         }
 
         public void Draw(SpriteBatch spriteBatch)

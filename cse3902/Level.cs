@@ -21,6 +21,9 @@ namespace cse3902
 
         public Level(GameContent content)
         {
+            player = new Player(content);
+            player.Position = new Vector2(100, 100);
+
             rooms = new List<Room>
             {
                 new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
@@ -31,8 +34,7 @@ namespace cse3902
 
             };
 
-            player = new Player(content, rooms[0]);
-            player.Position = new Vector2(100, 100);
+            player.CurrentRoom = rooms[0];
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
