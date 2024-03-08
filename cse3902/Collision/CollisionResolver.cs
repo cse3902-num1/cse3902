@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using cse3902.Interfaces;
 using cse3902.Objects;
@@ -6,10 +7,8 @@ namespace cse3902;
 
 public static class CollisionResolver
 {
-    private static Player player;
-    
 
-    public static void CollisionMove(ICollider collider, int width, int height)
+    public static void CollisionMove(Player player, ICollider collider, int width, int height)
     {
         // a is subject b is object
         BoxCollider b = (BoxCollider)collider;
@@ -22,32 +21,31 @@ public static class CollisionResolver
         float bright = bleft + b.Size.X;
         float btop = b.Position.Y - b.Origin.Y;
         float bbottom = btop + b.Size.Y;
-        Vector2 Position = player.Position;
+
         if (height > width)
         {
             if (aleft >= bleft)
             {
-                Position.X -= 200;
+                player.Position = new Vector2(player.Position.X - 200, player.Position.Y);
             }
             else
             {
-                Position.X += 200;
+                player.Position = new Vector2(player.Position.X + 200, player.Position.Y);
             }
         }
         else
         {
             if (atop >= btop)
             {
-                Position.Y += 200;
-
+                player.Position = new Vector2(player.Position.X, player.Position.Y + 200);
             }
             else
             {
-                Position.Y -= 200;
+                player.Position = new Vector2(player.Position.X, player.Position.Y - 200);
             }
         }
-
     }
+
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
     {
         if (results.Count == 0)
