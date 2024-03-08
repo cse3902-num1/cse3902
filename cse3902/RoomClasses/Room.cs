@@ -237,13 +237,14 @@ namespace cse3902.RoomClasses
                         blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
                         enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
                         if (blockResults.Count > 0 || enemyResults.Count > 0) {
+                            CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
                             // Debug.WriteLine("enemy: " + blockResults.Count + " " + enemyResults.Count);
                         }
                         break;
                     /* todo: check any other enemy types */
                 }
                 /* apply collision response */
-                CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
+                
             }
 
             /* player collisions */

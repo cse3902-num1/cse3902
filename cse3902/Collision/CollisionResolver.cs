@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
@@ -25,7 +26,6 @@ public static class CollisionResolver
         float bright = bleft + b.Size.X;
         float btop = b.Position.Y - b.Origin.Y;
         float bbottom = btop + b.Size.Y;
-
         if (height > width) // if collision height greater, it's moving horizontally
         {
             if (aright >= bleft) // if player is moving collide with right part of the object 
