@@ -73,7 +73,7 @@ public class BoxCollider : ICollider
                     float bright = bleft + b.Size.X;
                     float btop = b.Position.Y - b.Origin.Y;
                     float bbottom = btop + b.Size.Y;
-            return new Vector2(Math.Abs(aright - bleft), Math.Abs(atop - bbottom));
+            return new Vector2(Math.Min(Math.Abs(aright - bleft),Math.Abs(bright -aleft)), Math.Min(Math.Abs(atop - bbottom),Math.Abs(btop - abottom)));
         }
 
         return new Vector2(0,0); // placeHolder
