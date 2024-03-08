@@ -48,7 +48,7 @@ namespace cse3902.Enemy
             // );
 
             Position = new Vector2(500, 200);
-            Collider = new BoxCollider(Position, new Vector2(25, 32), new Vector2(12.5f, 16f), ColliderType.ENEMY);
+            Collider = new BoxCollider(Position, new Vector2(25 * 2, 32 * 2), new Vector2(12.5f * 2, 16f * 2), ColliderType.ENEMY);
             this.content = content;
 
             this.room = room;

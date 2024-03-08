@@ -90,7 +90,7 @@ public static class CollisionResolver
     public static void ResolveEnemyBlockCollision(IEnemy enemy, List<CollisionResult<Block>> blockResults, List<CollisionResult<IEnemy>> enemyResults)
     {
         /* if no collisions occurred, do nothing */
-        if (blockResults.Count == 0 || enemyResults.Count == 0) {
+        if (blockResults.Count == 0 && enemyResults.Count == 0) {
             return;
         }
 

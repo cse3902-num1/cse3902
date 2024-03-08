@@ -29,6 +29,7 @@ public class BlueArrow : BasicDirectionalProjectile
         IsDead = true;
         IParticleEffect fx = new ArrowExplode(content, Position);
         /* TODO: "spawn" the particle effect in the level */
+        room.ParticleEffects.Add(fx);
     }
 
     public override void Update(GameTime gameTime, List<IController> controllers)

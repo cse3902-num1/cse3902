@@ -63,7 +63,7 @@ namespace cse3902.Enemy
             Position = new Vector2(400, 200);
 
             projectile = null;
-            Collider = new BoxCollider(Position, new Vector2(16, 16), new Vector2(8, 8), ColliderType);
+            Collider = new BoxCollider(Position, new Vector2(16 * 2, 16 * 2), new Vector2(8 * 2, 8 * 2), ColliderType);
             this.content = content;
         }
 

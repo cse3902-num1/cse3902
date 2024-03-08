@@ -25,7 +25,7 @@ namespace cse3902.Enemy
             );
 
             Position = new Vector2(200, 200);
-            Collider = new BoxCollider(Position, new Vector2(7, 16), new Vector2(3.5f, 8f), ColliderType.ENEMY);
+            Collider = new BoxCollider(Position, new Vector2(7 * 2, 16 * 2), new Vector2(3.5f * 2, 8f * 2), ColliderType.ENEMY);
         }
 
         public override void Move(GameTime gameTime, int randomNum)

@@ -240,7 +240,7 @@ namespace cse3902.RoomClasses
                        // wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
                         if (blockResults.Count > 0 || enemyResults.Count > 0) {
                             CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
-                            // Debug.WriteLine("enemy: " + blockResults.Count + " " + enemyResults.Count);
+                            Debug.WriteLine("enemy: " + blockResults.Count + " " + enemyResults.Count);
                         }
                         break;
                     /* todo: check any other enemy types */
