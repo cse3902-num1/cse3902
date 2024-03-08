@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using cse3902.Interfaces;
 using cse3902.Objects;
+using cse3902.WallClasses;
 using Microsoft.Xna.Framework;
 namespace cse3902;
 
@@ -118,14 +119,24 @@ public static class CollisionResolver
         projectile.IsDead = true;
     }
 
-    public static void ResolveEnemyWallCollision(IEnemy enemy,  List<CollisionResult<IEnemy>> results)
+    public static void ResolveEnemyWallCollision(IEnemy enemy,  List<CollisionResult<Wall>> results)
     {
         if (results.Count == 0)
         {
             return;
         }
 
-        CollisionMove(enemy, results[0].Collider, (int)results[0].Size.X, (int)results[0].Size.Y);
+        CollisionMove(enemy.Collider, results[0].Collider, results[0].Size.X, results[0].Size.Y);
     }
-   
+
+    public static void ResolvePlayerWallCollision(IPlayer player, List<CollisionResult<Wall>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+
+        CollisionMove(player.Pushbox, results[0].Collider, results[0].Size.X, results[0].Size.Y);
+    }
+
 }

@@ -5,6 +5,8 @@ namespace cse3902.Interfaces;
 
 public interface IEnemy : IGameObject
 {
+
+    public ICollider Collider { get; set; }
     public bool IsDead {set;get;}
 
     public void Move(GameTime gameTime, int randomNum);
