@@ -33,7 +33,7 @@ namespace cse3902
         public Player(GameContent content)
         {
             State = new PlayerStateIdle(content,this);
-            Pushbox = new BoxCollider(Position,Size, Origin, ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,Size*3, Origin*3, ColliderType.PLAYER);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
