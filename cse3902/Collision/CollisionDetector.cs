@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using cse3902.Interfaces;
 using cse3902.Objects;
+using cse3902.WallClasses;
 using Microsoft.Xna.Framework;
 
 namespace cse3902;
@@ -31,4 +32,10 @@ public static class CollisionDetector
     }
 
     /* TODO: add other collision detection methods */
+    public static List<CollisionResult<Wall>> DetectWallCollision(ICollider self, List<Wall> walls)
+    {
+        List<CollisionResult<Wall>> results = new List<CollisionResult<Wall>>();
+        /* TODO */
+        return results;
+    }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Numerics;
 using cse3902.Interfaces;
 using cse3902.Objects;
 using Microsoft.Xna.Framework;
@@ -10,7 +9,7 @@ public static class CollisionResolver
     private static Player player;
     
 
-    public static void CollisionMove(ICollider collider, int width, int height)
+    public static void CollisionMove(ICollider collider, IController collider2, int width, int height)
     {
         // a is subject b is object
         BoxCollider b = (BoxCollider)collider;
@@ -64,6 +63,42 @@ public static class CollisionResolver
     {
 
         /* TODO: get collision result with largest area and use it to calculate how much to move the player back */
+    }
+
+    /* Called only when projectile collision with player */
+    public static void ResolveProjectilePlayerCollision(IProjectile projectile, IPlayer player)
+    {
+        projectile.IsDead = true;
+        player.TakeDamage();
+    }
+
+    public static void ResolvePlayerEnemyCollision(IPlayer player, List<CollisionResult<IEnemy>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+
+        foreach (CollisionResult<IEnemy> result in results)
+        {
+            player.TakeDamage();
+        }
+    }
+
+    /* Called only when projectile collision with walls */
+    public static void ResolveProjectileWallCollision(IProjectile projectile)
+    {
+        projectile.IsDead = true;
+    }
+
+    public static void ResolveEnemyWallCollision(IEnemy enemy,  List<CollisionResult<IEnemy>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+
+        CollisionMove(enemy, results[0].Collider, (int)results[0].Size.X, (int)results[0].Size.Y);
     }
    
 }
