@@ -16,7 +16,11 @@ namespace cse3902.Enemy
         public bool IsDead {set;get;}
         public Vector2 Position { get; set; }
         public ColliderType ColliderType { set; get; }
-        public ICollider collider { set; get; }
+        public ICollider collider
+        {
+            get { return Collider; }
+            set { Collider = value; }
+        }
         public int HP { get; set; } = 100;
         //ICollider IEnemy.Collider { get; set; }
 

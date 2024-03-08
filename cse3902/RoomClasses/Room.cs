@@ -264,6 +264,9 @@ namespace cse3902.RoomClasses
             
 
             /* TODO: add other collision checks/responses */
+            List<CollisionResult<Wall>> playerWallCollisionResults = CollisionDetector.DetectWallCollision(Player.Pushbox, wall);
+            CollisionResolver.ResolvePlayerWallCollision(Player, playerWallCollisionResults);       
+        
         }
 
         public void Draw(SpriteBatch spriteBatch)

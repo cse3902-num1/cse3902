@@ -171,7 +171,7 @@ public static class CollisionResolver
             return;
         }
 
-        CollisionMove(enemy.collider, results[0].Collider, results[0].Size.X, results[0].Size.Y);
+        Vector2 reconciliation = CollisionMove(enemy.collider, results[0].Collider, results[0].Size.X, results[0].Size.Y);
     }
 
     public static void ResolvePlayerWallCollision(IPlayer player, List<CollisionResult<Wall>> results)
@@ -181,7 +181,19 @@ public static class CollisionResolver
             return;
         }
 
-        CollisionMove(player.Pushbox, results[0].Collider, results[0].Size.X, results[0].Size.Y);
+        float area = 0f;
+        CollisionResult<Wall> biggestResult = results[0];
+        foreach (CollisionResult<Wall> result in results)
+        {
+            if (result.GetArea() > area)
+            {
+                area = result.GetArea();
+                biggestResult = result;
+            }
+        }
+
+        Vector2 reconciliation = CollisionMove(((Player)player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        player.Position += reconciliation;
     }
 
 }
