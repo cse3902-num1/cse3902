@@ -22,30 +22,6 @@ internal class GreenBoomerang : BasicBoomerangProjectile
         );
         Hitbox = new BoxCollider(position, new Vector2(8, 16), new Vector2(4, 8), ColliderType.PROJECTILE);
     }
-    /*
-    public override void Update(GameTime gameTime, List<IController> controllers)
-    {
-        Debug.WriteLine($"Updating Boomerang: Position={Position}, Velocity={Velocity}, IsReturning={isReturning}, Distance={Vector2.Distance(initialPosition, Position)}");
-        Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (isReturning && Vector2.Distance(initialPosition, Position) <= 10)
-        {
-            IsDead = true;
-        }
-        /* flip direction once we reach max distance */
-    /*
-        if (Vector2.Distance(initialPosition, Position) >= maxDistance)
-        {
-            isReturning = true;
-            Velocity = -Velocity;
-        }
 
-        /* finish once we return to original position */
-    /*
-        sprite.Update(gameTime,controllers);
-
-      
-        
-    }
-    */
 
 }
