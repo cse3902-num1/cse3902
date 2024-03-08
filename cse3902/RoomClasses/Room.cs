@@ -9,6 +9,7 @@ using System.Diagnostics;
 using cse3902.DoorClasses;
 using System.Linq;
 using System;
+using cse3902.Projectiles;
 
 
 namespace cse3902.RoomClasses
@@ -175,7 +176,36 @@ namespace cse3902.RoomClasses
             //wall.colliders.ForEach(w => w.IsColliding(Player.Pushbox){
 
             //}
+            
+            /* projectile collisions */
+            foreach (IProjectile projectile in Projectiles) {
+                /* check for intersection of colliders */
+                List<CollisionResult<IEnemy>> collisionResults = null;
+                switch (projectile)
+                {
+                    case BasicBoomerangProjectile b:
+                        collisionResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
+                        break;
+                    case BasicDirectionalProjectile d:
+                        collisionResults = CollisionDetector.DetectEnemyCollision(d.Hitbox, Enemies);
+                        break;
+                    case Bomb b:
+                        collisionResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
+                        break;
+                    /* todo: check other types */
+                }
 
+                /* apply collision response */
+                CollisionResolver.ResolveProjectileEnemyCollision(projectile, collisionResults);
+            }
+
+            /* player collisions */
+            /* check for intersection of colliders */
+            List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
+            /* apply collision response */
+            CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
+
+            /* TODO: add other collision checks/responses */
         }
 
         public void Draw(SpriteBatch spriteBatch)
