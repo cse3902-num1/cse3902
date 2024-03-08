@@ -104,9 +104,10 @@ namespace cse3902.RoomClasses
             doorIds = doorML.LoadMap();
 
             int idx = 0;
+            position.Y = 96 + (3f * 8);
             foreach (List<int> row in tileIds)
             {
-                position.X = 96;
+                position.X = 96 + (3f * 8);
 
                 foreach (int element in row)
                 {
@@ -126,10 +127,16 @@ namespace cse3902.RoomClasses
                     }
 
                     idx++;
-                    position.X += 48;
+                    position.X += 3f * 16;
 
                 }
-                position.Y += 48;
+                position.Y += 3f * 16;
+            }
+
+            foreach (Block b in Blocks) {
+                if (b.Collider is null) continue;
+                BoxCollider c = (BoxCollider) b.Collider;
+                Debug.WriteLine("block: " + c.Position + " " + c.Size);
             }
 
             int type = 0;
@@ -199,31 +206,59 @@ namespace cse3902.RoomClasses
                 CollisionResolver.ResolveProjectileEnemyCollision(projectile, collisionResults);
             }
 
+            /* TODO: remove */
+            foreach (IProjectile p in Projectiles) {
+                List<CollisionResult<Block>> collisionResults = null;
+                switch (p)
+                {
+                    case BasicBoomerangProjectile b:
+                        collisionResults = CollisionDetector.DetectBlockCollision(b.Hitbox, Blocks);
+                        break;
+                    case BasicDirectionalProjectile d:
+                        collisionResults = CollisionDetector.DetectBlockCollision(d.Hitbox, Blocks);
+                        break;
+                    case Bomb b:
+                        collisionResults = CollisionDetector.DetectBlockCollision(b.Hitbox, Blocks);
+                        break;
+                }
+                if (collisionResults.Count > 0) {
+                    p.IsDead = true;
+                }
+            }
+
             /* enemy collisions */
             foreach (IEnemy enemy in Enemies) {
                 /* check for intersection of colliders */
                 List<CollisionResult<Block>> blockResults = null; 
                 List<CollisionResult<IEnemy>> enemyResults = null;
-                //switch (enemy)
-                //{
-                //    case EnemyBase e:
-                        blockResults = CollisionDetector.DetectBlockCollision(enemy.collider, Blocks);
-                        enemyResults = CollisionDetector.DetectEnemyCollision(enemy.collider, Enemies);
-                //        break;
+                List<CollisionResult<Wall>> wallResults = null;
+                switch (enemy)
+                {
+                    case EnemyBase e:
+                        blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
+                        enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
+                        wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
+                        if (blockResults.Count > 0 || enemyResults.Count > 0) {
+                            CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
+                            // Debug.WriteLine("enemy: " + blockResults.Count + " " + enemyResults.Count);
+                        }
+                        break;
                     /* todo: check any other enemy types */
                 //}
                 /* apply collision response */
-                CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
+                
             }
 
             /* player collisions */
             /* check for intersection of colliders */
-            foreach (Block block in Blocks)
-            {
-
-                List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
-                CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
+            List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
+            if (playerBlockCollisionResults.Count > 0) {
+                Debug.WriteLine(string.Format("{0} | {1} {2} | {3} {4}", playerBlockCollisionResults.Count,
+                    Player.Pushbox.Position, ((BoxCollider) Player.Pushbox).Size,
+                    playerBlockCollisionResults[0].Collider.Position, ((BoxCollider) playerBlockCollisionResults[0].Collider).Size
+                ));
             }
+            CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
            
             /* apply collision response */
             

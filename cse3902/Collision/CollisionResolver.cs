@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
@@ -25,10 +26,9 @@ public static class CollisionResolver
         float bright = bleft + b.Size.X;
         float btop = b.Position.Y - b.Origin.Y;
         float bbottom = btop + b.Size.Y;
-
         if (height > width) // if collision height greater, it's moving horizontally
         {
-            if (aleft >= bleft) // if player is moving collide with right part of the object 
+            if (aright >= bleft) // if player is moving collide with right part of the object 
             {
                 return new Vector2(width, 0);
             }
@@ -39,13 +39,13 @@ public static class CollisionResolver
         }
         else    // moving vertically
         {
-            if (atop >= btop)   // player is moving collide with top of the object
+            if (abottom >= btop)   // player is moving collide with top of the object
             {
-                return new Vector2 (height, 0);
+                return new Vector2 (-height, 0);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (-height, 0);
+                return new Vector2 (height, 0);
             }
         }
     }

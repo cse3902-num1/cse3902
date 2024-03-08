@@ -66,6 +66,15 @@ namespace cse3902
             this.origin = origin;
         }
 
+        public Sprite(Texture2D texture, List<Rectangle> frames, Vector2 origin, float scale)
+        {
+            this.position = Vector2.Zero;
+            this.texture = texture;
+            this.frames = frames;
+            this.origin = origin;
+            this.scale = scale;
+        }
+
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {

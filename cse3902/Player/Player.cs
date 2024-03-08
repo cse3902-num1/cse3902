@@ -13,7 +13,17 @@ namespace cse3902
     public class Player : IPlayer
     {
         public Room CurrentRoom {set;get;}
-        public Vector2 Position {set;get;} = Vector2.Zero;
+        
+        private Vector2 _position = Vector2.Zero;
+        public Vector2 Position {
+            set {
+                _position = value;
+                Pushbox.Position = value;
+            }
+            get {
+                return _position;
+            }
+        }
         public Direction Facing {set;get;}
         public Vector2 Origin { set;get;} = new Vector2(8,8);
         public Vector2 Size { set;get;} = new Vector2(16,16);
@@ -36,7 +46,6 @@ namespace cse3902
             State.Update(gameTime, controllers);
 
             Pushbox.Position = Position;
-            
         }
 
         public void Draw(SpriteBatch spriteBatch)

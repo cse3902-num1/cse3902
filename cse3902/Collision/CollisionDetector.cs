@@ -56,5 +56,19 @@ public static class CollisionDetector
         }
         return results;
     }
-    
+    public static List<CollisionResult<Player>> DetectPlayerCollision(ICollider self, Player player) {
+        List<CollisionResult<Player>> results = new List<CollisionResult<Player>>();
+
+            if (self.IsColliding(player.Pushbox))
+            {
+                Vector2 depth = self.GetOverlap(player.Pushbox);
+                CollisionResult<Player> result = new CollisionResult<Player>(depth, player.Pushbox, player);
+                results.Add(result);
+            } 
+        return results;
+
+    }
+
+
+
 }
