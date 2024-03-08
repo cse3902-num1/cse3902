@@ -204,14 +204,14 @@ namespace cse3902.RoomClasses
                 /* check for intersection of colliders */
                 List<CollisionResult<Block>> blockResults = null; 
                 List<CollisionResult<IEnemy>> enemyResults = null;
-                switch (enemy)
-                {
-                    case EnemyBase e:
-                        blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
-                        enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
-                        break;
+                //switch (enemy)
+                //{
+                //    case EnemyBase e:
+                        blockResults = CollisionDetector.DetectBlockCollision(enemy.collider, Blocks);
+                        enemyResults = CollisionDetector.DetectEnemyCollision(enemy.collider, Enemies);
+                //        break;
                     /* todo: check any other enemy types */
-                }
+                //}
                 /* apply collision response */
                 CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
             }

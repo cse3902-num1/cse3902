@@ -7,12 +7,10 @@ namespace cse3902;
 public class FireballInventoryItem : IInventoryItem
 {
     private GameContent content;
-    private Room room;
 
     public FireballInventoryItem(GameContent content)
     {
         this.content = content;
-        this.room = room;
     }
 
     public void Use(IPlayer player, Room room)
