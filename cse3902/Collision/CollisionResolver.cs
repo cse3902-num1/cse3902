@@ -28,7 +28,7 @@ public static class CollisionResolver
 
         if (height > width) // if collision height greater, it's moving horizontally
         {
-            if (aleft >= bleft) // if player is moving collide with right part of the object 
+            if (aright >= bleft) // if player is moving collide with right part of the object 
             {
                 return new Vector2(width, 0);
             }
@@ -39,13 +39,13 @@ public static class CollisionResolver
         }
         else    // moving vertically
         {
-            if (atop >= btop)   // player is moving collide with top of the object
+            if (abottom >= btop)   // player is moving collide with top of the object
             {
-                return new Vector2 (height, 0);
+                return new Vector2 (-height, 0);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (-height, 0);
+                return new Vector2 (height, 0);
             }
         }
     }
