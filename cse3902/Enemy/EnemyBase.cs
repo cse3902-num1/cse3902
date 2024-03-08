@@ -14,7 +14,22 @@ namespace cse3902.Enemy
     public abstract class EnemyBase : IEnemy
     {
         public bool IsDead {set;get;}
-        public Vector2 Position { get; set; }
+
+        private Vector2 _position;
+        public Vector2 Position {
+            get {
+                return _position;
+            }
+            set {
+                _position = value;
+                if (collider is not null) {
+                    collider.Position = value;
+                }
+                if (sprite is not null) {
+                    sprite.Position = value;
+                }
+            }
+        }
         public ColliderType ColliderType { set; get; }
         public ICollider collider
         {
@@ -68,22 +83,22 @@ namespace cse3902.Enemy
         public virtual void Update(GameTime gameTime, List<IController> controllers)
         {
             Collider.Position = Position;
-            foreach (Block block in room.Blocks)
-            {
-                if (Collider.IsColliding(block.Collider))
-                {
-                    BoxCollider blockBoxCollider = (BoxCollider)block.Collider; // Cast to BoxCollider if sure it is BoxCollider
+            // foreach (Block block in room.Blocks)
+            // {
+            //     if (Collider.IsColliding(block.Collider))
+            //     {
+            //         BoxCollider blockBoxCollider = (BoxCollider)block.Collider; // Cast to BoxCollider if sure it is BoxCollider
 
-                    // GetOverlap should probably take another BoxCollider, not a list of Blocks
-                    Vector2 overlap = Collider.GetOverlap(blockBoxCollider);
-                    Vector2 reconciliation = new Vector2(-20000, -20000);
-                    //reconciliation  += CollisionResolver.CollisionMove(Collider, blockBoxCollider, overlap.X,overlap.Y);
-                    Debug.WriteLine("Before: " + Collider.Position);
-                    Collider.Position += reconciliation;
-                    Debug.WriteLine("After: " + Collider.Position);
-                }
+            //         // GetOverlap should probably take another BoxCollider, not a list of Blocks
+            //         Vector2 overlap = Collider.GetOverlap(blockBoxCollider);
+            //         Vector2 reconciliation = new Vector2(-20000, -20000);
+            //         //reconciliation  += CollisionResolver.CollisionMove(Collider, blockBoxCollider, overlap.X,overlap.Y);
+            //         Debug.WriteLine("Before: " + Collider.Position);
+            //         Collider.Position += reconciliation;
+            //         Debug.WriteLine("After: " + Collider.Position);
+            //     }
 
-            }
+            // }
 
         }
 
