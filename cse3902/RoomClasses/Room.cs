@@ -231,13 +231,13 @@ namespace cse3902.RoomClasses
                 /* check for intersection of colliders */
                 List<CollisionResult<Block>> blockResults = null; 
                 List<CollisionResult<IEnemy>> enemyResults = null;
-                List<CollisionResult<Wall>> wallResults = null;
+                //List<CollisionResult<Wall>> wallResults = null;
                 switch (enemy)
                 {
                     case EnemyBase e:
                         blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
                         enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
-                        wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
+                       // wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
                         if (blockResults.Count > 0 || enemyResults.Count > 0) {
                             CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
                             // Debug.WriteLine("enemy: " + blockResults.Count + " " + enemyResults.Count);

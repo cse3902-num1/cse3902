@@ -28,24 +28,25 @@ public static class CollisionResolver
         float bbottom = btop + b.Size.Y;
         if (height > width) // if collision height greater, it's moving horizontally
         {
-            if (aright >= bleft) // if player is moving collide with right part of the object 
+            if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
-                return new Vector2(width, 0);
+                return new Vector2(width + 5, 0);
             }
             else //if player is moving collide with left part of the object
             {
-                return new Vector2(-width, 0);
+                return new Vector2(-width - 5, 0);
             }
+            
         }
         else    // moving vertically
         {
-            if (abottom >= btop)   // player is moving collide with top of the object
+            if (abottom <= bbottom)   // player is moving collide with top of the object
             {
-                return new Vector2 (-height, 0);
+                return new Vector2 (0, -height-5);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (height, 0);
+                return new Vector2 (0, height+5);
             }
         }
     }
