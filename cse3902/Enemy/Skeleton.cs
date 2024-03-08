@@ -14,16 +14,18 @@ namespace cse3902.Enemy
 
         public Skeleton(GameContent content, Room room) : base(content, room)
         {
+            this.HP = 3;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 0, 15, 15),
                     new Rectangle(15, 0, 15, 15)
-                }
+                },
+                new Vector2(7.5f, 7.5f)
             );
 
             Position = new Vector2(200, 200);
-            collider = new BoxCollider(Position, Size, ColliderType);
+            Collider = new BoxCollider(Position, new Vector2(15, 15), new Vector2(7.5f, 7.5f), ColliderType);
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -47,19 +49,9 @@ namespace cse3902.Enemy
             Position = newPosition;
         }
 
-        public override void Attack()
-        {
-
-        }
-
-        public override void TakeDmg(int damage)
-        {
-
-        }
-
-
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
+            base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
             if (randomChangeTimer.ElapsedMilliseconds >= 500)

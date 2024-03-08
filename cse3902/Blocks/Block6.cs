@@ -15,6 +15,6 @@ public class Block6 : BasicBlock
             },
             new Vector2(8, 8)
         );
-        collider = new BoxCollider(Position, Size, ColliderType);
+        collider = new BoxCollider(Position, Size, new Vector2(8, 8), ColliderType.BLOCK);
     }
 }

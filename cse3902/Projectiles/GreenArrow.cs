@@ -22,6 +22,7 @@ public class GreenArrow : BasicDirectionalProjectile
         initialPosition = position;
 
         this.content = content;
+        this.Hitbox = new BoxCollider(position, new Vector2(15, 15), new Vector2(7.5f, 7.5f), ColliderType.PROJECTILE);
     }
 
     private void Die()

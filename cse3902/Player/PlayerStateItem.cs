@@ -14,7 +14,6 @@ namespace cse3902
 
         public PlayerStateItem(GameContent content, Player player, IInventoryItem item)
         {
-            Debug.WriteLine("[info] player entered item state");
             this.content = content;
             this.player = player;
             this.item = item;

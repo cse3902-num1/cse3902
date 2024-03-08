@@ -13,7 +13,6 @@ namespace cse3902
         public void Move(Vector2 direction);
         public void Attack();
         public void UseItem(IInventoryItem item);
-        public void SpawnProjectile(IProjectile projectile);
         public void TakeDamage();
     }
 }

@@ -1,7 +1,10 @@
+using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using System.Linq;
 
 namespace cse3902
@@ -11,10 +14,10 @@ namespace cse3902
         private Player player;
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+        
 
         public PlayerStateMove(GameContent content, Player player)
         {
-            Debug.WriteLine("[info] player entered move state");
             this.content = content;
             this.player = player;
 
@@ -57,22 +60,22 @@ namespace cse3902
             if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
                 player.Facing = Direction.Left;
-                position.X -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveRightPressed()) == true)
             {
                 player.Facing = Direction.Right;
-                position.X += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveUpPressed()) == true)
             {
                 player.Facing = Direction.Up;
-                position.Y -= 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveDownPressed()) == true)
             {
                 player.Facing = Direction.Down;
-                position.Y += 100 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             /* change to idle state if no movement keys are pressed */
@@ -84,6 +87,45 @@ namespace cse3902
             player.Position = position;
 
             sprites[player.Facing].Update(gameTime, controllers);
+        }
+        public void CollisionMove(ICollider collider, int width,int height)
+        {
+            // a is subject b is object
+            BoxCollider b = (BoxCollider)collider;
+                    float aleft = player.Position.X - player.Origin.X;
+                    float aright = aleft + player.Size.X;
+                    float atop = player.Position.Y - player.Origin.Y;
+                    float abottom = atop + player.Size.Y;
+
+                    float bleft = b.Position.X - b.Origin.X;
+                    float bright = bleft + b.Size.X;
+                    float btop = b.Position.Y - b.Origin.Y;
+                    float bbottom = btop + b.Size.Y;
+            Vector2 Position = player.Position;
+                    if(height > width)
+                    {
+                        if(aleft >= bleft)
+                        {
+                           Position.X -= 200;
+                        }
+                        else
+                        {
+                            Position.X += 200;
+                        }
+                    }
+                    else
+                    {
+                        if (atop >= btop)
+                        {
+                            Position.Y += 200;
+
+                        }
+                        else
+                        {
+                            Position.Y -= 200;
+                        }
+                    }
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -11,6 +11,8 @@ public class Fire : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
+    public bool isEnermyProjectile { get; set; }
+
     private Sprite sprite;
     private Room room;
 

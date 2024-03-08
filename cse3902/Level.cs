@@ -21,6 +21,9 @@ namespace cse3902
 
         public Level(GameContent content)
         {
+            player = new Player(content);
+            player.Position = new Vector2(100, 100);
+
             rooms = new List<Room>
             {
                 new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
@@ -31,29 +34,26 @@ namespace cse3902
 
             };
 
-            player = new Player(content, rooms[0]);
-            player.Position = new Vector2(100, 100);
+            player.CurrentRoom = rooms[0];
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-
-            //add room update
             player.Update(gameTime, controllers);
-            rooms.ForEach(r => r.Update(gameTime, controllers));
-            foreach(Room r in rooms){
-                r.Update(gameTime, controllers);
-            }
+
+            rooms[roomIdx].Update(gameTime, controllers);
 
             if (controllers.Any(c => c.isLeftClick()))
             {
                 roomIdx++;
                 roomIdx %= rooms.Count;
+                player.CurrentRoom = rooms[roomIdx];
             }
             if (controllers.Any(c => c.isRightClick()))
             {
                 roomIdx--;
                 if (roomIdx < 0) roomIdx = rooms.Count - 1;
+                player.CurrentRoom = rooms[roomIdx];
             }
         }
 
@@ -61,7 +61,6 @@ namespace cse3902
         {
             rooms[roomIdx].Draw(spriteBatch);
            
-            rooms.ForEach(r => r.Draw(spriteBatch));
             player.Draw(spriteBatch);
         }
     }

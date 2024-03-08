@@ -6,6 +6,7 @@ using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using cse3902.WallClasses;
 
 namespace cse3902
 {    
@@ -14,16 +15,15 @@ namespace cse3902
         public Room CurrentRoom {set;get;}
         public Vector2 Position {set;get;} = Vector2.Zero;
         public Direction Facing {set;get;}
+        public Vector2 Origin { set;get;} = new Vector2(8,8);
+        public Vector2 Size { set;get;} = new Vector2(16,16);
         public ICollider Pushbox {set;get;}
         public IPlayerState State;
-        private List<IProjectile> projectiles;
         public int health = 5;
-        public Player(GameContent content, Room room)
+        public Player(GameContent content)
         {
-            CurrentRoom = room;
             State = new PlayerStateIdle(content,this);
-            projectiles = new List<IProjectile>();
-            Pushbox = new BoxCollider(Position,new Vector2(16,16),ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,Size, Origin, ColliderType.PLAYER);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -35,20 +35,13 @@ namespace cse3902
 
             State.Update(gameTime, controllers);
 
-            projectiles.ForEach(p => p.Update(gameTime, controllers));
-
-            /* remove dead projectiles */
-            projectiles = projectiles.Where(p => !p.IsDead).ToList();
+            Pushbox.Position = Position;
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {   
             State.Draw(spriteBatch);
-
-            foreach (IProjectile projectile in projectiles)
-            {
-                projectile.Draw(spriteBatch);
-            }
         }
 
         public void Move(Vector2 direction)
@@ -65,11 +58,6 @@ namespace cse3902
         public void UseItem(IInventoryItem item)
         {
             item.Use(this, CurrentRoom);
-        }
-
-        public void SpawnProjectile(IProjectile projectile)
-        {
-            projectiles.Add(projectile);
         }
 
         public void TakeDamage()

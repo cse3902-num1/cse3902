@@ -18,5 +18,6 @@ internal class MagicalBoomerang : BasicBoomerangProjectile
             },
             new Vector2(10, 16)
         );
+        Hitbox = new BoxCollider(position, new Vector2(20, 32), new Vector2(10, 16), ColliderType.PROJECTILE);
     }
 }

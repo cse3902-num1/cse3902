@@ -25,40 +25,45 @@ namespace cse3902.Enemy
 
         public Goriya(GameContent content, Room room) : base(content, room)
         {
+            this.HP = 7;
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 32, 16, 16),
                     new Rectangle(16, 32, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             spriteDown = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 48, 16, 16),
                     new Rectangle(16, 48, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             spriteRight = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 16, 16, 16),
                     new Rectangle(16, 16, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             spriteLeft = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 0, 16, 16),
                     new Rectangle(16, 0, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             currentSprite = spriteDown;
 
             Position = new Vector2(400, 200);
 
             projectile = null;
-            collider = new BoxCollider(Position, Size, ColliderType);
+            Collider = new BoxCollider(Position, new Vector2(16, 16), new Vector2(8, 8), ColliderType);
             this.content = content;
         }
 
@@ -130,10 +135,7 @@ namespace cse3902.Enemy
             }
             velocity *= 200f;
             projectile = new GreenBoomerang(content, room, Position, velocity);
-        }
-
-        public override void TakeDmg(int damage)
-        {
+            projectile.isEnermyProjectile = true;
 
         }
 
@@ -148,6 +150,8 @@ namespace cse3902.Enemy
 
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
+            base.Update(gameTime, controllers);
+
             randomChangeTimer.Start();
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
             {

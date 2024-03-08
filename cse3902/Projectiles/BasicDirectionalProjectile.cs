@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
@@ -10,8 +11,10 @@ public abstract class BasicDirectionalProjectile : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Velocity {set;get;}
     public Vector2 Position {set;get;}
+    public bool isEnermyProjectile { set; get; }
+
     //public Player player;
-    
+
     /* set in constructor */
     protected ISprite leftSprite;
     protected ISprite rightSprite;
@@ -19,7 +22,7 @@ public abstract class BasicDirectionalProjectile : IProjectile
     protected ISprite downSprite;
     
     private ISprite currentSprite;
-    public ICollider Hitbox;
+    public ICollider Hitbox; /* set in constructor */
     public Room room;
 
     /* need to call this super constructor in the subclass's constructor */
@@ -51,10 +54,35 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
         currentSprite.Update(gameTime, controllers);
 
-        if (Hitbox.IsColliding(room.Player.Pushbox)) {
-            this.IsDead = true;
-            
-            room.Player.TakeDamage();
+        Hitbox.Position = Position;
+
+        /* check for enemy collisions */
+        if (isEnermyProjectile == false)
+        {
+            foreach (IEnemy e in room.Enemies)
+            {
+                switch (e)
+                {
+                    case EnemyBase enemyBase:
+                        if (Hitbox.IsColliding(enemyBase.Collider))
+                        {
+                            IsDead = true;
+                            e.TakeDmg(1);
+
+                        }
+                        break;
+                }
+            }
+        }
+        else
+        {
+            /* check for player collisions */
+            if (Hitbox.IsColliding(room.Player.Pushbox))
+            {
+                 this.IsDead = true;
+
+                 room.Player.TakeDamage();
+            }
         }
     }
 }
