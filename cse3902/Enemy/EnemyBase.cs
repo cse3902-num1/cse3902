@@ -17,6 +17,8 @@ namespace cse3902.Enemy
         public ColliderType ColliderType { set; get; }
         public ICollider collider { set; get; }
         public int HP { get; set; } = 100;
+        //ICollider IEnemy.Collider { get; set; }
+
         protected Sprite sprite;
         public ICollider Collider;
         protected Stopwatch randomChangeTimer = new Stopwatch();

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.RoomClasses;
@@ -47,10 +48,10 @@ public abstract class BasicDirectionalProjectile : IProjectile
         
         Position += Velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (Velocity.X >= 0) currentSprite = rightSprite;
-        if (Velocity.X < 0)  currentSprite = leftSprite;
-        if (Velocity.Y >= 0) currentSprite = downSprite;
-        if (Velocity.Y < 0)  currentSprite = upSprite;
+        if (Velocity.Y > 0) currentSprite = downSprite;
+        if (Velocity.X > 0) currentSprite = rightSprite;
+        if (Velocity.X < 0) currentSprite = leftSprite;
+        if (Velocity.Y < 0) currentSprite = upSprite;
 
         currentSprite.Update(gameTime, controllers);
 

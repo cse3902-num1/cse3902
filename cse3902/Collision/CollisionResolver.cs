@@ -170,7 +170,7 @@ public static class CollisionResolver
             return;
         }
 
-        CollisionMove(enemy.Collider, results[0].Collider, results[0].Size.X, results[0].Size.Y);
+        CollisionMove(enemy.collider, results[0].Collider, results[0].Size.X, results[0].Size.Y);
     }
 
     public static void ResolvePlayerWallCollision(IPlayer player, List<CollisionResult<Wall>> results)

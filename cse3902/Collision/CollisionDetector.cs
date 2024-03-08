@@ -13,10 +13,10 @@ public static class CollisionDetector
     {
         List<CollisionResult<IEnemy>> results = new List<CollisionResult<IEnemy>>();
         foreach (IEnemy enemy in enemies) {
-            if (self.IsColliding(enemy.Collider))
+            if (self.IsColliding(enemy.collider))
             {
-                Vector2 depth = self.GetOverlap(enemy.Collider);
-                CollisionResult<IEnemy> result = new CollisionResult<IEnemy>(depth, enemy.Collider, enemy);
+                Vector2 depth = self.GetOverlap(enemy.collider);
+                CollisionResult<IEnemy> result = new CollisionResult<IEnemy>(depth, enemy.collider, enemy);
                 results.Add(result);
             }
             /* TODO: get the overlap between the "self" collider and the enemy's collider, and use it to construct a new CollisionResult instance */
@@ -56,4 +56,5 @@ public static class CollisionDetector
         }
         return results;
     }
+    
 }

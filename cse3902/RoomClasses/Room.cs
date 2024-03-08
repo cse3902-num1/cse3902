@@ -218,9 +218,15 @@ namespace cse3902.RoomClasses
 
             /* player collisions */
             /* check for intersection of colliders */
-            List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
+            foreach (Block block in Blocks)
+            {
+
+                List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
+                CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
+            }
+           
             /* apply collision response */
-            CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
+            
 
             /* TODO: add other collision checks/responses */
         }
