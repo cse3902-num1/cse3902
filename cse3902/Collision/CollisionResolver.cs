@@ -10,7 +10,7 @@ public static class CollisionResolver
 
     public static void CollisionMove(IPlayer iplayer, ICollider collider, float width, float height)
     {
-        Player player = (Player) iplayer; /* really goofy but i'm too lazy to care rn */
+        //Player player = (Player) iplayer; /* really goofy but i'm too lazy to care rn */
 
         // a is subject b is object
         BoxCollider b = (BoxCollider)collider;
@@ -25,26 +25,26 @@ public static class CollisionResolver
         float bbottom = btop + b.Size.Y;
 
         Vector2 newPosition = player.Position;
-        if (height > width)
+        if (height > width) // if collision height greater, it's moving horizontally
         {
-            if (aleft >= bleft)
+            if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
                 newPosition.X += width;
             }
-            else
+            else //if player is moving collide with left part of the object
             {
                 newPosition.X -= width;
             }
         }
-        else
+        else    // moving vertically
         {
-            if (atop >= btop)
+            if (atop >= btop)   // player is moving collide with top of the object
             {
                 newPosition.Y += height;
             }
             else
             {
-                newPosition.Y -= height;
+                newPosition.Y -= height;    // player is moving collide with bottom of the obejct
             }
         }
         player.Position = newPosition;
