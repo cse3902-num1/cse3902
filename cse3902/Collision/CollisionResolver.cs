@@ -8,8 +8,10 @@ namespace cse3902;
 public static class CollisionResolver
 {
 
-    public static void CollisionMove(Player player, ICollider collider, int width, int height)
+    public static void CollisionMove(IPlayer iplayer, ICollider collider, float width, float height)
     {
+        Player player = (Player) iplayer; /* really goofy but i'm too lazy to care rn */
+
         // a is subject b is object
         BoxCollider b = (BoxCollider)collider;
         float aleft = player.Position.X - player.Origin.X;
@@ -22,28 +24,30 @@ public static class CollisionResolver
         float btop = b.Position.Y - b.Origin.Y;
         float bbottom = btop + b.Size.Y;
 
+        Vector2 newPosition = player.Position;
         if (height > width)
         {
             if (aleft >= bleft)
             {
-                player.Position = new Vector2(player.Position.X - 200, player.Position.Y);
+                newPosition.X += width;
             }
             else
             {
-                player.Position = new Vector2(player.Position.X + 200, player.Position.Y);
+                newPosition.X -= width;
             }
         }
         else
         {
             if (atop >= btop)
             {
-                player.Position = new Vector2(player.Position.X, player.Position.Y + 200);
+                newPosition.Y += height;
             }
             else
             {
-                player.Position = new Vector2(player.Position.X, player.Position.Y - 200);
+                newPosition.Y -= height;
             }
         }
+        player.Position = newPosition;
     }
 
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
@@ -79,15 +83,8 @@ public static class CollisionResolver
             }
         }
 
-        /* determine movement amount based on smallest axis of overlap area */
-        Vector2 reconciliation = new Vector2(0, 0);
-        if (biggestResult.Size.X < biggestResult.Size.Y) {
-            reconciliation.X = biggestResult.Size.X;
-        } else {
-            reconciliation.Y = biggestResult.Size.Y;
-        }
-
-        /* determine direction based on relative positions of colliders */
+        /* determine direction based on relative positions of colliders, and apply that movement */
+        CollisionMove(player, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
     }
    
 }
