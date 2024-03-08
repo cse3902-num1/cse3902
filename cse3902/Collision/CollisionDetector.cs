@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using cse3902.Interfaces;
 using cse3902.Objects;
+using Microsoft.Xna.Framework;
 
 namespace cse3902;
 
@@ -18,7 +19,15 @@ public static class CollisionDetector
 
     public static List<CollisionResult<Block>> DetectBlockCollision(ICollider self, List<Block> blocks)
     {
-        return new List<CollisionResult<Block>>();
+        List<CollisionResult<Block>> results = new List<CollisionResult<Block>>();
+        foreach (Block b in blocks) {
+            if (self.IsColliding(b.Collider)) {
+                Vector2 depth = self.GetOverlap(b.Collider);
+                CollisionResult<Block> result = new CollisionResult<Block>(depth, b.Collider, b);
+                results.Add(result);
+            }
+        }
+        return results;
     }
 
     /* TODO: add other collision detection methods */

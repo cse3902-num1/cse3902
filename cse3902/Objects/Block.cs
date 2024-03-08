@@ -23,6 +23,7 @@ namespace cse3902.Objects
         private int blockIndex;
         private List<Sprite> blocks;
         private Vector2 position;
+        public ICollider Collider;
        
        
         public bool isVisible = true;
@@ -67,8 +68,9 @@ namespace cse3902.Objects
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
                        new Rectangle(53, 28, 16, 16) }, 3.0f)
                 }
-
             };
+
+            Collider = new BoxCollider(position, new Vector2(16, 16), new Vector2(8, 8), ColliderType.BLOCK);
         }
 
      
