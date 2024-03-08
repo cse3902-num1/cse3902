@@ -199,6 +199,23 @@ namespace cse3902.RoomClasses
                 CollisionResolver.ResolveProjectileEnemyCollision(projectile, collisionResults);
             }
 
+            /* enemy collisions */
+            foreach (IEnemy enemy in Enemies) {
+                /* check for intersection of colliders */
+                List<CollisionResult<Block>> blockResults = null; 
+                List<CollisionResult<IEnemy>> enemyResults = null;
+                switch (enemy)
+                {
+                    case EnemyBase e:
+                        blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
+                        enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
+                        break;
+                    /* todo: check any other enemy types */
+                }
+                /* apply collision response */
+                CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
+            }
+
             /* player collisions */
             /* check for intersection of colliders */
             List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);

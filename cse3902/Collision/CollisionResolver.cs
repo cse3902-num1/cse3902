@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.WallClasses;
@@ -25,17 +26,14 @@ public static class CollisionResolver
         float btop = b.Position.Y - b.Origin.Y;
         float bbottom = btop + b.Size.Y;
 
-        Vector2 newPosition = a.Position;
         if (height > width) // if collision height greater, it's moving horizontally
         {
             if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
-                newPosition.X += width;
                 return new Vector2(width, 0);
             }
             else //if player is moving collide with left part of the object
             {
-                newPosition.X -= width;
                 return new Vector2(-width, 0);
             }
         }
@@ -43,17 +41,13 @@ public static class CollisionResolver
         {
             if (atop >= btop)   // player is moving collide with top of the object
             {
-                newPosition.Y += height;
                 return new Vector2 (height, 0);
             }
-            else
+            else // player is moving collide with bottom of the obejct
             {
-                newPosition.Y -= height;    // player is moving collide with bottom of the obejct
                 return new Vector2 (-height, 0);
             }
         }
-        //a.Position = newPosition;
-        return new Vector2(newPosition.X, newPosition.Y);
     }
 
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
@@ -76,8 +70,6 @@ public static class CollisionResolver
             return;
         }
 
-        /* TODO: get collision result with largest area and use it to calculate how much to move the player back */
-
         /* get collision result with largest overlap area */
         float area = 0f;
         CollisionResult<Block> biggestResult = results[0];
@@ -90,7 +82,59 @@ public static class CollisionResolver
         }
 
         /* determine direction based on relative positions of colliders, and apply that movement */
-        
+        Vector2 reconciliation = CollisionMove(((Player) player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        player.Position += reconciliation;
+    }
+
+    public static void ResolveEnemyBlockCollision(IEnemy enemy, List<CollisionResult<Block>> blockResults, List<CollisionResult<IEnemy>> enemyResults)
+    {
+        /* if no collisions occurred, do nothing */
+        if (blockResults.Count == 0 || enemyResults.Count == 0) {
+            return;
+        }
+
+        /* get collision result with largest overlap area */
+        float biggestArea = 0f;
+        ICollider biggestCollider = null;
+        Vector2 biggestSize = new Vector2(0, 0);
+        foreach (CollisionResult<Block> result in blockResults)
+        {
+            if (biggestCollider == null || result.GetArea() > biggestArea) {
+                biggestArea = result.GetArea();
+                biggestCollider = result.Collider;
+                biggestSize = result.Size;
+            }
+        }
+        foreach (CollisionResult<IEnemy> result in enemyResults)
+        {
+            if (biggestCollider == null || result.GetArea() > biggestArea) {
+                biggestArea = result.GetArea();
+                biggestCollider = result.Collider;
+                biggestSize = result.Size;
+            }
+        }
+
+        /* determine direction based on relative positions of colliders, and apply that movement */
+        Vector2 reconciliation = new Vector2(0, 0);
+        switch (enemy)
+        {
+            case Dragon e:
+                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
+                break;
+            case Gel e:
+                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
+                break;
+            case Goriya e:
+                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
+                break;
+            case Keese e:
+                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
+                break;
+            case Skeleton e:
+                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
+                break;
+        }
+        enemy.Position += reconciliation;
     }
 
     /* Called only when projectile collision with player */
