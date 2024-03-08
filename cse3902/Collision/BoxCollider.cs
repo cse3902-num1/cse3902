@@ -56,7 +56,7 @@ public class BoxCollider : ICollider
         }
         return false;
     }
-    public Vector2 intersect(ICollider collider)
+    public Vector2 GetOverlap(ICollider collider)
         {
             switch (collider)
             {
