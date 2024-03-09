@@ -10,6 +10,7 @@ namespace cse3902.Enemy
 {
     public class Skeleton : IEnemy
     {
+        public Vector2 Position {set;get;}
         private Sprite sprite;
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
@@ -24,7 +25,8 @@ namespace cse3902.Enemy
                     new Rectangle(15, 0, 15, 15)
                 }
             );
-            sprite.SetPosition(200, 200);
+
+            Position = new Vector2(200, 200);
         }
 
         public Vector2 Position
@@ -35,21 +37,23 @@ namespace cse3902.Enemy
 
         public void Move(GameTime gameTime, int randomNum)
         {
+            Vector2 newPosition = Position;
             switch (randomNum)
             {
                 case 1:
-                    sprite.Y -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 2:
-                    sprite.X -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 3:
-                    sprite.X += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 4:
-                    sprite.Y += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
+            Position = newPosition;
         }
 
         public void Attack()
@@ -64,10 +68,11 @@ namespace cse3902.Enemy
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            sprite.Position = Position;
             sprite.Draw(spriteBatch);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController controller)
         {
 
             randomChangeTimer.Start();
@@ -81,7 +86,7 @@ namespace cse3902.Enemy
 
             Move(gameTime, randomNum);
 
-            sprite.Update(gameTime);
+            sprite.Update(gameTime, controller);
         }
     }
 }

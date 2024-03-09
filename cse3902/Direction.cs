@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 namespace cse3902;
+
 public enum Direction
 {
     Up = 0,

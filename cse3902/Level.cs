@@ -33,7 +33,6 @@ namespace cse3902
             };
             
 
-
         }
 
         public void Update(GameTime gameTime, KeyboardController controller, MouseController mouseController)
@@ -59,7 +58,6 @@ namespace cse3902
         {
             rooms[roomIdx].Draw(spriteBatch);
             player.Draw(spriteBatch);
-
         }
     }
 }

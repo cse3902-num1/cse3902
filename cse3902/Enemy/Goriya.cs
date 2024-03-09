@@ -10,12 +10,14 @@ namespace cse3902.Enemy
 {
     public class Goriya : IEnemy
     {
+        public Vector2 Position {set;get;}
         private enum GoriyaState { Left, Right, Up, Down }
         private GoriyaState currentState = GoriyaState.Down;
         private Sprite spriteUp;
         private Sprite spriteDown;
         private Sprite spriteLeft;
         private Sprite spriteRight;
+        private Sprite currentSprite;
         private Stopwatch randomChangeTimer = new Stopwatch();
         private Random random = new Random();
         private int randomNum = 1;
@@ -53,14 +55,14 @@ namespace cse3902.Enemy
                     new Rectangle(16, 0, 16, 16)
                 }
             );
-            spriteDown.SetPosition(400, 200);
-            spriteUp.SetPosition(400, 200);
-            spriteLeft.SetPosition(400, 200);
-            spriteRight.SetPosition(400, 200);
+            currentSprite = spriteDown;
+
             greenBoomerang = new GreenBoomerang(content,
                 new Vector2(0f, 0f),
                 new Vector2(0f, 0f)
             );
+
+            Position = new Vector2(400, 200);
         }
 
         public Vector2 Position
@@ -78,28 +80,16 @@ namespace cse3902.Enemy
             switch (currentState)
             {
                 case GoriyaState.Up:
-                    spriteUp.Y -= 100f * totalTime;
-                    spriteDown.Y -= 100f * totalTime;
-                    spriteLeft.Y -= 100f * totalTime;
-                    spriteRight.Y -= 100f * totalTime;
+                    Position += new Vector2(0, -0) * 100f * totalTime;
                     break;
                 case GoriyaState.Left:
-                    spriteUp.X -= 100f * totalTime;
-                    spriteDown.X -= 100f * totalTime;
-                    spriteLeft.X -= 100f * totalTime;
-                    spriteRight.X -= 100f * totalTime;
+                    Position += new Vector2(-1, 0) * 100f * totalTime;
                     break;
                 case GoriyaState.Right:
-                    spriteUp.X += 100f * totalTime;
-                    spriteDown.X += 100f * totalTime;
-                    spriteLeft.X += 100f * totalTime;
-                    spriteRight.X += 100f * totalTime;
+                    Position += new Vector2(1, 0) * 100f * totalTime;
                     break;
                 case GoriyaState.Down:
-                    spriteUp.Y += 100f * totalTime;
-                    spriteDown.Y += 100f * totalTime;
-                    spriteLeft.Y += 100f * totalTime;
-                    spriteRight.Y += 100f * totalTime;
+                    Position += new Vector2(0, 1) * 100f * totalTime;
                     break;
             }
         }
@@ -108,10 +98,22 @@ namespace cse3902.Enemy
         {
             switch (randomNum)
             {
-                case 1: currentState = GoriyaState.Up; break;
-                case 2: currentState = GoriyaState.Down; break;
-                case 3: currentState = GoriyaState.Left; break;
-                case 4: currentState = GoriyaState.Right; break;
+                case 1:
+                    currentState = GoriyaState.Up;
+                    currentSprite = spriteUp;
+                    break;
+                case 2:
+                    currentState = GoriyaState.Down;
+                    currentSprite = spriteDown;
+                    break;
+                case 3:
+                    currentState = GoriyaState.Left;
+                    currentSprite = spriteLeft;
+                    break;
+                case 4:
+                    currentState = GoriyaState.Right;
+                    currentSprite = spriteRight;
+                    break;
                 case 5: Attack(); break;
             }
         }
@@ -119,7 +121,7 @@ namespace cse3902.Enemy
         public void Attack()
         {
             isAttack = true;
-            greenBoomerang.Position = new Vector2(spriteUp.X, spriteUp.Y);
+            greenBoomerang.Position = Position;
         }
 
         public void TakeDmg()
@@ -129,20 +131,16 @@ namespace cse3902.Enemy
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            switch (currentState)
-            {
-                case GoriyaState.Up: spriteUp.Draw(spriteBatch); break;
-                case GoriyaState.Down: spriteDown.Draw(spriteBatch); break;
-                case GoriyaState.Left: spriteLeft.Draw(spriteBatch); break;
-                case GoriyaState.Right: spriteRight.Draw(spriteBatch); break;
-            }
+            currentSprite.Position = Position;
+            currentSprite.Draw(spriteBatch);
+
             if (isAttack)
             {
                 greenBoomerang.Draw(spriteBatch);
             }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, IController controller)
         {
             randomChangeTimer.Start();
 
@@ -187,7 +185,7 @@ namespace cse3902.Enemy
                     isAttack = false;
                     goingBack = false;
                 }
-                greenBoomerang.Update(gameTime);
+                greenBoomerang.Update(gameTime, controller);
             }
             else
             {
@@ -195,13 +193,7 @@ namespace cse3902.Enemy
                 ChangeAction(randomNum);
             }
 
-            switch(currentState)
-            {
-                case GoriyaState.Up: spriteUp.Update(gameTime); break;
-                case GoriyaState.Down: spriteDown.Update(gameTime); break;
-                case GoriyaState.Left: spriteLeft.Update(gameTime); break;
-                case GoriyaState.Right: spriteRight.Update(gameTime); break;
-            }
+            currentSprite.Update(gameTime, controller);
         }
     }
 }

@@ -4,12 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902
 {
-	public interface IPlayer
+	public interface IPlayer : IGameObject
 	{
-        public Vector2 Position {set;get;}
         public Direction Facing {set;get;}
-        public void Update(GameTime gameTime, KeyboardController keyboard);
-        public void Draw(SpriteBatch spriteBatch);
         public void Move(Vector2 direction);
         public void Attack();
         public void UseItem(IInventoryItem item);

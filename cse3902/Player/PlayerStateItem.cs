@@ -52,7 +52,7 @@ namespace cse3902
         public void Update(GameTime gameTime, KeyboardController controller)
         {
             /* TODO: change to idle state if itemUsageSprite animation is done */
-            if (sprites[player.Facing].Frame == 0)
+            if (sprites[player.Facing].IsAnimationDone())
             {
                 player.State = new PlayerStateIdle(content, player);
             }
@@ -61,7 +61,7 @@ namespace cse3902
             // item.Update();
 
             /* play idle sprite animation */
-            sprites[player.Facing].Update(gameTime);
+            sprites[player.Facing].Update(gameTime, controller);
         }
 
         public void Draw(SpriteBatch spriteBatch)

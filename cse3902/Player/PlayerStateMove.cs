@@ -82,7 +82,7 @@ namespace cse3902
 
             player.Position = position;
 
-            sprites[player.Facing].Update(gameTime);
+            sprites[player.Facing].Update(gameTime, controller);
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -50,12 +50,12 @@ namespace cse3902
         public void Update(GameTime gameTime, KeyboardController controller)
         {
             /* go to idle state if attack animation is done */
-            if (sprites[player.Facing].Frame == 3)
+            if (sprites[player.Facing].IsAnimationDone())
             {
                 player.State = new PlayerStateIdle(content, player);
             }
 
-            sprites[player.Facing].Update(gameTime);
+            sprites[player.Facing].Update(gameTime, controller);
         }
 
         public void Draw(SpriteBatch spriteBatch)
