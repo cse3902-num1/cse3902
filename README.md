@@ -24,3 +24,16 @@ cd gamerepo
 dotnet restore
 dotnet build
 dotnet run
+
+## Player controls
+* W - move Link up, make Link face up
+* A - move Link left, make Link face left
+* S - move Link down, make Link face down
+* D - move Link right, make Link face right
+* Z - make Link use his primary attack
+* N - make Link use his primary attack
+* Left Click - Move to previous room
+* Right Click - Move to next room
+
+## Other control
+* Q - quit the game
