@@ -37,7 +37,7 @@ namespace cse3902.Objects
                 /* only add a collider if the block is of the right type */
                 Collider = null;
                 if (value == 1) {
-                    Collider = new BoxCollider(position, new Vector2(16, 16), new Vector2(8, 8), ColliderType.BLOCK);
+                    Collider = new BoxCollider(position, new Vector2(16, 16)*2, new Vector2(8, 8)*2, ColliderType.BLOCK);
                 }
             }
         }

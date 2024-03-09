@@ -34,14 +34,14 @@ namespace cse3902.WallClasses
             walls[7].Position = new Vector2(432, 432);
             colliders = new List<BoxCollider>()
             {
-                new BoxCollider(walls[0].Position,new Vector2(112,32),new Vector2(56,16),ColliderType.WALL),
-                new BoxCollider(walls[1].Position,new Vector2(32, 40),new Vector2(16,20),ColliderType.WALL),
-                new BoxCollider(walls[2].Position,new Vector2(112,32),new Vector2(56,16),ColliderType.WALL),
-                new BoxCollider(walls[3].Position,new Vector2(32, 40),new Vector2(16,20),ColliderType.WALL),
-                new BoxCollider(walls[4].Position,new Vector2(32, 40),new Vector2(16,20),ColliderType.WALL),
-                new BoxCollider(walls[5].Position,new Vector2(112,32),new Vector2(56,16),ColliderType.WALL),
-                new BoxCollider(walls[6].Position,new Vector2(32, 40),new Vector2(16,20),ColliderType.WALL),
-                new BoxCollider(walls[7].Position,new Vector2(112,32),new Vector2(56,16),ColliderType.WALL),
+                new BoxCollider(walls[0].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[1].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[2].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[3].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[4].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[5].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[6].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[7].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
 
             };
             this.room = room;

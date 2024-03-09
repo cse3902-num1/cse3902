@@ -30,11 +30,11 @@ public static class CollisionResolver
         {
             if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
-                return new Vector2(width + 5, 0);
+                return new Vector2(width + 2, 0);
             }
             else //if player is moving collide with left part of the object
             {
-                return new Vector2(-width - 5, 0);
+                return new Vector2(-width - 2, 0);
             }
             
         }
@@ -42,11 +42,11 @@ public static class CollisionResolver
         {
             if (abottom <= bbottom)   // player is moving collide with top of the object
             {
-                return new Vector2 (0, -height-5);
+                return new Vector2 (0, -height-2);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (0, height+5);
+                return new Vector2 (0, height+2);
             }
         }
     }
@@ -87,10 +87,10 @@ public static class CollisionResolver
         player.Position += reconciliation;
     }
 
-    public static void ResolveEnemyBlockCollision(IEnemy enemy, List<CollisionResult<Block>> blockResults, List<CollisionResult<IEnemy>> enemyResults)
+    public static void ResolveEnemyBlockCollision(IEnemy enemy, List<CollisionResult<Block>> blockResults)
     {
         /* if no collisions occurred, do nothing */
-        if (blockResults.Count == 0 && enemyResults.Count == 0) {
+        if (blockResults.Count == 0) {
             return;
         }
 
@@ -106,14 +106,14 @@ public static class CollisionResolver
                 biggestSize = result.Size;
             }
         }
-        foreach (CollisionResult<IEnemy> result in enemyResults)
-        {
-            if (biggestCollider == null || result.GetArea() > biggestArea) {
-                biggestArea = result.GetArea();
-                biggestCollider = result.Collider;
-                biggestSize = result.Size;
-            }
-        }
+        //foreach (CollisionResult<IEnemy> result in enemyResults)
+        //{
+        //    if (biggestCollider == null || result.GetArea() > biggestArea) {
+        //        biggestArea = result.GetArea();
+        //        biggestCollider = result.Collider;
+        //        biggestSize = result.Size;
+        //    }
+        //}
 
         /* determine direction based on relative positions of colliders, and apply that movement */
         Vector2 reconciliation = new Vector2(0, 0);
@@ -152,10 +152,20 @@ public static class CollisionResolver
             return;
         }
 
+        float area = 0f;
+        CollisionResult<IEnemy> biggestResult = results[0];
         foreach (CollisionResult<IEnemy> result in results)
         {
+            if (result.GetArea() > area)
+            {
+                area = result.GetArea();
+                biggestResult = result;
+            }
             player.TakeDamage();
         }
+
+        Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        player.Position += reconciliation;
     }
 
     /* Called only when projectile collision with walls */
@@ -170,8 +180,19 @@ public static class CollisionResolver
         {
             return;
         }
+        float area = 0f;
+        CollisionResult<Wall> biggestResult = results[0];
+        foreach (CollisionResult<Wall> result in results)
+        {
+            if (result.GetArea() > area)
+            {
+                area = result.GetArea();
+                biggestResult = result;
+            }
+        }
 
-        Vector2 reconciliation = CollisionMove(enemy.collider, results[0].Collider, results[0].Size.X, results[0].Size.Y);
+        Vector2 reconciliation = CollisionMove(enemy.collider, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        enemy.Position += reconciliation;
     }
 
     public static void ResolvePlayerWallCollision(IPlayer player, List<CollisionResult<Wall>> results)

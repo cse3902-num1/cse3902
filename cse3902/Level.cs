@@ -22,7 +22,7 @@ namespace cse3902
         public Level(GameContent content)
         {
             player = new Player(content);
-            player.Position = new Vector2(100, 100);
+            player.Position = new Vector2(300, 200);
 
             rooms = new List<Room>
             {

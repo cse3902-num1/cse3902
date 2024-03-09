@@ -188,22 +188,31 @@ namespace cse3902.RoomClasses
             foreach (IProjectile projectile in Projectiles) {
                 /* check for intersection of colliders */
                 List<CollisionResult<IEnemy>> collisionResults = null;
+                List<CollisionResult<Wall>> wallResults = null;
                 switch (projectile)
                 {
                     case BasicBoomerangProjectile b:
                         collisionResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
+                        wallResults = CollisionDetector.DetectWallCollision(b.Hitbox, wall);
                         break;
                     case BasicDirectionalProjectile d:
                         collisionResults = CollisionDetector.DetectEnemyCollision(d.Hitbox, Enemies);
+                        wallResults = CollisionDetector.DetectWallCollision(d.Hitbox, wall);
                         break;
                     case Bomb b:
                         collisionResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
+                        wallResults = CollisionDetector.DetectWallCollision(b.Hitbox, wall);
                         break;
                     /* todo: check other types */
                 }
 
                 /* apply collision response */
                 CollisionResolver.ResolveProjectileEnemyCollision(projectile, collisionResults);
+                if (wallResults.Count > 0)
+                {
+                    CollisionResolver.ResolveProjectileWallCollision(projectile);
+                }
+                
             }
 
             /* TODO: remove */
@@ -227,26 +236,29 @@ namespace cse3902.RoomClasses
             }
 
             /* enemy collisions */
-            foreach (IEnemy enemy in Enemies) {
+            foreach (IEnemy enemy in Enemies)
+            {
                 /* check for intersection of colliders */
-                List<CollisionResult<Block>> blockResults = null; 
-                List<CollisionResult<IEnemy>> enemyResults = null;
+                List<CollisionResult<Block>> blockResults = null;
+                //List<CollisionResult<IEnemy>> enemyResults = null;
                 //List<CollisionResult<Wall>> wallResults = null;
                 switch (enemy)
                 {
                     case EnemyBase e:
                         blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
-                        enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
-                       // wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
-                        if (blockResults.Count > 0 || enemyResults.Count > 0) {
-                            CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults, enemyResults);
-                            Debug.WriteLine("enemy: " + blockResults.Count + " " + enemyResults.Count);
+                        //enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
+                        // wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
+                        if (blockResults.Count > 0)
+                        {
+                            CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults);
+                            Debug.WriteLine("enemy: " + blockResults.Count + " ");
                         }
                         break;
-                    /* todo: check any other enemy types */
-                //}
-                /* apply collision response */
-                
+                        /* todo: check any other enemy types */
+                        //}
+                        /* apply collision response */
+
+                }
             }
 
             /* player collisions */
@@ -264,9 +276,43 @@ namespace cse3902.RoomClasses
             
 
             /* TODO: add other collision checks/responses */
+            /* Player wall collision */
             List<CollisionResult<Wall>> playerWallCollisionResults = CollisionDetector.DetectWallCollision(Player.Pushbox, wall);
-            CollisionResolver.ResolvePlayerWallCollision(Player, playerWallCollisionResults);       
-        
+            CollisionResolver.ResolvePlayerWallCollision(Player, playerWallCollisionResults);
+
+            /* Enemy wall collision */
+            foreach (IEnemy enemy in Enemies)
+            {
+                /* check for intersection of colliders */
+                List<CollisionResult<Wall>> enemyWallCollisionResults = null;
+                switch (enemy)
+                {
+                    case EnemyBase e:
+                        enemyWallCollisionResults = CollisionDetector.DetectWallCollision(e.Collider, wall);
+                        //enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
+                        // wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
+                        if (enemyWallCollisionResults.Count > 0)
+                        {
+                            CollisionResolver.ResolveEnemyWallCollision(enemy, enemyWallCollisionResults);
+                            Debug.WriteLine("enemy: " + enemyWallCollisionResults.Count + " ");
+                        }
+                        break;
+                        /* todo: check any other enemy types */
+                        //}
+                        /* apply collision response */
+
+                }
+            }
+
+            /* Player enemy collision */
+            foreach (IEnemy enemy in Enemies)
+            {
+                /* check for intersection of colliders */
+                List<CollisionResult<IEnemy>> playerEnemyCollisionResults = CollisionDetector.DetectEnemyCollision(Player.Pushbox, Enemies);
+                CollisionResolver.ResolvePlayerEnemyCollision(Player, playerEnemyCollisionResults);
+            }
+
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
