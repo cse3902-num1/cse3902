@@ -34,6 +34,13 @@ dotnet run
 * N - make Link use his primary attack
 * Left Click - Move to previous room
 * Right Click - Move to next room
+* 1 - use bomb
+* 2 - use magical boomerang
+* 3 - use blue arrow
+* 4 - use fireball
+* 5 - use fire (not implemented yet)
+* 6 - use green boomerang
+* 7 - use green arrow
 
 ## Other control
 * Q - quit the game
