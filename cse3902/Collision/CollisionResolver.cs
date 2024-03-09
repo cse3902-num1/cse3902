@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
@@ -57,7 +56,6 @@ public static class CollisionResolver
         {
             return;
         }
-        /* call something like OnHit() on the projectile, passing in the enemy (or list of enemies? or the collision result?) */
         projectile.IsDead = true;
         foreach (CollisionResult<IEnemy> r in results) {
             r.Entity.TakeDmg(1);
@@ -106,34 +104,16 @@ public static class CollisionResolver
                 biggestSize = result.Size;
             }
         }
-        //foreach (CollisionResult<IEnemy> result in enemyResults)
-        //{
-        //    if (biggestCollider == null || result.GetArea() > biggestArea) {
-        //        biggestArea = result.GetArea();
-        //        biggestCollider = result.Collider;
-        //        biggestSize = result.Size;
-        //    }
-        //}
 
         /* determine direction based on relative positions of colliders, and apply that movement */
         Vector2 reconciliation = new Vector2(0, 0);
         switch (enemy)
         {
-            case Dragon e:
+            case EnemyBase e:
                 reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
                 break;
-            case Gel e:
-                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
-                break;
-            case Goriya e:
-                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
-                break;
-            case Keese e:
-                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
-                break;
-            case Skeleton e:
-                reconciliation = CollisionMove(e.Collider, biggestCollider, biggestSize.X, biggestSize.Y);
-                break;
+            default:
+                throw new NotImplementedException("Unhandled enemy type " + enemy.GetType().Name);
         }
         enemy.Position += reconciliation;
     }
@@ -216,5 +196,4 @@ public static class CollisionResolver
         Vector2 reconciliation = CollisionMove(((Player)player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
         player.Position += reconciliation;
     }
-
 }

@@ -240,24 +240,18 @@ namespace cse3902.RoomClasses
             {
                 /* check for intersection of colliders */
                 List<CollisionResult<Block>> blockResults = null;
-                //List<CollisionResult<IEnemy>> enemyResults = null;
-                //List<CollisionResult<Wall>> wallResults = null;
                 switch (enemy)
                 {
                     case EnemyBase e:
                         blockResults = CollisionDetector.DetectBlockCollision(e.Collider, Blocks);
-                        //enemyResults = CollisionDetector.DetectEnemyCollision(e.Collider, Enemies);
-                        // wallResults = CollisionDetector.DetectWallCollision(e.collider, wall);
                         if (blockResults.Count > 0)
                         {
                             CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults);
                             Debug.WriteLine("enemy: " + blockResults.Count + " ");
                         }
                         break;
-                        /* todo: check any other enemy types */
-                        //}
-                        /* apply collision response */
-
+                    default:
+                        throw new NotImplementedException("Unhandled enemy type " + enemy.GetType().Name);
                 }
             }
 
