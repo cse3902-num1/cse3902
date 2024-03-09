@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace cse3902
 {
@@ -13,7 +14,6 @@ namespace cse3902
 
         public PlayerStateIdle(GameContent content, Player player)
         {
-            Debug.WriteLine("[info] player entered idle state");
             this.content = content;
             this.player = player;
 
@@ -45,19 +45,19 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, KeyboardController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             /* enter move state if any movement keys are pressed */
-            if (controller.isPlayerMoveLeftPressed()
-                || controller.isPlayerMoveUpPressed()
-                || controller.isPlayerMoveDownPressed()
-                || controller.isPlayerMoveRightPressed())
+            if (controllers.Any(c => c.isPlayerMoveLeftPressed())
+                || controllers.Any(c => c.isPlayerMoveUpPressed())
+                || controllers.Any(c => c.isPlayerMoveDownPressed())
+                || controllers.Any(c => c.isPlayerMoveRightPressed()))
             {
                 player.State = new PlayerStateMove(content, player);
             }
 
             /* enter attack state if attack key is pressed */
-            else if (controller.isPlayerAttackJustPressed())
+            else if (controllers.Any(c => c.isPlayerAttackJustPressed()))
             {
                 player.State = new PlayerStateAttack(content, player);
             }
@@ -65,22 +65,22 @@ namespace cse3902
             /* enter item state if any item use keys are pressed */
             /* TODO: finish once items classes are created */
             IInventoryItem item = null;
-            if      (controller.isPlayerUseItem1JustPressed()) item = new BlueBombInventoryItem(content);
-            else if (controller.isPlayerUseItem2JustPressed()) item = new MagicalBoomerangInventoryItem(content);
-            else if (controller.isPlayerUseItem3JustPressed()) item = new BlueBowInventoryItem(content);
-            else if (controller.isPlayerUseItem4JustPressed()) item = new FireballInventoryItem(content);
-            else if (controller.isPlayerUseItem5JustPressed()) item = new FireInventoryItem();
-            else if (controller.isPlayerUseItem6JustPressed()) item = new GreenBoomerangInventoryItem(content);
-            else if (controller.isPlayerUseItem7JustPressed()) item = new GreenBowInventoryItem(content);
-            else if (controller.isPlayerUseItem8JustPressed()) item = new PurpleCystleInventoryItem();
-            else if (controller.isPlayerUseItem9JustPressed()) item = new YellowBoomerangInventoryItem(content);
+            if      (controllers.Any(c => c.isPlayerUseItem1JustPressed())) item = new BlueBombInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem2JustPressed())) item = new MagicalBoomerangInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem3JustPressed())) item = new BlueBowInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem4JustPressed())) item = new FireballInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem5JustPressed())) item = new FireInventoryItem();
+            else if (controllers.Any(c => c.isPlayerUseItem6JustPressed())) item = new GreenBoomerangInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem7JustPressed())) item = new GreenBowInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem8JustPressed())) item = new PurpleCystleInventoryItem();
+            else if (controllers.Any(c => c.isPlayerUseItem9JustPressed())) item = new YellowBoomerangInventoryItem(content);
             if (item != null)
             {
                 player.State = new PlayerStateItem(content, player, item);
             }
         
             /* play idle sprite animation */
-            sprites[player.Facing].Update(gameTime, controller);
+            sprites[player.Facing].Update(gameTime, controllers);
         }
 
         public void Draw(SpriteBatch spriteBatch)

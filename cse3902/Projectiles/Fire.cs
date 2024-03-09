@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using cse3902.RoomClasses;
 
 namespace cse3902.Projectiles;
 
@@ -10,9 +11,12 @@ public class Fire : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
-    private Sprite sprite;
+    public bool isEnermyProjectile { get; set; }
 
-    public Fire(GameContent content, Vector2 position)
+    private Sprite sprite;
+    private Room room;
+
+    public Fire(GameContent content, Room room, Vector2 position)
     {
         sprite = new Sprite(content.weapon2,
             new List<Rectangle>()
@@ -26,16 +30,18 @@ public class Fire : IProjectile
         Position = position;
         Velocity = new Vector2(0, 0);
         IsDead = false;
+        this.room = room;
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public void Update(GameTime gameTime, List<IController> controllers)
     {
         sprite.Position = Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         sprite.Draw(spriteBatch);
     }
+
 }

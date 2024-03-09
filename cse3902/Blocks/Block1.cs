@@ -13,7 +13,8 @@ public class Block1 : BasicBlock
             new List<Rectangle>() {
                 new Rectangle(2, 11, 16, 16)
             },
-            new Vector2(8, 8)
+            new Vector2(8, 8) // width and height both multiple by 8
         );
+        collider = new BoxCollider(Position, Size, new Vector2(8, 8), ColliderType.BLOCK);
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,10 +9,12 @@ public abstract class BasicItemPickup : IItemPickup
 {
     public Vector2 Position {set;get;}
     protected ISprite sprite; /* should set in constructor */
+    protected Room room;
 
-    public BasicItemPickup()
+    public BasicItemPickup(Room room)
     {
         Position = new Vector2(0);
+        this.room = room;
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -19,8 +23,8 @@ public abstract class BasicItemPickup : IItemPickup
         sprite.Draw(spriteBatch);
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public void Update(GameTime gameTime, List<IController> controllers)
     {
-        sprite.Update(gameTime, controller);
+        sprite.Update(gameTime, controllers);
     }
 }

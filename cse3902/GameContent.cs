@@ -76,7 +76,7 @@ namespace cse3902
             SpritesheetLinkUseItem = LoadTexture2D("spritesheet_link_useitem");
             SpritesheetLinkWalkMagicShield = LoadTexture2D("spritesheet_link_walk_magicshield");
             SpritesheetLinkWalk = LoadTexture2D("spritesheet_link_walk");
-
+            
             enemies = LoadTexture2D("enemies");
             enemiesSheet = LoadTexture2D("enemiesSheet");
             skeleton = LoadTexture2D("skeleton");

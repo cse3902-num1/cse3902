@@ -14,7 +14,6 @@ namespace cse3902
 
         public PlayerStateItem(GameContent content, Player player, IInventoryItem item)
         {
-            Debug.WriteLine("[info] player entered item state");
             this.content = content;
             this.player = player;
             this.item = item;
@@ -49,7 +48,7 @@ namespace cse3902
             /* TODO: use the item */
             player.UseItem(item);
         }
-        public void Update(GameTime gameTime, KeyboardController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             /* TODO: change to idle state if itemUsageSprite animation is done */
             if (sprites[player.Facing].IsAnimationDone())
@@ -61,7 +60,7 @@ namespace cse3902
             // item.Update();
 
             /* play idle sprite animation */
-            sprites[player.Facing].Update(gameTime, controller);
+            sprites[player.Facing].Update(gameTime, controllers);
         }
 
         public void Draw(SpriteBatch spriteBatch)

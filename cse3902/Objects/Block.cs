@@ -23,6 +23,7 @@ namespace cse3902.Objects
         private int blockIndex;
         private List<Sprite> blocks;
         private Vector2 position;
+        public ICollider Collider;
        
        
         public bool isVisible = true;
@@ -30,13 +31,26 @@ namespace cse3902.Objects
         public int BlockIndex
         {
             get { return blockIndex; }
-            set { blockIndex = value; }
+            set {
+                blockIndex = value;
+
+                /* only add a collider if the block is of the right type */
+                Collider = null;
+                if (value == 1) {
+                    Collider = new BoxCollider(position, new Vector2(16, 16)*2, new Vector2(8, 8)*2, ColliderType.BLOCK);
+                }
+            }
         }
 
         public Vector2 Position
         {
             get { return position; }
-            set {  position = value; }
+            set {
+                position = value;
+                if (Collider is not null) {
+                    Collider.Position = value;
+                }
+            }
         }
       
         public Block(GameContent content, int index, Vector2 position)
@@ -46,29 +60,33 @@ namespace cse3902.Objects
 
             blocks = new List<Sprite>() {
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(2, 11, 16, 16) }, 3.0f)
+                        new Rectangle(2, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(19, 11, 16, 16) }, 3.0f)
+                        new Rectangle(19, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                },
+                { new Sprite(content.TilesSheet, new List<Rectangle>() {
+                        new Rectangle(36, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                },
+                { new Sprite(content.TilesSheet, new List<Rectangle>() {
+                        new Rectangle(53, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                },
+                { new Sprite(content.TilesSheet, new List<Rectangle>() {
+                        new Rectangle(19, 28, 16, 16) }, new Vector2(8, 8), 3.0f)
+                },
+                { new Sprite(content.TilesSheet, new List<Rectangle>() {
+                        new Rectangle(36, 28, 16, 16) }, new Vector2(8, 8), 3.0f)
+                },
+                { new Sprite(content.TilesSheet, new List<Rectangle>() {
+                       new Rectangle(53, 28, 16, 16) }, new Vector2(8, 8), 3.0f)
                 }
-                ,
-                { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(36, 11, 16, 16) }, 3.0f)
-                },
-                { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(53, 11, 16, 16) }, 3.0f)
-                },
-                { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(19, 28, 16, 16) }, 3.0f)
-                },
-                { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(36, 28, 16, 16) }, 3.0f)
-                },
-                { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                       new Rectangle(53, 28, 16, 16) }, 3.0f)
-                }
-
             };
+
+            /* only add a collider if the block is of the right type */
+            Collider = null;
+            if (this.blockIndex == 1) {
+                Collider = new BoxCollider(position, new Vector2(16 * 3, 16 * 3), new Vector2(8 * 3, 8 * 3), ColliderType.BLOCK);
+            }
         }
 
      
@@ -78,13 +96,12 @@ namespace cse3902.Objects
             blocks[blockIndex].Draw(spriteBatch);
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
-            
+            if (Collider is not null) {
+                Collider.Position = position;
+            }
         }
-
-
-
     }
 }
 

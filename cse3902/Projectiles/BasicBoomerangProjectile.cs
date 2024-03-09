@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using System.Diagnostics;
+using cse3902.Enemy;
 using cse3902.Interfaces;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +13,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
     public bool IsDead {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
+    public bool isEnermyProjectile { get; set; }
 
     protected ISprite sprite; /* set in constructor */
     protected float range;
@@ -16,7 +21,10 @@ public abstract class BasicBoomerangProjectile : IProjectile
     protected bool isReturning;
     protected Vector2 initialPosition;
 
-    public BasicBoomerangProjectile(Vector2 position, Vector2 velocity, float range)
+    public ICollider Hitbox; /* set in constructor */
+    protected Room room;
+
+    public BasicBoomerangProjectile(Room room, Vector2 position, Vector2 velocity, float range)
     {
         IsDead = false;
         Position = position;
@@ -25,31 +33,74 @@ public abstract class BasicBoomerangProjectile : IProjectile
         totalDistance = 0;
         isReturning = false;
         initialPosition = position;
+        this.room = room;
     }
 
-    private void Die()
+    public void Die()
     {
         IsDead = true;
     }
 
-    public void Update(GameTime gameTime, IController controller)
+    public virtual void Update(GameTime gameTime, List<IController> controllers)
     {
-        Position += Velocity * (float) gameTime.ElapsedGameTime.TotalSeconds;
-        totalDistance += Velocity.Length() * (float) gameTime.ElapsedGameTime.TotalSeconds; /* slow but should be fine for now */
+        float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Position += Velocity * deltaTime;
 
-        if (!isReturning && totalDistance > range && totalDistance <= range * 2)
+        // Calculate the straight-line displacement from the starting point to the current position
+        // totalDistance += Vector2.Distance(initialPosition, Position);
+        totalDistance += (Velocity * deltaTime).Length();
+
+        // Check if the boomerang has reached its maximum range and should start returning
+        if (!isReturning && totalDistance >= range && totalDistance < range * 2)
         {
+            // Debug.WriteLine("displacement" + displacement + "range" + range);
             isReturning = true;
-            Velocity *= -1;
+            // Instead of simply inverting the velocity, calculate the direction back to the initial position
+            // Velocity = (initialPosition - Position);
+            // if (Velocity != Vector2.Zero)
+            //     Velocity.Normalize();
+            // Velocity *= Velocity.Length(); // Set the return speed (might be different from initial speed)
+            Velocity *= -1f;
         }
 
-        if (totalDistance > range * 2)
+        // Check if the boomerang has returned close enough to the initial position
+        if (totalDistance >= range * 2)
         {
             Die();
         }
 
-        sprite.Update(gameTime, controller);
+        /* check for collisions */
+        if (isEnermyProjectile == false)
+        {
+            Hitbox.Position = Position;
+            foreach (IEnemy e in room.Enemies)
+            {
+                switch (e)
+                {
+                    case EnemyBase enemyBase:
+                        if (Hitbox.IsColliding(enemyBase.Collider))
+                        {
+                            e.TakeDmg(1);
+                            Die();
+                        }
+                        break;
+                }
+            }
+        }
+        else
+        {
+            Hitbox.Position = Position;
+            if (Hitbox.IsColliding(room.Player.Pushbox))
+            {
+                this.IsDead = true;
+
+                room.Player.TakeDamage();
+            }
+        }
+
+        sprite.Update(gameTime, controllers);
     }
+
 
     public void Draw(SpriteBatch spriteBatch)
     {

@@ -5,10 +5,15 @@ namespace cse3902.Interfaces;
 
 public interface IEnemy : IGameObject
 {
-    public Vector2 Position { get; set; }
+
+    public ICollider collider { get; set; }
+    public bool IsDead {set;get;}
+
     public void Move(GameTime gameTime, int randomNum);
 
     public void Attack();
 
-    public void TakeDmg();
+    public void TakeDmg(int damage);
+
+    public void Die();
 }

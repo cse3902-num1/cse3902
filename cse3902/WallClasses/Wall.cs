@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,8 +9,10 @@ namespace cse3902.WallClasses
     public class Wall
     {
         private List<Sprite> walls;
+        protected Room room;
+        public List<BoxCollider> colliders;
 
-        public Wall(GameContent content)
+        public Wall(GameContent content, Room room)
         {
             walls = new List<Sprite>() {
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 0, 112, 32) }, 3.0f),
@@ -29,6 +32,20 @@ namespace cse3902.WallClasses
             walls[5].Position = new Vector2(0, 432);
             walls[6].Position = new Vector2(672, 312);
             walls[7].Position = new Vector2(432, 432);
+            colliders = new List<BoxCollider>()
+            {
+                new BoxCollider(walls[0].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[1].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[2].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[3].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[4].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[5].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[6].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
+                new BoxCollider(walls[7].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+
+            };
+            this.room = room;
+
         }
 
         public void Update()

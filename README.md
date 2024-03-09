@@ -44,3 +44,7 @@ dotnet run
 
 ## Other control
 * Q - quit the game
+
+## Known bugs
+* Enemy hitbox is kind off
+* Wall hitbox is a little large or player pushbox is a little large

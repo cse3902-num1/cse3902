@@ -1,4 +1,5 @@
 ﻿using cse3902.Interfaces;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,34 +9,26 @@ using System.Diagnostics;
 
 namespace cse3902.Enemy
 {
-    public class Skeleton : IEnemy
+    public class Skeleton : EnemyBase
     {
-        public Vector2 Position {set;get;}
-        private Sprite sprite;
-        private Stopwatch randomChangeTimer = new Stopwatch();
-        private Random random = new Random();
-        private int randomNum = 1;
 
-        public Skeleton(GameContent content)
+        public Skeleton(GameContent content, Room room) : base(content, room)
         {
+            this.HP = 3;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 0, 15, 15),
                     new Rectangle(15, 0, 15, 15)
-                }
+                },
+                new Vector2(7.5f, 7.5f)
             );
 
             Position = new Vector2(200, 200);
+            Collider = new BoxCollider(Position, new Vector2(15 * 2, 15 * 2), new Vector2(7.5f * 2, 7.5f * 2), ColliderType);
         }
 
-        public Vector2 Position
-        {
-            get { return sprite.Position; }
-            set { sprite.Position = value; }
-        }
-
-        public void Move(GameTime gameTime, int randomNum)
+        public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
             switch (randomNum)
@@ -56,27 +49,11 @@ namespace cse3902.Enemy
             Position = newPosition;
         }
 
-        public void Attack()
+        public override void Update(GameTime gameTime, List<IController> controllers)
         {
-
-        }
-
-        public void TakeDmg()
-        {
-
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            sprite.Position = Position;
-            sprite.Draw(spriteBatch);
-        }
-
-        public void Update(GameTime gameTime, IController controller)
-        {
+            base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
-
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
             {
                 randomChangeTimer.Restart();
@@ -86,7 +63,7 @@ namespace cse3902.Enemy
 
             Move(gameTime, randomNum);
 
-            sprite.Update(gameTime, controller);
+            sprite.Update(gameTime, controllers);
         }
     }
 }

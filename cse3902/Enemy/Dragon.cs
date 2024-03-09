@@ -1,59 +1,60 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace cse3902.Enemy
 {
-    public class Dragon : IEnemy
+    public class Dragon : EnemyBase
     {
-        public Vector2 Position {set;get;}
-        private Sprite sprite;
-        private Stopwatch randomChangeTimer = new Stopwatch();
-        private Stopwatch attackTimer = new Stopwatch();
-        private Random random = new Random();
-        private int randomNum = 1;
-        private Fireball ballUp;
-        private Fireball ballDown;
-        private Fireball ballMid;
+        
+        private List<IProjectile> projectiles;
 
-        public Dragon(GameContent content)
+        private GameContent content;
+        
+
+        public Dragon(GameContent content, Room room): base(content, room)
         {
+            this.HP = 20;
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
                     new Rectangle(1, 11, 25, 32),
                     new Rectangle(26, 11, 25, 32),
                     new Rectangle(51, 11, 25, 32),
-                    new Rectangle(76, 11, 25, 32)
-                }
+                    new Rectangle(76, 11, 25, 32),
+                },
+                new Vector2(12.5f, 16f)
             );
 
-            ballUp = new Fireball(content, 
-                new Vector2(-200f, -50f), 
-                new Vector2(sprite.X, sprite.Y)
-            );
-            ballDown = new Fireball(content,
-                new Vector2(-200f, +50f),
-                new Vector2(sprite.X, sprite.Y)
-            );
-            ballMid = new Fireball(content,
-                new Vector2(-200f, 0f),
-                new Vector2(sprite.X, sprite.Y)
-            );
+            projectiles = new List<IProjectile>();
+
+            // ballUp = new Fireball(content, 
+            //     new Vector2(-200f, -50f), 
+            //     new Vector2(sprite.X, sprite.Y)
+            // );
+            // ballDown = new Fireball(content,
+            //     new Vector2(-200f, +50f),
+            //     new Vector2(sprite.X, sprite.Y)
+            // );
+            // ballMid = new Fireball(content,
+            //     new Vector2(-200f, 0f),
+            //     new Vector2(sprite.X, sprite.Y)
+            // );
 
             Position = new Vector2(500, 200);
+            Collider = new BoxCollider(Position, new Vector2(25 * 2, 32 * 2), new Vector2(12.5f * 2, 16f * 2), ColliderType.ENEMY);
+            this.content = content;
+
+            this.room = room;
         }
 
-        public Vector2 Position
-        {
-            get { return sprite.Position; }
-            set { sprite.Position = value; }
-        }
-        public void Move(GameTime gameTime, int randomNum)
+        public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
             switch (randomNum)
@@ -74,34 +75,48 @@ namespace cse3902.Enemy
             Position = newPosition;
         }
 
-        public void Attack()
+        public override void Attack()
         {
-            ballUp.Position = new Vector2(sprite.X, sprite.Y);
-            ballDown.Position = new Vector2(sprite.X, sprite.Y);
-            ballMid.Position = new Vector2(sprite.X, sprite.Y);
+            Fireball ballUp = new Fireball(content, 
+                room,
+                Position,
+                new Vector2(-200f, -50f)
+            );
+            Fireball ballDown = new Fireball(content,
+                room,
+                Position,
+                new Vector2(-200f, +50f)
+            );
+            Fireball ballMid = new Fireball(content,
+                room,
+                Position,
+                new Vector2(-200f, 0f)
+            );
+            projectiles.Add(ballUp);
+            ballUp.isEnermyProjectile = true;
+            projectiles.Add(ballMid);
+            ballMid.isEnermyProjectile = true;
+            projectiles.Add(ballDown);
+            ballDown.isEnermyProjectile = true;
         }
 
-        public void TakeDmg()
-        {
-
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
 
-            ballUp.Draw(spriteBatch);
-            ballDown.Draw(spriteBatch);
-            ballMid.Draw(spriteBatch);
+            projectiles.ForEach(p => p.Draw(spriteBatch));
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, List<IController> controllers)
         {
+            base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
             attackTimer.Start();
 
+
+          
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
             {
                 randomChangeTimer.Restart();
@@ -114,13 +129,23 @@ namespace cse3902.Enemy
                 attackTimer.Restart();
                 Attack();
             }
-            ballUp.Update(gameTime, controller);
-            ballDown.Update(gameTime, controller);
-            ballMid.Update(gameTime, controller);
+
+            projectiles.ForEach(p => p.Update(gameTime, controllers));
+            
+            /* remove dead projectiles */
+            projectiles = projectiles.Where(p => !p.IsDead).ToList();
 
             Move(gameTime, randomNum);
 
-            sprite.Update(gameTime, controller);
+            sprite.Update(gameTime, controllers);
+            /*if (BoxCollider.IsColliding(dragon.collider)) // Assuming you have a reference to the dragon
+            {
+                dragon.TakeDamage(damageAmount); // damageAmount is the damage this projectile does
+                this.IsDead = true; // Optionally remove the projectile upon impact
+            }
+            */
         }
+
+
     }
 }

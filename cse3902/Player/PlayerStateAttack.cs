@@ -12,7 +12,6 @@ namespace cse3902
         private GameContent content;
         public PlayerStateAttack(GameContent content, Player player)
         {
-            Debug.WriteLine("[info] player entered attack state");
             this.content = content;
             this.player = player;
 
@@ -47,7 +46,7 @@ namespace cse3902
             };
         }
 
-        public void Update(GameTime gameTime, KeyboardController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             /* go to idle state if attack animation is done */
             if (sprites[player.Facing].IsAnimationDone())
@@ -55,7 +54,10 @@ namespace cse3902
                 player.State = new PlayerStateIdle(content, player);
             }
 
-            sprites[player.Facing].Update(gameTime, controller);
+
+
+
+            sprites[player.Facing].Update(gameTime, controllers);
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -1,5 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.RoomClasses;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using cse3902.Objects;
+using cse3902.Enemy;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace cse3902;
 
@@ -12,10 +21,9 @@ public class Game1 : Game
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
-    public KeyboardController controller;
-    private MouseController mouseController;
+    private List<IController> controllers;
     private GameContent gameContent;
-    
+    //public static Room currRoom;
     private Level level;
 
     private Texture2D room;
@@ -24,8 +32,10 @@ public class Game1 : Game
     {
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        controller = new KeyboardController();
-        mouseController = new MouseController();
+        controllers = new List<IController>() {
+            new KeyboardController(),
+            new MouseController(),
+        };
     }
 
     protected override void Initialize()
@@ -45,27 +55,26 @@ public class Game1 : Game
 
         room = gameContent.rooms;
        
-        level = new Level(gameContent, controller);
+        level = new Level(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        controller.Update(gameTime);
-        mouseController.Update(gameTime);
+        controllers.ForEach(c => c.Update(gameTime));
 
         /* reset level if R is pressed */
-        if (controller.isResetPressed())
+        if (controllers.Any(c => c.isResetPressed()))
         {
-            level = new Level(gameContent, controller);
+            level = new Level(gameContent);
         }
 
         /* quit game if Q is pressed */
-        if (controller.isQuitPressed())
+        if (controllers.Any(c => c.isQuitPressed()))
         {
             Exit();
         }
 
-        level.Update(gameTime, controller, mouseController);
+        level.Update(gameTime, controllers);
 
         base.Update(gameTime);
     }
