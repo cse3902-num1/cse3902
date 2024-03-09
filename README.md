@@ -24,7 +24,7 @@ cd gamerepo
 dotnet restore
 dotnet build
 dotnet run
-
+```
 ## Player controls
 * W - move Link up, make Link face up
 * A - move Link left, make Link face left
