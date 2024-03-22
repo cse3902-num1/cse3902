@@ -59,11 +59,10 @@ namespace cse3902
 
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
-            mergedSheet = content.Load<Texture2D>("merged");
-            TilesSheet = content.Load<Texture2D>("Tileset");
-            ItemSheet = content.Load<Texture2D>("Items");
-            SpriteSheetFlipped = content.Load<Texture2D>("flipped");
-            SpriteSheetLinkAdditionItems = content.Load<Texture2D>("spritesheet_link");
+            mergedSheet = LoadTexture2D("merged");
+            TilesSheet = LoadTexture2D("Tileset");
+            ItemSheet = LoadTexture2D("Items");
+            SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");
             SpritesheetLinkAttackMagicSwordMagicShield = LoadTexture2D("spritesheet_link_attack_magicsword_magicshield");
