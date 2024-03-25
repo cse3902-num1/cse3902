@@ -7,6 +7,7 @@ using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using cse3902.WallClasses;
+using Microsoft.Xna.Framework.Audio;
 
 namespace cse3902
 {    
@@ -71,7 +72,10 @@ namespace cse3902
 
         public void TakeDamage()
         {
-            if(health > 0)
+            SoundEffect sound = SoundManager.Manager.linkDamageSound();
+            sound.Play();
+
+            if (health > 0)
             {
                 health -= 1;
             

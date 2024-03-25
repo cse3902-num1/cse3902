@@ -26,7 +26,7 @@ namespace cse3902
             }
         }
 
-        private static SoundEffect music = null;
+        private static Song music = null;
         private static SoundEffect sword = null;
         private static SoundEffect itemPickUp = null;
         private static SoundEffect linkDamage = null;
@@ -57,14 +57,9 @@ namespace cse3902
             bombBlowUp = content.bombBlowUp;
             fireball = content.fireball;
 
-            if (musicLoop != null)
-            {
-                musicLoop.Stop();
-            }
-
-            musicLoop = music.CreateInstance();
-            musicLoop.IsLooped = true;
-            musicLoop.Play();
+            MediaPlayer.Volume = 0.2f;
+            MediaPlayer.Play(music);
+            MediaPlayer.IsRepeating = true;
         }
 
         public SoundEffect swordSound()

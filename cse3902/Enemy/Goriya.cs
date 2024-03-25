@@ -2,6 +2,7 @@
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -116,6 +117,8 @@ namespace cse3902.Enemy
             if (projectile != null) {
                 return;
             }
+            SoundEffect sound = SoundManager.Manager.arrowBoomerangSound();
+            sound.Play();
 
             Vector2 velocity = new Vector2(0, 0);
             switch (currentState)

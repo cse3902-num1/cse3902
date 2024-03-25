@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using cse3902.Projectiles;
 using Microsoft.Xna.Framework.Audio;
-using System.IO;
 using Microsoft.Xna.Framework.Media;
+using System.IO;
 
 
 namespace cse3902
@@ -52,7 +52,8 @@ namespace cse3902
         public Texture2D rightDoors;
         public Texture2D bottomDoors;
         public Texture2D leftDoors;
-        public SoundEffect bgmusic;
+
+        public Song bgmusic;
         public SoundEffect sword;
         public SoundEffect itemPickUp;
         public SoundEffect linkDamage;
@@ -114,7 +115,7 @@ namespace cse3902
             leftDoors = LoadTexture2D("leftDoors");
             rightDoors = LoadTexture2D("rightDoors");
 
-            bgmusic = LoadSoundEffect(@"Sound/Dungeon");
+            bgmusic = content.Load<Song>(@"Sound/Dungeon");
             sword = LoadSoundEffect(@"Sound/LOZ_Sword_Slash");
             itemPickUp = LoadSoundEffect(@"Sound/LOZ_Get_Item");
             linkDamage = LoadSoundEffect(@"Sound/LOZ_Link_Hurt");

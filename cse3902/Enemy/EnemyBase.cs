@@ -3,6 +3,7 @@ using cse3902.Objects;
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,8 @@ namespace cse3902.Enemy
 
         public virtual void TakeDmg(int damage)
         {
+            SoundEffect sound = SoundManager.Manager.enemyDamageSound();
+            sound.Play();
             HP -= damage;
             Debug.Write("OUCH!");
             if (HP <= 0)
@@ -104,6 +107,8 @@ namespace cse3902.Enemy
 
         public virtual void Die()
         {
+            SoundEffect sound = SoundManager.Manager.enemyDeadSound();
+            sound.Play();
             IsDead = true;
         }
     }

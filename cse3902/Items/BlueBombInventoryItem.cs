@@ -1,6 +1,8 @@
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+
 namespace cse3902;
 
 public class BlueBombInventoryItem : IInventoryItem
@@ -17,6 +19,8 @@ public class BlueBombInventoryItem : IInventoryItem
         Vector2 direction = player.Facing.asVector2();
         Vector2 position = player.Position + direction * 20f;
         Bomb bomb = new Bomb(content, room, position);
+        SoundEffect bombDrop = SoundManager.Manager.bombDropSound();
+        bombDrop.Play();
         room.Projectiles.Add(bomb);
         bomb.isEnermyProjectile = false;
     }
