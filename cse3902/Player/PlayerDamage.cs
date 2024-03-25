@@ -17,6 +17,7 @@ namespace cse3902
         
         public PlayerDamage(GameContent content, Player player)
         {
+            player.damageTimer.Start();
             this.content = content;
             this.player = player;
             // default is down since we currently only have the facing down damaged sprite
@@ -46,12 +47,13 @@ namespace cse3902
                   Direction.Down,
                   new Sprite(content.LinkSpritesheet, new List<Rectangle>()
                   {
+                      new Rectangle(74, 223,16,16),
                         new Rectangle(0, 231, 16, 16),
-                        new Rectangle(74, 223,16,16),
+                        
                         new Rectangle(198,239,16,16),
                         new Rectangle(222,240,16,16)
-                  },new Vector2(8f, 8f))
-        },
+                  },new Vector2(8, 8))
+                },
             };
 
 
@@ -60,8 +62,7 @@ namespace cse3902
         public void Update(GameTime gameTime, List<IController> controllers)
         {
             /* move player if any movement key is pressed */
-            player.damageTimer.Start();
-        
+            
             Vector2 position = player.Position;
             if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
@@ -83,18 +84,15 @@ namespace cse3902
                 player.Facing = Direction.Down;
                 position.Y += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-
+            player.Facing = Direction.Down;
             /* change to idle state if no movement keys are pressed */
-            else
-            {
-                player.State = new PlayerStateIdle(content, player);
-            }
 
             player.Position = position;
 
-            if (player.damageTimer.ElapsedMilliseconds > 100)
+            if (player.damageTimer.Elapsed.TotalMilliseconds > 1000)
             {
                 player.damageTimer.Stop();
+                player.damageTimer.Reset();
                 player.State = new PlayerStateIdle(content, player);
                 
             }

@@ -8,13 +8,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using cse3902.WallClasses;
 
+
 namespace cse3902
 {    
     public class Player : IPlayer
     {
         public Room CurrentRoom {set;get;}
         
-        private Vector2 _position = Vector2.Zero;
+        private Microsoft.Xna.Framework.Vector2 _position = Vector2.Zero;
         public Stopwatch damageTimer;
         public Vector2 Position {
             set {
@@ -80,19 +81,24 @@ namespace cse3902
 
         public void TakeDamage()
         {
-
-            
-            if(health > 0)
+            bool istrue = this.State is PlayerDamage;
+            Debug.WriteLine(istrue);
+            if (!(istrue))
+            {
+                Debug.WriteLine("entering damage state");
+                State = new PlayerDamage(content, this);
+            }
+            if (health > 0)
             {
                 health -= 1;
-            
+
                 Debug.WriteLine("player health is: " + health);
             }
-            if(health == 0)
+            if (health == 0)
             {
                 Debug.WriteLine("YOU ARE DEAD!!!!!");
             }
-            this.State = new PlayerDamage(content, this);
+            
         }
     }
 }
