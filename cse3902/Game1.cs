@@ -56,6 +56,7 @@ public class Game1 : Game
         room = gameContent.rooms;
        
         level = new Level(gameContent);
+        SoundManager.Manager.LoadContent(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
