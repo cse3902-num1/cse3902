@@ -6,17 +6,14 @@ using cse3902.RoomClasses;
 
 namespace cse3902.Projectiles;
 
-public class Fire : IProjectile
+public class Fire : BasicDirectionalProjectile
 {
-    public bool IsDead {set;get;}
-    public Vector2 Position {set;get;}
-    public Vector2 Velocity {set;get;}
-    public bool isEnermyProjectile { get; set; }
-
+    private Vector2 initialPosition;
+    private const float maxDistance = 200f;
+    private GameContent content;
     private Sprite sprite;
-    private Room room;
 
-    public Fire(GameContent content, Room room, Vector2 position)
+    public Fire(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
     {
         sprite = new Sprite(content.weapon2,
             new List<Rectangle>()
@@ -27,21 +24,29 @@ public class Fire : IProjectile
             new Vector2(7.5f, 7.5f)
         );
 
-        Position = position;
-        Velocity = new Vector2(0, 0);
-        IsDead = false;
-        this.room = room;
+        initialPosition = position;
+        upSprite = sprite;
+        downSprite = sprite;
+        leftSprite = sprite;
+        rightSprite = sprite;
+        this.content = content;
+        this.Hitbox = new BoxCollider(position, new Vector2(15, 15), new Vector2(7.5f, 7.5f), ColliderType.PROJECTILE);
+    }
+    private void Die()
+    {
+        IsDead = true;
+        /* TODO: "spawn" the particle effect in the level */
+    }
+    public override void Update(GameTime gameTime, List<IController> controllers)
+    {
+
+        base.Update(gameTime, controllers);
+
+        if (Vector2.Distance(initialPosition, Position) > maxDistance)
+        {
+            Die();
+        }
     }
 
-    public void Update(GameTime gameTime, List<IController> controllers)
-    {
-        sprite.Position = Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        sprite.Update(gameTime, controllers);
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        sprite.Draw(spriteBatch);
-    }
 
 }
