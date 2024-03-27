@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -64,6 +65,7 @@ namespace cse3902
         {
             sprites[player.Facing].SetPosition(player.Position.X, player.Position.Y);
             sprites[player.Facing].Draw(spriteBatch);
+             
         }
     }
 }

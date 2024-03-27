@@ -41,10 +41,10 @@ public class KeyboardController : IController
     }
 
     /* player keys */
-    public bool isPlayerMoveUpPressed()         { return isKeyPressed(Keys.W); }
-    public bool isPlayerMoveDownPressed()       { return isKeyPressed(Keys.S); }
-    public bool isPlayerMoveLeftPressed()       { return isKeyPressed(Keys.A); }
-    public bool isPlayerMoveRightPressed()      { return isKeyPressed(Keys.D); }
+    public bool isPlayerMoveUpPressed()         { return isKeyPressed(Keys.W) || isKeyPressed(Keys.Up); }
+    public bool isPlayerMoveDownPressed()       { return isKeyPressed(Keys.S) || isKeyPressed(Keys.Down); }
+    public bool isPlayerMoveLeftPressed()       { return isKeyPressed(Keys.A) || isKeyPressed(Keys.Left); }
+    public bool isPlayerMoveRightPressed()      { return isKeyPressed(Keys.D) || isKeyPressed(Keys.Right); }
     public bool isPlayerAttackJustPressed()     { return isKeyJustPressed(Keys.Z) || isKeyJustPressed(Keys.N); }
     public bool isPlayerTakeDamageJustPressed() { return isKeyJustPressed(Keys.E); }
 

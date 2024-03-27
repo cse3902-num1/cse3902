@@ -8,13 +8,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using cse3902.WallClasses;
 
+
 namespace cse3902
 {    
     public class Player : IPlayer
     {
         public Room CurrentRoom {set;get;}
         
-        private Vector2 _position = Vector2.Zero;
+        private Microsoft.Xna.Framework.Vector2 _position = Vector2.Zero;
+        public Stopwatch damageTimer;
         public Vector2 Position {
             set {
                 _position = value;
@@ -30,10 +32,15 @@ namespace cse3902
         public ICollider Pushbox {set;get;}
         public IPlayerState State;
         public int health = 5;
+        public GameContent content;
         public Player(GameContent content)
         {
+            damageTimer = new Stopwatch();
+            this.content = content;
             State = new PlayerStateIdle(content,this);
+            
             Pushbox = new BoxCollider(Position,Size*3, Origin*3, ColliderType.PLAYER);
+           
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -42,6 +49,7 @@ namespace cse3902
             {
                 TakeDamage();
             }
+            
 
             State.Update(gameTime, controllers);
 
@@ -49,8 +57,10 @@ namespace cse3902
         }
 
         public void Draw(SpriteBatch spriteBatch)
-        {   
+        {
+            //sprite.Draw(spriteBatch);
             State.Draw(spriteBatch);
+            
         }
 
         public void Move(Vector2 direction)
@@ -71,16 +81,24 @@ namespace cse3902
 
         public void TakeDamage()
         {
-            if(health > 0)
+            bool istrue = this.State is PlayerDamage;
+            Debug.WriteLine(istrue);
+            if (!(istrue))
+            {
+                Debug.WriteLine("entering damage state");
+                State = new PlayerDamage(content, this);
+            }
+            if (health > 0)
             {
                 health -= 1;
-            
+
                 Debug.WriteLine("player health is: " + health);
             }
-            if(health == 0)
+            if (health == 0)
             {
                 Debug.WriteLine("YOU ARE DEAD!!!!!");
             }
+            
         }
     }
 }

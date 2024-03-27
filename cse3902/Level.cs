@@ -14,7 +14,7 @@ namespace cse3902
 {
     public class Level
     {
-        private Player player;
+        public Player player;
         private List<Room> rooms;
         private int roomIdx = 0;
     

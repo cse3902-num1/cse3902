@@ -89,7 +89,15 @@ public class Game1 : Game
         SamplerState s = new SamplerState();
         s.Filter = TextureFilter.Point;
 
-        spriteBatch.Begin(samplerState: s);
+        if (level.player is not null) {
+            spriteBatch.Begin(samplerState: s, transformMatrix: Matrix.CreateTranslation(new Vector3(
+                -level.player.Position.X + graphics.PreferredBackBufferWidth / 2f,
+                -level.player.Position.Y + graphics.PreferredBackBufferHeight / 2f,
+                0
+            )));
+        } else {
+            spriteBatch.Begin(samplerState: s);
+        }
         /*
         int screenWidth = GraphicsDevice.Viewport.Width;
         int screenHeight = GraphicsDevice.Viewport.Height;
