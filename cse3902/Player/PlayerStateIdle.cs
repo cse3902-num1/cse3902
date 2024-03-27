@@ -69,7 +69,7 @@ namespace cse3902
             else if (controllers.Any(c => c.isPlayerUseItem2JustPressed())) item = new MagicalBoomerangInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem3JustPressed())) item = new BlueBowInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem4JustPressed())) item = new FireballInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem5JustPressed())) item = new FireInventoryItem();
+            else if (controllers.Any(c => c.isPlayerUseItem5JustPressed())) item = new FireInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem6JustPressed())) item = new GreenBoomerangInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem7JustPressed())) item = new GreenBowInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem8JustPressed())) item = new PurpleCystleInventoryItem();
