@@ -132,20 +132,20 @@ public static class CollisionResolver
             return;
         }
 
-        float area = 0f;
-        CollisionResult<IEnemy> biggestResult = results[0];
+        //float area = 0f;
+        //CollisionResult<IEnemy> biggestResult = results[0];
         foreach (CollisionResult<IEnemy> result in results)
         {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
+            //if (result.GetArea() > area)
+            //{
+            //    area = result.GetArea();
+            //    biggestResult = result;
+            //}
             player.TakeDamage();
         }
 
-        Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        player.Position += reconciliation;
+        //Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        //player.Position += reconciliation;
     }
 
     /* Called only when projectile collision with walls */

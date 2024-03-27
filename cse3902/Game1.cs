@@ -41,8 +41,10 @@ public class Game1 : Game
     protected override void Initialize()
     {
         this.IsMouseVisible = true;
-        graphics.PreferredBackBufferWidth = 768; // Change this to your desired width
-        graphics.PreferredBackBufferHeight = 528; // Change this to your desired height
+        //graphics.PreferredBackBufferWidth = 768; // Change this to your desired width
+        //graphics.PreferredBackBufferHeight = 528; // Change this to your desired height
+        graphics.PreferredBackBufferWidth = 868; // Change this to your desired width
+        graphics.PreferredBackBufferHeight = 828; // Change this to your desired height
         graphics.ApplyChanges();
         base.Initialize();
     }
@@ -81,7 +83,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Lavender);
+        GraphicsDevice.Clear(Color.Black);
 
         /* enable nearest-neighbor texture filtering */
         SamplerState s = new SamplerState();

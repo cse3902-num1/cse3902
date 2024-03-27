@@ -33,38 +33,39 @@ namespace cse3902.DoorClasses
         {
             this.idx = idx;
             this.doorType = doorType;
+            Vector2 offset = new Vector2(50, 300);
 
             topDoors = new List<Sprite>()
             {
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) }
+                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) + offset },
+                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) + offset },
+                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) + offset },
+                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) + offset },
+                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) + offset }
             };
             botDoors = new List<Sprite>()
             {
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) }
+                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) + offset },
+                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) + offset },
+                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) + offset },
+                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) + offset },
+                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) + offset }
             };
             leftDoors = new List<Sprite>()
             {
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) }
+                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) + offset },
+                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) + offset },
+                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) + offset },
+                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) + offset },
+                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) + offset }
             };
             rightDoors = new List<Sprite>()
             {
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) }
+                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) + offset },
+                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) + offset },
+                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) + offset },
+                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) + offset },
+                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) + offset }
             };
             this.idx = idx;
         }

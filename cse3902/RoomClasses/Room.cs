@@ -103,11 +103,12 @@ namespace cse3902.RoomClasses
             doorML = new MapLoader(doorFilePath);
             doorIds = doorML.LoadMap();
 
+            Vector2 offset = new Vector2(50, 300);
             int idx = 0;
-            position.Y = 96 + (3f * 8);
+            position.Y = 96 + (3f * 8) + offset.Y;
             foreach (List<int> row in tileIds)
             {
-                position.X = 96 + (3f * 8);
+                position.X = 96 + (3f * 8) + offset.X;
 
                 foreach (int element in row)
                 {
