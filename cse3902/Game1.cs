@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 
 namespace cse3902;
@@ -30,6 +31,14 @@ public class Game1 : Game
     
     public Game1()
     {
+        EventBus.LoggingMessage("Hello, world!");
+        EventBus.LoggingMessage += log;
+        EventBus.LoggingMessage("Hello, world 2!");
+        EventBus.LoggingMessage -= log;
+        EventBus.LoggingMessage("Hello, world 3!");
+
+        EventBus.PlayerDying += onPlayerDying;
+
         graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         controllers = new List<IController>() {
@@ -107,5 +116,13 @@ public class Game1 : Game
         camera.EndDraw();
 
         base.Draw(gameTime);
+    }
+
+    private void log(string msg) {
+        Debug.WriteLine(msg);
+    }
+
+    private void onPlayerDying(IPlayer player) {
+        throw new NotImplementedException();
     }
 }
