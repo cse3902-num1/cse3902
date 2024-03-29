@@ -57,33 +57,33 @@ public abstract class BasicDirectionalProjectile : IProjectile
 
         Hitbox.Position = Position;
 
-        /* check for enemy collisions */
-        if (isEnermyProjectile == false)
-        {
-            foreach (IEnemy e in room.Enemies)
-            {
-                switch (e)
-                {
-                    case EnemyBase enemyBase:
-                        if (Hitbox.IsColliding(enemyBase.Collider))
-                        {
-                            IsDead = true;
-                            e.TakeDmg(1);
+        // /* check for enemy collisions */
+        // if (isEnermyProjectile == false)
+        // {
+        //     foreach (IEnemy e in room.Enemies)
+        //     {
+        //         switch (e)
+        //         {
+        //             case EnemyBase enemyBase:
+        //                 if (Hitbox.IsColliding(enemyBase.Collider))
+        //                 {
+        //                     IsDead = true;
+        //                     e.TakeDmg(1);
 
-                        }
-                        break;
-                }
-            }
-        }
-        else
-        {
-            /* check for player collisions */
-            if (Hitbox.IsColliding(room.Player.Pushbox))
-            {
-                 this.IsDead = true;
+        //                 }
+        //                 break;
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     /* check for player collisions */
+        //     if (Hitbox.IsColliding(room.Player.Pushbox))
+        //     {
+        //          this.IsDead = true;
 
-                 room.Player.TakeDamage();
-            }
-        }
+        //          room.Player.TakeDamage();
+        //     }
+        // }
     }
 }

@@ -49,12 +49,17 @@ public static class CollisionDetector
         }
         return results;
     }
-    public static List<CollisionResult<Player>> DetectPlayerCollision(ICollider self, Player player) {
-        List<CollisionResult<Player>> results = new List<CollisionResult<Player>>();
+    public static List<CollisionResult<IPlayer>> DetectPlayerCollision(ICollider self, IPlayer player) {
+        List<CollisionResult<IPlayer>> results = new List<CollisionResult<IPlayer>>();
         if (self.IsColliding(player.Pushbox))
         {
             Vector2 depth = self.GetOverlap(player.Pushbox);
-            CollisionResult<Player> result = new CollisionResult<Player>(depth, player.Pushbox, player);
+            CollisionResult<IPlayer> result = null;
+            switch (player) {
+                case Player p:
+                    result = new CollisionResult<IPlayer>(depth, player.Pushbox, p);
+                    break;
+            }
             results.Add(result);
         } 
         return results;

@@ -187,31 +187,36 @@ namespace cse3902.RoomClasses
             /* projectile collisions */
             foreach (IProjectile projectile in Projectiles) {
                 /* check for intersection of colliders */
-                List<CollisionResult<IEnemy>> collisionResults = null;
-                List<CollisionResult<Wall>> wallResults = null;
+                List<CollisionResult<IEnemy>> enemyResults = new List<CollisionResult<IEnemy>>();
+                List<CollisionResult<IPlayer>> playerResults = new List<CollisionResult<IPlayer>>();
+                List<CollisionResult<Wall>> wallResults = new List<CollisionResult<Wall>>();
                 switch (projectile)
                 {
                     case BasicBoomerangProjectile b:
-                        collisionResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
+                        enemyResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
                         wallResults = CollisionDetector.DetectWallCollision(b.Hitbox, wall);
+                        playerResults = CollisionDetector.DetectPlayerCollision(b.Hitbox, Player);
                         break;
                     case BasicDirectionalProjectile d:
-                        collisionResults = CollisionDetector.DetectEnemyCollision(d.Hitbox, Enemies);
+                        enemyResults = CollisionDetector.DetectEnemyCollision(d.Hitbox, Enemies);
                         wallResults = CollisionDetector.DetectWallCollision(d.Hitbox, wall);
+                        playerResults = CollisionDetector.DetectPlayerCollision(d.Hitbox, Player);
                         break;
                     case Bomb b:
-                        collisionResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
+                        enemyResults = CollisionDetector.DetectEnemyCollision(b.Hitbox, Enemies);
                         wallResults = CollisionDetector.DetectWallCollision(b.Hitbox, wall);
+                        playerResults = CollisionDetector.DetectPlayerCollision(b.Hitbox, Player);
                         break;
                     /* todo: check other types */
                 }
 
                 /* apply collision response */
-                CollisionResolver.ResolveProjectileEnemyCollision(projectile, collisionResults);
+                CollisionResolver.ResolveProjectileEnemyCollision(projectile, enemyResults);
                 if (wallResults.Count > 0)
                 {
                     CollisionResolver.ResolveProjectileWallCollision(projectile);
                 }
+                CollisionResolver.ResolveProjectilePlayerCollision(projectile, playerResults);
                 
             }
 
