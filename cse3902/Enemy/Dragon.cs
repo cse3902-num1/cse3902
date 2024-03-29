@@ -12,11 +12,7 @@ namespace cse3902.Enemy
 {
     public class Dragon : EnemyBase
     {
-        
-        private List<IProjectile> projectiles;
-
         private GameContent content;
-        
 
         public Dragon(GameContent content, Room room): base(content, room)
         {
@@ -31,21 +27,6 @@ namespace cse3902.Enemy
                 },
                 new Vector2(12.5f, 16f)
             );
-
-            projectiles = new List<IProjectile>();
-
-            // ballUp = new Fireball(content, 
-            //     new Vector2(-200f, -50f), 
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-            // ballDown = new Fireball(content,
-            //     new Vector2(-200f, +50f),
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-            // ballMid = new Fireball(content,
-            //     new Vector2(-200f, 0f),
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
 
             Position = new Vector2(500, 200);
             Collider = new BoxCollider(Position, new Vector2(25 * 2, 32 * 2), new Vector2(12.5f * 2, 16f * 2), ColliderType.ENEMY);
@@ -92,11 +73,11 @@ namespace cse3902.Enemy
                 Position,
                 new Vector2(-200f, 0f)
             );
-            projectiles.Add(ballUp);
+            room.Projectiles.Add(ballUp);
             ballUp.isEnermyProjectile = true;
-            projectiles.Add(ballMid);
+            room.Projectiles.Add(ballMid);
             ballMid.isEnermyProjectile = true;
-            projectiles.Add(ballDown);
+            room.Projectiles.Add(ballDown);
             ballDown.isEnermyProjectile = true;
         }
 
@@ -104,8 +85,6 @@ namespace cse3902.Enemy
         {
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
-
-            projectiles.ForEach(p => p.Draw(spriteBatch));
         }
 
         public override void Update(GameTime gameTime, List<IController> controllers)
@@ -129,11 +108,6 @@ namespace cse3902.Enemy
                 attackTimer.Restart();
                 Attack();
             }
-
-            projectiles.ForEach(p => p.Update(gameTime, controllers));
-            
-            /* remove dead projectiles */
-            projectiles = projectiles.Where(p => !p.IsDead).ToList();
 
             Move(gameTime, randomNum);
 
