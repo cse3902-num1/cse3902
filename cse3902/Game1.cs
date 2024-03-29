@@ -54,7 +54,7 @@ public class Game1 : Game
         gameContent = new GameContent(Content);
 
         room = gameContent.rooms;
-       
+
         level = new Level(gameContent);
     }
 

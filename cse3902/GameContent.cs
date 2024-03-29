@@ -47,6 +47,7 @@ namespace cse3902
         public Texture2D rightDoors;
         public Texture2D bottomDoors;
         public Texture2D leftDoors;
+        public Texture2D hud;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -62,6 +63,7 @@ namespace cse3902
             mergedSheet = LoadTexture2D("merged");
             TilesSheet = LoadTexture2D("Tileset");
             ItemSheet = LoadTexture2D("Items");
+            hud = LoadTexture2D("hud");
             SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");

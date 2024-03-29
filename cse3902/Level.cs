@@ -14,10 +14,11 @@ namespace cse3902
 {
     public class Level
     {
+        private const int HUD_HEIGHT = 40; // Adjust as needed
         public Player player;
         private List<Room> rooms;
         private int roomIdx = 0;
-    
+       
 
         public Level(GameContent content)
         {
@@ -35,6 +36,11 @@ namespace cse3902
             };
 
             player.CurrentRoom = rooms[0];
+            Sprite hud = new Sprite(content.hud, new List<Rectangle>() {
+                 new Rectangle(258 ,11 ,256 ,56) },
+                 new Vector2(8, 8),
+                 3.0f);
+           
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -62,6 +68,13 @@ namespace cse3902
             rooms[roomIdx].Draw(spriteBatch);
            
             player.Draw(spriteBatch);
+            DrawHUD(spriteBatch);
+
+        }
+
+        private void DrawHUD(SpriteBatch spriteBatch)
+        {
+
         }
     }
 }
