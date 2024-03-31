@@ -60,8 +60,7 @@ namespace cse3902
             /* enter attack state if attack key is pressed */
             else if (controllers.Any(c => c.isPlayerAttackJustPressed()))
             {
-                SoundEffect sound = SoundManager.Manager.swordSound();
-                sound.Play();
+                SoundManager.Manager.swordSound();
                 player.State = new PlayerStateAttack(content, player);
             }
 

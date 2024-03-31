@@ -19,8 +19,7 @@ public class BlueBombInventoryItem : IInventoryItem
         Vector2 direction = player.Facing.asVector2();
         Vector2 position = player.Position + direction * 20f;
         Bomb bomb = new Bomb(content, room, position);
-        SoundEffect bombDrop = SoundManager.Manager.bombDropSound();
-        bombDrop.Play();
+        SoundManager.Manager.bombDropSound();
         room.Projectiles.Add(bomb);
         bomb.isEnermyProjectile = false;
     }

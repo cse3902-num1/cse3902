@@ -67,8 +67,7 @@ namespace cse3902.Enemy
 
         public virtual void TakeDmg(int damage)
         {
-            SoundEffect sound = SoundManager.Manager.enemyDamageSound();
-            sound.Play();
+            SoundManager.Manager.enemyDamageSound();
             HP -= damage;
             Debug.Write("OUCH!");
             if (HP <= 0)
@@ -107,8 +106,7 @@ namespace cse3902.Enemy
 
         public virtual void Die()
         {
-            SoundEffect sound = SoundManager.Manager.enemyDeadSound();
-            sound.Play();
+            SoundManager.Manager.enemyDeadSound();
             IsDead = true;
         }
     }

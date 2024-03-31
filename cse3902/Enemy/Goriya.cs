@@ -117,8 +117,7 @@ namespace cse3902.Enemy
             if (projectile != null) {
                 return;
             }
-            SoundEffect sound = SoundManager.Manager.arrowBoomerangSound();
-            sound.Play();
+            SoundManager.Manager.arrowBoomerangSound();
 
             Vector2 velocity = new Vector2(0, 0);
             switch (currentState)

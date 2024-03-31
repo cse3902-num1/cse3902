@@ -78,8 +78,7 @@ namespace cse3902.Enemy
 
         public override void Attack()
         {
-            SoundEffect sound = SoundManager.Manager.fireballSound();
-            sound.Play();
+            SoundManager.Manager.fireballSound();
 
             Fireball ballUp = new Fireball(content, 
                 room,

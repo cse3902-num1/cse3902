@@ -42,8 +42,7 @@ public class Bomb : IProjectile
 
     private void Die()
     {
-        SoundEffect bombBlowUp = SoundManager.Manager.bombBlowUpSound();
-        bombBlowUp.Play();
+        SoundManager.Manager.bombBlowUpSound();
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
         room.ParticleEffects.Add(fx);

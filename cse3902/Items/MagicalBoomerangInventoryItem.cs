@@ -18,8 +18,7 @@ public class MagicalBoomerangInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         MagicalBoomerang magicBoomerangProjectile = new MagicalBoomerang(content, room, player.Position, direction * 400f);
-        SoundEffect boomerangSound = SoundManager.Manager.arrowBoomerangSound();
-        boomerangSound.Play();
+        SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(magicBoomerangProjectile);
         magicBoomerangProjectile.isEnermyProjectile = false;
     }

@@ -87,46 +87,76 @@ namespace cse3902
            
         }
     
-        public SoundEffect swordSound()
+        public void swordSound()
         {
-            return sword;
+            if (!isMusicPaused)
+            {
+                sword.Play();
+            }
         }
-        public SoundEffect itemPickUpSound()
+        public void itemPickUpSound()
         {
-            return itemPickUp;
+            if (!isMusicPaused)
+            {
+                itemPickUp.Play();
+            }
         }
-        public SoundEffect linkDamageSound()
+        public void linkDamageSound()
         {
-            return linkDamage;
+            if (!isMusicPaused)
+            {
+                linkDamage.Play();
+            }
         }
-        public SoundEffect linkDeadSound()
+        public void linkDeadSound()
         {
-            return linkDead;
+            if (!isMusicPaused)
+            {
+                linkDead.Play();
+            }
         }
-        public SoundEffect enemyDamageSound()
+        public void enemyDamageSound()
         {
-            return enemyDamage;
+            if (!isMusicPaused)
+            {
+                enemyDamage.Play();
+            }
         }
-        public SoundEffect enemyDeadSound()
+        public void enemyDeadSound()
         {
-            return enemyDead;
+            if (!isMusicPaused)
+            {
+                enemyDead.Play();
+            }
         }
-        public SoundEffect arrowBoomerangSound()
+        public void arrowBoomerangSound()
         {
-            return arrowBoomerang;
+            if (!isMusicPaused)
+            {
+                arrowBoomerang.Play();
+            }
         }
-        public SoundEffect bombDropSound()
+        public void bombDropSound()
         {
-            return bombDrop;
+            if (!isMusicPaused)
+            {
+                bombDrop.Play();
+            }
         }
-        public SoundEffect bombBlowUpSound()
+        public void bombBlowUpSound()
         {
-            return bombBlowUp;
+            if (!isMusicPaused)
+            {
+                bombBlowUp.Play();
+            }
         }
 
-        public SoundEffect fireballSound()
+        public void fireballSound()
         {
-            return fireball;
+            if (!isMusicPaused)
+            {
+                fireball.Play();
+            }
         }
     }
 }

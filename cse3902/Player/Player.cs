@@ -89,8 +89,7 @@ namespace cse3902
                 Debug.WriteLine("entering damage state");
                 State = new PlayerDamage(content, this);
             }
-            SoundEffect sound = SoundManager.Manager.linkDamageSound();
-            sound.Play();
+            SoundManager.Manager.linkDamageSound();
             if (health > 0)
             {
                 health -= 1;

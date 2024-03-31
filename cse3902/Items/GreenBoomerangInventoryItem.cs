@@ -18,8 +18,7 @@ public class GreenBoomerangInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         GreenBoomerang greenBoomerangProjectile = new GreenBoomerang(content, room, player.Position, direction * 200f);
-        SoundEffect sound = SoundManager.Manager.arrowBoomerangSound();
-        sound.Play();
+        SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(greenBoomerangProjectile);
         greenBoomerangProjectile.isEnermyProjectile = false;
     }

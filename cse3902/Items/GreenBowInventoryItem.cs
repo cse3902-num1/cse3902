@@ -18,8 +18,7 @@ public class GreenBowInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         GreenArrow greenArrowProjectile = new GreenArrow(content, room, player.Position, direction * 300f);
-        SoundEffect arrowSound = SoundManager.Manager.arrowBoomerangSound();
-        arrowSound.Play();
+        SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(greenArrowProjectile);
         greenArrowProjectile.isEnermyProjectile = false;
     }

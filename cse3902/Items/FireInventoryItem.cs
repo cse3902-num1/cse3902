@@ -19,8 +19,7 @@ public class FireInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         Fire fire = new Fire(content, room, player.Position, direction * 300f);
-        SoundEffect sound = SoundManager.Manager.arrowBoomerangSound();
-        sound.Play();
+        SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(fire);
         fire.isEnermyProjectile = false;
     }
