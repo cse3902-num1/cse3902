@@ -42,4 +42,8 @@ public interface IController
     /* gameplay keys */
     public bool isResetPressed();
     public bool isQuitPressed();
+
+    /* room controls */
+    public bool isLeftClick();
+    public bool isRightClick();
 }

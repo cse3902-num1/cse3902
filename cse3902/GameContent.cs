@@ -41,6 +41,13 @@ namespace cse3902
         public Texture2D weapon;
         public Texture2D weapon2;
 
+        public Texture2D rooms;
+        public Texture2D walls;
+        public Texture2D topDoors;
+        public Texture2D rightDoors;
+        public Texture2D bottomDoors;
+        public Texture2D leftDoors;
+
         private Texture2D LoadTexture2D(String name)
         {
             return content.Load<Texture2D>(name);
@@ -52,11 +59,10 @@ namespace cse3902
 
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
-            mergedSheet = content.Load<Texture2D>("merged");
-            TilesSheet = content.Load<Texture2D>("Tileset");
-            ItemSheet = content.Load<Texture2D>("Items");
-            SpriteSheetFlipped = content.Load<Texture2D>("flipped");
-            SpriteSheetLinkAdditionItems = content.Load<Texture2D>("spritesheet_link");
+            mergedSheet = LoadTexture2D("merged");
+            TilesSheet = LoadTexture2D("Tileset");
+            ItemSheet = LoadTexture2D("Items");
+            SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");
             SpritesheetLinkAttackMagicSwordMagicShield = LoadTexture2D("spritesheet_link_attack_magicsword_magicshield");
@@ -69,7 +75,7 @@ namespace cse3902
             SpritesheetLinkUseItem = LoadTexture2D("spritesheet_link_useitem");
             SpritesheetLinkWalkMagicShield = LoadTexture2D("spritesheet_link_walk_magicshield");
             SpritesheetLinkWalk = LoadTexture2D("spritesheet_link_walk");
-
+            
             enemies = LoadTexture2D("enemies");
             enemiesSheet = LoadTexture2D("enemiesSheet");
             skeleton = LoadTexture2D("skeleton");
@@ -78,6 +84,13 @@ namespace cse3902
             blueBoomerang = LoadTexture2D("BlueBoomerang");
             weapon = LoadTexture2D("Weapon");
             weapon2 = LoadTexture2D("Weapon2");
+
+            rooms = LoadTexture2D("rooms");
+            walls = LoadTexture2D("walls");
+            topDoors = LoadTexture2D("topDoors");
+            bottomDoors = LoadTexture2D("bottomDoors");
+            leftDoors = LoadTexture2D("leftDoors");
+            rightDoors = LoadTexture2D("rightDoors");
         }
     }
 }

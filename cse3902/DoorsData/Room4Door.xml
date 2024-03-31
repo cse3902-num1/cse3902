@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Settings>
+	<Setting name="DoorIds">
+		0
+		2
+		3
+		4
+	</Setting>
+</Settings>

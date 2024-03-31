@@ -1,16 +1,17 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
+using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace cse3902.Enemy
 {
-    public class Goriya : IEnemy
+    public class Goriya : EnemyBase
     {
-        public Vector2 Position {set;get;}
         private enum GoriyaState { Left, Right, Up, Down }
         private GoriyaState currentState = GoriyaState.Down;
         private Sprite spriteUp;
@@ -18,54 +19,55 @@ namespace cse3902.Enemy
         private Sprite spriteLeft;
         private Sprite spriteRight;
         private Sprite currentSprite;
-        private Stopwatch randomChangeTimer = new Stopwatch();
-        private Random random = new Random();
-        private int randomNum = 1;
-        private GreenBoomerang greenBoomerang;
-        private bool isAttack;
-        private bool goingBack = false;
+        private IProjectile projectile;
 
-        public Goriya(GameContent content)
+        private GameContent content;
+
+        public Goriya(GameContent content, Room room) : base(content, room)
         {
+            this.HP = 7;
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 32, 16, 16),
                     new Rectangle(16, 32, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             spriteDown = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 48, 16, 16),
                     new Rectangle(16, 48, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             spriteRight = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 16, 16, 16),
                     new Rectangle(16, 16, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             spriteLeft = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
                     new Rectangle(0, 0, 16, 16),
                     new Rectangle(16, 0, 16, 16)
-                }
+                },
+                new Vector2(8, 8)
             );
             currentSprite = spriteDown;
 
-            greenBoomerang = new GreenBoomerang(content,
-                new Vector2(0f, 0f),
-                new Vector2(0f, 0f)
-            );
-
             Position = new Vector2(400, 200);
+
+            projectile = null;
+            Collider = new BoxCollider(Position, new Vector2(16 * 2, 16 * 2), new Vector2(8 * 2, 8 * 2), ColliderType);
+            this.content = content;
         }
 
-        public void Move(GameTime gameTime, int randomNum)
+        public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             switch (currentState)
@@ -109,32 +111,48 @@ namespace cse3902.Enemy
             }
         }
 
-        public void Attack()
+        public override void Attack()
         {
-            isAttack = true;
-            greenBoomerang.Position = Position;
+            if (projectile != null) {
+                return;
+            }
+
+            Vector2 velocity = new Vector2(0, 0);
+            switch (currentState)
+            {
+                case GoriyaState.Left:
+                    velocity = new Vector2(-1, 0);
+                    break;
+                case GoriyaState.Right:
+                    velocity = new Vector2(1, 0);
+                    break;
+                case GoriyaState.Up:
+                    velocity = new Vector2(0, -1);
+                    break;
+                case GoriyaState.Down:
+                    velocity = new Vector2(0, 1);
+                    break;
+            }
+            velocity *= 200f;
+            projectile = new GreenBoomerang(content, room, Position, velocity);
+            projectile.isEnermyProjectile = true;
+
         }
 
-        public void TakeDmg()
-        {
-
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.Position = Position;
             currentSprite.Draw(spriteBatch);
-
-            if (isAttack)
-            {
-                greenBoomerang.Draw(spriteBatch);
+            if (projectile is not null) {
+                projectile.Draw(spriteBatch);
             }
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public override void Update(GameTime gameTime, List<IController> controllers)
         {
-            randomChangeTimer.Start();
+            base.Update(gameTime, controllers);
 
+            randomChangeTimer.Start();
             if (randomChangeTimer.ElapsedMilliseconds >= 500)
             {
                 randomChangeTimer.Restart();
@@ -142,49 +160,22 @@ namespace cse3902.Enemy
                 randomNum = random.Next(1, 6);
             }
 
-            if (isAttack)
-            {
-                if (!goingBack)
-                {
-                    switch (currentState)
-                    {
-                        case GoriyaState.Up: greenBoomerang.Velocity = new Vector2(0f, -100f); break;
-                        case GoriyaState.Down: greenBoomerang.Velocity = new Vector2(0f, 100f); break;
-                        case GoriyaState.Left: greenBoomerang.Velocity = new Vector2(-100f, 0f); break;
-                        case GoriyaState.Right: greenBoomerang.Velocity = new Vector2(100f, 0f); break;
-                    }
-                }
-                else
-                {
-                    switch (currentState)
-                    {
-                        case GoriyaState.Up: greenBoomerang.Velocity = new Vector2(0f, 100f); break;
-                        case GoriyaState.Down: greenBoomerang.Velocity = new Vector2(0f, -100f); break;
-                        case GoriyaState.Left: greenBoomerang.Velocity = new Vector2(100f, 0f); break;
-                        case GoriyaState.Right: greenBoomerang.Velocity = new Vector2(-100f, 0f); break;
-                    }
-                }
+            if (projectile is not null) {
+                projectile.Update(gameTime, controllers);
 
-                if (Math.Abs(greenBoomerang.Position.X - spriteUp.X) > 100f
-                    || Math.Abs(greenBoomerang.Position.Y - spriteUp.Y) > 100f)
-                {
-                    goingBack = true;
+                /* filter out dead projectiles */
+                if (projectile.IsDead) {
+                    projectile = null;
                 }
-                if (goingBack && Math.Abs(greenBoomerang.Position.X - spriteUp.X) < 10f
-                    && Math.Abs(greenBoomerang.Position.Y - spriteUp.Y) < 10f)
-                {
-                    isAttack = false;
-                    goingBack = false;
-                }
-                greenBoomerang.Update(gameTime, controller);
             }
-            else
-            {
+
+            /* only move if boomerang has returned */
+            // if (projectiles.Count == 0) {
                 Move(gameTime, randomNum);
                 ChangeAction(randomNum);
-            }
+            // }
 
-            currentSprite.Update(gameTime, controller);
+            currentSprite.Update(gameTime, controllers);
         }
     }
 }

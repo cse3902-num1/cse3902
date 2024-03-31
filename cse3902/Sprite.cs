@@ -13,6 +13,7 @@ namespace cse3902
         private List<Rectangle> frames; /* source rectangles */
 
         private int frame = 0;
+        private float scale = 2.0f;
         public int Frame /* index of current frame's source rectangle */
         {
             get { return frame; }
@@ -49,6 +50,14 @@ namespace cse3902
             this.frames = frames;
         }
 
+        public Sprite(Texture2D texture, List<Rectangle> frames, float scale)
+        {
+            this.position = Vector2.Zero;
+            this.texture = texture;
+            this.frames = frames;
+            this.scale = scale;
+        }
+
         public Sprite(Texture2D texture, List<Rectangle> frames, Vector2 origin)
         {
             this.position = Vector2.Zero;
@@ -57,8 +66,17 @@ namespace cse3902
             this.origin = origin;
         }
 
+        public Sprite(Texture2D texture, List<Rectangle> frames, Vector2 origin, float scale)
+        {
+            this.position = Vector2.Zero;
+            this.texture = texture;
+            this.frames = frames;
+            this.origin = origin;
+            this.scale = scale;
+        }
 
-        public void Update(GameTime gameTime, IController controller)
+
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
             if (frameTimer < frameTimerThreshold) return;
@@ -74,7 +92,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, origin, 2.0f, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, origin, scale, SpriteEffects.None, 1f);
         }
 
         // Set the position of the sprite

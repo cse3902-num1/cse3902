@@ -4,135 +4,64 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.Interfaces;
 using cse3902.Enemy;
 using cse3902.Objects;
+using cse3902.RoomClasses;
+using System;
+using cse3902.DoorClasses;
+using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace cse3902
 {
     public class Level
     {
-        private Player player;
-        private List<IEnemy> enemies;
-        private int idxEnemy;
-        private List<IItemPickup> items;
-        private int idxItem;
-        private List<IBlock> blocks;
-        private int idxBlock;
+        public Player player;
+        private List<Room> rooms;
+        private int roomIdx = 0;
+    
 
-        public Level(GameContent content, IController controller)
+        public Level(GameContent content)
         {
             player = new Player(content);
-            player.Position = new Vector2(100, 100);
+            player.Position = new Vector2(300, 200);
 
-            enemies = new List<IEnemy>()
+            rooms = new List<Room>
             {
-                new Skeleton(content),
-                new Dragon(content),
-                new Gel(content),
-                new Keese(content),
-                new Goriya(content),
-            };
-            idxEnemy = 0;
+                new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
+                new Room(content, @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml", player),
+                new Room(content, @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml", player),
+                new Room(content, @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml", player),
+                new Room(content, @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml", player)
 
-            items = new List<IItemPickup>
-            {
-                new FiveRupiesItemPickup(content),
-                new FireItemPickUp(content),
-                new RupyItemPickup(content),
-                new TriforceItemPickup(content),
-                new MapItemPickup(content),
-                new KeyItemPickup(content),
-                new HeartItemPickup(content),
-                new HeartContainerItemPickup(content),
-                new FairyItemPickup(content),
-                new CompassItemPickUp(content),
-                new ClockItemPickUp(content),
-                new BowItemPickup(content),
-                new YellowBoomerangItemPickup(content),
-                new BombItemPickup(content),
-                new LifePotionItemPickup(content),
-                new SecondPotionItemPickup(content),
-                new LetterItemPickup(content),
-                new FoodItemPickup(content),
-                new SwordItemPickup(content),
-                new WhiteSwordItemPickup (content),
-                new MagicalSwordItemPickup(content),
-                new MagicalShieldItemPickup(content),
-                new BlueCandleItemPickup(content),
-                new RedCandleItemPickup (content),
-                new RedRingItemPickup(content),
-                new BlueRingItemPickup (content),
-                new PowerBraceletItemPickup(content),
-                new RecorderItemPickup(content),
-                new RaftItemPickup(content),
-                new StepLadderItemPickup(content),
-                new MagicalRodItemPickup(content),
-                new BookOfMagicItemPickup(content),
-                new MagicalKeyItemPickup(content),
             };
-            idxItem = 0;
-            items.ForEach(i => i.Position = new Vector2(300, 200));
 
-            blocks = new List<IBlock>() {
-                new Block1(content),
-                new Block2(content),
-                new Block3(content),
-                new Block4(content),
-                new Block5(content),
-                new Block6(content),
-                new Block7(content),
-            };
-            idxBlock = 0;
-            blocks.ForEach(b => b.Position = new Vector2(200, 200));
+            player.CurrentRoom = rooms[0];
         }
 
-        public void Update(GameTime gameTime, IController controller)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
-            if (controller.isEnemyPressP())
-            { 
-                idxEnemy++;
-                idxEnemy %= enemies.Count;
-            }
-            if (controller.isEnemyPressO())
-            {
-                idxEnemy--;
-                if (idxEnemy < 0) idxEnemy = enemies.Count - 1;
-            }
+            player.Update(gameTime, controllers);
 
-            if (controller.isNextItemKeyPress())
-            {
-                idxItem++;
-                idxItem %= items.Count;
-            }
+            rooms[roomIdx].Update(gameTime, controllers);
 
-            if(controller.isPreviousItemKeyPress()) 
+            if (controllers.Any(c => c.isLeftClick()))
             {
-                idxItem--;
-                if (idxItem < 0) idxItem = items.Count - 1;
+                roomIdx++;
+                roomIdx %= rooms.Count;
+                player.CurrentRoom = rooms[roomIdx];
             }
-
-            if (controller.isNextBlockPressed())
+            if (controllers.Any(c => c.isRightClick()))
             {
-                idxBlock++;
-                idxBlock %= blocks.Count;
+                roomIdx--;
+                if (roomIdx < 0) roomIdx = rooms.Count - 1;
+                player.CurrentRoom = rooms[roomIdx];
             }
-
-            if (controller.isPreviousBlockPressed())
-            {
-                idxBlock--;
-                if (idxBlock < 0) idxBlock = blocks.Count - 1;
-            }
-
-            player.Update(gameTime, controller);
-            enemies[idxEnemy].Update(gameTime, controller);
-            items[idxItem].Update(gameTime, controller);
-            blocks[idxBlock].Update(gameTime, controller);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            rooms[roomIdx].Draw(spriteBatch);
+           
             player.Draw(spriteBatch);
-            enemies[idxEnemy].Draw(spriteBatch);
-            items[idxItem].Draw(spriteBatch);
-            blocks[idxBlock].Draw(spriteBatch);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902.Projectiles;
 
@@ -14,7 +15,7 @@ internal class BombExplode : BasicParticleEffect
                 new Rectangle(155, 185, 15, 15),
                 new Rectangle(172, 185, 15, 15)
             },
-            new Vector2(7.5f, 7.5f)
+            new Vector2(8f, 8f)
         );
     }
 }
