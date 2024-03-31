@@ -75,6 +75,8 @@ public class Game1 : Game
             Exit();
         }
 
+        SoundManager.Manager.Update(gameTime, controllers);
+
         level.Update(gameTime, controllers);
 
         base.Update(gameTime);
