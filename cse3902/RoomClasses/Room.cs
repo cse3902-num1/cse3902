@@ -137,7 +137,6 @@ namespace cse3902.RoomClasses
             foreach (Block b in Blocks) {
                 if (b.Collider is null) continue;
                 BoxCollider c = (BoxCollider) b.Collider;
-                Debug.WriteLine("block: " + c.Position + " " + c.Size);
             }
 
             int type = 0;

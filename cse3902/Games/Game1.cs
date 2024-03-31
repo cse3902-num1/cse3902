@@ -9,28 +9,29 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 
 
-namespace cse3902;
+namespace cse3902.Games;
 
 
 
 public class Game1 : Game
 {
     /* loaded game content accessible by anyone with a reference to this Game1 */
-    
+
 
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
     private List<IController> controllers;
     private GameContent gameContent;
     //public static Room currRoom;
-    private Level level;
-
+    public static IGameState State;
     public Camera camera;
-    
+
     public Game1()
     {
+       
         EventBus.LoggingMessage("Hello, world!");
         EventBus.LoggingMessage += log;
         EventBus.LoggingMessage("Hello, world 2!");
@@ -45,6 +46,7 @@ public class Game1 : Game
             new KeyboardController(),
             new MouseController(),
         };
+
     }
 
     protected override void Initialize()
@@ -64,9 +66,8 @@ public class Game1 : Game
         camera = new Camera(new SpriteBatch(GraphicsDevice), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
 
         gameContent = new GameContent(Content);
+        State = new GameStartState(gameContent, this);
 
-
-        level = new Level(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
@@ -74,18 +75,13 @@ public class Game1 : Game
         controllers.ForEach(c => c.Update(gameTime));
 
         /* reset level if R is pressed */
-        if (controllers.Any(c => c.isResetPressed()))
-        {
-            level = new Level(gameContent);
-        }
+
 
         /* quit game if Q is pressed */
         if (controllers.Any(c => c.isQuitPressed()))
         {
             Exit();
         }
-
-        level.Update(gameTime, controllers);
 
         base.Update(gameTime);
     }
@@ -108,24 +104,28 @@ public class Game1 : Game
         //     spriteBatch.Begin(samplerState: s);
         // }
 
-        if (level.player is not null) {
+        if (level.player is not null)
+        {
             camera.Position = level.player.Position;
         }
 
         camera.BeginDraw();
 
         level.Draw(camera.spriteBatch);
-       
+
         camera.EndDraw();
 
         base.Draw(gameTime);
     }
 
-    private void log(string msg) {
+    private void log(string msg)
+    {
         Debug.WriteLine(msg);
     }
 
-    private void onPlayerDying(IPlayer player) {
-        throw new NotImplementedException();
+    private void onPlayerDying(IPlayer player)
+    {
+        level = new Level(gameContent);
     }
+
 }
