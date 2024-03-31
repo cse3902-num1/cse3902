@@ -36,10 +36,7 @@ namespace cse3902
             };
 
             player.CurrentRoom = rooms[0];
-            Sprite hud = new Sprite(content.hud, new List<Rectangle>() {
-                 new Rectangle(258 ,11 ,256 ,56) },
-                 new Vector2(8, 8),
-                 3.0f);
+       
            
         }
 
