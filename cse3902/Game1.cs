@@ -25,6 +25,7 @@ public class Game1 : Game
     private List<IController> controllers;
     private GameContent gameContent;
     //public static Room currRoom;
+    public Hud hud;
     private Level level;
 
     public Camera camera;
@@ -66,6 +67,7 @@ public class Game1 : Game
         gameContent = new GameContent(Content);
 
 
+        hud = new Hud(gameContent);
         level = new Level(gameContent);
     }
 
@@ -114,9 +116,12 @@ public class Game1 : Game
 
         camera.BeginDraw();
 
+      
         level.Draw(camera.spriteBatch);
-       
+        hud.Draw(camera.spriteBatch);
+
         camera.EndDraw();
+        
 
         base.Draw(gameTime);
     }
@@ -126,6 +131,6 @@ public class Game1 : Game
     }
 
     private void onPlayerDying(IPlayer player) {
-        throw new NotImplementedException();
+       // throw new NotImplementedException();
     }
 }
