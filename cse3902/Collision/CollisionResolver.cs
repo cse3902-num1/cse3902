@@ -4,6 +4,7 @@ using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.WallClasses;
+using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 namespace cse3902;
 
@@ -202,5 +203,13 @@ public static class CollisionResolver
 
         Vector2 reconciliation = CollisionMove(((Player)player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
         player.Position += reconciliation;
+    }
+
+    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
+    {
+        foreach (CollisionResult<IItemPickup> result in results)
+        {
+            result.Entity.Pickup(player);
+        }
     }
 }

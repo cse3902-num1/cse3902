@@ -20,7 +20,6 @@ namespace cse3902.RoomClasses
         public List<IEnemy> Enemies;
         private int idxEnemy;
         public List<IItemPickup> Items;
-        private int idxItem;
         public List<IProjectile> Projectiles = new List<IProjectile>();
         public List<IParticleEffect> ParticleEffects = new List<IParticleEffect>();
         public List<Block> Blocks = new List<Block>();
@@ -91,9 +90,15 @@ namespace cse3902.RoomClasses
                 new BookOfMagicItemPickup(content, this),
                 new MagicalKeyItemPickup(content, this),
             };
-            idxItem = 0;
+            Random r = new Random();
+            foreach (IItemPickup i in Items) {
+                float x = r.NextSingle() * 868f;
+                float y = r.NextSingle() * 828f;
+                i.Position = new Vector2(x, y);
+            }
 
             wall = new Wall(content, this);
+
             //doors = new Doors(content);
 
             //handle loading map
@@ -154,24 +159,13 @@ namespace cse3902.RoomClasses
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-            if (controllers.Any(c => c.isNextItemKeyPress()))
-            {
-                idxItem++;
-                idxItem %= Items.Count;
-            }
-
-            if (controllers.Any(c => c.isPreviousItemKeyPress()))
-            {
-                idxItem--;
-                if (idxItem < 0) idxItem = Items.Count - 1;
-            }
-
             // Enemies[idxEnemy].Update(gameTime, controllers);
             Enemies.ForEach(e => e.Update(gameTime, controllers));
             Enemies = Enemies.Where(e => !e.IsDead).ToList();
 
-            Items[idxItem].Update(gameTime, controllers);
-            // Items = Items.Where(e => !e.IsDead).ToList();
+            // Items[idxItem].Update(gameTime, controllers);
+            Items.ForEach(i => i.Update(gameTime, controllers));
+            Items = Items.Where(i => !i.IsDead).ToList();
 
             Projectiles.ForEach(p => p.Update(gameTime, controllers));
             Projectiles = Projectiles.Where(p => !p.IsDead).ToList();
@@ -311,7 +305,9 @@ namespace cse3902.RoomClasses
                 CollisionResolver.ResolvePlayerEnemyCollision(Player, playerEnemyCollisionResults);
             }
 
-
+            /* Player ItemPickup collisions */
+            List<CollisionResult<IItemPickup>> playerItemPickupResults = CollisionDetector.DetectItemPickupCollision(Player.Pushbox, Items);
+            CollisionResolver.ResolvePlayerItemPickupCollision(Player, playerItemPickupResults);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -320,7 +316,8 @@ namespace cse3902.RoomClasses
             Doors.ForEach(d => d.Draw(spriteBatch));
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
-            Items[idxItem].Draw(spriteBatch);
+            // Items[idxItem].Draw(spriteBatch);
+            Items.ForEach(i => i.Draw(spriteBatch));
             Projectiles.ForEach(p => p.Draw(spriteBatch));
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
         }

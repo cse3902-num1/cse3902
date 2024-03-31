@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.WallClasses;
+using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 
 namespace cse3902;
@@ -62,6 +63,19 @@ public static class CollisionDetector
             }
             results.Add(result);
         } 
+        return results;
+    }
+
+    public static List<CollisionResult<IItemPickup>> DetectItemPickupCollision(ICollider self, List<IItemPickup> items) {
+        List<CollisionResult<IItemPickup>> results = new List<CollisionResult<IItemPickup>>();
+        foreach (IItemPickup item in items)
+        {
+            if (self.IsColliding(item.Collider)) {
+                Vector2 depth = self.GetOverlap(item.Collider);
+                CollisionResult<IItemPickup> result = new CollisionResult<IItemPickup>(depth, item.Collider, item);
+                results.Add(result);
+            }
+        }
         return results;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using cse3902.Interfaces;
-using cse3902.Player;
+using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +12,7 @@ namespace cse3902
     public class Hud
     {
         private Sprite sprite;
-        public cse3902.Player.PlayerInventory Inventory { get; set; }
+        public cse3902.PlayerClasses.PlayerInventory Inventory { get; set; }
 
         public Hud(GameContent content)
         {

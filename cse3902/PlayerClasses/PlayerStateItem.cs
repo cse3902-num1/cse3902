@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {
     public class PlayerStateItem : IPlayerState
     {

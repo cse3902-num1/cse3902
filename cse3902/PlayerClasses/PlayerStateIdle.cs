@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {
     public class PlayerStateIdle : IPlayerState
     {

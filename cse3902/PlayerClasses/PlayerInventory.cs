@@ -1,5 +1,5 @@
 ﻿using System;
-namespace cse3902.Player
+namespace cse3902.PlayerClasses
 {
 	public class PlayerInventory
 	{
@@ -8,7 +8,7 @@ namespace cse3902.Player
         private bool hasCompass;
         private int health;
         private int Rubies;
-		private int Keys;
+		public int Keys;
       
         public PlayerInventory()
 		{

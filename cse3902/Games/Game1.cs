@@ -22,7 +22,6 @@ public class Game1 : Game
 
 
     private GraphicsDeviceManager graphics;
-    private SpriteBatch spriteBatch;
     private List<IController> controllers;
     private GameContent gameContent;
     //public static Room currRoom;
@@ -64,6 +63,7 @@ public class Game1 : Game
     {
         // spriteBatch = new SpriteBatch(GraphicsDevice);
         camera = new Camera(new SpriteBatch(GraphicsDevice), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+        camera.Position = new Vector2(graphics.PreferredBackBufferWidth/2, graphics.PreferredBackBufferHeight/2);
 
         gameContent = new GameContent(Content);
         State = new GameStartState(gameContent, this);

@@ -9,14 +9,17 @@ using Microsoft.Xna.Framework.Graphics;
 using cse3902.WallClasses;
 
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {    
     public class Player : IPlayer
     {
         public Room CurrentRoom {set;get;}
+
+        public PlayerInventory Inventory {set;get;}
         
-        private Microsoft.Xna.Framework.Vector2 _position = Vector2.Zero;
         public Stopwatch damageTimer;
+
+        private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
             set {
                 _position = value;
@@ -40,7 +43,8 @@ namespace cse3902
             State = new PlayerStateIdle(content,this);
             
             Pushbox = new BoxCollider(Position,Size*3, Origin*3, ColliderType.PLAYER);
-           
+
+            Inventory = new PlayerInventory();
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
