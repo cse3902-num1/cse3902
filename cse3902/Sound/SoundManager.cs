@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 namespace cse3902
 {
+
     class SoundManager
     {
         private static SoundManager manager = null;
@@ -25,6 +30,7 @@ namespace cse3902
                 return manager;
             }
         }
+        private bool isMusicPaused = false; 
 
         private static Song music = null;
         private static SoundEffect sword = null;
@@ -36,7 +42,7 @@ namespace cse3902
         private static SoundEffect arrowBoomerang = null;
         private static SoundEffect bombDrop = null;
         private static SoundEffect bombBlowUp = null;
-  
+
         private static SoundEffect fireball = null;
         public static SoundEffectInstance musicLoop = null;
 
@@ -60,8 +66,27 @@ namespace cse3902
             MediaPlayer.Volume = 0.2f;
             MediaPlayer.Play(music);
             MediaPlayer.IsRepeating = true;
-        }
 
+        }
+        public void Update(GameTime gameTime, List<IController> controllers) {
+
+
+            if (controllers.Any(c => c.isMutePressed()) == true)
+            {
+                if (isMusicPaused)
+                {
+                    MediaPlayer.Resume();
+                    isMusicPaused = false;
+                }
+                else
+                {
+                    MediaPlayer.Pause();
+                    isMusicPaused = true;
+                }
+            }
+           
+        }
+    
         public SoundEffect swordSound()
         {
             return sword;

@@ -74,6 +74,7 @@ public class KeyboardController : IController
     /* gameplay keys */
     public bool isResetPressed()                { return isKeyJustPressed(Keys.R); }
     public bool isQuitPressed()                 { return isKeyJustPressed(Keys.Q); }
+    public bool isMutePressed() { return isKeyJustPressed(Keys.M); }
 
     /* room controls */
     public bool isLeftClick() { return false; }

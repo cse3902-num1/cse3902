@@ -58,5 +58,6 @@ namespace cse3902
         public bool isPreviousBlockPressed() { return false; }
         public bool isResetPressed() { return false; }
         public bool isQuitPressed() { return false; }
+        public bool isMutePressed() { return false; }
     }
 }
