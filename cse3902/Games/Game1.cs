@@ -74,7 +74,7 @@ public class Game1 : Game
     {
         controllers.ForEach(c => c.Update(gameTime));
 
-        /* reset level if R is pressed */
+      
 
 
         /* quit game if Q is pressed */
@@ -82,7 +82,7 @@ public class Game1 : Game
         {
             Exit();
         }
-
+        State.Update(gameTime, controllers);
         base.Update(gameTime);
     }
 
@@ -104,14 +104,10 @@ public class Game1 : Game
         //     spriteBatch.Begin(samplerState: s);
         // }
 
-        if (level.player is not null)
-        {
-            camera.Position = level.player.Position;
-        }
 
         camera.BeginDraw();
-
-        level.Draw(camera.spriteBatch);
+        State.Draw(camera.spriteBatch);
+        //level.Draw(camera.spriteBatch);
 
         camera.EndDraw();
 
@@ -125,7 +121,7 @@ public class Game1 : Game
 
     private void onPlayerDying(IPlayer player)
     {
-        level = new Level(gameContent);
+        State = new GameOverState(gameContent, this);
     }
 
 }
