@@ -97,6 +97,7 @@ namespace cse3902
             if (health == 0)
             {
                 Debug.WriteLine("YOU ARE DEAD!!!!!");
+                EventBus.PlayerDying(this);
             }
             
         }

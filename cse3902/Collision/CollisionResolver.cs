@@ -52,10 +52,8 @@ public static class CollisionResolver
 
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
     {
-        if (results.Count == 0)
-        {
-            return;
-        }
+        if (projectile.isEnermyProjectile) return;
+        if (results.Count == 0) return;
         projectile.IsDead = true;
         foreach (CollisionResult<IEnemy> r in results) {
             r.Entity.TakeDmg(1);
@@ -119,10 +117,19 @@ public static class CollisionResolver
     }
 
     /* Called only when projectile collision with player */
-    public static void ResolveProjectilePlayerCollision(IProjectile projectile, IPlayer player)
+    public static void ResolveProjectilePlayerCollision(IProjectile projectile, List<CollisionResult<IPlayer>> results)
     {
+        if (!projectile.isEnermyProjectile) return;
+        if (results.Count == 0) return;
         projectile.IsDead = true;
-        player.TakeDamage();
+        foreach (CollisionResult<IPlayer> result in results)
+        {
+            switch (result.Entity) {
+                case Player p:
+                    p.TakeDamage();
+                    break;
+            }
+        }
     }
 
     public static void ResolvePlayerEnemyCollision(IPlayer player, List<CollisionResult<IEnemy>> results)

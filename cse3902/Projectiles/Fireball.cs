@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace cse3902.Projectiles;
 
@@ -22,5 +24,10 @@ public class Fireball : BasicDirectionalProjectile
         upSprite = leftSprite;
         downSprite = leftSprite;
         Hitbox = new BoxCollider(position, new Vector2(8, 10), new Vector2(4, 5), ColliderType.PROJECTILE);
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        base.Draw(spriteBatch);
     }
 }

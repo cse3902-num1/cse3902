@@ -24,7 +24,7 @@ namespace cse3902.RoomClasses
             List<List<int>> tileIds = new List<List<int>>();
 
             // Get the directory where the solution file resides
-             string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+              string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
             // string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
             //string solutionDir = Directory.GetCurrentDirectory();
 
