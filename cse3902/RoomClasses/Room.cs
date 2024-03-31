@@ -306,7 +306,22 @@ namespace cse3902.RoomClasses
                 CollisionResolver.ResolvePlayerEnemyCollision(Player, playerEnemyCollisionResults);
             }
 
+            /* Player door collision */
+            foreach (Doors door in Doors)
+            {
+                List<CollisionResult<Doors>> playerDoorCollisionResults = CollisionDetector.DetectDoorCollision(Player.Pushbox, door);
+                CollisionResolver.ResolvePlayerDoorCollision(Player, playerDoorCollisionResults);
+            }
 
+            /* Enemy door collision */
+            foreach (IEnemy enemy in Enemies)
+            {
+                foreach (Doors door in Doors)
+                {
+                    List<CollisionResult<Doors>> enemyDoorCollisionResults = CollisionDetector.DetectDoorCollision(enemy.collider, door);
+                    CollisionResolver.ResolveEnemyDoorCollision(enemy, enemyDoorCollisionResults);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
