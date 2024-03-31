@@ -13,16 +13,19 @@ namespace cse3902.Games
         private GameContent gameContent;
         private Game1 game;
         private Level level;
+        private Hud hud;
         public GamePlayState(GameContent gamecontent, Game1 game)
         {
             this.gameContent = gamecontent;
             this.game = game;
             level = new Level(gamecontent);
-            // 
+            hud = new Hud(gameContent);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             level.Draw(spriteBatch);
+
+            hud.Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -34,6 +37,7 @@ namespace cse3902.Games
                 level = new Level(gameContent);
             }
 
+            hud.Update(gameTime, controllers);
         }
     }
 }

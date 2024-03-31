@@ -12,7 +12,7 @@ namespace cse3902
     public class Hud
     {
         private Sprite sprite;
-        public cse3902.PlayerClasses.PlayerInventory Inventory { get; set; }
+        public PlayerInventory Inventory { get; set; }
 
         public Hud(GameContent content)
         {
@@ -21,7 +21,7 @@ namespace cse3902
         }
 
         // Update method for the HUD
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<IController> controllers)
         {
             // You may add update logic here if needed, 
             // such as updating HUD elements based on player state or game events
