@@ -3,12 +3,14 @@ namespace cse3902.PlayerClasses
 {
 	public class PlayerInventory
 	{
-		private bool hasMap;
-        private bool BowUnlocked;
-        private bool hasCompass;
-        private int health;
-        private int Rubies;
+        public bool hasMap;
+        public bool BowUnlocked;
+        public bool hasCompass;
+        public int health;
+        public int Rubies;
 		public int Keys;
+        public int Bombs;
+        public int lifeContainer = 3;
       
         public PlayerInventory()
 		{
@@ -18,6 +20,8 @@ namespace cse3902.PlayerClasses
             Keys = 0;
             hasMap = false;
             hasCompass = false;
+            Bombs = 0;
+
         }
 	}
 }
