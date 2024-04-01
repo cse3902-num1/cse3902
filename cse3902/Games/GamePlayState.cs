@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,13 +20,15 @@ namespace cse3902.Games
             this.gameContent = gamecontent;
             this.game = game;
             level = new Level(gamecontent);
-            hud = new Hud(gameContent);
+            hud = new Hud(gameContent,level);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             level.Draw(spriteBatch);
 
             hud.Draw(spriteBatch);
+
+    
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

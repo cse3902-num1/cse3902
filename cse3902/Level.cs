@@ -15,7 +15,7 @@ namespace cse3902
 {
     public class Level
     {
-        private const int HUD_HEIGHT = 40; // Adjust as needed
+      
         public Player player;
         private List<Room> rooms;
         private int roomIdx = 0;

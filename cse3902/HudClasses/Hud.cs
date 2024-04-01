@@ -11,13 +11,16 @@ namespace cse3902
 {
     public class Hud
     {
+        GameContent content1;
         private Sprite sprite;
-        public PlayerInventory Inventory { get; set; }
+        public PlayerInventory Inventory;
 
-        public Hud(GameContent content)
+        public Hud(GameContent content, Level level)
         {
             // Initialize the background sprite for the HUD
             sprite = new Sprite(content.hud, new List<Rectangle>() { new Rectangle(256, 11, 256, 56) }, new Vector2(8, 8), 3.0f);
+            content1 = content;
+            Inventory = level.player.Inventory;
         }
 
         // Update method for the HUD
@@ -32,6 +35,7 @@ namespace cse3902
         {
             // Draw the background sprite for the HUD
             sprite.Draw(spriteBatch);
+            Inventory.Draw(content1, spriteBatch);
 
             // You can add more draw calls here to render additional HUD elements
             // For example:

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace cse3902
 {
@@ -49,6 +50,7 @@ namespace cse3902
         public Texture2D leftDoors;
         public Texture2D hud;
         public Texture2D BlackScreen;
+        public SpriteFont font;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -58,6 +60,7 @@ namespace cse3902
         public GameContent(ContentManager content) 
         {
             this.content = content;
+            font = content.Load<SpriteFont>("font_arial");
 
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
             BlackScreen = LoadTexture2D("blackScreen");
