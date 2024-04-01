@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using cse3902;
+
 
 namespace cse3902.PlayerClasses
 {
@@ -43,6 +45,8 @@ namespace cse3902.PlayerClasses
             spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, 100), Color.White);
             spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, 30), Color.White);
 
+
+
             //draw the heart for the health, initial there are 3 hearts:
             // Draw heart items based on player's health
             Vector2 heartPosition = new Vector2(100, 100);
@@ -53,25 +57,41 @@ namespace cse3902.PlayerClasses
             heart.X = 500;
             heart.Y = 85;
 
-            for (int i = 0; i < health; i++) {
-
-                heart.X += 16;
-                heart.Draw(spriteBatch);
-            }
-            if (health < lifeContainer) {
+            //should draw all life container first
+          
                 Sprite fadedHeart = new Sprite(gameContent.hud, new List<Rectangle>() {
                         new Rectangle(627, 117, 8, 8) }
                        , new Vector2(3.5f, 3.5f));
                 fadedHeart.X = heart.X;
                 fadedHeart.Y = heart.Y;
 
-                for (int i = health; i < lifeContainer; i++)
+                for (int i = 0; i < lifeContainer; i++)
                 {
                     fadedHeart.X += 16;
                     fadedHeart.Draw(spriteBatch);
                 }
+            
+
+            //cover the life container with current health
+            for (int i = 0; i < health; i++) {
+
+                heart.X += 16;
+                heart.Draw(spriteBatch);
             }
+
+            Sprite sword = new Sprite(gameContent.hud, new List<Rectangle>() {
+                        new Rectangle(555, 137, 8, 16) }
+                       , new Vector2(3.5f, 3.5f));
+
+            sword.X = 375;
+            sword.Y = 60;
+
+            if (SwordItemPickup.swordIsPicked == true) {
+                sword.Draw(spriteBatch);
+            }
+
            
+
         }
     }
 }

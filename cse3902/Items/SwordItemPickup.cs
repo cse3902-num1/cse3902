@@ -7,6 +7,7 @@ namespace cse3902;
 
 public class SwordItemPickup : BasicItemPickup
 {
+    public static bool swordIsPicked = false;
     public SwordItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
@@ -14,7 +15,7 @@ public class SwordItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-
+        swordIsPicked = true;
         Debug.WriteLine("sword item picked up");
         IsDead = true;
     }

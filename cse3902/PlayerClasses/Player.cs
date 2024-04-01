@@ -34,7 +34,7 @@ namespace cse3902.PlayerClasses
         public Vector2 Size { set;get;} = new Vector2(16,16);
         public ICollider Pushbox {set;get;}
         public IPlayerState State;
-        public int health = 5;
+        
         public GameContent content;
         public Player(GameContent content)
         {
@@ -92,13 +92,13 @@ namespace cse3902.PlayerClasses
                 Debug.WriteLine("entering damage state");
                 State = new PlayerDamage(content, this);
             }
-            if (health > 0)
+            if (Inventory.health > 0)
             {
-                health -= 1;
+                Inventory.health -= 1;
 
-                Debug.WriteLine("player health is: " + health);
+                Debug.WriteLine("player health is: " + Inventory.health);
             }
-            if (health == 0)
+            if (Inventory.health == 0)
             {
                 Debug.WriteLine("YOU ARE DEAD!!!!!");
                 EventBus.PlayerDying(this);
