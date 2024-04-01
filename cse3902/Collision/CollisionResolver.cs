@@ -7,6 +7,7 @@ using cse3902.WallClasses;
 using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace cse3902;
 
@@ -137,6 +138,7 @@ public static class CollisionResolver
 
     public static void ResolvePlayerEnemyCollision(IPlayer player, List<CollisionResult<IEnemy>> results)
     {
+        
         if (results.Count == 0)
         {
             return;
@@ -152,6 +154,7 @@ public static class CollisionResolver
             //    biggestResult = result;
             //}
             player.TakeDamage();
+
         }
 
         //Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);

@@ -86,7 +86,6 @@ namespace cse3902.PlayerClasses
         public void TakeDamage()
         {
             bool istrue = this.State is PlayerDamage;
-            Debug.WriteLine(istrue);
             if (!(istrue))
             {
                 Debug.WriteLine("entering damage state");
