@@ -71,28 +71,6 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         controllers.ForEach(c => c.Update(gameTime));
-        
-        /*this is really bad chocie */
-
-        if (controllers.Any(c => c.isPausePressed()) && State.Equals(new GameOverState(gameContent, this)))
-        {
-            //Sprite.draw new sprite
-            // State = new GameOverState();
-        }
-
-        if (controllers.Any(c => c.isPausePressed()) && State.Equals(new GameWinState(gameContent, this)))
-        {
-            //Sprite.draw new sprite
-            // State = new GameWinState();
-        }
-
-        if (controllers.Any(c => c.isPausePressed()) && State.Equals(new GamePlayState(gameContent, this)))
-        {
-            //Sprite.draw new sprite
-            // State = new GamePlayState();
-        }
-
-
 
 
         /* quit game if Q is pressed */
