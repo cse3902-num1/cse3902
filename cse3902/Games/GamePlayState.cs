@@ -36,8 +36,12 @@ namespace cse3902.Games
             {
                 level = new Level(gameContent);
             }
-
+            
             hud.Update(gameTime, controllers);
+            if(level.player.Inventory.Triforce == 1)
+            {
+                Game1.State = new GameWinState(gameContent, game);
+            }
         }
     }
 }

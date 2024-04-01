@@ -19,13 +19,13 @@ public class Game1 : Game
     /* loaded game content accessible by anyone with a reference to this Game1 */
 
 
-    private GraphicsDeviceManager graphics;
+    public static GraphicsDeviceManager graphics;
     private List<IController> controllers;
     private GameContent gameContent;
     //public static Room currRoom;
     public static IGameState State;
     public Camera camera;
-
+    public static SpriteFont font;
     public Game1()
     {
       
@@ -62,7 +62,7 @@ public class Game1 : Game
         // spriteBatch = new SpriteBatch(GraphicsDevice);
         camera = new Camera(new SpriteBatch(GraphicsDevice), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
         camera.Position = new Vector2(graphics.PreferredBackBufferWidth/2, graphics.PreferredBackBufferHeight/2);
-
+        font = Content.Load<SpriteFont>("font_arial");
         gameContent = new GameContent(Content);
         State = new GameStartState(gameContent, this);
 
