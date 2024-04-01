@@ -30,6 +30,7 @@ namespace cse3902
         public Texture2D SpritesheetLinkUseItem;
         public Texture2D SpritesheetLinkWalkMagicShield;
         public Texture2D SpritesheetLinkWalk;
+        public Texture2D SpritesheetLinkWalkDamaged;
         public Texture2D SpriteSheetLinkAdditionItems;
         public Texture2D SpriteSheetFlipped;
 
@@ -82,6 +83,7 @@ namespace cse3902
             SpritesheetLinkUseItem = LoadTexture2D("spritesheet_link_useitem");
             SpritesheetLinkWalkMagicShield = LoadTexture2D("spritesheet_link_walk_magicshield");
             SpritesheetLinkWalk = LoadTexture2D("spritesheet_link_walk");
+            SpritesheetLinkWalkDamaged = LoadTexture2D("spritesheet_link_walk_damaged");
             
             enemies = LoadTexture2D("enemies");
             enemiesSheet = LoadTexture2D("enemiesSheet");
