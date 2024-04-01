@@ -15,6 +15,7 @@ namespace cse3902.Games
         private Game1 game;
         private Level level;
         private Hud hud;
+        private bool isPaused = false;
         public GamePlayState(GameContent gamecontent, Game1 game)
         {
             this.gameContent = gamecontent;
@@ -33,18 +34,28 @@ namespace cse3902.Games
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-            level.Update(gameTime, controllers);
-            /* reset level if R is pressed */
-            if (controllers.Any(c => c.isResetPressed()))
+
+            if (!isPaused)
             {
-                level = new Level(gameContent);
+                level.Update(gameTime, controllers);
+                /* reset level if R is pressed */
+                if (controllers.Any(c => c.isResetPressed()))
+                {
+                    level = new Level(gameContent);
+                }
+
+                hud.Update(gameTime, controllers);
+                if (level.player.Inventory.Triforce == 1)
+                {
+                    Game1.State = new GameWinState(gameContent, game);
+                }
+
             }
-            
-            hud.Update(gameTime, controllers);
-            if(level.player.Inventory.Triforce == 1)
+            if(controllers.Any(c => c.isPausePressed()))
             {
-                Game1.State = new GameWinState(gameContent, game);
+                isPaused = !isPaused;
             }
         }
+        
     }
 }

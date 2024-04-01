@@ -24,34 +24,39 @@ namespace cse3902.PlayerClasses
             directionSprite = new Dictionary<Direction, ISprite>() {
                 {
                     Direction.Left,
-                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                    new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>() {
                         new Rectangle(0 * 16, 0 * 16, 16, 16),
-                        new Rectangle(1 * 16, 0 * 16, 16, 16),
+                        new Rectangle(1* 16, 0, 16, 16),
+                        new Rectangle(2* 16, 0, 16, 16),
+                        new Rectangle(3 * 16, 0, 16,16)
                     }, new Vector2(8, 8))
                 },
                 {
                     Direction.Right,
-                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                    new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>() {
                         new Rectangle(0 * 16, 1 * 16, 16, 16),
                         new Rectangle(1 * 16, 1 * 16, 16, 16),
+                        new Rectangle(2* 16, 1 * 16, 16, 16),
+                        new Rectangle(3 * 16,1 * 16, 16,16)
                     }, new Vector2(8, 8))
                 },
                 {
                     Direction.Up,
-                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
+                    new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>() {
                         new Rectangle(0 * 16, 2 * 16, 16, 16),
                         new Rectangle(1 * 16, 2 * 16, 16, 16),
+                        new Rectangle(2* 16, 2 * 16, 16, 16),
+                        new Rectangle(3 * 16,2 * 16, 16,16)
                     }, new Vector2(8, 8))
                 },
                 {
                   Direction.Down,
-                  new Sprite(content.LinkSpritesheet, new List<Rectangle>()
+                  new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>()
                   {
-                      new Rectangle(74, 223,16,16),
-                        new Rectangle(0, 231, 16, 16),
-                        
-                        new Rectangle(198,239,16,16),
-                        new Rectangle(222,240,16,16)
+                      new Rectangle(0 * 16, 3 * 16, 16, 16),
+                        new Rectangle(1 * 16, 3 * 16, 16, 16),
+                        new Rectangle(2* 16, 3 * 16, 16, 16),
+                        new Rectangle(3 * 16,3 * 16, 16,16)
                   },new Vector2(8, 8))
                 },
             };
@@ -85,7 +90,6 @@ namespace cse3902.PlayerClasses
                 player.Facing = Direction.Down;
                 position.Y += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            player.Facing = Direction.Down;
             /* change to idle state if no movement keys are pressed */
 
             player.Position = position;
