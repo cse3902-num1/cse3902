@@ -15,8 +15,10 @@ public class HeartItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-
-        player.Inventory.health += 1;
+        if (player.Inventory.health < player.Inventory.lifeContainer) {
+            player.Inventory.health += 1;
+        }
+             
         Debug.WriteLine("heart picked up, health is "+ player.Inventory.health);
         IsDead = true;
     }

@@ -15,7 +15,7 @@ namespace cse3902.PlayerClasses
       
         public PlayerInventory()
 		{
-
+            health = lifeContainer;
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;

@@ -14,8 +14,8 @@ public class HeartContainerItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-
-        Debug.WriteLine("heart container picked up");
+        player.Inventory.lifeContainer += 1;
+        Debug.WriteLine("heart container picked up, heart container is " + player.Inventory.lifeContainer);
         IsDead = true;
     }
 }
