@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using System.Reflection.Metadata;
-
-
 namespace cse3902.Games;
 
 
@@ -30,8 +28,8 @@ public class Game1 : Game
 
     public Game1()
     {
-       
-        EventBus.LoggingMessage("Hello, world!");
+      
+    EventBus.LoggingMessage("Hello, world!");
         EventBus.LoggingMessage += log;
         EventBus.LoggingMessage("Hello, world 2!");
         EventBus.LoggingMessage -= log;
@@ -73,8 +71,28 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         controllers.ForEach(c => c.Update(gameTime));
+        
+        /*this is really bad chocie */
 
-      
+        if (controllers.Any(c => c.isPausePressed()) && State.Equals(new GameOverState(gameContent, this)))
+        {
+            //Sprite.draw new sprite
+            // State = new GameOverState();
+        }
+
+        if (controllers.Any(c => c.isPausePressed()) && State.Equals(new GameWinState(gameContent, this)))
+        {
+            //Sprite.draw new sprite
+            // State = new GameWinState();
+        }
+
+        if (controllers.Any(c => c.isPausePressed()) && State.Equals(new GamePlayState(gameContent, this)))
+        {
+            //Sprite.draw new sprite
+            // State = new GamePlayState();
+        }
+
+
 
 
         /* quit game if Q is pressed */

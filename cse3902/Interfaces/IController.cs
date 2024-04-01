@@ -30,6 +30,7 @@ public interface IController
     /* enemy keys */
     public bool isEnemyPressO();
     public bool isEnemyPressP();
+   
 
     /* item keys */
     public bool isPreviousItemKeyPress();
@@ -42,6 +43,7 @@ public interface IController
     /* gameplay keys */
     public bool isResetPressed();
     public bool isQuitPressed();
+    public bool isPausePressed();
 
     /* room controls */
     public bool isLeftClick();

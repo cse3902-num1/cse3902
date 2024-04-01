@@ -47,6 +47,7 @@ public class KeyboardController : IController
     public bool isPlayerMoveRightPressed()      { return isKeyPressed(Keys.D) || isKeyPressed(Keys.Right); }
     public bool isPlayerAttackJustPressed()     { return isKeyJustPressed(Keys.Z) || isKeyJustPressed(Keys.N); }
     public bool isPlayerTakeDamageJustPressed() { return isKeyJustPressed(Keys.E); }
+    
 
     /* player item use keys */
     public bool isPlayerUseItem1JustPressed()   { return isKeyJustPressed(Keys.NumPad1) || isKeyJustPressed(Keys.D1); }
@@ -74,7 +75,7 @@ public class KeyboardController : IController
     /* gameplay keys */
     public bool isResetPressed()                { return isKeyJustPressed(Keys.R); }
     public bool isQuitPressed()                 { return isKeyJustPressed(Keys.Q); }
-
+    public bool isPausePressed()                      { return isKeyJustPressed(Keys.P); }
     /* room controls */
     public bool isLeftClick() { return false; }
     public bool isRightClick() { return false; }

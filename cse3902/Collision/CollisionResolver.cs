@@ -6,6 +6,8 @@ using cse3902.Objects;
 using cse3902.WallClasses;
 using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
+
 namespace cse3902;
 
 public static class CollisionResolver
@@ -209,6 +211,7 @@ public static class CollisionResolver
     {
         foreach (CollisionResult<IItemPickup> result in results)
         {
+            
             result.Entity.Pickup(player);
         }
     }

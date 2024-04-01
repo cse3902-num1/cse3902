@@ -10,6 +10,7 @@ namespace cse3902.PlayerClasses
         public int Rubies;
 		public int Keys;
         public int Bombs;
+        public int Triforce;
         public int lifeContainer = 3;
       
         public PlayerInventory()
@@ -21,6 +22,7 @@ namespace cse3902.PlayerClasses
             hasMap = false;
             hasCompass = false;
             Bombs = 0;
+            Triforce = 0;
 
         }
 	}

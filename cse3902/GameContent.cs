@@ -48,6 +48,7 @@ namespace cse3902
         public Texture2D bottomDoors;
         public Texture2D leftDoors;
         public Texture2D hud;
+        public Texture2D BlackScreen;
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -59,6 +60,7 @@ namespace cse3902
             this.content = content;
 
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
+            BlackScreen = LoadTexture2D("blackScreen");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
             mergedSheet = LoadTexture2D("merged");
             TilesSheet = LoadTexture2D("Tileset");
