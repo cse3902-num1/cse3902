@@ -23,7 +23,7 @@ namespace cse3902.PlayerClasses
 
         public PlayerInventory()
         {
-            health = lifeContainer;
+            health = 3;
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;
@@ -33,15 +33,45 @@ namespace cse3902.PlayerClasses
             Triforce = 0;
 
         }
+
+
         // Method to prepare the text to be drawn (won't actually draw anything)
         public void Draw(GameContent gameContent, SpriteBatch spriteBatch)
         {
-            // Draw the quantity of keys
-
+            // Draw the quantity of items
             spriteBatch.DrawString(gameContent.font, "Keys: " + this.Keys, new Vector2(280, 70), Color.White);
             spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, 100), Color.White);
             spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, 30), Color.White);
 
+            //draw the heart for the health, initial there are 3 hearts:
+            // Draw heart items based on player's health
+            Vector2 heartPosition = new Vector2(100, 100);
+            Sprite heart = new Sprite(gameContent.hud, new List<Rectangle>() {
+                        new Rectangle(645, 117, 8, 8) }
+                        , new Vector2(3.5f, 3.5f));
+
+            heart.X = 500;
+            heart.Y = 85;
+
+            for (int i = 0; i < health; i++) {
+
+                heart.X += 16;
+                heart.Draw(spriteBatch);
+            }
+            if (health < lifeContainer) {
+                Sprite fadedHeart = new Sprite(gameContent.hud, new List<Rectangle>() {
+                        new Rectangle(627, 117, 8, 8) }
+                       , new Vector2(3.5f, 3.5f));
+                fadedHeart.X = heart.X;
+                fadedHeart.Y = heart.Y;
+
+                for (int i = health; i < lifeContainer; i++)
+                {
+                    fadedHeart.X += 16;
+                    fadedHeart.Draw(spriteBatch);
+                }
+            }
+           
         }
     }
 }

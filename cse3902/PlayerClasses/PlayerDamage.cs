@@ -64,6 +64,7 @@ namespace cse3902.PlayerClasses
             /* move player if any movement key is pressed */
             
             Vector2 position = player.Position;
+         
             if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
                 player.Facing = Direction.Left;
