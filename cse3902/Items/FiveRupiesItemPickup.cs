@@ -10,7 +10,7 @@ public class FiveRupiesItemPickup : BasicItemPickup
     public FiveRupiesItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(71, 16, 9, 16) });
+                        new Rectangle(71, 16, 8, 16) });
     }
     public override void Pickup(IPlayer player)
     {

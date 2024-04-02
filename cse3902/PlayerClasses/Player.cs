@@ -18,6 +18,7 @@ namespace cse3902.PlayerClasses
         public PlayerInventory Inventory {set;get;}
         
         public Stopwatch damageTimer;
+        private bool isDamaged = false;
 
         private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
@@ -85,17 +86,24 @@ namespace cse3902.PlayerClasses
 
         public void TakeDamage()
         {
-            bool istrue = this.State is PlayerDamage;
-            if (!(istrue))
+            if (!(State is PlayerDamage))
             {
-                Debug.WriteLine("entering damage state");
                 State = new PlayerDamage(content, this);
             }
+
             if (Inventory.health > 0)
             {
-                Inventory.health -= 1;
+                if (!isDamaged)
+                {
+                    Inventory.health -= 1;
+                    isDamaged = true;
+                    damageTimer.Restart();  // Restart the stopwatch when damage is taken
+                }
 
-                Debug.WriteLine("player health is: " + Inventory.health);
+                if (damageTimer.ElapsedMilliseconds >= 1000)
+                {
+                    isDamaged = false; // Reset damage flag after 100 ms
+                }
             }
             if (Inventory.health == 0)
             {

@@ -10,7 +10,7 @@ public class FairyItemPickup : BasicItemPickup
     public FairyItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(39, 0, 7, 15) });
+                        new Rectangle(39, 0, 8, 16) });
     }
     public override void Pickup(IPlayer player)
     {
