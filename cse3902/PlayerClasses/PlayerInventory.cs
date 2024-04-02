@@ -79,9 +79,8 @@ namespace cse3902.PlayerClasses
                 heart.Draw(spriteBatch);
             }
 
-            Sprite sword = new Sprite(gameContent.hud, new List<Rectangle>() {
-                        new Rectangle(555, 137, 8, 16) }
-                       , new Vector2(3.5f, 3.5f));
+            Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(104, 0, 8, 16) });
 
             sword.X = 375;
             sword.Y = 60;

@@ -100,7 +100,7 @@ namespace cse3902.PlayerClasses
                     damageTimer.Restart();  // Restart the stopwatch when damage is taken
                 }
 
-                if (damageTimer.ElapsedMilliseconds >= 1000)
+                if (damageTimer.ElapsedMilliseconds >= 500)
                 {
                     isDamaged = false; // Reset damage flag after 100 ms
                 }
