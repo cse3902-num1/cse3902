@@ -70,10 +70,10 @@ namespace cse3902.DoorClasses
             this.idx = idx;
             colliders = new List<BoxCollider>()
             {
-                new BoxCollider(topDoors[0].Position, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
-                new BoxCollider(botDoors[0].Position, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
-                new BoxCollider(leftDoors[0].Position, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
-                new BoxCollider(rightDoors[0].Position, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR)
+                new BoxCollider(topDoors[0].Position+new Vector2(16, 16)*3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
+                new BoxCollider(botDoors[0].Position+new Vector2(16, 16)*3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
+                new BoxCollider(leftDoors[0].Position + new Vector2(16, 16) * 3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
+                new BoxCollider(rightDoors[0].Position + new Vector2(16, 16) * 3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR)
             };
         }
 

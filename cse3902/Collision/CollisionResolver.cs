@@ -214,7 +214,19 @@ public static class CollisionResolver
         {
             return;
         }
-        /* TODO */
         //Enemy should collision the doors like walls.
+        float area = 0f;
+        CollisionResult<Doors> biggestResult = results[0];
+        foreach (CollisionResult<Doors> result in results)
+        {
+            if (result.GetArea() > area)
+            {
+                area = result.GetArea();
+                biggestResult = result;
+            }
+        }
+
+        Vector2 reconciliation = CollisionMove(enemy.collider, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        enemy.Position += reconciliation;
     }
 }
