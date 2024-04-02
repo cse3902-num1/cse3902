@@ -7,6 +7,7 @@ using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using cse3902.WallClasses;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace cse3902.PlayerClasses
@@ -95,6 +96,7 @@ namespace cse3902.PlayerClasses
             {
                 if (!isDamaged)
                 {
+                    SoundManager.Manager.linkDamageSound();
                     Inventory.health -= 1;
                     isDamaged = true;
                     damageTimer.Restart();  // Restart the stopwatch when damage is taken

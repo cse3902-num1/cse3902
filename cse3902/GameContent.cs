@@ -3,7 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using cse3902.Projectiles;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using System.IO;
 using System.Reflection.Metadata;
+
 
 namespace cse3902
 {
@@ -53,11 +58,28 @@ namespace cse3902
         public Texture2D BlackScreen;
         public SpriteFont font;
 
+        public Song bgmusic;
+        public SoundEffect sword;
+        public SoundEffect itemPickUp;
+        public SoundEffect linkDamage;
+        public SoundEffect linkDead;
+        public SoundEffect enemyDamage;
+        public SoundEffect enemyDead;
+        public SoundEffect arrowBoomerang;
+        public SoundEffect bombDrop;
+        public SoundEffect bombBlowUp;
+        public SoundEffect fireball;
+        
+
         private Texture2D LoadTexture2D(String name)
         {
             return content.Load<Texture2D>(name);
         }
-
+        private SoundEffect LoadSoundEffect(String name)
+        {
+           
+            return content.Load<SoundEffect>(name);
+        }
         public GameContent(ContentManager content) 
         {
             this.content = content;
@@ -100,6 +122,18 @@ namespace cse3902
             bottomDoors = LoadTexture2D("bottomDoors");
             leftDoors = LoadTexture2D("leftDoors");
             rightDoors = LoadTexture2D("rightDoors");
+
+            bgmusic = content.Load<Song>(@"Sound/Dungeon");
+            sword = LoadSoundEffect(@"Sound/LOZ_Sword_Slash");
+            itemPickUp = LoadSoundEffect(@"Sound/LOZ_Get_Item");
+            linkDamage = LoadSoundEffect(@"Sound/LOZ_Link_Hurt");
+            linkDead = LoadSoundEffect(@"Sound/LOZ_Link_Die");
+            enemyDamage = LoadSoundEffect(@"Sound/LOZ_Enemy_Hit");
+            enemyDead = LoadSoundEffect(@"Sound/LOZ_Enemy_Die");
+            arrowBoomerang = LoadSoundEffect(@"Sound/LOZ_Arrow_Boomerang");
+            bombDrop = LoadSoundEffect(@"Sound/LOZ_Bomb_Drop");
+            bombBlowUp = LoadSoundEffect(@"Sound/LOZ_Bomb_Blow");
+            fireball = LoadSoundEffect(@"Sound/LOZ_Fireball");
         }
     }
 }

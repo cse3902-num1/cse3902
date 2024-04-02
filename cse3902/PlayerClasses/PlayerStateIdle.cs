@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -59,6 +60,7 @@ namespace cse3902.PlayerClasses
             /* enter attack state if attack key is pressed */
             else if (controllers.Any(c => c.isPlayerAttackJustPressed()))
             {
+                SoundManager.Manager.swordSound();
                 player.State = new PlayerStateAttack(content, player);
             }
 

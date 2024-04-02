@@ -16,6 +16,7 @@ namespace cse3902.DoorClasses
         private List<Sprite> rightDoors;
         private int idx;
         private int doorType;
+        public List<BoxCollider> colliders;
 
         public int Idx
         {
@@ -68,6 +69,13 @@ namespace cse3902.DoorClasses
                 new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) + offset }
             };
             this.idx = idx;
+            colliders = new List<BoxCollider>()
+            {
+                new BoxCollider(topDoors[0].Position+new Vector2(16, 16)*3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
+                new BoxCollider(botDoors[0].Position+new Vector2(16, 16)*3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
+                new BoxCollider(leftDoors[0].Position + new Vector2(16, 16) * 3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR),
+                new BoxCollider(rightDoors[0].Position + new Vector2(16, 16) * 3, new Vector2(32, 32)*3, new Vector2(16, 16)*3, ColliderType.DOOR)
+            };
         }
 
         /* public bool IsColliding(ICollider collider)

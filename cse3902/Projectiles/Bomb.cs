@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.RoomClasses;
 using cse3902.Enemy;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace cse3902.Projectiles;
 
@@ -40,6 +42,7 @@ public class Bomb : IProjectile
 
     private void Die()
     {
+        SoundManager.Manager.bombBlowUpSound();
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
         room.ParticleEffects.Add(fx);
