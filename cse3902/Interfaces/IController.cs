@@ -26,7 +26,7 @@ public interface IController
     public bool isPlayerUseItem7JustPressed();
     public bool isPlayerUseItem8JustPressed();
     public bool isPlayerUseItem9JustPressed();
-
+    public bool isMutePressed();
     /* enemy keys */
     public bool isEnemyPressO();
     public bool isEnemyPressP();
@@ -48,4 +48,5 @@ public interface IController
     /* room controls */
     public bool isLeftClick();
     public bool isRightClick();
+
 }

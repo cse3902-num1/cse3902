@@ -1,6 +1,7 @@
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace cse3902;
 
@@ -17,6 +18,7 @@ public class GreenBoomerangInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         GreenBoomerang greenBoomerangProjectile = new GreenBoomerang(content, room, player.Position, direction * 200f);
+        SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(greenBoomerangProjectile);
         greenBoomerangProjectile.isEnermyProjectile = false;
     }

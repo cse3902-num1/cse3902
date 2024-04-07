@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using cse3902.DoorClasses;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
@@ -220,5 +221,37 @@ public static class CollisionResolver
             
             result.Entity.Pickup(player);
         }
+    }
+
+    public static void ResolvePlayerDoorCollision(IPlayer player, List<CollisionResult<Doors>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+        /* TODO */
+        //Player should go to another room according to what door did it collide with.
+    }
+
+    public static void ResolveEnemyDoorCollision(IEnemy enemy, List<CollisionResult<Doors>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+        //Enemy should collision the doors like walls.
+        float area = 0f;
+        CollisionResult<Doors> biggestResult = results[0];
+        foreach (CollisionResult<Doors> result in results)
+        {
+            if (result.GetArea() > area)
+            {
+                area = result.GetArea();
+                biggestResult = result;
+            }
+        }
+
+        Vector2 reconciliation = CollisionMove(enemy.collider, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        enemy.Position += reconciliation;
     }
 }

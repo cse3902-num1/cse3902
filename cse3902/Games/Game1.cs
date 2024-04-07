@@ -65,7 +65,7 @@ public class Game1 : Game
         font = Content.Load<SpriteFont>("font_arial");
         gameContent = new GameContent(Content);
         State = new GameStartState(gameContent, this);
-
+        SoundManager.Manager.LoadContent(gameContent);
     }
 
     protected override void Update(GameTime gameTime)
@@ -79,6 +79,7 @@ public class Game1 : Game
             Exit();
         }
         State.Update(gameTime, controllers);
+        SoundManager.Manager.Update(gameTime, controllers);
         base.Update(gameTime);
     }
 

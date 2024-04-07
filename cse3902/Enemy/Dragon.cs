@@ -2,6 +2,7 @@
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace cse3902.Enemy
 
         public override void Attack()
         {
+<<<<<<< HEAD
             Vector2[] velocities = { Constant.DragonFireBallVelocity1, Constant.DragonFireBallVelocity2, Constant.DragonFireBallVelocity3 };
 
             foreach (Vector2 velocity in velocities)
@@ -66,6 +68,31 @@ namespace cse3902.Enemy
                 ball.isEnermyProjectile = true;
                 room.Projectiles.Add(ball);
             }
+=======
+            SoundManager.Manager.fireballSound();
+
+            Fireball ballUp = new Fireball(content, 
+                room,
+                Position,
+                new Vector2(-200f, -50f)
+            );
+            Fireball ballDown = new Fireball(content,
+                room,
+                Position,
+                new Vector2(-200f, +50f)
+            );
+            Fireball ballMid = new Fireball(content,
+                room,
+                Position,
+                new Vector2(-200f, 0f)
+            );
+            room.Projectiles.Add(ballUp);
+            ballUp.isEnermyProjectile = true;
+            room.Projectiles.Add(ballMid);
+            ballMid.isEnermyProjectile = true;
+            room.Projectiles.Add(ballDown);
+            ballDown.isEnermyProjectile = true;
+>>>>>>> 36c2ba962544cda770de410d6f4513f110219358
         }
 
         public override void Draw(SpriteBatch spriteBatch)
