@@ -13,9 +13,11 @@ namespace cse3902;
 
 public static class CollisionResolver
 {
-
+   
     public static Vector2 CollisionMove(ICollider collider1, ICollider collider, float width, float height)
     {
+        const float CollisionBuffer = 2;
+
         BoxCollider a = (BoxCollider)collider1;
 
         // a is subject b is object
@@ -33,11 +35,11 @@ public static class CollisionResolver
         {
             if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
-                return new Vector2(width + 2, 0);
+                return new Vector2(width + CollisionBuffer, 0);
             }
             else //if player is moving collide with left part of the object
             {
-                return new Vector2(-width - 2, 0);
+                return new Vector2(-width - CollisionBuffer, 0);
             }
             
         }
@@ -45,11 +47,11 @@ public static class CollisionResolver
         {
             if (abottom <= bbottom)   // player is moving collide with top of the object
             {
-                return new Vector2 (0, -height-2);
+                return new Vector2 (0, -height- CollisionBuffer);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (0, height+2);
+                return new Vector2 (0, height+ CollisionBuffer);
             }
         }
     }
@@ -128,6 +130,7 @@ public static class CollisionResolver
         projectile.IsDead = true;
         foreach (CollisionResult<IPlayer> result in results)
         {
+            
             switch (result.Entity) {
                 case Player p:
                     p.TakeDamage();

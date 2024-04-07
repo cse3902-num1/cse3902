@@ -54,7 +54,10 @@ namespace cse3902.PlayerClasses
             {
                 TakeDamage();
             }
-            
+            if (isDamaged && damageTimer.ElapsedMilliseconds >= 500)
+            {
+                isDamaged = false;  // Reset damage flag after cooldown
+            }
 
             State.Update(gameTime, controllers);
 
@@ -89,8 +92,10 @@ namespace cse3902.PlayerClasses
             if (!(State is PlayerDamage))
             {
                 State = new PlayerDamage(content, this);
+                Debug.WriteLine("current state is: " + State);
+                Debug.WriteLine(Inventory.health);
             }
-
+           
             if (Inventory.health > 0)
             {
                 if (!isDamaged)
@@ -100,7 +105,7 @@ namespace cse3902.PlayerClasses
                     damageTimer.Restart();  // Restart the stopwatch when damage is taken
                 }
 
-                if (damageTimer.ElapsedMilliseconds >= 1000)
+                if (damageTimer.ElapsedMilliseconds >= 500)
                 {
                     isDamaged = false; // Reset damage flag after 100 ms
                 }

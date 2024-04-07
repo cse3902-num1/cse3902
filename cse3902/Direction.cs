@@ -16,12 +16,13 @@ public static partial class Extensions
 {
     public static Vector2 asVector2(this Direction direction)
     {
+        
         switch (direction)
         {
-            case Direction.Left:  return new Vector2(-1, 0);
-            case Direction.Right: return new Vector2(1, 0);
-            case Direction.Up:    return new Vector2(0, -1);
-            case Direction.Down:  return new Vector2(0, 1);
+            case Direction.Left:  return Constant.moveLeftOneUnit;
+            case Direction.Right: return Constant.moveRightOneUnit;
+            case Direction.Up:    return Constant.moveUpOneUnit;
+            case Direction.Down: return Constant.moveDownOneUnit;
         }
         /* should never reach here */
         throw new InvalidOperationException("Unhandled direction");

@@ -26,7 +26,7 @@ namespace cse3902.Games
             sprite = new Sprite(gamecontent.BlackScreen, new List<Rectangle>() {
                         new Rectangle()
                     });
-            Constant.textPosMidScreen = new Vector2(Constant.textPosMidScreenX, Constant.textPosMidScreenY);
+            Constant.textPosMidScreen = new Vector2(Constant.TextPosMidScreenX, Constant.TextPosMidScreenY);
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -37,9 +37,12 @@ namespace cse3902.Games
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+            if (controllers.Any(c => c.isResetPressed()) == true)
+            {
+                Game1.State = new GameStartState(gameContent, game);
+            }
 
-            
-                sprite.Update(gameTime, controllers);
+            sprite.Update(gameTime, controllers);
             
     
         }

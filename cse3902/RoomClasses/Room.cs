@@ -210,7 +210,9 @@ namespace cse3902.RoomClasses
                 {
                     CollisionResolver.ResolveProjectileWallCollision(projectile);
                 }
+                Debug.WriteLine("project are: " + projectile.ToString());
                 CollisionResolver.ResolveProjectilePlayerCollision(projectile, playerResults);
+
                 
             }
 
