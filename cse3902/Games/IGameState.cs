@@ -11,6 +11,6 @@ namespace cse3902.Games
     public interface IGameState
     {
         public void Update(GameTime gameTime, List<IController> controllers);
-        public void Draw(SpriteBatch spriteBatch);
+        public void Draw(Camera camera);
     }
 }

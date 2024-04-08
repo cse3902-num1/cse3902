@@ -26,13 +26,15 @@ namespace cse3902
             player = new Player(content);
             player.Position = new Vector2(300, 600);
 
+            int ROOM_WIDTH = 768;
+            int ROOM_HEIGHT = 528;
             rooms = new List<Room>
             {
-                new Room(content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
-                new Room(content, @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml", player),
-                new Room(content, @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml", player),
-                new Room(content, @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml", player),
-                new Room(content, @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml", player)
+                new Room(content, new Vector2(0 * ROOM_WIDTH, 0 * ROOM_HEIGHT), @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
+                new Room(content, new Vector2(1 * ROOM_WIDTH, 0 * ROOM_HEIGHT), @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml", player),
+                new Room(content, new Vector2(0 * ROOM_WIDTH, 1 * ROOM_HEIGHT), @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml", player),
+                new Room(content, new Vector2(1 * ROOM_WIDTH, 1 * ROOM_HEIGHT), @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml", player),
+                new Room(content, new Vector2(-1 * ROOM_WIDTH, 0 * ROOM_HEIGHT), @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml", player)
 
             };
 
@@ -45,7 +47,9 @@ namespace cse3902
         {
             player.Update(gameTime, controllers);
 
-            rooms[roomIdx].Update(gameTime, controllers);
+            // rooms[roomIdx].Update(gameTime, controllers);
+            // TODO: only update current room, and provide a way to transition between rooms
+            rooms.ForEach(r => r.Update(gameTime, controllers));
 
             if (controllers.Any(c => c.isLeftClick()))
             {
@@ -63,7 +67,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            rooms[roomIdx].Draw(spriteBatch);
+            rooms.ForEach(r => r.Draw(spriteBatch));
            
             player.Draw(spriteBatch);
             DrawHUD(spriteBatch);

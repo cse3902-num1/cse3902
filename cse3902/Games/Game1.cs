@@ -101,12 +101,12 @@ public class Game1 : Game
         //     spriteBatch.Begin(samplerState: s);
         // }
 
-
-        camera.BeginDraw();
-        State.Draw(camera.spriteBatch);
+        // camera.BeginDraw();
+        // State.Draw(camera.spriteBatch);
+        State.Draw(camera);
         //level.Draw(camera.spriteBatch);
 
-        camera.EndDraw();
+        // camera.EndDraw();
 
         base.Draw(gameTime);
     }

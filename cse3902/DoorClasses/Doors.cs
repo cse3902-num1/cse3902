@@ -30,7 +30,7 @@ namespace cse3902.DoorClasses
             set { doorType = value; }
         }
 
-        public Doors(GameContent content, int idx, int doorType)
+        public Doors(GameContent content, int idx, int doorType, Vector2 roomPosition)
         {
             this.idx = idx;
             this.doorType = doorType;
@@ -39,10 +39,10 @@ namespace cse3902.DoorClasses
 
             Vector2 offset = new Vector2(offsetX, offsetY);
             int doorXOffset = 32;
-            Vector2 topDoorPosition = Constant.TopDoorPosition + offset;
-            Vector2 botDoorPosition = Constant.BottomDoorPosition + offset;
-            Vector2 leftDoorPosition = Constant.LeftDoorPosition + offset;
-            Vector2 rightDoorPosition = Constant.RightDoorPosition + offset;
+            Vector2 topDoorPosition = Constant.TopDoorPosition + offset + roomPosition;
+            Vector2 botDoorPosition = Constant.BottomDoorPosition + offset + roomPosition;
+            Vector2 leftDoorPosition = Constant.LeftDoorPosition + offset + roomPosition;
+            Vector2 rightDoorPosition = Constant.RightDoorPosition + offset + roomPosition;
 
             topDoors = new List<Sprite>();
             for (int i = 0; i < 5; i++) {

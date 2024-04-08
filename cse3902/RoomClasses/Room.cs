@@ -17,6 +17,7 @@ namespace cse3902.RoomClasses
 
     public class Room
     {
+        public Vector2 Position {set;get;}
         public List<IEnemy> Enemies;
         private int idxEnemy;
         public List<IItemPickup> Items;
@@ -36,8 +37,9 @@ namespace cse3902.RoomClasses
         private BoxCollider collider;
         public IPlayer Player;
 
-        public Room(GameContent content, string xmlFilePath, string doorFilePath, IPlayer player)
+        public Room(GameContent content, Vector2 position, string xmlFilePath, string doorFilePath, IPlayer player)
         {
+            this.Position = position;
             this.content = content;
             this.Player = player;
 
@@ -48,7 +50,7 @@ namespace cse3902.RoomClasses
             }
             for (int i = 0; i < 4; i++)
             {
-                Doors d = new Doors(content, 0, 0);
+                Doors d = new Doors(content, 0, 0, this.Position);
                 Doors.Add(d);
             }
             Enemies = new List<IEnemy>() {};
@@ -97,7 +99,7 @@ namespace cse3902.RoomClasses
                 i.Position = new Vector2(x, y);
             }
 
-            wall = new Wall(content, this);
+            wall = new Wall(content, this, position);
 
             //doors = new Doors(content);
 
@@ -118,16 +120,16 @@ namespace cse3902.RoomClasses
                 foreach (int element in row)
                 {
                     Blocks[idx].BlockIndex = element;
-                    Blocks[idx].Position = position;
+                    Blocks[idx].Position = position + this.Position;
                     if (element >= 10)
                     {
                         switch(element)
                         {
-                            case 10: Enemies.Add(new Skeleton(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 11: Enemies.Add(new Dragon(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 12: Enemies.Add(new Keese(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 13: Enemies.Add(new Gel(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 14: Enemies.Add(new Goriya(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 10: Enemies.Add(new Skeleton(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 11: Enemies.Add(new Dragon(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 12: Enemies.Add(new Keese(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 13: Enemies.Add(new Gel(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 14: Enemies.Add(new Goriya(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
                         }
                         Blocks[idx].BlockIndex = 0;
                     }
@@ -210,7 +212,7 @@ namespace cse3902.RoomClasses
                 {
                     CollisionResolver.ResolveProjectileWallCollision(projectile);
                 }
-                Debug.WriteLine("project are: " + projectile.ToString());
+                // Debug.WriteLine("project are: " + projectile.ToString());
                 CollisionResolver.ResolveProjectilePlayerCollision(projectile, playerResults);
 
                 
@@ -248,7 +250,6 @@ namespace cse3902.RoomClasses
                         if (blockResults.Count > 0)
                         {
                             CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults);
-                            Debug.WriteLine("enemy: " + blockResults.Count + " ");
                         }
                         break;
                     default:
@@ -259,12 +260,6 @@ namespace cse3902.RoomClasses
             /* player collisions */
             /* check for intersection of colliders */
             List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
-            if (playerBlockCollisionResults.Count > 0) {
-                Debug.WriteLine(string.Format("{0} | {1} {2} | {3} {4}", playerBlockCollisionResults.Count,
-                    Player.Pushbox.Position, ((BoxCollider) Player.Pushbox).Size,
-                    playerBlockCollisionResults[0].Collider.Position, ((BoxCollider) playerBlockCollisionResults[0].Collider).Size
-                ));
-            }
             CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
            
             /* apply collision response */
@@ -289,7 +284,6 @@ namespace cse3902.RoomClasses
                         if (enemyWallCollisionResults.Count > 0)
                         {
                             CollisionResolver.ResolveEnemyWallCollision(enemy, enemyWallCollisionResults);
-                            Debug.WriteLine("enemy: " + enemyWallCollisionResults.Count + " ");
                         }
                         break;
                         /* todo: check any other enemy types */

@@ -26,11 +26,15 @@ namespace cse3902.Games
             textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - 50, Game1.graphics.PreferredBackBufferHeight / 2);
             
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(Camera camera)
         {
-            sprite.Draw(spriteBatch);
-            spriteBatch.DrawString(Game1.font, gameOver, textPos, Color.Red,0f,new Vector2(30,10),6, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(Game1.font, startOver, textPos, Color.DarkRed, 0f, new Vector2(100, -20), 3, SpriteEffects.None, 0f);
+            Vector2 centerPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2, Game1.graphics.PreferredBackBufferHeight / 2);
+            camera.Position = centerPos;
+            camera.BeginDraw();
+            sprite.Draw(camera.spriteBatch);
+            camera.spriteBatch.DrawString(Game1.font, gameOver, textPos, Color.Red,0f,new Vector2(30,10),6, SpriteEffects.None, 0f);
+            camera.spriteBatch.DrawString(Game1.font, startOver, textPos, Color.DarkRed, 0f, new Vector2(100, -20), 3, SpriteEffects.None, 0f);
+            camera.EndDraw();
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

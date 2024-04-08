@@ -23,13 +23,15 @@ namespace cse3902.Games
             level = new Level(gamecontent);
             hud = new Hud(gameContent,level);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(Camera camera)
         {
-            level.Draw(spriteBatch);
-
-            hud.Draw(spriteBatch);
-
-    
+            if (level.player is not null) {
+                camera.Position = level.player.Position;
+            }
+            camera.BeginDraw();
+            level.Draw(camera.spriteBatch);
+            hud.Draw(camera.spriteBatch);
+            camera.EndDraw();
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

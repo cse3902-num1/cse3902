@@ -12,7 +12,7 @@ namespace cse3902.WallClasses
         protected Room room;
         public List<BoxCollider> colliders;
 
-        public Wall(GameContent content, Room room)
+        public Wall(GameContent content, Room room, Vector2 roomPosition)
         {
             walls = new List<Sprite>() {
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 0, 112, 32) }, 3.0f),
@@ -24,7 +24,7 @@ namespace cse3902.WallClasses
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(224, 104, 32, 40) }, 3.0f),
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(144, 144, 112, 32) }, 3.0f)
             };
-            Vector2 offset = new Vector2(50, 300);
+            Vector2 offset = new Vector2(50, 300) + roomPosition;
             walls[0].Position = new Vector2(0, 0)+offset;
             walls[1].Position = new Vector2(0, 96) + offset;
             walls[2].Position = new Vector2(432, 0) + offset;

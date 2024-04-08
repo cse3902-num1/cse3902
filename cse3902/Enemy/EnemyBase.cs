@@ -69,7 +69,6 @@ namespace cse3902.Enemy
         {
             SoundManager.Manager.enemyDamageSound();
             HP -= damage;
-            Debug.Write("OUCH!");
             if (HP <= 0)
             {
                 Die();
