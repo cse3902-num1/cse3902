@@ -22,6 +22,7 @@ namespace cse3902.PlayerClasses
         public int Bombs;
         public int Triforce;
         public int lifeContainer = 3;
+        private Vector2 HudHeartOrigin = new Vector2(3.5f, 3.5f);
 
         public PlayerInventory()
         {
@@ -41,9 +42,9 @@ namespace cse3902.PlayerClasses
         public void Draw(GameContent gameContent, SpriteBatch spriteBatch)
         {
             // Draw the quantity of items
-            spriteBatch.DrawString(gameContent.font, "Keys: " + this.Keys, new Vector2(280, 70), Color.White);
-            spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, 100), Color.White);
-            spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, 30), Color.White);
+            spriteBatch.DrawString(gameContent.font, "Keys: " + this.Keys, PlayerConstant.KeysTextPosition, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, PlayerConstant.BombsPosition, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, PlayerConstant.RubiesTextPosition, Color.White);
 
 
 
@@ -51,8 +52,8 @@ namespace cse3902.PlayerClasses
             // Draw heart items based on player's health
             Vector2 heartPosition = new Vector2(100, 100);
             Sprite heart = new Sprite(gameContent.hud, new List<Rectangle>() {
-                        new Rectangle(645, 117, 8, 8) }
-                        , new Vector2(3.5f, 3.5f));
+                        PlayerConstant.HudHeartPosition }
+                        , HudHeartOrigin);
 
             heart.X = 500;
             heart.Y = 85;
@@ -60,8 +61,8 @@ namespace cse3902.PlayerClasses
             //should draw all life container first
           
                 Sprite fadedHeart = new Sprite(gameContent.hud, new List<Rectangle>() {
-                        new Rectangle(627, 117, 8, 8) }
-                       , new Vector2(3.5f, 3.5f));
+                        PlayerConstant.HudFadedHeartPosition }
+                       , HudHeartOrigin);
                 fadedHeart.X = heart.X;
                 fadedHeart.Y = heart.Y;
 
@@ -80,7 +81,7 @@ namespace cse3902.PlayerClasses
             }
 
             Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(104, 0, 8, 16) });
+                        PlayerConstant.HudSwordPositionnew });
 
             sword.X = 375;
             sword.Y = 60;

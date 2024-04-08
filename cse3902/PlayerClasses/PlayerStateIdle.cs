@@ -12,6 +12,7 @@ namespace cse3902.PlayerClasses
         private Player player;
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+        private Vector2 PlayerIdleOrigin = new Vector2(8, 8);
 
         public PlayerStateIdle(GameContent content, Player player)
         {
@@ -22,26 +23,26 @@ namespace cse3902.PlayerClasses
                 {
                     Direction.Left,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 0 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleLeft
+                    }, PlayerIdleOrigin)
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 1 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleRight
+                    }, PlayerIdleOrigin)
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 2 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleUp
+                    }, PlayerIdleOrigin)
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 3 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleDown
+                    }, PlayerIdleOrigin)
                 },
             };
         }

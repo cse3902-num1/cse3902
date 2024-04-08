@@ -75,16 +75,16 @@ namespace cse3902.Enemy
             switch (currentState)
             {
                 case GoriyaState.Up:
-                    Position += EnermyConstant.moveUpOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveUpOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
                 case GoriyaState.Left:
-                    Position += EnermyConstant.moveLeftOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveLeftOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
                 case GoriyaState.Right:
-                    Position += EnermyConstant.moveRightOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveRightOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
                 case GoriyaState.Down:
-                    Position += EnermyConstant.moveDownOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveDownOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
             }
         }
@@ -124,16 +124,16 @@ namespace cse3902.Enemy
             switch (currentState)
             {
                 case GoriyaState.Left:
-                    velocity = EnermyConstant.moveLeftOneUnit;
+                    velocity = Constant.moveLeftOneUnit;
                     break;
                 case GoriyaState.Right:
-                    velocity = EnermyConstant.moveRightOneUnit;
+                    velocity = Constant.moveRightOneUnit;
                     break;
                 case GoriyaState.Up:
-                    velocity = EnermyConstant.moveUpOneUnit;
+                    velocity = Constant.moveUpOneUnit;
                     break;
                 case GoriyaState.Down:
-                    velocity = EnermyConstant.moveDownOneUnit;
+                    velocity = Constant.moveDownOneUnit;
                     break;
             }
             velocity *= 200f;

@@ -30,6 +30,24 @@ namespace cse3902.Items
         public static Rectangle MagicKeyItemSourceRect = new Rectangle(248, 0, 8, 16);
         public static Rectangle MagicRodItemSourceRect = new Rectangle(225, 0, 6, 16);
         public static Rectangle MagicShieldItemSourceRect = new Rectangle(120, 0, 8, 16);
+        public static Rectangle MagicSwordItemSourceRect = new Rectangle(112, 0, 8, 16);
+        public static Rectangle MapItemSourceRect = new Rectangle(87, 0, 8, 15);
+        public static Rectangle PowerBraceletItemSourceRect = new Rectangle(175, 0, 10, 16);
+        public static Rectangle RaftItemSourceRect = new Rectangle(192, 0, 16, 16);
+        public static Rectangle RecorderItemSourceRect = new Rectangle(187, 0, 5, 17);
+        public static Rectangle RedCandleItemSourceRect = new Rectangle(160, 0, 8, 16);
+        public static Rectangle RedRingItemSourceRect = new Rectangle(168, 2, 8, 16);
+        public static Rectangle RupyItemAnimationSourceRect1 = new Rectangle(71, 16, 9, 16);
+        public static Rectangle RupyItemAnimationSourceRect2 = new Rectangle(71, 0, 9, 16);
+        public static Rectangle SecondPotionItemSourceRect = new Rectangle(80, 0, 8, 16);
+        public static Rectangle StepLadderItemSourceRect = new Rectangle(207, 0, 17, 16) ;
+        public static Rectangle SwordItemSourceRect = new Rectangle(104, 0, 8, 16);
+        public static Rectangle TriforceItemAnimationSourceRect1 = new Rectangle(274, 3, 11, 12);
+        public static Rectangle TriforceItemAnimationSourceRect2 = new Rectangle(274, 18, 11, 12);
+        public static Rectangle WhiteItemSourceRect = new Rectangle(104, 16, 8, 16);
+        public static Rectangle YellowBoomerangItemSourceRect = new Rectangle(128, 2, 5, 9);
+
+
 
 
 

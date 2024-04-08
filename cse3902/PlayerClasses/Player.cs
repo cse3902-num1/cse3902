@@ -20,6 +20,7 @@ namespace cse3902.PlayerClasses
         
         public Stopwatch damageTimer;
         private bool isDamaged = false;
+        private const int RandomChangeInterval = 500;
 
         private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
@@ -107,7 +108,7 @@ namespace cse3902.PlayerClasses
                     damageTimer.Restart();  // Restart the stopwatch when damage is taken
                 }
 
-                if (damageTimer.ElapsedMilliseconds >= 500)
+                if (damageTimer.ElapsedMilliseconds >= RandomChangeInterval)
                 {
                     isDamaged = false; // Reset damage flag after 100 ms
                 }

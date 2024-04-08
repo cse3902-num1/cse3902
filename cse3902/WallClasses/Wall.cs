@@ -11,40 +11,40 @@ namespace cse3902.WallClasses
         private List<Sprite> walls;
         protected Room room;
         public List<BoxCollider> colliders;
-
+        private float wallScale = 3.0f;
         public Wall(GameContent content, Room room, Vector2 roomPosition)
         {
             walls = new List<Sprite>() {
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 0, 112, 32) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 32, 32, 40) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(144, 0, 112, 32) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(224, 32, 32, 40) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 104, 32, 40) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(0, 144, 112, 32) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(224, 104, 32, 40) }, 3.0f),
-                new Sprite(content.walls, new List<Rectangle>() { new Rectangle(144, 144, 112, 32) }, 3.0f)
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect1 }, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect2 }, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect3 }, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect4 }, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect5 }, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect6 }, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect7}, wallScale),
+                new Sprite(content.walls, new List<Rectangle>() { WallConstant.wallSourceRect8}, wallScale)
             };
             // Vector2 offset = new Vector2(50, 300) + roomPosition;
             Vector2 offset = roomPosition;
-            walls[0].Position = new Vector2(0, 0)+offset;
-            walls[1].Position = new Vector2(0, 96) + offset;
-            walls[2].Position = new Vector2(432, 0) + offset;
-            walls[3].Position = new Vector2(672, 96) + offset;
-            walls[4].Position = new Vector2(0, 312) + offset;
-            walls[5].Position = new Vector2(0, 432) + offset;
-            walls[6].Position = new Vector2(672, 312) + offset;
-            walls[7].Position = new Vector2(432, 432) + offset;
+            walls[0].Position = WallConstant.positionOffset1 + offset;
+            walls[1].Position = WallConstant.positionOffset2 + offset;
+            walls[2].Position = WallConstant.positionOffset3 + offset;
+            walls[3].Position = WallConstant.positionOffset4 + offset;
+            walls[4].Position = WallConstant.positionOffset5 + offset;
+            walls[5].Position = WallConstant.positionOffset6 + offset;
+            walls[6].Position = WallConstant.positionOffset7 + offset;
+            walls[7].Position = WallConstant.positionOffset8 + offset;
             
             colliders = new List<BoxCollider>()
             {
-                new BoxCollider(walls[0].Position+new Vector2(56,16)*3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
-                new BoxCollider(walls[1].Position+new Vector2(16,20)*3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
-                new BoxCollider(walls[2].Position + new Vector2(56, 16) * 3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
-                new BoxCollider(walls[3].Position + new Vector2(16, 20) * 3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
-                new BoxCollider(walls[4].Position + new Vector2(16, 20) * 3 ,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
-                new BoxCollider(walls[5].Position + new Vector2(56, 16) * 3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
-                new BoxCollider(walls[6].Position + new Vector2(16, 20) * 3,new Vector2(32, 40)*3,new Vector2(16,20)*3,ColliderType.WALL),
-                new BoxCollider(walls[7].Position + new Vector2(56, 16) * 3,new Vector2(112,32)*3,new Vector2(56,16)*3,ColliderType.WALL),
+                new BoxCollider(walls[0].Position+WallConstant.colliderOffsetLarge,WallConstant.colliderSizeLarge,WallConstant.colliderOriginLarge,ColliderType.WALL),
+                new BoxCollider(walls[1].Position+WallConstant.colliderOffset,WallConstant.colliderSize,WallConstant.colliderOrigin,ColliderType.WALL),
+                new BoxCollider(walls[2].Position + WallConstant.colliderOffsetLarge,WallConstant.colliderSizeLarge,WallConstant.colliderOriginLarge,ColliderType.WALL),
+                new BoxCollider(walls[3].Position + WallConstant.colliderOffset,WallConstant.colliderSize,WallConstant.colliderOrigin,ColliderType.WALL),
+                new BoxCollider(walls[4].Position + WallConstant.colliderOffset ,WallConstant.colliderSize,WallConstant.colliderOrigin,ColliderType.WALL),
+                new BoxCollider(walls[5].Position + WallConstant.colliderOffsetLarge,WallConstant.colliderSizeLarge,WallConstant.colliderOriginLarge,ColliderType.WALL),
+                new BoxCollider(walls[6].Position + WallConstant.colliderOffset,WallConstant.colliderSize,WallConstant.colliderOrigin,ColliderType.WALL),
+                new BoxCollider(walls[7].Position + WallConstant.colliderOffsetLarge,WallConstant.colliderSizeLarge,WallConstant.colliderOriginLarge,ColliderType.WALL),
 
             };
             this.room = room;

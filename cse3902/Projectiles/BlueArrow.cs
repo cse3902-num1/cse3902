@@ -10,18 +10,19 @@ public class BlueArrow : BasicDirectionalProjectile
     private Vector2 initialPosition;
     private const float maxDistance = 400f;
     private GameContent content;
+    private Vector2 blueArrowOrigin = new Vector2(7.5f,7.5f);
     
     public BlueArrow(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
     {
-        leftSprite = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(0, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
-        rightSprite = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(36, 185, 15, 15) }, new Vector2(7.5f, 7.5f));
-        upSprite = new Sprite(content.weapon, new List<Rectangle>() { new Rectangle(27, 185, 7, 15) }, new Vector2(3.5f, 8.5f));
-        downSprite = new Sprite(content.weapon2, new List<Rectangle>() { new Rectangle(15, 15, 15, 15) }, new Vector2(7.5f, 7.5f));
+        leftSprite = new Sprite(content.weapon2, new List<Rectangle>() { ProjectileConstant.BlueArrowLeftSourceRect }, blueArrowOrigin);
+        rightSprite = new Sprite(content.weapon, new List<Rectangle>() { ProjectileConstant.BlueArrowRightSourceRect}, blueArrowOrigin);
+        upSprite = new Sprite(content.weapon, new List<Rectangle>() { ProjectileConstant.BlueArrowUpSourceRect }, blueArrowOrigin);
+        downSprite = new Sprite(content.weapon2, new List<Rectangle>() { ProjectileConstant.BlueArrowDownSourceRect }, blueArrowOrigin);
 
         initialPosition = position;
 
         this.content = content;
-        this.Hitbox = new BoxCollider(position, new Vector2(15, 15), new Vector2(7.5f, 7.5f), ColliderType.PROJECTILE);
+        this.Hitbox = new BoxCollider(position, ProjectileConstant.BlueArrowCollideSize, ProjectileConstant.BlueArrowCollideOrigin, ColliderType.PROJECTILE);
     }
 
     private void Die()
