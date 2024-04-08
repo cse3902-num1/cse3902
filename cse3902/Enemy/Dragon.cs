@@ -14,7 +14,7 @@ namespace cse3902.Enemy
     public class Dragon : EnemyBase
     {
         private GameContent content;
-        private float DragonMoveSpeedConstant = 50f;
+        private float DragonMoveSpeedEnermyConstant = 50f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
         private const int AttackInterval = 3000;
         public Dragon(GameContent content, Room room): base(content, room)
@@ -23,14 +23,14 @@ namespace cse3902.Enemy
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
-                    Constant.DragonSpriteSheetAnimation1,
-                    Constant.DragonSpriteSheetAnimation2,
-                    Constant.DragonSpriteSheetAnimation3,
-                    Constant.DragonSpriteSheetAnimation4,
+                    EnermyConstant.DragonSpriteSheetAnimation1,
+                    EnermyConstant.DragonSpriteSheetAnimation2,
+                    EnermyConstant.DragonSpriteSheetAnimation3,
+                    EnermyConstant.DragonSpriteSheetAnimation4,
                 },
-                Constant.DragonOrigin
+                EnermyConstant.DragonOrigin
             );
-            Collider = new BoxCollider(Constant.DragonPosition, Constant.DragonColliderSize,Constant.DragonColliderOrigin, ColliderType.ENEMY);
+            Collider = new BoxCollider(EnermyConstant.DragonPosition, EnermyConstant.DragonColliderSize,EnermyConstant.DragonColliderOrigin, ColliderType.ENEMY);
             this.content = content;
 
             this.room = room;
@@ -42,16 +42,16 @@ namespace cse3902.Enemy
             switch (randomNum)
             {
                 case 1:
-                    newPosition.X -= DragonMoveSpeedConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 2:
-                    newPosition.X += DragonMoveSpeedConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 3:
-                    newPosition.Y -= DragonMoveSpeedConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 4:
-                    newPosition.Y += DragonMoveSpeedConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
             Position = newPosition;
@@ -60,7 +60,7 @@ namespace cse3902.Enemy
         public override void Attack()
         {
 
-            Vector2[] velocities = { Constant.DragonFireBallVelocity1, Constant.DragonFireBallVelocity2, Constant.DragonFireBallVelocity3 };
+            Vector2[] velocities = { EnermyConstant.DragonFireBallVelocity1, EnermyConstant.DragonFireBallVelocity2, EnermyConstant.DragonFireBallVelocity3 };
 
             foreach (Vector2 velocity in velocities)
             {

@@ -27,23 +27,18 @@ namespace cse3902
         public static Vector2 LeftDoorPosition = new Vector2(0, 216);
         public static Vector2 RightDoorPosition = new Vector2(672, 216);
         public static Vector2 GeneralPosition = new Vector2(50, 300);
-        public static Vector2 moveLeftOneUnit = new Vector2(-1, 0);
-        public static Vector2 moveRightOneUnit = new Vector2(1, 0);
-        public static Vector2 moveUpOneUnit = new Vector2(0, -1);
-        public static Vector2 moveDownOneUnit = new Vector2(0, 1);
-        public static Rectangle DragonSpriteSheetAnimation1 = new Rectangle(1, 11, 25, 32);
-        public static Rectangle DragonSpriteSheetAnimation2 = new Rectangle(26, 11, 25, 32);
-        public static Rectangle DragonSpriteSheetAnimation3 = new Rectangle(51, 11, 25, 32);
-        public static Rectangle DragonSpriteSheetAnimation4 = new Rectangle(76, 11, 25, 32);
-        public static Vector2 DragonOrigin = new Vector2(12.5f, 16f);
-        public static Vector2 DragonPosition = new Vector2(500, 200);
-        public static Vector2 DragonColliderSize = new Vector2(25 * 2, 32 * 2);
-        public static Vector2 DragonColliderOrigin = new Vector2(12.5f * 2, 16f * 2);
-        public static Vector2 DragonFireBallVelocity1 = new Vector2(-200f, -50f);
-        public static Vector2 DragonFireBallVelocity2 = new Vector2(-200f, 0f);
-        public static Vector2 DragonFireBallVelocity3 = new Vector2(-200f, 50f);
+        public static Vector2 DoorColliderScaleFactor = new Vector2(16, 16) * 3;
+        public static Vector2 DoorColliderSize = new Vector2(32, 32) * 3;
+        public static Vector2 DoorColliderOrigin = new Vector2(16, 16) * 3;
 
+        public static Rectangle HudSprite = new Rectangle(256, 11, 256, 56);
+        public static Vector2 HudOrigin = new Vector2(8, 8);
+        public static float HudScaleFactor = 3.0f;
 
+        public static readonly Vector2 TextOrigin = new Vector2(45, 10);
 
+        public static readonly Vector2 WinGameTextOrigin = new Vector2(55, 10);
+        public static readonly Vector2 StartOverTextOrigin = new Vector2(105, -20);
+        
     }
 }

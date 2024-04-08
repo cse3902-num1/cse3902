@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using cse3902.Interfaces;
+using cse3902.Items;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +19,7 @@ public abstract class BasicItemPickup : IItemPickup
     {
         Position = new Vector2(0);
         this.room = room;
-        this.Collider = new BoxCollider(Position, new Vector2(16, 16), new Vector2(8, 8), ColliderType.ITEM_PICKUP);
+        this.Collider = new BoxCollider(Position, ItemsConstant.BasicItemColliderSize, ItemsConstant.BasicItemColliderOrigin, ColliderType.ITEM_PICKUP);
         this.IsDead = false;
     }
 

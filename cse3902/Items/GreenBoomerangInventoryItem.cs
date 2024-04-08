@@ -8,7 +8,7 @@ namespace cse3902;
 public class GreenBoomerangInventoryItem : IInventoryItem
 {
     private GameContent content;
-
+    private float directionShift = 200f;
     public GreenBoomerangInventoryItem(GameContent content)
     {
         this.content = content;
@@ -17,7 +17,7 @@ public class GreenBoomerangInventoryItem : IInventoryItem
     public void Use(IPlayer player, Room room)
     {
         Vector2 direction = player.Facing.asVector2();
-        GreenBoomerang greenBoomerangProjectile = new GreenBoomerang(content, room, player.Position, direction * 200f);
+        GreenBoomerang greenBoomerangProjectile = new GreenBoomerang(content, room, player.Position, direction * directionShift);
         SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(greenBoomerangProjectile);
         greenBoomerangProjectile.isEnermyProjectile = false;

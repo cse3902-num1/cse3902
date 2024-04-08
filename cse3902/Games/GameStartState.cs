@@ -16,6 +16,8 @@ namespace cse3902.Games
         private ISprite sprite;
         private string startGame = "Right Click to Start";
         private Vector2 textPos;
+        private const int TextOffsetX = 50; 
+        private const float TextScale = 4;
         public GameStartState(GameContent gamecontent, Game1 game) 
         {
             this.gameContent = gamecontent;
@@ -23,7 +25,7 @@ namespace cse3902.Games
             sprite = new Sprite(gamecontent.BlackScreen, new List<Rectangle>() {
                         new Rectangle()
                     });
-            textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - 50, Game1.graphics.PreferredBackBufferHeight / 2);
+            textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - TextOffsetX, Game1.graphics.PreferredBackBufferHeight / 2);
             // 
         }
         public void Draw(Camera camera)
@@ -32,7 +34,7 @@ namespace cse3902.Games
             camera.Position = centerPos;
             camera.BeginDraw();
             sprite.Draw(camera.spriteBatch);
-            camera.spriteBatch.DrawString(Game1.font, startGame, textPos, Color.Red, 0f, new Vector2(45, 10), 4, SpriteEffects.None, 0f);
+            camera.spriteBatch.DrawString(Game1.font, startGame, textPos, Color.Red, 0f, Constant.TextOrigin, TextScale, SpriteEffects.None, 0f);
             camera.EndDraw();
         }
 
