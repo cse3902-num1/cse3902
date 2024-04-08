@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using cse3902.RoomClasses;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,10 @@ namespace cse3902.Games
         public void Draw(Camera camera)
         {
             if (level.player is not null) {
-                camera.Position = level.player.Position;
+                // camera.Position = level.player.Position;
+                camera.Position = level.player.CurrentRoom.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
             }
+            // camera.Position = new Vector2(0, 0);
             camera.BeginDraw();
             level.Draw(camera.spriteBatch);
             hud.Draw(camera.spriteBatch);

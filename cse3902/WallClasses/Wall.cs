@@ -24,7 +24,8 @@ namespace cse3902.WallClasses
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(224, 104, 32, 40) }, 3.0f),
                 new Sprite(content.walls, new List<Rectangle>() { new Rectangle(144, 144, 112, 32) }, 3.0f)
             };
-            Vector2 offset = new Vector2(50, 300) + roomPosition;
+            // Vector2 offset = new Vector2(50, 300) + roomPosition;
+            Vector2 offset = roomPosition;
             walls[0].Position = new Vector2(0, 0)+offset;
             walls[1].Position = new Vector2(0, 96) + offset;
             walls[2].Position = new Vector2(432, 0) + offset;

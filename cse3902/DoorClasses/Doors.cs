@@ -17,8 +17,10 @@ namespace cse3902.DoorClasses
         private int idx;
         private int doorType;
         public List<BoxCollider> colliders;
-        private static int offsetX = 50;
-        private static int offsetY = 300;
+        // private static int offsetX = 50;
+        // private static int offsetY = 300;
+        private static int offsetX = 0;
+        private static int offsetY = 0;
 
         private static Vector2 offset = new Vector2(offsetX, offsetY);
         int doorXOffset = 32;

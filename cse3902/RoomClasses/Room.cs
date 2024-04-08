@@ -17,6 +17,9 @@ namespace cse3902.RoomClasses
 
     public class Room
     {
+        public const int ROOM_WIDTH = 768;
+        public const int ROOM_HEIGHT = 528;
+
         public Vector2 Position {set;get;}
         public List<IEnemy> Enemies;
         private int idxEnemy;
@@ -110,7 +113,8 @@ namespace cse3902.RoomClasses
             doorML = new MapLoader(doorFilePath);
             doorIds = doorML.LoadMap();
 
-            Vector2 offset = new Vector2(50, 300);
+            // Vector2 offset = new Vector2(50, 300);
+            Vector2 offset = new Vector2(0, 0);
             int idx = 0;
             position.Y = 96 + (3f * 8) + offset.Y;
             foreach (List<int> row in tileIds)
@@ -319,6 +323,17 @@ namespace cse3902.RoomClasses
                     List<CollisionResult<Doors>> enemyDoorCollisionResults = CollisionDetector.DetectDoorCollision(enemy.collider, door);
                     CollisionResolver.ResolveEnemyDoorCollision(enemy, enemyDoorCollisionResults);
                 }
+            }
+
+            /* player door collision */
+            if (Player.Position.X < Position.X) {
+                EventBus.EnteringDoor(Direction.Left);
+            } else if (Player.Position.X >= Position.X + ROOM_WIDTH) {
+                EventBus.EnteringDoor(Direction.Right);
+            } else if (Player.Position.Y < Position.Y) {
+                EventBus.EnteringDoor(Direction.Up);
+            } else if (Player.Position.Y >= Position.Y + ROOM_HEIGHT) {
+                EventBus.EnteringDoor(Direction.Down);
             }
         }
 

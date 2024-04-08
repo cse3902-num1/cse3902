@@ -231,6 +231,12 @@ public static class CollisionResolver
         }
         /* TODO */
         //Player should go to another room according to what door did it collide with.
+
+        // /* we only care about the first collision */
+        // CollisionResult<Doors> result = results[0];
+        // Doors doors = result.Entity;
+
+        
     }
 
     public static void ResolveEnemyDoorCollision(IEnemy enemy, List<CollisionResult<Doors>> results)
