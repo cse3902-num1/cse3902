@@ -16,6 +16,11 @@ namespace cse3902.Games
         private Vector2 textPos;
         private string gameOver = "Game Over";
         private string startOver = "press r to startOver or press q to quit";
+        private static readonly Vector2 GameOverTextOrigin = new Vector2(30, 10);
+        private static readonly Vector2 StartOverTextOrigin = new Vector2(100, -20);
+        private const float GameOverTextScale = 6;
+        private const float StartOverTextScale = 3;
+        private const int TextOffsetX = -50;
 
         public GameOverState(GameContent gamecontent, Game1 game) {
             this.gameContent = gamecontent;

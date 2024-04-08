@@ -1,3 +1,4 @@
+using cse3902.Items;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ public class BombItemPickup : BasicItemPickup
     public BombItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(135, 0, 9, 14) });
+                        ItemsConstant.BombItemSourceRect });
     }
     public override void Pickup(IPlayer player)
     {

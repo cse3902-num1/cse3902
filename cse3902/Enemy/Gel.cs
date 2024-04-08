@@ -11,21 +11,22 @@ namespace cse3902.Enemy
 {
     public class Gel : EnemyBase
     {
-        
+        private float GelMoveSpeedEnermyConstant = 100f;
+        private const int RandomChangeInterval = 500;
         public Gel(GameContent content, Room room) : base(content, room)
         {
             this.HP = 1;
-            sprite = new Sprite(content.enemiesSheet, 
-                new List<Rectangle>()
-                {
-                    new Rectangle(1, 11, 7, 16),
-                    new Rectangle(10, 11, 7, 16)
-                },
-                new Vector2(3.5f, 8f)
-            );
+            sprite = new Sprite(content.enemiesSheet,
+            new List<Rectangle>()
+            {
+                EnermyConstant.GelSpriteSheetAnimation1,
+                EnermyConstant.GelSpriteSheetAnimation2
+            },
+            EnermyConstant.GelOrigin
+     );
 
-            Position = new Vector2(200, 200);
-            Collider = new BoxCollider(Position, new Vector2(7 * 2, 16 * 2), new Vector2(3.5f * 2, 8f * 2), ColliderType.ENEMY);
+            Position = EnermyConstant.GelInitialPosition;
+            Collider = new BoxCollider(Position, EnermyConstant.GelColliderSize, EnermyConstant.GelColliderOrigin, ColliderType.ENEMY);
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -34,16 +35,16 @@ namespace cse3902.Enemy
             switch (randomNum)
             {
                 case 1:
-                    newPosition.X -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X -= GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 2:
-                    newPosition.X += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.X += GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 3:
-                    newPosition.Y -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y -= GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
                 case 4:
-                    newPosition.Y += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    newPosition.Y += GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     break;
             }
             Position = newPosition;
@@ -59,7 +60,7 @@ namespace cse3902.Enemy
             base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
                 randomChangeTimer.Restart();
 

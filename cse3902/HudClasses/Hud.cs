@@ -18,7 +18,7 @@ namespace cse3902
         public Hud(GameContent content, Level level)
         {
             // Initialize the background sprite for the HUD
-            sprite = new Sprite(content.hud, new List<Rectangle>() { new Rectangle(256, 11, 256, 56) }, new Vector2(8, 8), 3.0f);
+            sprite = new Sprite(content.hud, new List<Rectangle>() { Constant.HudSprite }, Constant.HudOrigin, Constant.HudScaleFactor);
             content1 = content;
             Inventory = level.player.Inventory;
         }

@@ -8,6 +8,7 @@ namespace cse3902;
 public class BlueBombInventoryItem : IInventoryItem
 {
     private GameContent content;
+    private float positionShift = 20f;
 
     public BlueBombInventoryItem(GameContent content)
     {
@@ -17,7 +18,7 @@ public class BlueBombInventoryItem : IInventoryItem
     public void Use(IPlayer player, Room room)
     {
         Vector2 direction = player.Facing.asVector2();
-        Vector2 position = player.Position + direction * 20f;
+        Vector2 position = player.Position + direction * positionShift;
         Bomb bomb = new Bomb(content, room, position);
         SoundManager.Manager.bombDropSound();
         room.Projectiles.Add(bomb);

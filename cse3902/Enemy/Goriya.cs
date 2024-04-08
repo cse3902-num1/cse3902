@@ -21,7 +21,8 @@ namespace cse3902.Enemy
         private Sprite spriteRight;
         private Sprite currentSprite;
         private IProjectile projectile;
-
+        private float GoriyaMoveSpeedEnermyConstant = 100f;
+        private const int RandomChangeInterval = 500;
         private GameContent content;
 
         public Goriya(GameContent content, Room room) : base(content, room)
@@ -30,41 +31,41 @@ namespace cse3902.Enemy
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 32, 16, 16),
-                    new Rectangle(16, 32, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetUp1,
+                    EnermyConstant.GoriyaSpriteSheetUp2
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             spriteDown = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 48, 16, 16),
-                    new Rectangle(16, 48, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetDown1,
+                    EnermyConstant.GoriyaSpriteSheetDown2,
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             spriteRight = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 16, 16, 16),
-                    new Rectangle(16, 16, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetRight1,
+                    EnermyConstant.GoriyaSpriteSheetRight2,
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             spriteLeft = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 0, 16, 16),
-                    new Rectangle(16, 0, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetLeft1,
+                    EnermyConstant.GoriyaSpriteSheetLeft2,
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             currentSprite = spriteDown;
 
-            Position = new Vector2(400, 200);
+            Position = EnermyConstant.GoriyaInitialPosition;
 
             projectile = null;
-            Collider = new BoxCollider(Position, new Vector2(16 * 2, 16 * 2), new Vector2(8 * 2, 8 * 2), ColliderType);
+            Collider = new BoxCollider(Position, EnermyConstant.GoriyaColliderSize, EnermyConstant.GoriyaColliderOrigin, ColliderType);
             this.content = content;
         }
 
@@ -74,16 +75,16 @@ namespace cse3902.Enemy
             switch (currentState)
             {
                 case GoriyaState.Up:
-                    Position += new Vector2(0, -0) * 100f * totalTime;
+                    Position += EnermyConstant.moveUpOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
                 case GoriyaState.Left:
-                    Position += new Vector2(-1, 0) * 100f * totalTime;
+                    Position += EnermyConstant.moveLeftOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
                 case GoriyaState.Right:
-                    Position += new Vector2(1, 0) * 100f * totalTime;
+                    Position += EnermyConstant.moveRightOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
                 case GoriyaState.Down:
-                    Position += new Vector2(0, 1) * 100f * totalTime;
+                    Position += EnermyConstant.moveDownOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
                     break;
             }
         }
@@ -123,16 +124,16 @@ namespace cse3902.Enemy
             switch (currentState)
             {
                 case GoriyaState.Left:
-                    velocity = new Vector2(-1, 0);
+                    velocity = EnermyConstant.moveLeftOneUnit;
                     break;
                 case GoriyaState.Right:
-                    velocity = new Vector2(1, 0);
+                    velocity = EnermyConstant.moveRightOneUnit;
                     break;
                 case GoriyaState.Up:
-                    velocity = new Vector2(0, -1);
+                    velocity = EnermyConstant.moveUpOneUnit;
                     break;
                 case GoriyaState.Down:
-                    velocity = new Vector2(0, 1);
+                    velocity = EnermyConstant.moveDownOneUnit;
                     break;
             }
             velocity *= 200f;
@@ -155,7 +156,7 @@ namespace cse3902.Enemy
             base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
                 randomChangeTimer.Restart();
 

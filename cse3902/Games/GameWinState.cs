@@ -16,8 +16,10 @@ namespace cse3902.Games
         private GameContent gameContent;
         private Game1 game;
         private ISprite sprite;
-        private string winGame = "You Win the game!";
-        private string startOver = "press r to startOver or press q to quit";
+        private static float WinGameTextScale = 6;
+        private static float StartOverTextScale = 3;
+        public static string winGame = "You Win the game!";
+        public static string startOver = "press r to startOver or press q to quit";
         
         public GameWinState(GameContent gamecontent, Game1 game) 
         {
@@ -31,8 +33,8 @@ namespace cse3902.Games
         public void Draw(SpriteBatch spriteBatch)
         {
             sprite.Draw(spriteBatch);
-            spriteBatch.DrawString(Game1.font, winGame, Constant.textPosMidScreen, Color.Red, 0f, new Vector2(55, 10), 6, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(Game1.font, startOver, Constant.textPosMidScreen, Color.DarkRed, 0f, new Vector2(105, -20), 3, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(Game1.font, winGame, Constant.textPosMidScreen, Color.Red, 0f, Constant.WinGameTextOrigin, WinGameTextScale, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(Game1.font, startOver, Constant.textPosMidScreen, Color.DarkRed, 0f, Constant.StartOverTextOrigin, StartOverTextScale, SpriteEffects.None, 0f);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

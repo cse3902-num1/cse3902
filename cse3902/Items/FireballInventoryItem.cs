@@ -8,6 +8,7 @@ namespace cse3902;
 public class FireballInventoryItem : IInventoryItem
 {
     private GameContent content;
+    private float directionShift = 400f;
 
     public FireballInventoryItem(GameContent content)
     {
@@ -17,7 +18,7 @@ public class FireballInventoryItem : IInventoryItem
     public void Use(IPlayer player, Room room)
     {
         Vector2 direction = player.Facing.asVector2();
-        Fireball fireballProjectile = new Fireball(content, room, player.Position, direction * 400f);
+        Fireball fireballProjectile = new Fireball(content, room, player.Position, direction * directionShift);
         SoundManager.Manager.fireballSound();
         room.Projectiles.Add(fireballProjectile);
         fireballProjectile.isEnermyProjectile = false;
