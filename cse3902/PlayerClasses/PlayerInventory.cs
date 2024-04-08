@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using cse3902.Items;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using cse3902;
+using System;
 
 
 namespace cse3902.PlayerClasses
@@ -22,6 +23,7 @@ namespace cse3902.PlayerClasses
         public int Bombs;
         public int Triforce;
         public int lifeContainer = 3;
+        private Level level;
 
         public PlayerInventory()
         {
@@ -33,7 +35,7 @@ namespace cse3902.PlayerClasses
             hasCompass = false;
             Bombs = 0;
             Triforce = 0;
-
+            
         }
 
 
@@ -79,18 +81,32 @@ namespace cse3902.PlayerClasses
                 heart.Draw(spriteBatch);
             }
 
-            Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+            if (SwordItemPickup.swordIsPicked == true)
+            {
+
+
+                Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
                         new Rectangle(104, 0, 8, 16) });
+                sword.X = 375;
+                sword.Y = 60;
+                sword.Draw(spriteBatch);
+            }else if (MagicalSwordItemPickup.isMagicalSwordPicked == true)
+            {
 
-            sword.X = 375;
-            sword.Y = 60;
 
-            if (SwordItemPickup.swordIsPicked == true) {
+               Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(112, 0, 8, 16) });
+                sword.X = 375;
+                sword.Y = 60;
                 sword.Draw(spriteBatch);
             }
-
-           
-
+            else if (WhiteSwordItemPickup.isWhiteSwordPicked) {
+                Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(104, 16, 8, 16) });
+                sword.X = 375;
+                sword.Y = 60;
+                sword.Draw(spriteBatch);
+            }
         }
     }
 }

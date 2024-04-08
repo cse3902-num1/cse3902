@@ -2,10 +2,11 @@ using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
+using cse3902.Items;
 
 namespace cse3902;
 
-public class SwordItemPickup : BasicItemPickup
+public class SwordItemPickup : BasicSwordPickup
 {
     public static bool swordIsPicked = false;
     public SwordItemPickup(GameContent content, Room room) : base(room)

@@ -66,12 +66,7 @@ namespace cse3902
             rooms[roomIdx].Draw(spriteBatch);
            
             player.Draw(spriteBatch);
-            DrawHUD(spriteBatch);
-
-        }
-
-        private void DrawHUD(SpriteBatch spriteBatch)
-        {
+          
 
         }
     }

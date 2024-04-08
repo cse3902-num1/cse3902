@@ -9,7 +9,10 @@ namespace cse3902
 {
     public class Constant
     {
-
+        public static Vector2 moveLeftOneUnit = new Vector2(-1, 0);
+        public static Vector2 moveRightOneUnit = new Vector2(1, 0);
+        public static Vector2 moveUpOneUnit = new Vector2(0, -1);
+        public static Vector2 moveDownOneUnit = new Vector2(0, 1);
         public static Vector2 textPosMidScreen;
         public static int TextPosMidScreenX = 868 / 2 - 50;
         public static int TextPosMidScreenY = 828 /2 - 50;
