@@ -49,4 +49,7 @@ public interface IController
     public bool isLeftClick();
     public bool isRightClick();
 
+    /* display the inventory */
+    public bool isInventoryDisplayedPressed();
+
 }

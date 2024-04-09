@@ -62,5 +62,6 @@ namespace cse3902
         public bool isExitPressed() { return false; }
 
         public bool isPausePressed() {return false;}
+        public bool isInventoryDisplayedPressed() { return false; }
     }
 }

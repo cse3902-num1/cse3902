@@ -81,4 +81,7 @@ public class KeyboardController : IController
     /* room controls */
     public bool isLeftClick() { return false; }
     public bool isRightClick() { return false; }
+
+    /* display the inventory */
+    public bool isInventoryDisplayedPressed() { return isKeyJustPressed(Keys.B); }
 }

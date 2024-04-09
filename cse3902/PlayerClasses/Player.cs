@@ -46,7 +46,7 @@ namespace cse3902.PlayerClasses
             
             Pushbox = new BoxCollider(Position,Size*3, Origin*3, ColliderType.PLAYER);
 
-            Inventory = new PlayerInventory();
+            Inventory = new PlayerInventory(content);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

@@ -26,8 +26,7 @@ namespace cse3902
         // Update method for the HUD
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-            // You may add update logic here if needed, 
-            // such as updating HUD elements based on player state or game events
+            Inventory.Update(gameTime, controllers);
         }
 
         // Draw method for the HUD
