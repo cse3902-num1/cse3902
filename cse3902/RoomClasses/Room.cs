@@ -73,7 +73,6 @@ namespace cse3902.RoomClasses
                 new CompassItemPickUp(content, this),
                 new ClockItemPickUp(content, this),
                 new BowItemPickup(content, this),
-                new YellowBoomerangItemPickup(content, this),
                 new BombItemPickup(content, this),
                 new LifePotionItemPickup(content, this),
                 new SecondPotionItemPickup(content, this),

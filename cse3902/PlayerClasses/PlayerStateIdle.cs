@@ -76,7 +76,7 @@ namespace cse3902.PlayerClasses
             else if (controllers.Any(c => c.isPlayerUseItem6JustPressed())) item = new GreenBoomerangInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem7JustPressed())) item = new GreenBowInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem8JustPressed())) item = new PurpleCystleInventoryItem();
-            else if (controllers.Any(c => c.isPlayerUseItem9JustPressed())) item = new YellowBoomerangInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem9JustPressed())) item = new MagicalBoomerangInventoryItem(content);
             if (item != null)
             {
                 player.State = new PlayerStateItem(content, player, item);
