@@ -174,7 +174,7 @@ namespace cse3902.PlayerClasses
             {
                 Sprite sprite = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
                         new Rectangle(128, 2, 5, 9) });
-                sprite.X = 400;
+                sprite.X = 440;
                 sprite.Y = 60;
                 sprite.Draw(spriteBatch);
             }
