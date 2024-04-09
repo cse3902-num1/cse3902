@@ -14,7 +14,7 @@ namespace cse3902;
 
 public static class CollisionResolver
 {
-   
+
     public static Vector2 CollisionMove(ICollider collider1, ICollider collider, float width, float height)
     {
         const float CollisionBuffer = 2;
@@ -214,11 +214,11 @@ public static class CollisionResolver
         player.Position += reconciliation;
     }
 
-    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
+    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results, List<IItemPickup> inventoryItems)
     {
         foreach (CollisionResult<IItemPickup> result in results)
         {
-            
+            inventoryItems.Add(result.Entity);
             result.Entity.Pickup(player);
         }
     }

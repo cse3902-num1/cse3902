@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using cse3902;
 using System;
 using System.Reflection.Emit;
+using cse3902.RoomClasses;
 
 
 namespace cse3902.PlayerClasses
@@ -83,20 +84,41 @@ namespace cse3902.PlayerClasses
             //fill slot A:
             drawSlotA(gameContent, spriteBatch, 60);
 
+            
+
             // Draw blackout effect if inventory is displayed and draw the other things
             if (!isDisplayed)
             {
                 spriteBatch.Draw(gameContent.hud, Vector2.Zero, blackbackground, Color.Black, 0f, Vector2.Zero, blackbackgroundScale, SpriteEffects.None, 0f);
+
                 Sprite sprite = new Sprite(gameContent.hud, new List<Rectangle>() { Constant.HudSprite }, Constant.HudOrigin, Constant.HudScaleFactor);
                 sprite.Position = new Vector2(0, 175*3.5f);
                 sprite.Draw(spriteBatch);
+
+                //this is for drawing the inventory
+                spriteBatch.Draw(gameContent.hud, inventoryPosition, inventory, Color.White, 0f, Vector2.Zero, inventoryScale, SpriteEffects.None, 0f);
+
                 drawText(gameContent, spriteBatch, 184*3.5f);
                 drawSlotA(gameContent, spriteBatch, 194 * 3.5f);
                 drawSlotB(gameContent, spriteBatch, 194 * 3.5f);
                 drawHeart(gameContent, spriteBatch, 200 * 3.5f);
+
+                Vector2 pos = new Vector2(460, 170);
+                int count = 0;
+                foreach(IItemPickup i in Room.inventoryItems) {
+                    i.Position = pos;
+                    pos.X += 40;
+                    count++;
+                    if (count > 7)
+                    {
+                        pos.Y += 70;
+                        pos.X = 460;
+                        count = 0;
+                    }
+                    i.Draw(spriteBatch);
+                }
             }
-            //this is for drawing the inventory
-            spriteBatch.Draw(gameContent.hud, inventoryPosition, inventory, Color.White, 0f, Vector2.Zero, inventoryScale, SpriteEffects.None, 0f);
+            
 
             
 

@@ -17,6 +17,7 @@ namespace cse3902.RoomClasses
 
     public class Room
     {
+        public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
         public List<IEnemy> Enemies;
         private int idxEnemy;
         public List<IItemPickup> Items;
@@ -309,7 +310,8 @@ namespace cse3902.RoomClasses
 
             /* Player ItemPickup collisions */
             List<CollisionResult<IItemPickup>> playerItemPickupResults = CollisionDetector.DetectItemPickupCollision(Player.Pushbox, Items);
-            CollisionResolver.ResolvePlayerItemPickupCollision(Player, playerItemPickupResults);
+            CollisionResolver.ResolvePlayerItemPickupCollision(Player, playerItemPickupResults, inventoryItems);
+
             /* Player door collision */
             foreach (Doors door in Doors)
             {
