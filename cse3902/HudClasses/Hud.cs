@@ -36,13 +36,6 @@ namespace cse3902
             // Draw the background sprite for the HUD
             sprite.Draw(spriteBatch);
             Inventory.Draw(content1, spriteBatch);
-
-            // You can add more draw calls here to render additional HUD elements
-            // For example:
-            // spriteBatch.DrawString(font, "Score: " + score, new Vector2(20, 20), Color.White);
-            // This draws a score value at position (20, 20) on the HUD
-
-            // Make sure to adjust the positions and content according to your HUD design
         }
     }
 }

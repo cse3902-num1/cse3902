@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace cse3902;
 
-public class WhiteSwordItemPickup : BasicSwordPickup
+public class WhiteSwordItemPickup : BasicSlotBPickup
 {
     public static bool isWhiteSwordPicked;
     public WhiteSwordItemPickup(GameContent content, Room room) : base(room)

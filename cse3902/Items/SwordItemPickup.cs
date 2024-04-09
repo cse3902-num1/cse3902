@@ -6,7 +6,7 @@ using cse3902.Items;
 
 namespace cse3902;
 
-public class SwordItemPickup : BasicSwordPickup
+public class SwordItemPickup : BasicSlotBPickup
 {
     public static bool swordIsPicked = false;
     public SwordItemPickup(GameContent content, Room room) : base(room)

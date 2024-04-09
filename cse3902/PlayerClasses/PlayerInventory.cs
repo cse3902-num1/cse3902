@@ -81,6 +81,7 @@ namespace cse3902.PlayerClasses
                 heart.Draw(spriteBatch);
             }
 
+            //this is to fill slot B
             if (SwordItemPickup.swordIsPicked == true)
             {
 
@@ -106,6 +107,15 @@ namespace cse3902.PlayerClasses
                 sword.X = 375;
                 sword.Y = 60;
                 sword.Draw(spriteBatch);
+            }
+
+            //fill slot B:
+            if (YellowBoomerangItemPickup.isYellowBoomerangPicked) {
+                Sprite sprite = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+                        new Rectangle(128, 2, 5, 9) });
+                sprite.X = 400;
+                sprite.Y = 60;
+                sprite.Draw(spriteBatch);
             }
         }
     }

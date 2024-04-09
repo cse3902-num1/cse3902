@@ -2,19 +2,16 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
-
 namespace cse3902.Items
 {
-    public class BasicSlotBPickup: BasicItemPickup
+	public class BasicSlotAPickup : BasicItemPickup
     {
-        
-
-        public BasicSlotBPickup(Room room) : base(room)
+		public BasicSlotAPickup(Room room) : base(room)
         {
 
-        }
-
-        public override void Pickup(IPlayer player) {
+		}
+        public override void Pickup(IPlayer player)
+        {
 
         }
     }
