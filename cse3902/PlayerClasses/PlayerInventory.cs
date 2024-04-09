@@ -109,7 +109,7 @@ namespace cse3902.PlayerClasses
                 sword.Draw(spriteBatch);
             }
 
-            //fill slot B:
+            //fill slot A:
             if (YellowBoomerangItemPickup.isYellowBoomerangPicked) {
                 Sprite sprite = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
                         new Rectangle(128, 2, 5, 9) });
