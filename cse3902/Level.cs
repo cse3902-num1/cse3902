@@ -20,6 +20,8 @@ namespace cse3902
         private List<List<Room>> rooms; /* 2d array of rooms, indexed x first then y */
         private int currentRoomX = 0;
         private int currentRoomY = 0;
+        private int newRoomX = 0;
+        private int newRoomY = 0;
        
 
         public Level(GameContent content)
@@ -59,6 +61,7 @@ namespace cse3902
             player.CurrentRoom = rooms[0][0];
        
             EventBus.EnteringDoor += OnEnteringDoor;
+            EventBus.EndingRoomTransition += OnEndingRoomTransition;
         }
 
         private void AddRoom(int x, int y, GameContent content, String xmlFilePath, String doorFilePath, Player player)
@@ -74,24 +77,42 @@ namespace cse3902
 
         private void OnEnteringDoor(Direction direction)
         {
+            newRoomX = currentRoomX;
+            newRoomY = currentRoomY;
             switch (direction) {
                 case Direction.Left:
-                    currentRoomX -= 1;
+                    newRoomX -= 1;
                     break;
                 case Direction.Right:
-                    currentRoomX += 1;
+                    newRoomX += 1;
                     break;
                 case Direction.Up:
-                    currentRoomY -= 1;
+                    newRoomY -= 1;
                     break;
                 case Direction.Down:
-                    currentRoomY += 1;
+                    newRoomY += 1;
                     break;
             }
-            if (currentRoomX < 0) currentRoomX = 0;
-            if (currentRoomX >= rooms.Count) currentRoomX = rooms.Count - 1;
-            if (currentRoomY < 0) currentRoomY = 0;
-            if (currentRoomY >= rooms[currentRoomX].Count) currentRoomY = rooms[currentRoomX].Count - 1;
+            if (newRoomX < 0) newRoomX = 0;
+            if (newRoomX >= rooms.Count) newRoomX = rooms.Count - 1;
+            if (newRoomY < 0) newRoomY = 0;
+            if (newRoomY >= rooms[newRoomX].Count) newRoomY = rooms[newRoomX].Count - 1;
+
+            Room currentRoom = rooms[currentRoomX][currentRoomY];
+            Room nextRoom = rooms[newRoomX][newRoomY];
+            EventBus.StartingRoomTransition(currentRoom, nextRoom);
+
+            // if (currentRoomX < 0) currentRoomX = 0;
+            // if (currentRoomX >= rooms.Count) currentRoomX = rooms.Count - 1;
+            // if (currentRoomY < 0) currentRoomY = 0;
+            // if (currentRoomY >= rooms[currentRoomX].Count) currentRoomY = rooms[currentRoomX].Count - 1;
+            // player.CurrentRoom = rooms[currentRoomX][currentRoomY];
+        }
+
+        public void OnEndingRoomTransition()
+        {
+            currentRoomX = newRoomX;
+            currentRoomY = newRoomY;
             player.CurrentRoom = rooms[currentRoomX][currentRoomY];
         }
 
