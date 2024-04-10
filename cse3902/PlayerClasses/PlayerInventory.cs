@@ -37,7 +37,9 @@ namespace cse3902.PlayerClasses
         Sprite map;
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
-
+        /* sword items List array */
+        public static List<BasicSlotBPickup> slotBItems = new List<BasicSlotBPickup>();
+        public static List<BasicSlotAPickup> slotAItems = new List<BasicSlotAPickup>();
         public PlayerInventory(GameContent content)
         {
             health = 3;
@@ -72,6 +74,26 @@ namespace cse3902.PlayerClasses
                 isDisplayed = !isDisplayed;
 
             }  
+            if (controllers.Any(c => c.isSwitchSlotAPressed()))
+            {
+                //draw the item in slot A
+                for (int i = 0; i < slotAItems.Count; i++)
+                {
+                    if(slotAItems[i] is BombItemPickup){
+                        
+                    }
+                }
+                //get the current item:
+
+            }
+            if (controllers.Any(c => c.isSwitchSlotBPressed()))
+            {
+                //draw the item in slot B
+                for (int i = 0; i < slotBItems.Count; i++)
+                {
+                    slotBItems[i].Pickup(null);
+                }
+            }
         }
         
 

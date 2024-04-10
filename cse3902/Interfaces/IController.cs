@@ -51,5 +51,7 @@ public interface IController
 
     /* display the inventory */
     public bool isInventoryDisplayedPressed();
+     public bool isSwitchSlotAPressed();
+    public bool isSwitchSlotBPressed();
 
 }

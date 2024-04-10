@@ -1,3 +1,4 @@
+using cse3902.Items;
 using cse3902.PlayerClasses;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
@@ -7,7 +8,8 @@ using System.Linq;
 
 namespace cse3902;
 
-public class YellowBoomerangItemPickup : BasicItemPickup
+
+public class YellowBoomerangItemPickup : BasicSlotAPickup
 {
     private bool isAdded = false;
     public static bool isYellowBoomerangPicked = false;
@@ -21,6 +23,7 @@ public class YellowBoomerangItemPickup : BasicItemPickup
         isAdded = PlayerInventory.inventoryItems.OfType<YellowBoomerangItemPickup>().Any();
         if (!isAdded)
         {
+            PlayerInventory.slotAItems.Add(this);
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }

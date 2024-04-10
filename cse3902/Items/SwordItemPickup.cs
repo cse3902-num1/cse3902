@@ -22,6 +22,7 @@ public class SwordItemPickup : BasicSlotBPickup
         isAdded = PlayerInventory.inventoryItems.OfType<SwordItemPickup>().Any();
         if (!isAdded)
         {
+            PlayerInventory.slotBItems.Add(this);
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
