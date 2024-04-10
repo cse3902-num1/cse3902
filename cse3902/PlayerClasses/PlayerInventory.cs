@@ -33,6 +33,8 @@ namespace cse3902.PlayerClasses
         private float inventoryScale = 3.5f;
         private Vector2 inventoryPosition = new Vector2(0, -600);
         private bool isDisplayed = true;
+        private bool isAPressed = false;
+        private bool isBPressed = false;
         Sprite sprite;
         Sprite map;
         Sprite compass;
@@ -79,23 +81,25 @@ namespace cse3902.PlayerClasses
             }  
             if (controllers.Any(c => c.isSwitchSlotAPressed()))
             {
+                isAPressed = true;
                 //draw the item in slot A
-                for (int i = 0; i < slotAItems.Count; i++)
-                {
-                    if(slotAItems[i] is BombItemPickup){
+                //for (int i = 0; i < slotAItems.Count; i++)
+                //{
+                //    if(slotAItems[i] is BombItemPickup){
                         
-                    }
-                }
+                //    }
+                //}
                 //get the current item:
 
             }
             if (controllers.Any(c => c.isSwitchSlotBPressed()))
             {
+                isBPressed = true;
                 //draw the item in slot B
-                for (int i = 0; i < slotBItems.Count; i++)
-                {
-                    slotBItems[i].Pickup(null);
-                }
+                //for (int i = 0; i < slotBItems.Count; i++)
+                //{
+                //    slotBItems[i].Pickup(null);
+                //}
             }
         }
         
@@ -155,6 +159,12 @@ namespace cse3902.PlayerClasses
                 if (hasCompass)
                 {
                     compass.Draw(spriteBatch);
+                }
+
+                if (isAPressed)
+                {
+                    slotAItems[0].Draw(spriteBatch);
+                    isAPressed = false;
                 }
             }
             
