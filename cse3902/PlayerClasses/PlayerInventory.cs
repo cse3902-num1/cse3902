@@ -49,8 +49,8 @@ namespace cse3902.PlayerClasses
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;
-            hasMap = true;
-            hasCompass = true;
+            hasMap = false;
+            hasCompass = false;
             Bombs = 0;
             Triforce = 0;
 
@@ -161,10 +161,13 @@ namespace cse3902.PlayerClasses
                     compass.Draw(spriteBatch);
                 }
 
-                if (isAPressed)
+                if (isBPressed)
                 {
-                    slotAItems[0].Draw(spriteBatch);
-                    isAPressed = false;
+                    if (slotBItems.Count != 0)
+                    {
+                        slotBItems[0].Draw(spriteBatch);
+                    }
+                    isBPressed = false;
                 }
             }
             
