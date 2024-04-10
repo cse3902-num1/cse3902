@@ -45,7 +45,9 @@ namespace cse3902.Items
         public static Rectangle TriforceItemAnimationSourceRect1 = new Rectangle(274, 3, 11, 12);
         public static Rectangle TriforceItemAnimationSourceRect2 = new Rectangle(274, 18, 11, 12);
         public static Rectangle WhiteItemSourceRect = new Rectangle(104, 16, 8, 16);
-        public static Rectangle YellowBoomerangItemSourceRect = new Rectangle(128, 2, 5, 9);
+        public static Rectangle GreenBoomerangItemSourceRect = new Rectangle(128, 2, 5, 9);
+        public static Rectangle MagicBoomerangItemSourceRect = new Rectangle(128, 18, 5, 9);
+        
 
 
 

@@ -27,7 +27,7 @@ namespace cse3902.RoomClasses
         public List<IProjectile> Projectiles = new List<IProjectile>();
         public List<IParticleEffect> ParticleEffects = new List<IParticleEffect>();
         public List<Block> Blocks = new List<Block>();
-        public List<Doors> Doors = new List<Doors>();
+        public List<Doors> doors = new List<Doors>();
 
         private GameContent content;
 
@@ -54,7 +54,7 @@ namespace cse3902.RoomClasses
             for (int i = 0; i < 4; i++)
             {
                 Doors d = new Doors(content, 0, 0, this.Position);
-                Doors.Add(d);
+                doors.Add(d);
             }
             Enemies = new List<IEnemy>() {};
             idxEnemy = 0;
@@ -73,7 +73,6 @@ namespace cse3902.RoomClasses
                 new CompassItemPickUp(content, this),
                 new ClockItemPickUp(content, this),
                 new BowItemPickup(content, this),
-                new YellowBoomerangItemPickup(content, this),
                 new BombItemPickup(content, this),
                 new LifePotionItemPickup(content, this),
                 new SecondPotionItemPickup(content, this),
@@ -155,8 +154,8 @@ namespace cse3902.RoomClasses
             {
                 foreach (int element in row)
                 {
-                    Doors[type].Idx = element;
-                    Doors[type].DoorType = type;
+                    doors[type].Idx = element;
+                    doors[type].DoorType = type;
                     type++;
                 }
             }
@@ -309,7 +308,7 @@ namespace cse3902.RoomClasses
             List<CollisionResult<IItemPickup>> playerItemPickupResults = CollisionDetector.DetectItemPickupCollision(Player.Pushbox, Items);
             CollisionResolver.ResolvePlayerItemPickupCollision(Player, playerItemPickupResults);
             /* Player door collision */
-            foreach (Doors door in Doors)
+            foreach (Doors door in doors)
             {
                 List<CollisionResult<Doors>> playerDoorCollisionResults = CollisionDetector.DetectDoorCollision(Player.Pushbox, door);
                 CollisionResolver.ResolvePlayerDoorCollision(Player, playerDoorCollisionResults);
@@ -318,7 +317,7 @@ namespace cse3902.RoomClasses
             /* Enemy door collision */
             foreach (IEnemy enemy in Enemies)
             {
-                foreach (Doors door in Doors)
+                foreach (Doors door in doors)
                 {
                     List<CollisionResult<Doors>> enemyDoorCollisionResults = CollisionDetector.DetectDoorCollision(enemy.collider, door);
                     CollisionResolver.ResolveEnemyDoorCollision(enemy, enemyDoorCollisionResults);
@@ -335,12 +334,36 @@ namespace cse3902.RoomClasses
             } else if (Player.Position.Y >= Position.Y + ROOM_HEIGHT) {
                 EventBus.EnteringDoor(Direction.Down);
             }
+
+            /* don't allow player to move through walls with no door */
+            foreach (Doors door in doors) {
+                if (door.Idx != 0) continue; /* only care about non-doors */
+                Vector2 pos = Player.Position;
+                switch (door.DoorType) {
+                    case 0: /* top */
+                    if (pos.Y < Position.Y + Constant.DoorColliderSize.X) pos.Y = Position.Y + Constant.DoorColliderSize.Y;
+                    break;
+
+                    case 1: /* left */
+                    if (pos.X < Position.X + Constant.DoorColliderSize.X) pos.X = Position.X + Constant.DoorColliderSize.X;
+                    break;
+
+                    case 2: /* bottom */
+                    if (pos.Y > Position.Y + ROOM_HEIGHT - Constant.DoorColliderSize.Y) pos.Y = Position.Y + ROOM_HEIGHT - Constant.DoorColliderSize.Y;
+                    break;
+
+                    case 3: /* right */
+                    if (pos.X > Position.X + ROOM_WIDTH - Constant.DoorColliderSize.X) pos.X = Position.X + ROOM_WIDTH - Constant.DoorColliderSize.X;
+                    break;
+                }
+                Player.Position = pos;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             wall.Draw(spriteBatch);
-            Doors.ForEach(d => d.Draw(spriteBatch));
+            doors.ForEach(d => d.Draw(spriteBatch));
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
             // Items[idxItem].Draw(spriteBatch);

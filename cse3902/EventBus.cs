@@ -17,7 +17,9 @@ public static class EventBus
     public delegate void _EnteringDoor(Direction direction);
     public static _EnteringDoor EnteringDoor = (Direction direction) => { Debug.WriteLine("[event] EnteringDoor " + direction); }; 
 
-    /* when the "current room" changes. room is the new room */
-    public delegate void _RoomChanging(Room room);
-    public static _RoomChanging RoomChanging = (Room room) => {};
+    public delegate void _StartingRoomTransition(Room roomFrom, Room roomTo);
+    public static _StartingRoomTransition StartingRoomTransition = (Room roomFrom, Room roomTo) => {};
+
+    public delegate void _EndingRoomTransition();
+    public static _EndingRoomTransition EndingRoomTransition = () => {};
 }

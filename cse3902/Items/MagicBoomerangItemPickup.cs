@@ -6,17 +6,16 @@ using System.Diagnostics;
 
 namespace cse3902;
 
-public class YellowBoomerangItemPickup : BasicItemPickup
+public class MagicBoomerangItemPickup : BasicItemPickup
 {
-    public YellowBoomerangItemPickup(GameContent content, Room room) : base(room)
+    public MagicBoomerangItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.YellowBoomerangItemSourceRect});
+                        ItemsConstant.MagicBoomerangItemSourceRect });
     }
     public override void Pickup(IPlayer player)
     {
-
-        Debug.WriteLine("yellow boomerang item picked up");
+        Debug.WriteLine("letter picked up");
         IsDead = true;
     }
 }
