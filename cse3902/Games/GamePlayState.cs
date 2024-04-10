@@ -48,8 +48,12 @@ namespace cse3902.Games
 
             // camera.Position = new Vector2(0, 0);
             camera.BeginDraw();
+
             level.Draw(camera.spriteBatch);
+
+            hud.Position = camera.Position - new Vector2(Game1.graphics.PreferredBackBufferWidth / 2, Game1.graphics.PreferredBackBufferHeight / 2);
             hud.Draw(camera.spriteBatch);
+
             camera.EndDraw();
         }
 

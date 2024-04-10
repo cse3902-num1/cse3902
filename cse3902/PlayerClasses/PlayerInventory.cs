@@ -16,7 +16,7 @@ namespace cse3902.PlayerClasses
 {
     public class PlayerInventory
     {
-      
+        public Vector2 Position {set;get;}
         public bool hasMap;
         public bool BowUnlocked;
         public bool hasCompass;
@@ -127,18 +127,20 @@ namespace cse3902.PlayerClasses
             {
                 spriteBatch.Draw(gameContent.hud, Vector2.Zero, blackbackground, Color.Black, 0f, Vector2.Zero, blackbackgroundScale, SpriteEffects.None, 0f);
 
+                // sprite.Position = new Vector2(0, 175*3.5f) + Position;
                 sprite.Position = new Vector2(0, 175*3.5f);
+
                 sprite.Draw(spriteBatch);
 
                 //this is for drawing the inventory
-                spriteBatch.Draw(gameContent.hud, inventoryPosition, inventory, Color.White, 0f, Vector2.Zero, inventoryScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(gameContent.hud, inventoryPosition + Position, inventory, Color.White, 0f, Vector2.Zero, inventoryScale, SpriteEffects.None, 0f);
 
                 drawText(gameContent, spriteBatch, 184*3.5f);
                 drawSlotA(gameContent, spriteBatch, 194 * 3.5f);
                 drawSlotB(gameContent, spriteBatch, 194 * 3.5f);
                 drawHeart(gameContent, spriteBatch, 200 * 3.5f);
 
-                Vector2 pos = new Vector2(460, 170);
+                Vector2 pos = new Vector2(460, 170) + Position;
                 int count = 0;
                 foreach(IItemPickup i in inventoryItems) {
                     i.Position = pos;
@@ -155,10 +157,12 @@ namespace cse3902.PlayerClasses
 
                 if (hasMap)
                 {
+                    map.Position = new Vector2(160, 380) + Position;
                     map.Draw(spriteBatch);
                 }
                 if (hasCompass)
                 {
+                    compass.Position = new Vector2(160, 540) + Position;
                     compass.Draw(spriteBatch);
                 }
 
@@ -187,6 +191,7 @@ namespace cse3902.PlayerClasses
 
             heart.X = 500;
             heart.Y = y;
+            heart.Position += Position;
 
             //should draw all life container first
 
@@ -195,6 +200,7 @@ namespace cse3902.PlayerClasses
                    , new Vector2(3.5f, 3.5f));
             fadedHeart.X = heart.X;
             fadedHeart.Y = heart.Y;
+            // fadedHeart.Position += Position;
 
             for (int i = 0; i < lifeContainer; i++)
             {
@@ -214,9 +220,9 @@ namespace cse3902.PlayerClasses
 
         public void drawText(GameContent gameContent, SpriteBatch spriteBatch, float y)
         {
-            spriteBatch.DrawString(gameContent.font, "Keys: " + this.Keys, new Vector2(280, y+40), Color.White);
-            spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, y+70), Color.White);
-            spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, y), Color.White);
+            spriteBatch.DrawString(gameContent.font, "Keys: " + this.Keys, new Vector2(280, y+40) + Position, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, y+70) + Position, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, y) + Position, Color.White);
 
 
         }
@@ -229,6 +235,7 @@ namespace cse3902.PlayerClasses
                         new Rectangle(104, 0, 8, 16) });
                 sword.X = 375;
                 sword.Y = y;
+                sword.Position += Position;
                 sword.Draw(spriteBatch);
             }
             else if (MagicalSwordItemPickup.isMagicalSwordPicked == true)
@@ -239,6 +246,7 @@ namespace cse3902.PlayerClasses
                         new Rectangle(112, 0, 8, 16) });
                 sword.X = 375;
                 sword.Y = y;
+                sword.Position += Position;
                 sword.Draw(spriteBatch);
             }
             else if (WhiteSwordItemPickup.isWhiteSwordPicked)
@@ -247,18 +255,19 @@ namespace cse3902.PlayerClasses
                         new Rectangle(104, 16, 8, 16) });
                 sword.X = 375;
                 sword.Y = y;
+                sword.Position += Position;
                 sword.Draw(spriteBatch);
             }
         }
         public void drawSlotA(GameContent gameContent, SpriteBatch spriteBatch, float y) {
-            if (YellowBoomerangItemPickup.isYellowBoomerangPicked)
-            {
-                Sprite sprite = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(128, 2, 5, 9) });
-                sprite.X = 440;
-                sprite.Y = y;
-                sprite.Draw(spriteBatch);
-            }
+            // if (YellowBoomerangItemPickup.isYellowBoomerangPicked)
+            // {
+            //     Sprite sprite = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+            //             new Rectangle(128, 2, 5, 9) });
+            //     sprite.X = 440;
+            //     sprite.Y = y;
+            //     sprite.Draw(spriteBatch);
+            // }
         }
     }
 }

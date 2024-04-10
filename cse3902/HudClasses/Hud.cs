@@ -11,6 +11,7 @@ namespace cse3902
 {
     public class Hud
     {
+        public Vector2 Position {set;get;}
         GameContent content1;
         private Sprite sprite;
         public PlayerInventory Inventory;
@@ -33,7 +34,9 @@ namespace cse3902
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw the background sprite for the HUD
+            sprite.Position = Position;
             sprite.Draw(spriteBatch);
+            Inventory.Position = Position;
             Inventory.Draw(content1, spriteBatch);
         }
     }
