@@ -33,6 +33,8 @@ namespace cse3902.PlayerClasses
         private float inventoryScale = 3.5f;
         private Vector2 inventoryPosition = new Vector2(0, -600);
         private bool isDisplayed = true;
+        Sprite sprite;
+        Sprite map;
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
 
@@ -42,12 +44,14 @@ namespace cse3902.PlayerClasses
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;
-            hasMap = false;
+            hasMap = true;
             hasCompass = false;
             Bombs = 0;
             Triforce = 0;
-            
-       
+
+            sprite = new Sprite(content.hud, new List<Rectangle>() { Constant.HudSprite }, Constant.HudOrigin, Constant.HudScaleFactor);
+            map = new Sprite(content.ItemSheet, new List<Rectangle>() { new Rectangle(87, 0, 8, 15) });
+            map.Position = new Vector2(160, 380);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers) {
@@ -93,7 +97,6 @@ namespace cse3902.PlayerClasses
             {
                 spriteBatch.Draw(gameContent.hud, Vector2.Zero, blackbackground, Color.Black, 0f, Vector2.Zero, blackbackgroundScale, SpriteEffects.None, 0f);
 
-                Sprite sprite = new Sprite(gameContent.hud, new List<Rectangle>() { Constant.HudSprite }, Constant.HudOrigin, Constant.HudScaleFactor);
                 sprite.Position = new Vector2(0, 175*3.5f);
                 sprite.Draw(spriteBatch);
 
@@ -118,6 +121,11 @@ namespace cse3902.PlayerClasses
                         count = 0;
                     }
                     i.Draw(spriteBatch);
+                }
+
+                if (hasMap)
+                {
+                    map.Draw(spriteBatch);
                 }
             }
             
