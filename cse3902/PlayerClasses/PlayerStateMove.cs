@@ -14,6 +14,8 @@ namespace cse3902.PlayerClasses
         private Player player;
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+        private Vector2 PlayerMoveOrigin = new Vector2(8,8);
+        private float PlayerMoveScale = 200;
         
 
         public PlayerStateMove(GameContent content, Player player)
@@ -25,30 +27,30 @@ namespace cse3902.PlayerClasses
                 {
                     Direction.Left,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 0 * 16, 16, 16),
-                        new Rectangle(1 * 16, 0 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerWalkingLeftAnimation1,
+                        PlayerConstant.PlayerWalkingLeftAnimation2,
+                    }, PlayerMoveOrigin)
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 1 * 16, 16, 16),
-                        new Rectangle(1 * 16, 1 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerWalkingRightAnimation1,
+                        PlayerConstant.PlayerWalkingRightAnimation2,
+                    }, PlayerMoveOrigin)
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 2 * 16, 16, 16),
-                        new Rectangle(1 * 16, 2 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerWalkingUpAnimation1,
+                        PlayerConstant.PlayerWalkingUpAnimation2,
+                    }, PlayerMoveOrigin)
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 3 * 16, 16, 16),
-                        new Rectangle(1 * 16, 3 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerWalkingDownAnimation1,
+                        PlayerConstant.PlayerWalkingDownAnimation2,
+                    }, PlayerMoveOrigin)
                 },
             };
         }
@@ -60,22 +62,22 @@ namespace cse3902.PlayerClasses
             if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
                 player.Facing = Direction.Left;
-                position.X -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X -= PlayerMoveScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveRightPressed()) == true)
             {
                 player.Facing = Direction.Right;
-                position.X += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X += PlayerMoveScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveUpPressed()) == true)
             {
                 player.Facing = Direction.Up;
-                position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y -= PlayerMoveScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveDownPressed()) == true)
             {
                 player.Facing = Direction.Down;
-                position.Y += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y += PlayerMoveScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             /* change to idle state if no movement keys are pressed */
@@ -106,23 +108,23 @@ namespace cse3902.PlayerClasses
                     {
                         if(aleft >= bleft)
                         {
-                           Position.X -= 200;
+                           Position.X -= PlayerMoveScale;
                         }
                         else
                         {
-                            Position.X += 200;
+                            Position.X += PlayerMoveScale;
                         }
                     }
                     else
                     {
                         if (atop >= btop)
                         {
-                            Position.Y += 200;
+                            Position.Y += PlayerMoveScale;
 
                         }
                         else
                         {
-                            Position.Y -= 200;
+                            Position.Y -= PlayerMoveScale;
                         }
                     }
             

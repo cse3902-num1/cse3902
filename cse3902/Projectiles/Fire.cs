@@ -12,16 +12,16 @@ public class Fire : BasicDirectionalProjectile
     private const float maxDistance = 200f;
     private GameContent content;
     private Sprite sprite;
-
+    private Vector2 FireOrigin = new Vector2(7.5f, 7.5f);
     public Fire(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
     {
         sprite = new Sprite(content.weapon2,
             new List<Rectangle>()
             {
-                new Rectangle(0, 30, 15, 15),
-                new Rectangle(15, 30 , 15, 15)
+                ProjectileConstant.FireAnimationSourceRect1,
+                ProjectileConstant.FireAnimationSourceRect2
             },
-            new Vector2(7.5f, 7.5f)
+            FireOrigin
         );
 
         initialPosition = position;
@@ -30,7 +30,7 @@ public class Fire : BasicDirectionalProjectile
         leftSprite = sprite;
         rightSprite = sprite;
         this.content = content;
-        this.Hitbox = new BoxCollider(position, new Vector2(15, 15), new Vector2(7.5f, 7.5f), ColliderType.PROJECTILE);
+        this.Hitbox = new BoxCollider(position, ProjectileConstant.FireCollideSize, ProjectileConstant.FireCollideOrigin, ColliderType.PROJECTILE);
     }
     private void Die()
     {

@@ -26,6 +26,7 @@ namespace cse3902.PlayerClasses
         public int Bombs;
         public int Triforce;
         public int lifeContainer = 3;
+        private Vector2 HudHeartOrigin = new Vector2(3.5f, 3.5f);
 
         private Rectangle inventory = new Rectangle(1, 11, 250, 173);
         private Rectangle blackbackground = new Rectangle(1, 11, 11, 11);
@@ -181,8 +182,8 @@ namespace cse3902.PlayerClasses
             // Draw heart items based on player's health
 
             Sprite heart = new Sprite(gameContent.hud, new List<Rectangle>() {
-                        new Rectangle(645, 117, 8, 8) }
-                        , new Vector2(3.5f, 3.5f));
+                        PlayerConstant.HudHeartPosition }
+                        , HudHeartOrigin);
 
             heart.X = 500;
             heart.Y = y;

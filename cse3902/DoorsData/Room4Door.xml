@@ -2,9 +2,9 @@
 
 <Settings>
 	<Setting name="DoorIds">
-		0
-		2
-		3
 		4
+		3
+		0
+		0
 	</Setting>
 </Settings>

@@ -30,11 +30,15 @@ namespace cse3902.Games
                     });
             Constant.textPosMidScreen = new Vector2(Constant.TextPosMidScreenX, Constant.TextPosMidScreenY);
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(Camera camera)
         {
-            sprite.Draw(spriteBatch);
-            spriteBatch.DrawString(Game1.font, winGame, Constant.textPosMidScreen, Color.Red, 0f, Constant.WinGameTextOrigin, WinGameTextScale, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(Game1.font, startOver, Constant.textPosMidScreen, Color.DarkRed, 0f, Constant.StartOverTextOrigin, StartOverTextScale, SpriteEffects.None, 0f);
+            Vector2 centerPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2, Game1.graphics.PreferredBackBufferHeight / 2);
+            camera.Position = centerPos;
+            camera.BeginDraw();
+            sprite.Draw(camera.spriteBatch);
+            camera.spriteBatch.DrawString(Game1.font, winGame, Constant.textPosMidScreen, Color.Red, 0f, Constant.WinGameTextOrigin, WinGameTextScale, SpriteEffects.None, 0f);
+            camera.spriteBatch.DrawString(Game1.font, startOver, Constant.textPosMidScreen, Color.DarkRed, 0f, Constant.StartOverTextOrigin, StartOverTextScale, SpriteEffects.None, 0f);
+            camera.EndDraw();
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -43,10 +47,7 @@ namespace cse3902.Games
             {
                 Game1.State = new GameStartState(gameContent, game);
             }
-
             sprite.Update(gameTime, controllers);
-            
-    
         }
     }
 }

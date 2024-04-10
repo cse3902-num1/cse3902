@@ -15,7 +15,7 @@ public class MagicalSwordItemPickup : BasicSlotBPickup
     public MagicalSwordItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(112, 0, 8, 16) });
+                        ItemsConstant.MagicSwordItemSourceRect });
     }
     public override void Pickup(IPlayer player)
     {

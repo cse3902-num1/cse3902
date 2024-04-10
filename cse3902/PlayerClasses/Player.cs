@@ -20,6 +20,7 @@ namespace cse3902.PlayerClasses
         
         public Stopwatch damageTimer;
         private bool isDamaged = false;
+        private const int RandomChangeInterval = 500;
 
         private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
@@ -44,7 +45,7 @@ namespace cse3902.PlayerClasses
             this.content = content;
             State = new PlayerStateIdle(content,this);
             
-            Pushbox = new BoxCollider(Position,Size*3, Origin*3, ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,Size*2.5f, Origin*2.5f, ColliderType.PLAYER);
 
             Inventory = new PlayerInventory(content);
         }
@@ -107,7 +108,7 @@ namespace cse3902.PlayerClasses
                     damageTimer.Restart();  // Restart the stopwatch when damage is taken
                 }
 
-                if (damageTimer.ElapsedMilliseconds >= 500)
+                if (damageTimer.ElapsedMilliseconds >= RandomChangeInterval)
                 {
                     isDamaged = false; // Reset damage flag after 100 ms
                 }

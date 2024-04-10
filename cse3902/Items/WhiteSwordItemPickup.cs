@@ -15,7 +15,7 @@ public class WhiteSwordItemPickup : BasicSlotBPickup
     public WhiteSwordItemPickup(GameContent content, Room room) : base(room)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(104, 16, 8, 16) });
+                        ItemsConstant.WhiteItemSourceRect });
     }
     public override void Pickup(IPlayer player)
     {

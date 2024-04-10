@@ -17,8 +17,10 @@ namespace cse3902.DoorClasses
         private int idx;
         private int doorType;
         public List<BoxCollider> colliders;
-        private static int offsetX = 50;
-        private static int offsetY = 300;
+        // private static int offsetX = 50;
+        // private static int offsetY = 300;
+        private static int offsetX = 0;
+        private static int offsetY = 0;
 
         private static Vector2 offset = new Vector2(offsetX, offsetY);
         int doorXOffset = 32;
@@ -40,32 +42,32 @@ namespace cse3902.DoorClasses
             set { doorType = value; }
         }
 
-        public Doors(GameContent content, int idx, int doorType)
+        public Doors(GameContent content, int idx, int doorType, Vector2 roomPosition)
         {
             this.idx = idx;
             this.doorType = doorType;
-            
+
             topDoors = new List<Sprite>();
             for (int i = 0; i < 5; i++) {
-                topDoors.Add( new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = topDoorPosition });     
+                topDoors.Add( new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = topDoorPosition + roomPosition });     
             }
-
 
             botDoors = new List<Sprite>();
             for (int i = 0; i < 5; i++)
             {
-                botDoors.Add(new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = botDoorPosition });
+                botDoors.Add(new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = botDoorPosition + roomPosition });
             }
 
             leftDoors = new List<Sprite>();
             for (int i = 0; i < 5; i++)
             {
-                leftDoors.Add(new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = leftDoorPosition });
+                leftDoors.Add(new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = leftDoorPosition + roomPosition });
             }
+
             rightDoors = new List<Sprite>();
             for (int i = 0; i < 5; i++)
             {
-                rightDoors.Add(new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = rightDoorPosition });
+                rightDoors.Add(new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = rightDoorPosition + roomPosition });
             }
             this.idx = idx;
             

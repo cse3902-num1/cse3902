@@ -28,12 +28,14 @@ namespace cse3902.Games
             textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - TextOffsetX, Game1.graphics.PreferredBackBufferHeight / 2);
             // 
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(Camera camera)
         {
-            sprite.Draw(spriteBatch);
-            spriteBatch.DrawString(Game1.font, startGame, textPos, Color.Red, 0f, Constant.TextOrigin, TextScale, SpriteEffects.None, 0f);
-            
-            
+            Vector2 centerPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2, Game1.graphics.PreferredBackBufferHeight / 2);
+            camera.Position = centerPos;
+            camera.BeginDraw();
+            sprite.Draw(camera.spriteBatch);
+            camera.spriteBatch.DrawString(Game1.font, startGame, textPos, Color.Red, 0f, Constant.TextOrigin, TextScale, SpriteEffects.None, 0f);
+            camera.EndDraw();
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)

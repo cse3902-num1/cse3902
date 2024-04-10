@@ -9,7 +9,10 @@ namespace cse3902.Enemy
 {
     public class EnermyConstant
     {
-       
+        
+        public static Vector2 moveRightOneUnit = new Vector2(1, 0);
+        public static Vector2 moveUpOneUnit = new Vector2(0, -1);
+        public static Vector2 moveDownOneUnit = new Vector2(0, 1);
         public static Rectangle DragonSpriteSheetAnimation1 = new Rectangle(1, 11, 25, 32);
         public static Rectangle DragonSpriteSheetAnimation2 = new Rectangle(26, 11, 25, 32);
         public static Rectangle DragonSpriteSheetAnimation3 = new Rectangle(51, 11, 25, 32);

@@ -17,13 +17,17 @@ namespace cse3902.RoomClasses
 
     public class Room
     {
+        public const int ROOM_WIDTH = 768;
+        public const int ROOM_HEIGHT = 528;
+
+        public Vector2 Position {set;get;}
         public List<IEnemy> Enemies;
         private int idxEnemy;
         public List<IItemPickup> Items;
         public List<IProjectile> Projectiles = new List<IProjectile>();
         public List<IParticleEffect> ParticleEffects = new List<IParticleEffect>();
         public List<Block> Blocks = new List<Block>();
-        public List<Doors> Doors = new List<Doors>();
+        public List<Doors> doors = new List<Doors>();
 
         private GameContent content;
 
@@ -36,8 +40,9 @@ namespace cse3902.RoomClasses
         private BoxCollider collider;
         public IPlayer Player;
 
-        public Room(GameContent content, string xmlFilePath, string doorFilePath, IPlayer player)
+        public Room(GameContent content, Vector2 position, string xmlFilePath, string doorFilePath, IPlayer player)
         {
+            this.Position = position;
             this.content = content;
             this.Player = player;
 
@@ -48,8 +53,8 @@ namespace cse3902.RoomClasses
             }
             for (int i = 0; i < 4; i++)
             {
-                Doors d = new Doors(content, 0, 0);
-                Doors.Add(d);
+                Doors d = new Doors(content, 0, 0, this.Position);
+                doors.Add(d);
             }
             Enemies = new List<IEnemy>() {};
             idxEnemy = 0;
@@ -68,7 +73,6 @@ namespace cse3902.RoomClasses
                 new CompassItemPickUp(content, this),
                 new ClockItemPickUp(content, this),
                 new BowItemPickup(content, this),
-                new YellowBoomerangItemPickup(content, this),
                 new BombItemPickup(content, this),
                 new LifePotionItemPickup(content, this),
                 new SecondPotionItemPickup(content, this),
@@ -97,7 +101,7 @@ namespace cse3902.RoomClasses
                 i.Position = new Vector2(x, y);
             }
 
-            wall = new Wall(content, this);
+            wall = new Wall(content, this, position);
 
             //doors = new Doors(content);
 
@@ -108,7 +112,8 @@ namespace cse3902.RoomClasses
             doorML = new MapLoader(doorFilePath);
             doorIds = doorML.LoadMap();
 
-            Vector2 offset = new Vector2(50, 300);
+            // Vector2 offset = new Vector2(50, 300);
+            Vector2 offset = new Vector2(0, 0);
             int idx = 0;
             position.Y = 96 + (3f * 8) + offset.Y;
             foreach (List<int> row in tileIds)
@@ -118,16 +123,16 @@ namespace cse3902.RoomClasses
                 foreach (int element in row)
                 {
                     Blocks[idx].BlockIndex = element;
-                    Blocks[idx].Position = position;
+                    Blocks[idx].Position = position + this.Position;
                     if (element >= 10)
                     {
                         switch(element)
                         {
-                            case 10: Enemies.Add(new Skeleton(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 11: Enemies.Add(new Dragon(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 12: Enemies.Add(new Keese(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 13: Enemies.Add(new Gel(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
-                            case 14: Enemies.Add(new Goriya(content, this)); Enemies[idxEnemy].Position = position; idxEnemy++; break;
+                            case 10: Enemies.Add(new Skeleton(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 11: Enemies.Add(new Dragon(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 12: Enemies.Add(new Keese(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 13: Enemies.Add(new Gel(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 14: Enemies.Add(new Goriya(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
                         }
                         Blocks[idx].BlockIndex = 0;
                     }
@@ -149,8 +154,8 @@ namespace cse3902.RoomClasses
             {
                 foreach (int element in row)
                 {
-                    Doors[type].Idx = element;
-                    Doors[type].DoorType = type;
+                    doors[type].Idx = element;
+                    doors[type].DoorType = type;
                     type++;
                 }
             }
@@ -210,7 +215,7 @@ namespace cse3902.RoomClasses
                 {
                     CollisionResolver.ResolveProjectileWallCollision(projectile);
                 }
-                Debug.WriteLine("project are: " + projectile.ToString());
+                // Debug.WriteLine("project are: " + projectile.ToString());
                 CollisionResolver.ResolveProjectilePlayerCollision(projectile, playerResults);
 
                 
@@ -248,7 +253,6 @@ namespace cse3902.RoomClasses
                         if (blockResults.Count > 0)
                         {
                             CollisionResolver.ResolveEnemyBlockCollision(enemy, blockResults);
-                            Debug.WriteLine("enemy: " + blockResults.Count + " ");
                         }
                         break;
                     default:
@@ -259,12 +263,6 @@ namespace cse3902.RoomClasses
             /* player collisions */
             /* check for intersection of colliders */
             List<CollisionResult<Block>> playerBlockCollisionResults = CollisionDetector.DetectBlockCollision(Player.Pushbox, Blocks);
-            if (playerBlockCollisionResults.Count > 0) {
-                Debug.WriteLine(string.Format("{0} | {1} {2} | {3} {4}", playerBlockCollisionResults.Count,
-                    Player.Pushbox.Position, ((BoxCollider) Player.Pushbox).Size,
-                    playerBlockCollisionResults[0].Collider.Position, ((BoxCollider) playerBlockCollisionResults[0].Collider).Size
-                ));
-            }
             CollisionResolver.ResolvePlayerBlockCollision(Player, playerBlockCollisionResults);
            
             /* apply collision response */
@@ -289,7 +287,6 @@ namespace cse3902.RoomClasses
                         if (enemyWallCollisionResults.Count > 0)
                         {
                             CollisionResolver.ResolveEnemyWallCollision(enemy, enemyWallCollisionResults);
-                            Debug.WriteLine("enemy: " + enemyWallCollisionResults.Count + " ");
                         }
                         break;
                         /* todo: check any other enemy types */
@@ -312,7 +309,7 @@ namespace cse3902.RoomClasses
             CollisionResolver.ResolvePlayerItemPickupCollision(Player, playerItemPickupResults);
 
             /* Player door collision */
-            foreach (Doors door in Doors)
+            foreach (Doors door in doors)
             {
                 List<CollisionResult<Doors>> playerDoorCollisionResults = CollisionDetector.DetectDoorCollision(Player.Pushbox, door);
                 CollisionResolver.ResolvePlayerDoorCollision(Player, playerDoorCollisionResults);
@@ -321,18 +318,53 @@ namespace cse3902.RoomClasses
             /* Enemy door collision */
             foreach (IEnemy enemy in Enemies)
             {
-                foreach (Doors door in Doors)
+                foreach (Doors door in doors)
                 {
                     List<CollisionResult<Doors>> enemyDoorCollisionResults = CollisionDetector.DetectDoorCollision(enemy.collider, door);
                     CollisionResolver.ResolveEnemyDoorCollision(enemy, enemyDoorCollisionResults);
                 }
+            }
+
+            /* player door collision */
+            if (Player.Position.X < Position.X) {
+                EventBus.EnteringDoor(Direction.Left);
+            } else if (Player.Position.X >= Position.X + ROOM_WIDTH) {
+                EventBus.EnteringDoor(Direction.Right);
+            } else if (Player.Position.Y < Position.Y) {
+                EventBus.EnteringDoor(Direction.Up);
+            } else if (Player.Position.Y >= Position.Y + ROOM_HEIGHT) {
+                EventBus.EnteringDoor(Direction.Down);
+            }
+
+            /* don't allow player to move through walls with no door */
+            foreach (Doors door in doors) {
+                if (door.Idx != 0) continue; /* only care about non-doors */
+                Vector2 pos = Player.Position;
+                switch (door.DoorType) {
+                    case 0: /* top */
+                    if (pos.Y < Position.Y + Constant.DoorColliderSize.X) pos.Y = Position.Y + Constant.DoorColliderSize.Y;
+                    break;
+
+                    case 1: /* left */
+                    if (pos.X < Position.X + Constant.DoorColliderSize.X) pos.X = Position.X + Constant.DoorColliderSize.X;
+                    break;
+
+                    case 2: /* bottom */
+                    if (pos.Y > Position.Y + ROOM_HEIGHT - Constant.DoorColliderSize.Y) pos.Y = Position.Y + ROOM_HEIGHT - Constant.DoorColliderSize.Y;
+                    break;
+
+                    case 3: /* right */
+                    if (pos.X > Position.X + ROOM_WIDTH - Constant.DoorColliderSize.X) pos.X = Position.X + ROOM_WIDTH - Constant.DoorColliderSize.X;
+                    break;
+                }
+                Player.Position = pos;
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             wall.Draw(spriteBatch);
-            Doors.ForEach(d => d.Draw(spriteBatch));
+            doors.ForEach(d => d.Draw(spriteBatch));
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
             // Items[idxItem].Draw(spriteBatch);
