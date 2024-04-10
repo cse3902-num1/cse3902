@@ -125,10 +125,10 @@ namespace cse3902.PlayerClasses
             // Draw blackout effect if inventory is displayed and draw the other things
             if (!isDisplayed)
             {
-                spriteBatch.Draw(gameContent.hud, Vector2.Zero, blackbackground, Color.Black, 0f, Vector2.Zero, blackbackgroundScale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(gameContent.hud, Vector2.Zero + Position, blackbackground, Color.Black, 0f, Vector2.Zero, blackbackgroundScale, SpriteEffects.None, 0f);
 
-                // sprite.Position = new Vector2(0, 175*3.5f) + Position;
-                sprite.Position = new Vector2(0, 175*3.5f);
+                 sprite.Position = new Vector2(0, 175*3.5f) + Position;
+                //sprite.Position = new Vector2(0, 175*3.5f);
 
                 sprite.Draw(spriteBatch);
 

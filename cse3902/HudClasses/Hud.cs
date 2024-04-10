@@ -14,6 +14,7 @@ namespace cse3902
         public Vector2 Position {set;get;}
         GameContent content1;
         private Sprite sprite;
+        private Texture2D blackBackground;
         public PlayerInventory Inventory;
 
         public Hud(GameContent content, Level level)
@@ -22,6 +23,7 @@ namespace cse3902
             sprite = new Sprite(content.hud, new List<Rectangle>() { Constant.HudSprite }, Constant.HudOrigin, Constant.HudScaleFactor);
             content1 = content;
             Inventory = level.player.Inventory;
+            blackBackground = content.hud;
         }
 
         // Update method for the HUD
@@ -34,6 +36,7 @@ namespace cse3902
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw the background sprite for the HUD
+            spriteBatch.Draw(blackBackground, Vector2.Zero + Position, new Rectangle(1,11,95,10), Color.Black, 0f, Vector2.Zero, 14.5f, SpriteEffects.None, 0f);
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
             Inventory.Position = Position;
