@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.Items;
 using cse3902.PlayerClasses;
+using System.Linq;
 
 namespace cse3902;
 
@@ -18,6 +19,7 @@ public class SwordItemPickup : BasicSlotBPickup
     }
     public override void Pickup(IPlayer player)
     {
+        isAdded = PlayerInventory.inventoryItems.OfType<SwordItemPickup>().Any();
         if (!isAdded)
         {
             PlayerInventory.inventoryItems.Add(this);
