@@ -63,7 +63,6 @@ namespace cse3902
 
         public bool isPausePressed() {return false;}
         public bool isInventoryDisplayedPressed() { return false; }
-
         public bool isSwitchSlotAPressed() { return false; }
         public bool isSwitchSlotBPressed() { return false; }
     }
