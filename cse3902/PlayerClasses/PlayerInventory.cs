@@ -46,7 +46,7 @@ namespace cse3902.PlayerClasses
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;
-            hasMap = true;
+            hasMap = false;
             hasCompass = false;
             Bombs = 0;
             Triforce = 0;
