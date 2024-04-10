@@ -35,6 +35,7 @@ namespace cse3902.PlayerClasses
         private bool isDisplayed = true;
         Sprite sprite;
         Sprite map;
+        Sprite compass;
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
         /* sword items List array */
@@ -46,14 +47,16 @@ namespace cse3902.PlayerClasses
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;
-            hasMap = false;
-            hasCompass = false;
+            hasMap = true;
+            hasCompass = true;
             Bombs = 0;
             Triforce = 0;
 
             sprite = new Sprite(content.hud, new List<Rectangle>() { Constant.HudSprite }, Constant.HudOrigin, Constant.HudScaleFactor);
             map = new Sprite(content.ItemSheet, new List<Rectangle>() { new Rectangle(87, 0, 8, 15) });
             map.Position = new Vector2(160, 380);
+            compass = new Sprite(content.ItemSheet, new List<Rectangle>() { ItemsConstant.CompassItemSourceRect });
+            compass.Position = new Vector2(160, 540);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers) {
@@ -148,6 +151,10 @@ namespace cse3902.PlayerClasses
                 if (hasMap)
                 {
                     map.Draw(spriteBatch);
+                }
+                if (hasCompass)
+                {
+                    compass.Draw(spriteBatch);
                 }
             }
             
