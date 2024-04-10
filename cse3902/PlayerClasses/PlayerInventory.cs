@@ -33,7 +33,9 @@ namespace cse3902.PlayerClasses
         private float inventoryScale = 3.5f;
         private Vector2 inventoryPosition = new Vector2(0, -600);
         private bool isDisplayed = true;
-      
+
+        public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
+
         public PlayerInventory(GameContent content)
         {
             health = 3;
@@ -105,7 +107,7 @@ namespace cse3902.PlayerClasses
 
                 Vector2 pos = new Vector2(460, 170);
                 int count = 0;
-                foreach(IItemPickup i in Room.inventoryItems) {
+                foreach(IItemPickup i in inventoryItems) {
                     i.Position = pos;
                     pos.X += 40;
                     count++;

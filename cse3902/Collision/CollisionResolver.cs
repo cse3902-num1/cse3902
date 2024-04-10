@@ -214,11 +214,10 @@ public static class CollisionResolver
         player.Position += reconciliation;
     }
 
-    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results, List<IItemPickup> inventoryItems)
+    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
     {
         foreach (CollisionResult<IItemPickup> result in results)
         {
-            inventoryItems.Add(result.Entity);
             result.Entity.Pickup(player);
         }
     }

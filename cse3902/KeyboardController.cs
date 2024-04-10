@@ -83,5 +83,5 @@ public class KeyboardController : IController
     public bool isRightClick() { return false; }
 
     /* display the inventory */
-    public bool isInventoryDisplayedPressed() { return isKeyJustPressed(Keys.B); }
+    public bool isInventoryDisplayedPressed() { return isKeyJustPressed(Keys.C); }
 }

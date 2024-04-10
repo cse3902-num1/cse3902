@@ -1,4 +1,5 @@
 using cse3902.Items;
+using cse3902.PlayerClasses;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace cse3902;
 
 public class MagicalSwordItemPickup : BasicSlotBPickup
 {
+    private bool isAdded = false;
     public static bool isMagicalSwordPicked = false;
     public MagicalSwordItemPickup(GameContent content, Room room) : base(room)
     {
@@ -16,6 +18,11 @@ public class MagicalSwordItemPickup : BasicSlotBPickup
     }
     public override void Pickup(IPlayer player)
     {
+        if (!isAdded)
+        {
+            PlayerInventory.inventoryItems.Add(this);
+            isAdded = true;
+        }
         isMagicalSwordPicked = true;
         Debug.WriteLine("magic sword item picked up");
         IsDead = true;
