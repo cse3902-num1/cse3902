@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace cse3902;
 
-public class FireItemPickUp : BasicItemPickup
+public class FireItemPickUp : BasicSlotAPickup
 {
     private bool isAdded = false;
     public FireItemPickUp(GameContent content, Room room) : base(room)
@@ -23,6 +23,7 @@ public class FireItemPickUp : BasicItemPickup
         isAdded = PlayerInventory.inventoryItems.OfType<FireItemPickUp>().Any();
         if (!isAdded)
         {
+            PlayerInventory.slotAItems.Add(this);
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }

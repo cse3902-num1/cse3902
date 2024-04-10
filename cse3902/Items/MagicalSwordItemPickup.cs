@@ -22,6 +22,7 @@ public class MagicalSwordItemPickup : BasicSlotBPickup
         isAdded = PlayerInventory.inventoryItems.OfType<MagicalSwordItemPickup>().Any();
         if (!isAdded)
         {
+            PlayerInventory.slotBItems.Add(this);
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
