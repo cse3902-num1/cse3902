@@ -108,8 +108,10 @@ namespace cse3902.RoomClasses
 
             foreach (IItemPickup i in Items)
             {
-                float x = r.NextSingle() * 868f;
-                float y = r.NextSingle() * 828f;
+                float x = r.NextSingle() * 576f;
+                x += 90f;
+                float y = r.NextSingle() * 308f;
+                y += 90f;
                 i.Position = new Vector2(x, y) + position;
             }
 
