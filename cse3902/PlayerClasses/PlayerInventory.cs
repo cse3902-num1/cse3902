@@ -26,6 +26,10 @@ namespace cse3902.PlayerClasses
         public int Bombs;
         public int Triforce;
         public int lifeContainer = 3;
+        private int count = 0;
+        private int boxH = 0;
+        private int boxW = 0;
+        private int boxCount = 0;
         private Vector2 HudHeartOrigin = new Vector2(3.5f, 3.5f);
 
         private Rectangle inventory = new Rectangle(1, 11, 250, 173);
@@ -36,9 +40,12 @@ namespace cse3902.PlayerClasses
         private bool isDisplayed = true;
         private bool isAPressed = false;
         private bool isBPressed = false;
-        Sprite sprite;
-        Sprite map;
-        Sprite compass;
+        private Sprite sprite;
+        private Sprite map;
+        private Sprite compass;
+        private Sprite selectBox;
+        private IItemPickup itemCopy;
+        private IItemPickup itemCopy2;
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
         /* sword items List array */
@@ -60,6 +67,8 @@ namespace cse3902.PlayerClasses
             map.Position = new Vector2(160, 380);
             compass = new Sprite(content.ItemSheet, new List<Rectangle>() { ItemsConstant.CompassItemSourceRect });
             compass.Position = new Vector2(160, 540);
+            selectBox = new Sprite(content.hud, new List<Rectangle>() { new Rectangle(519, 137, 16, 16) });
+            selectBox.Position = new Vector2(460, 170) + Position;
         }
 
         public void Update(GameTime gameTime, List<IController> controllers) {
@@ -96,6 +105,22 @@ namespace cse3902.PlayerClasses
             if (controllers.Any(c => c.isSwitchSlotBPressed()))
             {
                 isBPressed = true;
+                boxCount++;
+                if (boxCount < inventoryItems.Count)
+                {
+                    boxW++;
+                    if (boxW > 7)
+                    {
+                        boxW = 0;
+                        boxH++;
+                    }
+                }
+                else
+                {
+                    boxCount = 0;
+                    boxW = 0;
+                    boxH = 0;
+                }
                 //draw the item in slot B
                 //for (int i = 0; i < slotBItems.Count; i++)
                 //{
@@ -120,7 +145,6 @@ namespace cse3902.PlayerClasses
             //fill slot A:
             drawSlotA(gameContent, spriteBatch, 60);
 
-            
 
             // Draw blackout effect if inventory is displayed and draw the other things
             if (!isDisplayed)
@@ -141,7 +165,7 @@ namespace cse3902.PlayerClasses
                 drawHeart(gameContent, spriteBatch, 200 * 3.5f);
 
                 Vector2 pos = new Vector2(460, 170) + Position;
-                int count = 0;
+                selectBox.Position = pos - new Vector2(5, 0);
                 foreach(IItemPickup i in inventoryItems) {
                     i.Position = pos;
                     pos.X += 40;
@@ -153,6 +177,22 @@ namespace cse3902.PlayerClasses
                         count = 0;
                     }
                     i.Draw(spriteBatch);
+                }
+
+                selectBox.X += 40 * boxW;
+                selectBox.Y += 70 * boxH;
+
+                if (inventoryItems.Count > 0)
+                {
+                    selectBox.Draw(spriteBatch);
+                    // Holding item drawing
+                    itemCopy = inventoryItems[boxCount];
+                    itemCopy.Position = new Vector2(240, 180) + Position;
+                    itemCopy.Draw(spriteBatch);
+                    // Slot B drawing
+                    itemCopy2 = itemCopy;
+                    itemCopy2.Position = new Vector2(440, 194 * 3.5f) + Position;
+                    itemCopy2.Draw(spriteBatch);
                 }
 
                 if (hasMap)

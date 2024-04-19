@@ -43,6 +43,14 @@ namespace cse3902
             set { position = value; }
         }
 
+        public Sprite(Sprite sprite)
+        {
+            texture = sprite.texture;
+            frames = sprite.frames;
+            scale = sprite.scale;
+            origin = sprite.origin;
+        }
+
         public Sprite(Texture2D texture, List<Rectangle> frames)
         {
             this.position = Vector2.Zero;

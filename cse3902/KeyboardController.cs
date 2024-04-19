@@ -85,5 +85,5 @@ public class KeyboardController : IController
     /* display the inventory */
     public bool isInventoryDisplayedPressed() { return isKeyJustPressed(Keys.C); }
     public bool isSwitchSlotAPressed() { return isKeyPressed(Keys.A); }
-    public bool isSwitchSlotBPressed() { return isKeyPressed(Keys.B); }
+    public bool isSwitchSlotBPressed() { return isKeyJustPressed(Keys.B); }
 }
