@@ -46,6 +46,7 @@ namespace cse3902.PlayerClasses
         private Sprite selectBox;
         private IItemPickup itemCopy;
         private IItemPickup itemCopy2;
+        private IItemPickup itemCopy3;
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
         /* sword items List array */
@@ -143,7 +144,13 @@ namespace cse3902.PlayerClasses
             //this is to fill slot B
             drawSlotB(gameContent, spriteBatch, 60);
             //fill slot A:
-            drawSlotA(gameContent, spriteBatch, 60);
+            if (inventoryItems.Count > 0)
+            {
+                itemCopy3 = inventoryItems[boxCount];
+                itemCopy3.Position = new Vector2(440, 60) + Position;
+                itemCopy3.Draw(spriteBatch);
+            }
+            //drawSlotA(gameContent, spriteBatch, 60);
 
 
             // Draw blackout effect if inventory is displayed and draw the other things
@@ -186,7 +193,7 @@ namespace cse3902.PlayerClasses
                 {
                     selectBox.Draw(spriteBatch);
                     // Holding item drawing
-                    itemCopy = inventoryItems[boxCount];
+                    itemCopy = itemCopy3;
                     itemCopy.Position = new Vector2(240, 180) + Position;
                     itemCopy.Draw(spriteBatch);
                     // Slot B drawing
