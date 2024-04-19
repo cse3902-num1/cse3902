@@ -32,8 +32,10 @@ dotnet run
 * D - move Link right, make Link face right
 * Z - make Link use his primary attack
 * N - make Link use his primary attack
-* Left Click - Move to previous room
-* Right Click - Move to next room
+
+* C - display the hud
+* B - switch weapon in slot B - slot B contains all the other weapon
+* V - switch weapon in slot A - slot A contains only sword
 * 1 - use bomb
 * 2 - use magical boomerang
 * 3 - use blue arrow
@@ -44,6 +46,8 @@ dotnet run
 
 ## Other control
 * Q - quit the game
+* M - Mute the game
+* R - Reset the game
 
 ## Known bugs
 * Enemy hitbox is kind off
