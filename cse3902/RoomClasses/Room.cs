@@ -96,13 +96,13 @@ namespace cse3902.RoomClasses
                 new MagicalKeyItemPickup(content, this),
             };
 
-            Items[0].Position = new Vector2(300, 200);
-            Items[1].Position = new Vector2(300,300);
-            Items[2].Position = new Vector2(400, 400);
-            Items[3].Position = new Vector2(300, 400);
-            Items[4].Position = new Vector2(200, 200);
-            Items[5].Position = new Vector2(100, 200);
-            Items[18].Position = new Vector2(500, 400);
+            Items[0].Position = new Vector2(300, 200) + position;
+            Items[1].Position = new Vector2(300,300) + position;
+            Items[2].Position = new Vector2(400, 400) + position;
+            Items[3].Position = new Vector2(300, 400) + position;
+            Items[4].Position = new Vector2(200, 200) + position;
+            Items[5].Position = new Vector2(100, 200) + position;
+            Items[18].Position = new Vector2(500, 400) + position;
 
             //Random r = new Random();
 
@@ -372,7 +372,7 @@ namespace cse3902.RoomClasses
                 }
                 Player.Position = pos;
             }
-            Debug.WriteLine("the current length of items list in update:"+ Items.Count);
+            // Debug.WriteLine("the current length of items list in update:"+ Items.Count);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -385,7 +385,7 @@ namespace cse3902.RoomClasses
             Items.ForEach(i => i.Draw(spriteBatch));
             Projectiles.ForEach(p => p.Draw(spriteBatch));
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
-            Debug.WriteLine("the current length of items list in Drawing :" + Items.Count);
+            // Debug.WriteLine("the current length of items list in Drawing :" + Items.Count);
         }
     }
 }
