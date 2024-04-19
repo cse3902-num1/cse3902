@@ -96,21 +96,22 @@ namespace cse3902.RoomClasses
                 new MagicalKeyItemPickup(content, this),
             };
 
-            Items[0].Position = new Vector2(300, 200) + position;
-            Items[1].Position = new Vector2(300,300) + position;
-            Items[2].Position = new Vector2(400, 400) + position;
-            Items[3].Position = new Vector2(300, 400) + position;
-            Items[4].Position = new Vector2(200, 200) + position;
-            Items[5].Position = new Vector2(100, 200) + position;
-            Items[18].Position = new Vector2(500, 400) + position;
+            //Items[0].Position = new Vector2(300, 200) + position;
+            //Items[1].Position = new Vector2(300,300) + position;
+            //Items[2].Position = new Vector2(400, 400) + position;
+            //Items[3].Position = new Vector2(300, 400) + position;
+            //Items[4].Position = new Vector2(200, 200) + position;
+            //Items[5].Position = new Vector2(100, 200) + position;
+            //Items[18].Position = new Vector2(500, 400) + position;
 
-            //Random r = new Random();
+            Random r = new Random();
 
-            //foreach (IItemPickup i in Items) {
-            //    float x = r.NextSingle() * 868f;
-            //    float y = r.NextSingle() * 828f;
-            //    i.Position = new Vector2(x, y);
-            //}
+            foreach (IItemPickup i in Items)
+            {
+                float x = r.NextSingle() * 868f;
+                float y = r.NextSingle() * 828f;
+                i.Position = new Vector2(x, y) + position;
+            }
 
 
             wall = new Wall(content, this, position);
