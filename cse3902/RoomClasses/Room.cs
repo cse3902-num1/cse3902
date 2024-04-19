@@ -62,6 +62,7 @@ namespace cse3902.RoomClasses
             Items = new List<IItemPickup>
             {
                 new FiveRupiesItemPickup(content, this),
+              
                 new FireItemPickUp(content, this),
                 new RupyItemPickup(content, this),
                 new TriforceItemPickup(content, this),
@@ -94,12 +95,23 @@ namespace cse3902.RoomClasses
                 new BookOfMagicItemPickup(content, this),
                 new MagicalKeyItemPickup(content, this),
             };
-            Random r = new Random();
-            foreach (IItemPickup i in Items) {
-                float x = r.NextSingle() * 868f;
-                float y = r.NextSingle() * 828f;
-                i.Position = new Vector2(x, y);
-            }
+
+            Items[0].Position = new Vector2(300, 200);
+            Items[1].Position = new Vector2(300,300);
+            Items[2].Position = new Vector2(400, 400);
+            Items[3].Position = new Vector2(300, 400);
+            Items[4].Position = new Vector2(200, 200);
+            Items[5].Position = new Vector2(100, 200);
+            Items[18].Position = new Vector2(500, 400);
+
+            //Random r = new Random();
+
+            //foreach (IItemPickup i in Items) {
+            //    float x = r.NextSingle() * 868f;
+            //    float y = r.NextSingle() * 828f;
+            //    i.Position = new Vector2(x, y);
+            //}
+
 
             wall = new Wall(content, this, position);
 
@@ -164,6 +176,7 @@ namespace cse3902.RoomClasses
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+
             // Enemies[idxEnemy].Update(gameTime, controllers);
             Enemies.ForEach(e => e.Update(gameTime, controllers));
             Enemies = Enemies.Where(e => !e.IsDead).ToList();
@@ -359,6 +372,7 @@ namespace cse3902.RoomClasses
                 }
                 Player.Position = pos;
             }
+            Debug.WriteLine("the current length of items list in update:"+ Items.Count);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -367,10 +381,11 @@ namespace cse3902.RoomClasses
             doors.ForEach(d => d.Draw(spriteBatch));
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
-            // Items[idxItem].Draw(spriteBatch);
+            //[idxItem].Draw(spriteBatch);
             Items.ForEach(i => i.Draw(spriteBatch));
             Projectiles.ForEach(p => p.Draw(spriteBatch));
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
+            Debug.WriteLine("the current length of items list in Drawing :" + Items.Count);
         }
     }
 }

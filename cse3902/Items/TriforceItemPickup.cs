@@ -20,6 +20,7 @@ public class TriforceItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
         player.Inventory.Triforce += 1;
+        Debug.WriteLine("Triforce picked up");
         IsDead = true;
     }
 }
