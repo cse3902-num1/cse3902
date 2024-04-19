@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace cse3902;
 
-public class MagicalSwordItemPickup : BasicSlotBPickup
+public class MagicalSwordItemPickup : BasicSlotAPickup
 {
     private bool isAdded = false;
     public static bool isMagicalSwordPicked = false;
@@ -22,7 +22,7 @@ public class MagicalSwordItemPickup : BasicSlotBPickup
         isAdded = PlayerInventory.inventoryItems.OfType<MagicalSwordItemPickup>().Any();
         if (!isAdded)
         {
-            PlayerInventory.slotBItems.Add(this);
+            PlayerInventory.slotAItems.Add(this);
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }

@@ -151,7 +151,6 @@ namespace cse3902.RoomClasses
             }
 
             //regenerate items to avoid blocks:
-
             Random r = new Random();
 
             foreach (IItemPickup i in Items)
@@ -174,6 +173,7 @@ namespace cse3902.RoomClasses
                         if ((blockPosition.X - i.Position.X) * (blockPosition.X - i.Position.X) + (blockPosition.Y - i.Position.Y) * (blockPosition.Y - i.Position.Y) < 3000f)
                         {
                             isNotClose = false;
+                            //means block and this item are too close,regenerate new position for item
                             x = r.NextSingle() * 576f;
                             x += 90f;
                             y = r.NextSingle() * 308f;
@@ -182,13 +182,8 @@ namespace cse3902.RoomClasses
                             break;
                         }
                     }
-                    //means block and this item are too close,regenerate new position for item
                     
-
                 }
-
-
-
             }
 
             int type = 0;

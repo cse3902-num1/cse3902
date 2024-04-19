@@ -3,13 +3,12 @@ using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
-using cse3902.Items;
 using cse3902.PlayerClasses;
 using System.Linq;
 
 namespace cse3902;
 
-public class SwordItemPickup : BasicSlotBPickup
+public class SwordItemPickup : BasicSlotAPickup
 {
     private bool isAdded = false;
     public static bool swordIsPicked = false;
@@ -23,7 +22,7 @@ public class SwordItemPickup : BasicSlotBPickup
         isAdded = PlayerInventory.inventoryItems.OfType<SwordItemPickup>().Any();
         if (!isAdded)
         {
-            PlayerInventory.slotBItems.Add(this);
+            PlayerInventory.slotAItems.Add(this);
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }

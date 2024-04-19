@@ -30,6 +30,7 @@ namespace cse3902.PlayerClasses
         private int boxH = 0;
         private int boxW = 0;
         private int boxCount = 0;
+        private int slotAindex = 0;
         private Vector2 HudHeartOrigin = new Vector2(3.5f, 3.5f);
 
         private Rectangle inventory = new Rectangle(1, 11, 250, 173);
@@ -93,21 +94,23 @@ namespace cse3902.PlayerClasses
             if (controllers.Any(c => c.isSwitchSlotAPressed()))
             {
                 isAPressed = true;
-                //draw the item in slot A
-                //for (int i = 0; i < slotAItems.Count; i++)
-                //{
-                //    if(slotAItems[i] is BombItemPickup){
-                        
-                //    }
-                //}
-                //get the current item:
+
+
+                if (slotAindex < slotAItems.Count-1)
+                {
+                    slotAindex++;
+                }
+                else {
+                    slotAindex = 0;
+                }
+
 
             }
             if (controllers.Any(c => c.isSwitchSlotBPressed()))
             {
                 isBPressed = true;
                 boxCount++;
-                if (boxCount < inventoryItems.Count)
+                if (boxCount < slotBItems.Count)
                 {
                     boxW++;
                     if (boxW > 7)
@@ -122,11 +125,7 @@ namespace cse3902.PlayerClasses
                     boxW = 0;
                     boxH = 0;
                 }
-                //draw the item in slot B
-                //for (int i = 0; i < slotBItems.Count; i++)
-                //{
-                //    slotBItems[i].Pickup(null);
-                //}
+                
             }
         }
         
@@ -141,13 +140,13 @@ namespace cse3902.PlayerClasses
             //draw hearts in life:
             drawHeart(gameContent, spriteBatch, 85);
 
-            //this is to fill slot B
-            drawSlotB(gameContent, spriteBatch, 60);
-            //fill slot A:
-            if (inventoryItems.Count > 0)
+            //this is to fill slot A
+            drawSlotA(gameContent, spriteBatch, 60);
+            //fill slot B:
+            if (slotBItems.Count > 0)
             {
-                itemCopy3 = inventoryItems[boxCount];
-                itemCopy3.Position = new Vector2(440, 60) + Position;
+                itemCopy3 = slotBItems[boxCount];
+                itemCopy3.Position = new Vector2(375, 60) + Position;
                 itemCopy3.Draw(spriteBatch);
             }
             //drawSlotA(gameContent, spriteBatch, 60);
@@ -173,7 +172,7 @@ namespace cse3902.PlayerClasses
 
                 Vector2 pos = new Vector2(460, 170) + Position;
                 selectBox.Position = pos - new Vector2(5, 0);
-                foreach(IItemPickup i in inventoryItems) {
+                foreach(IItemPickup i in slotBItems) {
                     i.Position = pos;
                     pos.X += 40;
                     count++;
@@ -189,7 +188,7 @@ namespace cse3902.PlayerClasses
                 selectBox.X += 40 * boxW;
                 selectBox.Y += 70 * boxH;
 
-                if (inventoryItems.Count > 0)
+                if (slotBItems.Count > 0)
                 {
                     selectBox.Draw(spriteBatch);
                     // Holding item drawing
@@ -198,7 +197,7 @@ namespace cse3902.PlayerClasses
                     itemCopy.Draw(spriteBatch);
                     // Slot B drawing
                     itemCopy2 = itemCopy;
-                    itemCopy2.Position = new Vector2(440, 194 * 3.5f) + Position;
+                    itemCopy2.Position = new Vector2(375, 194 * 3.5f) + Position;
                     itemCopy2.Draw(spriteBatch);
                 }
 
@@ -222,6 +221,16 @@ namespace cse3902.PlayerClasses
                     }
                     isBPressed = false;
                 }
+                //press V to switch swords in slot A
+                if (isAPressed)
+                {
+                    if (slotAItems.Count != 0)
+                    {
+                        slotAItems[0].Draw(spriteBatch);
+                    }
+                    isAPressed = false;
+                }
+
             }
             
 
@@ -275,47 +284,46 @@ namespace cse3902.PlayerClasses
 
         }
         public void drawSlotB(GameContent gameContent, SpriteBatch spriteBatch, float y) {
-            if (SwordItemPickup.swordIsPicked == true)
-            {
-
-
-                Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(104, 0, 8, 16) });
-                sword.X = 375;
-                sword.Y = y;
-                sword.Position += Position;
-                sword.Draw(spriteBatch);
-            }
-            else if (MagicalSwordItemPickup.isMagicalSwordPicked == true)
-            {
-
-
-                Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(112, 0, 8, 16) });
-                sword.X = 375;
-                sword.Y = y;
-                sword.Position += Position;
-                sword.Draw(spriteBatch);
-            }
-            else if (WhiteSwordItemPickup.isWhiteSwordPicked)
-            {
-                Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(104, 16, 8, 16) });
-                sword.X = 375;
-                sword.Y = y;
-                sword.Position += Position;
-                sword.Draw(spriteBatch);
-            }
+            
         }
         public void drawSlotA(GameContent gameContent, SpriteBatch spriteBatch, float y) {
-            // if (YellowBoomerangItemPickup.isYellowBoomerangPicked)
-            // {
-            //     Sprite sprite = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-            //             new Rectangle(128, 2, 5, 9) });
-            //     sprite.X = 440;
-            //     sprite.Y = y;
-            //     sprite.Draw(spriteBatch);
-            // }
+            if (slotAItems.Count > 0)
+            {
+                IItemPickup x = slotAItems[slotAindex];
+                x.Position = new Vector2(440, y) + Position;
+                x.Draw(spriteBatch);
+            }
+            //if (SwordItemPickup.swordIsPicked == true)
+            //{
+
+
+            //    Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+            //            new Rectangle(104, 0, 8, 16) });
+            //    sword.X = 440;
+            //    sword.Y = y;
+            //    sword.Position += Position;
+            //    sword.Draw(spriteBatch);
+            //}
+            //else if (MagicalSwordItemPickup.isMagicalSwordPicked == true)
+            //{
+
+
+            //    Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+            //            new Rectangle(112, 0, 8, 16) });
+            //    sword.X = 440;
+            //    sword.Y = y;
+            //    sword.Position += Position;
+            //    sword.Draw(spriteBatch);
+            //}
+            //else if (WhiteSwordItemPickup.isWhiteSwordPicked)
+            //{
+            //    Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
+            //            new Rectangle(104, 16, 8, 16) });
+            //    sword.X = 440;
+            //    sword.Y = y;
+            //    sword.Position += Position;
+            //    sword.Draw(spriteBatch);
+            //}
         }
     }
 }
