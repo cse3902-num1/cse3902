@@ -104,21 +104,7 @@ namespace cse3902.RoomClasses
             //Items[5].Position = new Vector2(100, 200) + position;
             //Items[18].Position = new Vector2(500, 400) + position;
 
-            Random r = new Random();
-
-            foreach (IItemPickup i in Items)
-            {
-                float x = r.NextSingle() * 576f;
-                x += 90f;
-                float y = r.NextSingle() * 308f;
-                y += 90f;
-                i.Position = new Vector2(x, y) + position;
-            }
-
-
             wall = new Wall(content, this, position);
-
-            //doors = new Doors(content);
 
             //handle loading map
             ml = new MapLoader(xmlFilePath);
@@ -127,7 +113,7 @@ namespace cse3902.RoomClasses
             doorML = new MapLoader(doorFilePath);
             doorIds = doorML.LoadMap();
 
-            // Vector2 offset = new Vector2(50, 300);
+   
             Vector2 offset = new Vector2(0, 0);
             int idx = 0;
             position.Y = 96 + (3f * 8) + offset.Y;
@@ -162,6 +148,47 @@ namespace cse3902.RoomClasses
             foreach (Block b in Blocks) {
                 if (b.Collider is null) continue;
                 BoxCollider c = (BoxCollider) b.Collider;
+            }
+
+            //regenerate items to avoid blocks:
+
+            Random r = new Random();
+
+            foreach (IItemPickup i in Items)
+            {
+                float x = r.NextSingle() * 576f;
+                x += 90f;
+                float y = r.NextSingle() * 308f;
+                y += 90f;
+                i.Position = new Vector2(x, y) + Position;
+
+                bool isNotClose = false;
+                while (!isNotClose)
+                {
+                    //get the current position of each blocks:
+                    foreach (Block b in Blocks)
+                    {
+                        if (b.BlockIndex == 0) continue;
+                        Vector2 blockPosition = b.Position;
+                        isNotClose = true;
+                        if ((blockPosition.X - i.Position.X) * (blockPosition.X - i.Position.X) + (blockPosition.Y - i.Position.Y) * (blockPosition.Y - i.Position.Y) < 3000f)
+                        {
+                            isNotClose = false;
+                            x = r.NextSingle() * 576f;
+                            x += 90f;
+                            y = r.NextSingle() * 308f;
+                            y += 90f;
+                            i.Position = new Vector2(x, y) + Position;
+                            break;
+                        }
+                    }
+                    //means block and this item are too close,regenerate new position for item
+                    
+
+                }
+
+
+
             }
 
             int type = 0;
