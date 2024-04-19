@@ -206,6 +206,7 @@ namespace cse3902.PlayerClasses
                     compass.Draw(spriteBatch);
                 }
 
+                //press b to switch weapons in the inventory
                 if (isBPressed)
                 {
                     if (slotBItems.Count != 0)

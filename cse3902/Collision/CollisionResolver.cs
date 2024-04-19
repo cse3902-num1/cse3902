@@ -218,6 +218,7 @@ public static class CollisionResolver
     {
         foreach (CollisionResult<IItemPickup> result in results)
         {
+            
             result.Entity.Pickup(player);
         }
     }

@@ -26,7 +26,9 @@ public abstract class BasicItemPickup : IItemPickup
     public void Draw(SpriteBatch spriteBatch)
     {
         sprite.Position = Position;
+       
         sprite.Draw(spriteBatch);
+        
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)
@@ -36,6 +38,6 @@ public abstract class BasicItemPickup : IItemPickup
     }
 
     public virtual void Pickup(IPlayer player) {
-        // do nothing, child classes can override this
+        IsDead = true;
     }
 }
