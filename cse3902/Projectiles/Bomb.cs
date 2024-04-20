@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.RoomClasses;
 using cse3902.Enemy;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace cse3902.Projectiles;
 
@@ -19,15 +21,16 @@ public class Bomb : IProjectile
     private Stopwatch explodeTimer = new Stopwatch();
     private GameContent content;
     private Room room;
-    
+    private Vector2 BombOrigin = new Vector2(3.5f, 7.5f);
+    private int ExplodeTime = 1500;
     public Bomb(GameContent content, Room room, Vector2 position)
     {
         sprite = new Sprite(content.weapon, 
             new List<Rectangle>()
             {
-                new Rectangle(129, 185, 7, 15)
+                ProjectileConstant.BombSourceRect
             },
-            new Vector2(3.5f, 7.5f)
+            BombOrigin
         );
 
         Position = position;
@@ -35,11 +38,12 @@ public class Bomb : IProjectile
 
         this.content = content;
         this.room = room;
-        Hitbox = new BoxCollider(position, new Vector2(7, 15), new Vector2(3.5f, 7.5f), ColliderType.ITEM_PICKUP);
+        Hitbox = new BoxCollider(position, ProjectileConstant.BombCollideSize, ProjectileConstant.BombCollideOrigin, ColliderType.ITEM_PICKUP);
     }
 
     private void Die()
     {
+        SoundManager.Manager.bombBlowUpSound();
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
         room.ParticleEffects.Add(fx);
@@ -65,7 +69,7 @@ public class Bomb : IProjectile
         
         sprite.Update(gameTime, controllers);
 
-        if (explodeTimer.ElapsedMilliseconds >= 1500)
+        if (explodeTimer.ElapsedMilliseconds >= ExplodeTime)
         {
             Die();
         }

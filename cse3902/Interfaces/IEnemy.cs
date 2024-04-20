@@ -9,6 +9,8 @@ public interface IEnemy : IGameObject
     public ICollider collider { get; set; }
     public bool IsDead {set;get;}
 
+    public bool IsGhost { set;get;}
+
     public void Move(GameTime gameTime, int randomNum);
 
     public void Attack();

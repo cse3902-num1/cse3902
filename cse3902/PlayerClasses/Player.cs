@@ -7,17 +7,22 @@ using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using cse3902.WallClasses;
-using System.Reflection.Emit;
+using Microsoft.Xna.Framework.Audio;
 
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {    
     public class Player : IPlayer
     {
         public Room CurrentRoom {set;get;}
+
+        public PlayerInventory Inventory {set;get;}
         
-        private Microsoft.Xna.Framework.Vector2 _position = Vector2.Zero;
         public Stopwatch damageTimer;
+        private bool isDamaged = false;
+        private const int RandomChangeInterval = 500;
+
+        private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
             set {
                 _position = value;
@@ -32,7 +37,7 @@ namespace cse3902
         public Vector2 Size { set;get;} = new Vector2(16,16);
         public ICollider Pushbox {set;get;}
         public IPlayerState State;
-        public int health = 5;
+        
         public GameContent content;
         public Player(GameContent content)
         {
@@ -40,9 +45,9 @@ namespace cse3902
             this.content = content;
             State = new PlayerStateIdle(content,this);
             
-            Pushbox = new BoxCollider(Position,Size*3, Origin*3, ColliderType.PLAYER);
-           
+            Pushbox = new BoxCollider(Position,Size*2.5f, Origin*2.5f, ColliderType.PLAYER);
 
+            Inventory = new PlayerInventory(content);
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -51,6 +56,10 @@ namespace cse3902
             if (controllers.Any(c => c.isPlayerTakeDamageJustPressed()))
             {
                 TakeDamage();
+            }
+            if (isDamaged && damageTimer.ElapsedMilliseconds >= 500)
+            {
+                isDamaged = false;  // Reset damage flag after cooldown
             }
 
             State.Update(gameTime, controllers);
@@ -84,23 +93,32 @@ namespace cse3902
 
         public void TakeDamage()
         {
-            bool istrue = this.State is PlayerDamage;
-            Debug.WriteLine(istrue);
-            if (!(istrue))
+            if (!(State is PlayerDamage))
             {
-                Debug.WriteLine("entering damage state");
                 State = new PlayerDamage(content, this);
+                Debug.WriteLine("current state is: " + State);
+                Debug.WriteLine(Inventory.health);
             }
-            if (health > 0)
+           
+            if (Inventory.health > 0)
             {
-                health -= 1;
+                if (!isDamaged)
+                {
+                    SoundManager.Manager.linkDamageSound();
+                    Inventory.health -= 1;
+                    isDamaged = true;
+                    damageTimer.Restart();  // Restart the stopwatch when damage is taken
+                }
 
-                Debug.WriteLine("player health is: " + health);
+                if (damageTimer.ElapsedMilliseconds >= RandomChangeInterval)
+                {
+                    isDamaged = false; // Reset damage flag after 100 ms
+                }
             }
-            if (health == 0)
+            if (Inventory.health == 0)
             {
-                return State = new GameOverState();
-
+                Debug.WriteLine("YOU ARE DEAD!!!!!");
+                EventBus.PlayerDying(this);
             }
             
         }

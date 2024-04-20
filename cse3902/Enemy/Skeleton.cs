@@ -11,40 +11,67 @@ namespace cse3902.Enemy
 {
     public class Skeleton : EnemyBase
     {
-
+        private float SkeletonMoveSpeedEnermyConstant = 100f;
+        private float GhostSkeletonMoveSpeedEnermyConstant = 30f;
+        private const int RandomChangeInterval = 500;
         public Skeleton(GameContent content, Room room) : base(content, room)
         {
             this.HP = 3;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 0, 15, 15),
-                    new Rectangle(15, 0, 15, 15)
+                    EnermyConstant.SkeletonSpriteSheet1,
+                    EnermyConstant.SkeletonSpriteSheet2
                 },
-                new Vector2(7.5f, 7.5f)
+                EnermyConstant.SkeletonOrigin
             );
 
-            Position = new Vector2(200, 200);
-            Collider = new BoxCollider(Position, new Vector2(15 * 2, 15 * 2), new Vector2(7.5f * 2, 7.5f * 2), ColliderType);
+            Position = EnermyConstant.SkeletonInitialPosition;
+            Collider = new BoxCollider(Position, EnermyConstant.SkeletonColliderSize, EnermyConstant.SkeletonColliderOrigin, ColliderType);
         }
 
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            float speed = SkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float ghostSpeed = GhostSkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.Y -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.X += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += ghostSpeed;
+                }
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= ghostSpeed;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += ghostSpeed;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= ghostSpeed;
+                }
+            }
+            else
+            {
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.Y -= speed;
+                        break;
+                    case 2:
+                        newPosition.X -= speed;
+                        break;
+                    case 3:
+                        newPosition.X += speed;
+                        break;
+                    case 4:
+                        newPosition.Y += speed;
+                        break;
+                }
             }
             Position = newPosition;
         }
@@ -54,7 +81,7 @@ namespace cse3902.Enemy
             base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
                 randomChangeTimer.Restart();
 

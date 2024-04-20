@@ -1,16 +1,18 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {
     public class PlayerStateIdle : IPlayerState
     {
         private Player player;
         private Dictionary<Direction, ISprite> sprites;
         private GameContent content;
+        private Vector2 PlayerIdleOrigin = new Vector2(8, 8);
 
         public PlayerStateIdle(GameContent content, Player player)
         {
@@ -21,26 +23,26 @@ namespace cse3902
                 {
                     Direction.Left,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 0 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleLeft
+                    }, PlayerIdleOrigin)
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 1 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleRight
+                    }, PlayerIdleOrigin)
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 2 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleUp
+                    }, PlayerIdleOrigin)
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 3 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerIdleDown
+                    }, PlayerIdleOrigin)
                 },
             };
         }
@@ -59,6 +61,7 @@ namespace cse3902
             /* enter attack state if attack key is pressed */
             else if (controllers.Any(c => c.isPlayerAttackJustPressed()))
             {
+                SoundManager.Manager.swordSound();
                 player.State = new PlayerStateAttack(content, player);
             }
 
@@ -73,7 +76,7 @@ namespace cse3902
             else if (controllers.Any(c => c.isPlayerUseItem6JustPressed())) item = new GreenBoomerangInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem7JustPressed())) item = new GreenBowInventoryItem(content);
             else if (controllers.Any(c => c.isPlayerUseItem8JustPressed())) item = new PurpleCystleInventoryItem();
-            else if (controllers.Any(c => c.isPlayerUseItem9JustPressed())) item = new YellowBoomerangInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseItem9JustPressed())) item = new MagicalBoomerangInventoryItem(content);
             if (item != null)
             {
                 player.State = new PlayerStateItem(content, player, item);

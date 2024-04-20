@@ -16,7 +16,20 @@ namespace cse3902.DoorClasses
         private List<Sprite> rightDoors;
         private int idx;
         private int doorType;
+        public List<BoxCollider> colliders;
+        // private static int offsetX = 50;
+        // private static int offsetY = 300;
+        private static int offsetX = 0;
+        private static int offsetY = 0;
 
+        private static Vector2 offset = new Vector2(offsetX, offsetY);
+        int doorXOffset = 32;
+        Vector2 topDoorPosition = Constant.TopDoorPosition + offset;
+        Vector2 botDoorPosition = Constant.BottomDoorPosition + offset;
+        Vector2 leftDoorPosition = Constant.LeftDoorPosition + offset;
+        Vector2 rightDoorPosition = Constant.RightDoorPosition + offset;
+        Vector2 topDoorColliderOffset = new Vector2(16, 16) * 3;
+        
         public int Idx
         {
             get { return idx; }
@@ -29,44 +42,44 @@ namespace cse3902.DoorClasses
             set { doorType = value; }
         }
 
-        public Doors(GameContent content, int idx, int doorType)
+        public Doors(GameContent content, int idx, int doorType, Vector2 roomPosition)
         {
             this.idx = idx;
             this.doorType = doorType;
 
-            topDoors = new List<Sprite>()
+            topDoors = new List<Sprite>();
+            for (int i = 0; i < 5; i++) {
+                topDoors.Add( new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = topDoorPosition + roomPosition });     
+            }
+
+            botDoors = new List<Sprite>();
+            for (int i = 0; i < 5; i++)
             {
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) },
-                new Sprite(content.topDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 0) }
-            };
-            botDoors = new List<Sprite>()
+                botDoors.Add(new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = botDoorPosition + roomPosition });
+            }
+
+            leftDoors = new List<Sprite>();
+            for (int i = 0; i < 5; i++)
             {
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) },
-                new Sprite(content.bottomDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(336, 432) }
-            };
-            leftDoors = new List<Sprite>()
+                leftDoors.Add(new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = leftDoorPosition + roomPosition });
+            }
+
+            rightDoors = new List<Sprite>();
+            for (int i = 0; i < 5; i++)
             {
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) },
-                new Sprite(content.leftDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(0, 216) }
-            };
-            rightDoors = new List<Sprite>()
-            {
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(0, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(32, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(64, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(96, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) },
-                new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(128, 0, 32, 32) }, 3.0f) { Position = new Vector2(672, 216) }
-            };
+                rightDoors.Add(new Sprite(content.rightDoors, new List<Rectangle>() { new Rectangle(doorXOffset * i, 0, Constant.DoorWidth, Constant.DoorHeight) }, Constant.DoorScale) { Position = rightDoorPosition + roomPosition });
+            }
             this.idx = idx;
+            
+
+            colliders = new List<BoxCollider>()
+            {
+           
+                new BoxCollider(topDoors[0].Position + Constant.DoorColliderScaleFactor, Constant.DoorColliderSize, Constant.DoorColliderOrigin, ColliderType.DOOR),
+                new BoxCollider(botDoors[0].Position+Constant.DoorColliderScaleFactor, Constant.DoorColliderSize, Constant.DoorColliderOrigin, ColliderType.DOOR),
+                new BoxCollider(leftDoors[0].Position +Constant.DoorColliderScaleFactor, Constant.DoorColliderSize, Constant.DoorColliderOrigin, ColliderType.DOOR),
+                new BoxCollider(rightDoors[0].Position + Constant.DoorColliderScaleFactor, Constant.DoorColliderSize, Constant.DoorColliderOrigin, ColliderType.DOOR)
+            };
         }
 
         /* public bool IsColliding(ICollider collider)

@@ -4,13 +4,18 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {
     public class PlayerStateAttack : IPlayerState
     {
         private Player player;
         private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
+        private Vector2 playerAttackLeftOrigin = new Vector2(18, 8);
+        private Vector2 playerAttackRightOrigin = new Vector2(18, 8);
+        private Vector2 playerAttackUpOrigin = new Vector2(18, 8);
+        private Vector2 playerAttackDownOrigin = new Vector2(18, 8);
+
         public PlayerStateAttack(GameContent content, Player player)
         {
             this.content = content;
@@ -18,32 +23,32 @@ namespace cse3902
 
             sprites = new Dictionary<Direction, Sprite>() {
                 {Direction.Left, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
-                    new Rectangle(0 * 27, 0 * 28, 27, 28),
-                    new Rectangle(1 * 27, 0 * 28, 27, 28),
-                    new Rectangle(2 * 27, 0 * 28, 27, 28),
-                    new Rectangle(3 * 27, 0 * 28, 27, 28),
-                }, new Vector2(18, 8))},
+                    PlayerConstant.PlayerAttackingLeftAnimation1,
+                    PlayerConstant.PlayerAttackingLeftAnimation2,
+                    PlayerConstant.PlayerAttackingLeftAnimation3,
+                    PlayerConstant.PlayerAttackingLeftAnimation4,
+                }, playerAttackLeftOrigin)},
 
                 {Direction.Right, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
-                    new Rectangle(0 * 27, 1 * 28, 27, 28),
-                    new Rectangle(1 * 27, 1 * 28, 27, 28),
-                    new Rectangle(2 * 27, 1 * 28, 27, 28),
-                    new Rectangle(3 * 27, 1 * 28, 27, 28),
-                }, new Vector2(8, 8))},
+                    PlayerConstant.PlayerAttackingRightAnimation1,
+                    PlayerConstant.PlayerAttackingRightAnimation2,
+                    PlayerConstant.PlayerAttackingRightAnimation3,
+                    PlayerConstant.PlayerAttackingRightAnimation4,
+                }, playerAttackRightOrigin)},
 
                 {Direction.Up, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
-                    new Rectangle(0 * 27, 2 * 28, 27, 28),
-                    new Rectangle(1 * 27, 2 * 28, 27, 28),
-                    new Rectangle(2 * 27, 2 * 28, 27, 28),
-                    new Rectangle(3 * 27, 2 * 28, 27, 28),
-                }, new Vector2(8, 20))},
+                    PlayerConstant.PlayerAttackingUpAnimation1,
+                    PlayerConstant.PlayerAttackingUpAnimation2,
+                    PlayerConstant.PlayerAttackingUpAnimation3,
+                    PlayerConstant.PlayerAttackingUpAnimation4,
+                }, playerAttackUpOrigin)},
 
                 {Direction.Down, new Sprite(content.SpritesheetLinkAttackWoodSword, new List<Rectangle>() {
-                    new Rectangle(0 * 27, 3 * 28, 27, 28),
-                    new Rectangle(1 * 27, 3 * 28, 27, 28),
-                    new Rectangle(2 * 27, 3 * 28, 27, 28),
-                    new Rectangle(3 * 27, 3 * 28, 27, 28),
-                }, new Vector2(8, 8))}
+                    PlayerConstant.PlayerAttackingDownAnimation1,
+                    PlayerConstant.PlayerAttackingDownAnimation2,
+                    PlayerConstant.PlayerAttackingDownAnimation3,
+                    PlayerConstant.PlayerAttackingDownAnimation4,
+                }, playerAttackDownOrigin)}
             };
         }
 

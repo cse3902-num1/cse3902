@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {
     public class PlayerStateItem : IPlayerState
     {
@@ -11,7 +11,7 @@ namespace cse3902
         private IInventoryItem item;
         private Dictionary<Direction, Sprite> sprites;
         private GameContent content;
-
+        private Vector2 playerUseItemOrigin = new Vector2(8, 8);
         public PlayerStateItem(GameContent content, Player player, IInventoryItem item)
         {
             this.content = content;
@@ -22,26 +22,26 @@ namespace cse3902
                 {
                     Direction.Left,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 0 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerUseItemLeft
+                    }, playerUseItemOrigin)
                 },
                 {
                     Direction.Right,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 1 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerUseItemRight
+                    },playerUseItemOrigin )
                 },
                 {
                     Direction.Up,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 2 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerUseItemUp
+                    }, playerUseItemOrigin)
                 },
                 {
                     Direction.Down,
                     new Sprite(content.SpritesheetLinkUseItem, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 3 * 16, 16, 16)
-                    }, new Vector2(8, 8))
+                        PlayerConstant.PlayerUseItemDown
+                    }, playerUseItemOrigin)
                 },
             };
 

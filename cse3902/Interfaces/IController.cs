@@ -26,10 +26,11 @@ public interface IController
     public bool isPlayerUseItem7JustPressed();
     public bool isPlayerUseItem8JustPressed();
     public bool isPlayerUseItem9JustPressed();
-
+    public bool isMutePressed();
     /* enemy keys */
     public bool isEnemyPressO();
     public bool isEnemyPressP();
+   
 
     /* item keys */
     public bool isPreviousItemKeyPress();
@@ -42,8 +43,15 @@ public interface IController
     /* gameplay keys */
     public bool isResetPressed();
     public bool isQuitPressed();
+    public bool isPausePressed();
 
     /* room controls */
     public bool isLeftClick();
     public bool isRightClick();
+
+    /* display the inventory */
+    public bool isInventoryDisplayedPressed();
+     public bool isSwitchSlotAPressed();
+    public bool isSwitchSlotBPressed();
+
 }

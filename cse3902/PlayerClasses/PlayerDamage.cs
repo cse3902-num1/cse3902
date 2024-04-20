@@ -7,52 +7,60 @@ using System.Diagnostics;
 
 using System.Linq;
 
-namespace cse3902
+namespace cse3902.PlayerClasses
 {
     public class PlayerDamage : IPlayerState
     {
         private Player player;
         private GameContent content;
         private Dictionary<Direction, ISprite> directionSprite;
-        
+        private Vector2 playerMoveOrigin = new Vector2(8,8);
+        private int playerMovingSpeedScale = 200;
+        private const int RandomChangeInterval = 1000;
         public PlayerDamage(GameContent content, Player player)
         {
             player.damageTimer.Start();
             this.content = content;
             this.player = player;
+
             // default is down since we currently only have the facing down damaged sprite
             directionSprite = new Dictionary<Direction, ISprite>() {
                 {
                     Direction.Left,
-                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 0 * 16, 16, 16),
-                        new Rectangle(1 * 16, 0 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                    new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>() {
+                        PlayerConstant.PlayerWalkingLeftAnimation1,
+                        PlayerConstant.PlayerWalkingLeftAnimation2,
+                        PlayerConstant.PlayerWalkingLeftAnimation3,
+                        PlayerConstant.PlayerWalkingLeftAnimation4
+                    }, playerMoveOrigin)
                 },
                 {
                     Direction.Right,
-                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 1 * 16, 16, 16),
-                        new Rectangle(1 * 16, 1 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                    new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>() {
+                        PlayerConstant.PlayerWalkingRightAnimation1,
+                        PlayerConstant.PlayerWalkingRightAnimation2,
+                        PlayerConstant.PlayerWalkingRightAnimation3,
+                        PlayerConstant.PlayerWalkingRightAnimation4
+                    }, playerMoveOrigin)
                 },
                 {
                     Direction.Up,
-                    new Sprite(content.SpritesheetLinkWalk, new List<Rectangle>() {
-                        new Rectangle(0 * 16, 2 * 16, 16, 16),
-                        new Rectangle(1 * 16, 2 * 16, 16, 16),
-                    }, new Vector2(8, 8))
+                    new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>() {
+                        PlayerConstant.PlayerWalkingUpAnimation1,
+                        PlayerConstant.PlayerWalkingUpAnimation2,
+                        PlayerConstant.PlayerWalkingUpAnimation3,
+                        PlayerConstant.PlayerWalkingUpAnimation4
+                    }, playerMoveOrigin)
                 },
                 {
                   Direction.Down,
-                  new Sprite(content.LinkSpritesheet, new List<Rectangle>()
+                  new Sprite(content.SpritesheetLinkWalkDamaged, new List<Rectangle>()
                   {
-                      new Rectangle(74, 223,16,16),
-                        new Rectangle(0, 231, 16, 16),
-                        
-                        new Rectangle(198,239,16,16),
-                        new Rectangle(222,240,16,16)
-                  },new Vector2(8, 8))
+                        PlayerConstant.PlayerWalkingDownAnimation1,
+                        PlayerConstant.PlayerWalkingDownAnimation2,
+                        PlayerConstant.PlayerWalkingDownAnimation3,
+                        PlayerConstant.PlayerWalkingDownAnimation4
+                  },playerMoveOrigin)
                 },
             };
 
@@ -64,32 +72,32 @@ namespace cse3902
             /* move player if any movement key is pressed */
             
             Vector2 position = player.Position;
+         
             if (controllers.Any(c => c.isPlayerMoveLeftPressed()) == true)
             {
                 player.Facing = Direction.Left;
-                position.X -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X -= playerMovingSpeedScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveRightPressed()) == true)
             {
                 player.Facing = Direction.Right;
-                position.X += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.X += playerMovingSpeedScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveUpPressed()) == true)
             {
                 player.Facing = Direction.Up;
-                position.Y -= 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y -= playerMovingSpeedScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (controllers.Any(c => c.isPlayerMoveDownPressed()) == true)
             {
                 player.Facing = Direction.Down;
-                position.Y += 200 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                position.Y += playerMovingSpeedScale * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            player.Facing = Direction.Down;
             /* change to idle state if no movement keys are pressed */
 
             player.Position = position;
 
-            if (player.damageTimer.Elapsed.TotalMilliseconds > 1000)
+            if (player.damageTimer.Elapsed.TotalMilliseconds > RandomChangeInterval)
             {
                 player.damageTimer.Stop();
                 player.damageTimer.Reset();

@@ -1,13 +1,14 @@
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 namespace cse3902;
 
 public class MagicalBoomerangInventoryItem : IInventoryItem
 {
     private GameContent content;
-    
+    private float directionShift = 400f;
     public MagicalBoomerangInventoryItem(GameContent content)
     {
         this.content = content;
@@ -17,6 +18,7 @@ public class MagicalBoomerangInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         MagicalBoomerang magicBoomerangProjectile = new MagicalBoomerang(content, room, player.Position, direction * 400f);
+        SoundManager.Manager.arrowBoomerangSound();
         room.Projectiles.Add(magicBoomerangProjectile);
         magicBoomerangProjectile.isEnermyProjectile = false;
     }

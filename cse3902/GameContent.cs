@@ -3,6 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using cse3902.Projectiles;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
+using System.IO;
+using System.Reflection.Metadata;
+
 
 namespace cse3902
 {
@@ -29,8 +35,10 @@ namespace cse3902
         public Texture2D SpritesheetLinkUseItem;
         public Texture2D SpritesheetLinkWalkMagicShield;
         public Texture2D SpritesheetLinkWalk;
+        public Texture2D SpritesheetLinkWalkDamaged;
         public Texture2D SpriteSheetLinkAdditionItems;
         public Texture2D SpriteSheetFlipped;
+        public Texture2D gameStartTriangle;
 
         public Texture2D enemies;
         public Texture2D enemiesSheet;
@@ -47,21 +55,45 @@ namespace cse3902
         public Texture2D rightDoors;
         public Texture2D bottomDoors;
         public Texture2D leftDoors;
+        public Texture2D hud;
+        public Texture2D BlackScreen;
+        public SpriteFont font;
+
+        public Song bgmusic;
+        public SoundEffect sword;
+        public SoundEffect itemPickUp;
+        public SoundEffect linkDamage;
+        public SoundEffect linkDead;
+        public SoundEffect enemyDamage;
+        public SoundEffect enemyDead;
+        public SoundEffect arrowBoomerang;
+        public SoundEffect bombDrop;
+        public SoundEffect bombBlowUp;
+        public SoundEffect fireball;
+        
+        
 
         private Texture2D LoadTexture2D(String name)
         {
             return content.Load<Texture2D>(name);
         }
-
+        private SoundEffect LoadSoundEffect(String name)
+        {
+           
+            return content.Load<SoundEffect>(name);
+        }
         public GameContent(ContentManager content) 
         {
             this.content = content;
-
+            font = content.Load<SpriteFont>("font_arial");
+            gameStartTriangle = LoadTexture2D("gameStartTriangle");
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
+            BlackScreen = LoadTexture2D("blackScreen");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");
             mergedSheet = LoadTexture2D("merged");
             TilesSheet = LoadTexture2D("Tileset");
             ItemSheet = LoadTexture2D("Items");
+            hud = LoadTexture2D("hud");
             SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");
@@ -75,6 +107,7 @@ namespace cse3902
             SpritesheetLinkUseItem = LoadTexture2D("spritesheet_link_useitem");
             SpritesheetLinkWalkMagicShield = LoadTexture2D("spritesheet_link_walk_magicshield");
             SpritesheetLinkWalk = LoadTexture2D("spritesheet_link_walk");
+            SpritesheetLinkWalkDamaged = LoadTexture2D("spritesheet_link_walk_damaged");
             
             enemies = LoadTexture2D("enemies");
             enemiesSheet = LoadTexture2D("enemiesSheet");
@@ -91,6 +124,18 @@ namespace cse3902
             bottomDoors = LoadTexture2D("bottomDoors");
             leftDoors = LoadTexture2D("leftDoors");
             rightDoors = LoadTexture2D("rightDoors");
+
+            bgmusic = content.Load<Song>(@"Sound/Dungeon");
+            sword = LoadSoundEffect(@"Sound/LOZ_Sword_Slash");
+            itemPickUp = LoadSoundEffect(@"Sound/LOZ_Get_Item");
+            linkDamage = LoadSoundEffect(@"Sound/LOZ_Link_Hurt");
+            linkDead = LoadSoundEffect(@"Sound/LOZ_Link_Die");
+            enemyDamage = LoadSoundEffect(@"Sound/LOZ_Enemy_Hit");
+            enemyDead = LoadSoundEffect(@"Sound/LOZ_Enemy_Die");
+            arrowBoomerang = LoadSoundEffect(@"Sound/LOZ_Arrow_Boomerang");
+            bombDrop = LoadSoundEffect(@"Sound/LOZ_Bomb_Drop");
+            bombBlowUp = LoadSoundEffect(@"Sound/LOZ_Bomb_Blow");
+            fireball = LoadSoundEffect(@"Sound/LOZ_Fireball");
         }
     }
 }

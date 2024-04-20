@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
+using cse3902.DoorClasses;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.WallClasses;
+using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 namespace cse3902;
 
 public static class CollisionResolver
@@ -12,6 +17,8 @@ public static class CollisionResolver
 
     public static Vector2 CollisionMove(ICollider collider1, ICollider collider, float width, float height)
     {
+        const float CollisionBuffer = 2;
+
         BoxCollider a = (BoxCollider)collider1;
 
         // a is subject b is object
@@ -29,11 +36,11 @@ public static class CollisionResolver
         {
             if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
-                return new Vector2(width + 2, 0);
+                return new Vector2(width + CollisionBuffer, 0);
             }
             else //if player is moving collide with left part of the object
             {
-                return new Vector2(-width - 2, 0);
+                return new Vector2(-width - CollisionBuffer, 0);
             }
             
         }
@@ -41,21 +48,19 @@ public static class CollisionResolver
         {
             if (abottom <= bbottom)   // player is moving collide with top of the object
             {
-                return new Vector2 (0, -height-2);
+                return new Vector2 (0, -height- CollisionBuffer);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (0, height+2);
+                return new Vector2 (0, height+ CollisionBuffer);
             }
         }
     }
 
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
     {
-        if (results.Count == 0)
-        {
-            return;
-        }
+        if (projectile.isEnermyProjectile) return;
+        if (results.Count == 0) return;
         projectile.IsDead = true;
         foreach (CollisionResult<IEnemy> r in results) {
             r.Entity.TakeDmg(1);
@@ -119,33 +124,45 @@ public static class CollisionResolver
     }
 
     /* Called only when projectile collision with player */
-    public static void ResolveProjectilePlayerCollision(IProjectile projectile, IPlayer player)
+    public static void ResolveProjectilePlayerCollision(IProjectile projectile, List<CollisionResult<IPlayer>> results)
     {
+        if (!projectile.isEnermyProjectile) return;
+        if (results.Count == 0) return;
         projectile.IsDead = true;
-        player.TakeDamage();
+        foreach (CollisionResult<IPlayer> result in results)
+        {
+            
+            switch (result.Entity) {
+                case Player p:
+                    p.TakeDamage();
+                    break;
+            }
+        }
     }
 
     public static void ResolvePlayerEnemyCollision(IPlayer player, List<CollisionResult<IEnemy>> results)
     {
+        
         if (results.Count == 0)
         {
             return;
         }
 
-        float area = 0f;
-        CollisionResult<IEnemy> biggestResult = results[0];
+        //float area = 0f;
+        //CollisionResult<IEnemy> biggestResult = results[0];
         foreach (CollisionResult<IEnemy> result in results)
         {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
+            //if (result.GetArea() > area)
+            //{
+            //    area = result.GetArea();
+            //    biggestResult = result;
+            //}
             player.TakeDamage();
+
         }
 
-        Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        player.Position += reconciliation;
+        //Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        //player.Position += reconciliation;
     }
 
     /* Called only when projectile collision with walls */
@@ -195,5 +212,52 @@ public static class CollisionResolver
 
         Vector2 reconciliation = CollisionMove(((Player)player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
         player.Position += reconciliation;
+    }
+
+    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
+    {
+        foreach (CollisionResult<IItemPickup> result in results)
+        {
+            
+            result.Entity.Pickup(player);
+        }
+    }
+
+    public static void ResolvePlayerDoorCollision(IPlayer player, List<CollisionResult<Doors>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+        /* TODO */
+        //Player should go to another room according to what door did it collide with.
+
+        // /* we only care about the first collision */
+        // CollisionResult<Doors> result = results[0];
+        // Doors doors = result.Entity;
+
+        
+    }
+
+    public static void ResolveEnemyDoorCollision(IEnemy enemy, List<CollisionResult<Doors>> results)
+    {
+        if (results.Count == 0)
+        {
+            return;
+        }
+        //Enemy should collision the doors like walls.
+        float area = 0f;
+        CollisionResult<Doors> biggestResult = results[0];
+        foreach (CollisionResult<Doors> result in results)
+        {
+            if (result.GetArea() > area)
+            {
+                area = result.GetArea();
+                biggestResult = result;
+            }
+        }
+
+        Vector2 reconciliation = CollisionMove(enemy.collider, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
+        enemy.Position += reconciliation;
     }
 }

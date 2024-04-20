@@ -2,6 +2,7 @@
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,43 +13,25 @@ namespace cse3902.Enemy
 {
     public class Dragon : EnemyBase
     {
-        
-        private List<IProjectile> projectiles;
-
         private GameContent content;
-        
-
+        private float DragonMoveSpeedEnermyConstant = 50f;
+        private float GhostDragonMoveSpeedEnermyConstant = 30f;
+        private const int RandomChangeInterval = 500;  // Time in milliseconds
+        private const int AttackInterval = 3000;
         public Dragon(GameContent content, Room room): base(content, room)
         {
             this.HP = 20;
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
-                    new Rectangle(1, 11, 25, 32),
-                    new Rectangle(26, 11, 25, 32),
-                    new Rectangle(51, 11, 25, 32),
-                    new Rectangle(76, 11, 25, 32),
+                    EnermyConstant.DragonSpriteSheetAnimation1,
+                    EnermyConstant.DragonSpriteSheetAnimation2,
+                    EnermyConstant.DragonSpriteSheetAnimation3,
+                    EnermyConstant.DragonSpriteSheetAnimation4,
                 },
-                new Vector2(12.5f, 16f)
+                EnermyConstant.DragonOrigin
             );
-
-            projectiles = new List<IProjectile>();
-
-            // ballUp = new Fireball(content, 
-            //     new Vector2(-200f, -50f), 
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-            // ballDown = new Fireball(content,
-            //     new Vector2(-200f, +50f),
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-            // ballMid = new Fireball(content,
-            //     new Vector2(-200f, 0f),
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-
-            Position = new Vector2(500, 200);
-            Collider = new BoxCollider(Position, new Vector2(25 * 2, 32 * 2), new Vector2(12.5f * 2, 16f * 2), ColliderType.ENEMY);
+            Collider = new BoxCollider(EnermyConstant.DragonPosition, EnermyConstant.DragonColliderSize,EnermyConstant.DragonColliderOrigin, ColliderType.ENEMY);
             this.content = content;
 
             this.room = room;
@@ -57,55 +40,67 @@ namespace cse3902.Enemy
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.X -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.Y -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                } 
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+            else
+            {
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.X -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 2:
+                        newPosition.X += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 3:
+                        newPosition.Y -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 4:
+                        newPosition.Y += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                }
             }
             Position = newPosition;
         }
 
         public override void Attack()
         {
-            Fireball ballUp = new Fireball(content, 
-                room,
-                Position,
-                new Vector2(-200f, -50f)
-            );
-            Fireball ballDown = new Fireball(content,
-                room,
-                Position,
-                new Vector2(-200f, +50f)
-            );
-            Fireball ballMid = new Fireball(content,
-                room,
-                Position,
-                new Vector2(-200f, 0f)
-            );
-            projectiles.Add(ballUp);
-            ballUp.isEnermyProjectile = true;
-            projectiles.Add(ballMid);
-            ballMid.isEnermyProjectile = true;
-            projectiles.Add(ballDown);
-            ballDown.isEnermyProjectile = true;
+            if (!IsGhost)
+            {
+                Vector2[] velocities = { EnermyConstant.DragonFireBallVelocity1, EnermyConstant.DragonFireBallVelocity2, EnermyConstant.DragonFireBallVelocity3 };
+
+                foreach (Vector2 velocity in velocities)
+                {
+                    Fireball ball = new Fireball(content, room, Position, velocity);
+                    ball.isEnermyProjectile = true;
+                    room.Projectiles.Add(ball);
+                }
+                SoundManager.Manager.fireballSound();
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
-
-            projectiles.ForEach(p => p.Draw(spriteBatch));
         }
 
         public override void Update(GameTime gameTime, List<IController> controllers)
@@ -114,36 +109,29 @@ namespace cse3902.Enemy
 
             randomChangeTimer.Start();
             attackTimer.Start();
+            UpdateRandomNumber();
+            TryAttack();
+            Move(gameTime, randomNum);
 
+            sprite.Update(gameTime, controllers);
 
-          
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
+        }
+        private void UpdateRandomNumber()
+        {
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
                 randomChangeTimer.Restart();
-
-                randomNum = random.Next(1, 5);
+                randomNum = random.Next(1, 5);  // Assuming randomNum is declared elsewhere
             }
+        }
 
-            if (attackTimer.ElapsedMilliseconds >= 3000)
+        private void TryAttack()
+        {
+            if (attackTimer.ElapsedMilliseconds >= AttackInterval)
             {
                 attackTimer.Restart();
                 Attack();
             }
-
-            projectiles.ForEach(p => p.Update(gameTime, controllers));
-            
-            /* remove dead projectiles */
-            projectiles = projectiles.Where(p => !p.IsDead).ToList();
-
-            Move(gameTime, randomNum);
-
-            sprite.Update(gameTime, controllers);
-            /*if (BoxCollider.IsColliding(dragon.collider)) // Assuming you have a reference to the dragon
-            {
-                dragon.TakeDamage(damageAmount); // damageAmount is the damage this projectile does
-                this.IsDead = true; // Optionally remove the projectile upon impact
-            }
-            */
         }
 
 
