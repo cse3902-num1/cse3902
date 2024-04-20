@@ -13,6 +13,7 @@ namespace cse3902.Enemy
     public class Keese : EnemyBase
     {
         private float KeeseMoveSpeedEnermyConstant = 100f;
+        private float GhostKeeseMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         public Keese(GameContent content, Room room) : base(content, room)
         {
@@ -33,20 +34,43 @@ namespace cse3902.Enemy
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.Y -= KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X -= KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.X += KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += GhostKeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= GhostKeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += GhostKeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= GhostKeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+            else
+            {
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.Y -= KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 2:
+                        newPosition.X -= KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 3:
+                        newPosition.X += KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 4:
+                        newPosition.Y += KeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                }
             }
             Position = newPosition;
         }

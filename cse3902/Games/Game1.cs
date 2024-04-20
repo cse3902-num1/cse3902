@@ -26,6 +26,7 @@ public class Game1 : Game
     public static IGameState State;
     public Camera camera;
     public static SpriteFont font;
+    public static bool isNightmare = false;
     public Game1()
     {
       

@@ -12,6 +12,7 @@ namespace cse3902.Enemy
     public class Skeleton : EnemyBase
     {
         private float SkeletonMoveSpeedEnermyConstant = 100f;
+        private float GhostSkeletonMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         public Skeleton(GameContent content, Room room) : base(content, room)
         {
@@ -33,20 +34,44 @@ namespace cse3902.Enemy
         {
             Vector2 newPosition = Position;
             float speed = SkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            switch (randomNum)
+            float ghostSpeed = GhostSkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.Y -= speed;
-                    break;
-                case 2:
-                    newPosition.X -= speed;
-                    break;
-                case 3:
-                    newPosition.X += speed;
-                    break;
-                case 4:
-                    newPosition.Y += speed;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += ghostSpeed;
+                }
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= ghostSpeed;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += ghostSpeed;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= ghostSpeed;
+                }
+            }
+            else
+            {
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.Y -= speed;
+                        break;
+                    case 2:
+                        newPosition.X -= speed;
+                        break;
+                    case 3:
+                        newPosition.X += speed;
+                        break;
+                    case 4:
+                        newPosition.Y += speed;
+                        break;
+                }
             }
             Position = newPosition;
         }

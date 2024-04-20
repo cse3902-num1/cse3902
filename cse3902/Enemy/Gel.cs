@@ -12,6 +12,7 @@ namespace cse3902.Enemy
     public class Gel : EnemyBase
     {
         private float GelMoveSpeedEnermyConstant = 100f;
+        private float GhostGelMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         public Gel(GameContent content, Room room) : base(content, room)
         {
@@ -32,20 +33,43 @@ namespace cse3902.Enemy
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.X -= GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X += GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.Y -= GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += GhostGelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= GhostGelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += GhostGelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= GhostGelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+            else
+            {
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.X -= GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 2:
+                        newPosition.X += GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 3:
+                        newPosition.Y -= GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 4:
+                        newPosition.Y += GelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                }
             }
             Position = newPosition;
         }

@@ -15,6 +15,7 @@ namespace cse3902.Enemy
     {
         private GameContent content;
         private float DragonMoveSpeedEnermyConstant = 50f;
+        private float GhostDragonMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
         private const int AttackInterval = 3000;
         public Dragon(GameContent content, Room room): base(content, room)
@@ -39,36 +40,61 @@ namespace cse3902.Enemy
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.X -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.Y -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                } 
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+            else
+            {
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.X -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 2:
+                        newPosition.X += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 3:
+                        newPosition.Y -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 4:
+                        newPosition.Y += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                }
             }
             Position = newPosition;
         }
 
         public override void Attack()
         {
-
-            Vector2[] velocities = { EnermyConstant.DragonFireBallVelocity1, EnermyConstant.DragonFireBallVelocity2, EnermyConstant.DragonFireBallVelocity3 };
-
-            foreach (Vector2 velocity in velocities)
+            if (!IsGhost)
             {
-                Fireball ball = new Fireball(content, room, Position, velocity);
-                ball.isEnermyProjectile = true;
-                room.Projectiles.Add(ball);
+                Vector2[] velocities = { EnermyConstant.DragonFireBallVelocity1, EnermyConstant.DragonFireBallVelocity2, EnermyConstant.DragonFireBallVelocity3 };
+
+                foreach (Vector2 velocity in velocities)
+                {
+                    Fireball ball = new Fireball(content, room, Position, velocity);
+                    ball.isEnermyProjectile = true;
+                    room.Projectiles.Add(ball);
+                }
+                SoundManager.Manager.fireballSound();
             }
-            SoundManager.Manager.fireballSound();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

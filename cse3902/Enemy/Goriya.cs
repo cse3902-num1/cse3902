@@ -22,6 +22,7 @@ namespace cse3902.Enemy
         private Sprite currentSprite;
         private IProjectile projectile;
         private float GoriyaMoveSpeedEnermyConstant = 100f;
+        private float GhostGoriyaMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         private GameContent content;
 
@@ -72,50 +73,84 @@ namespace cse3902.Enemy
         public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            switch (currentState)
+            if (IsGhost)
             {
-                case GoriyaState.Up:
-                    Position += Constant.moveUpOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
-                    break;
-                case GoriyaState.Left:
-                    Position += Constant.moveLeftOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
-                    break;
-                case GoriyaState.Right:
-                    Position += Constant.moveRightOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
-                    break;
-                case GoriyaState.Down:
-                    Position += Constant.moveDownOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
-                    break;
+                Vector2 playerPos = room.Player.Position;
+                if (Position.X <= playerPos.X && Position.Y <= playerPos.Y)
+                {
+                    currentSprite = spriteRight;
+                    Position += Constant.moveDownOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveRightOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+                else if (Position.X <= playerPos.X && Position.Y > playerPos.Y)
+                {
+                    currentSprite = spriteRight;
+                    Position += Constant.moveRightOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveUpOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+                else if (Position.X > playerPos.X && Position.Y <= playerPos.Y)
+                {
+                    currentSprite = spriteLeft;
+                    Position += Constant.moveLeftOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveDownOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+                else if (Position.X > playerPos.X && Position.Y > playerPos.Y)
+                {
+                    currentSprite = spriteLeft;
+                    Position += Constant.moveLeftOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveUpOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+            }
+            else
+            {
+                switch (currentState)
+                {
+                    case GoriyaState.Up:
+                        Position += Constant.moveUpOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                    case GoriyaState.Left:
+                        Position += Constant.moveLeftOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                    case GoriyaState.Right:
+                        Position += Constant.moveRightOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                    case GoriyaState.Down:
+                        Position += Constant.moveDownOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                }
             }
         }
 
         public void ChangeAction(int randomNum)
         {
-            switch (randomNum)
+            if (!IsGhost)
             {
-                case 1:
-                    currentState = GoriyaState.Up;
-                    currentSprite = spriteUp;
-                    break;
-                case 2:
-                    currentState = GoriyaState.Down;
-                    currentSprite = spriteDown;
-                    break;
-                case 3:
-                    currentState = GoriyaState.Left;
-                    currentSprite = spriteLeft;
-                    break;
-                case 4:
-                    currentState = GoriyaState.Right;
-                    currentSprite = spriteRight;
-                    break;
-                case 5: Attack(); break;
+                switch (randomNum)
+                {
+                    case 1:
+                        currentState = GoriyaState.Up;
+                        currentSprite = spriteUp;
+                        break;
+                    case 2:
+                        currentState = GoriyaState.Down;
+                        currentSprite = spriteDown;
+                        break;
+                    case 3:
+                        currentState = GoriyaState.Left;
+                        currentSprite = spriteLeft;
+                        break;
+                    case 4:
+                        currentState = GoriyaState.Right;
+                        currentSprite = spriteRight;
+                        break;
+                    case 5: Attack(); break;
+                }
             }
         }
 
         public override void Attack()
         {
-            if (projectile != null) {
+            if (projectile != null || IsGhost) {
                 return;
             }
             SoundManager.Manager.arrowBoomerangSound();
@@ -145,6 +180,10 @@ namespace cse3902.Enemy
         public override void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.Position = Position;
+            if (IsGhost)
+            {
+                currentSprite.setAlpha(0.4f);
+            }
             currentSprite.Draw(spriteBatch);
             if (projectile is not null) {
                 projectile.Draw(spriteBatch);

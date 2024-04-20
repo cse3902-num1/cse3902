@@ -1,4 +1,5 @@
-﻿using cse3902.Interfaces;
+﻿using cse3902.Games;
+using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.Projectiles;
 using cse3902.RoomClasses;
@@ -9,12 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 namespace cse3902.Enemy
 {
     public abstract class EnemyBase : IEnemy
     {
         public bool IsDead {set;get;}
+
+        public bool IsGhost { set;get;}
 
         private Vector2 _position;
         public Vector2 Position {
@@ -53,6 +57,7 @@ namespace cse3902.Enemy
         {
             this.room = room;
             IsDead = false;
+            IsGhost = false;
             // Initialize sprite and collider here based on specific enemy content
         }
 
@@ -78,6 +83,10 @@ namespace cse3902.Enemy
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
+            if (IsGhost)
+            {
+                sprite.setAlpha(0.4f);
+            }
             sprite.Draw(spriteBatch);
         }
 
@@ -90,7 +99,14 @@ namespace cse3902.Enemy
         public virtual void Die()
         {
             SoundManager.Manager.enemyDeadSound();
-            IsDead = true;
+            if (Game1.isNightmare)
+            {
+                IsGhost = true;
+            } 
+            else
+            {
+                IsDead = true;
+            }
         }
     }
 }

@@ -282,6 +282,7 @@ namespace cse3902.RoomClasses
             /* enemy collisions */
             foreach (IEnemy enemy in Enemies)
             {
+                if (enemy.IsGhost) { continue; }
                 /* check for intersection of colliders */
                 List<CollisionResult<Block>> blockResults = null;
                 switch (enemy)
