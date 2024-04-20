@@ -38,6 +38,7 @@ namespace cse3902
         public Texture2D SpritesheetLinkWalkDamaged;
         public Texture2D SpriteSheetLinkAdditionItems;
         public Texture2D SpriteSheetFlipped;
+        public Texture2D gameStartTriangle;
 
         public Texture2D enemies;
         public Texture2D enemiesSheet;
@@ -70,6 +71,7 @@ namespace cse3902
         public SoundEffect bombBlowUp;
         public SoundEffect fireball;
         
+        
 
         private Texture2D LoadTexture2D(String name)
         {
@@ -84,7 +86,7 @@ namespace cse3902
         {
             this.content = content;
             font = content.Load<SpriteFont>("font_arial");
-
+            gameStartTriangle = LoadTexture2D("gameStartTriangle");
             LinkSpritesheet = LoadTexture2D("spritesheet_link");
             BlackScreen = LoadTexture2D("blackScreen");
             NewLinkSpritesheet = LoadTexture2D("spritesheet");

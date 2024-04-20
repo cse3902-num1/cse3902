@@ -17,12 +17,14 @@ namespace cse3902
         {
             currentMouseState = Mouse.GetState();
             previousMouseState = currentMouseState;
+            Mouse.SetCursor(MouseCursor.Hand);
         }
 
         public void Update(GameTime gameTime)
         {
             previousMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
+            Point mousePosition = new Point(currentMouseState.X, currentMouseState.Y);
         }
 
         public bool isLeftClick()
@@ -33,6 +35,10 @@ namespace cse3902
         public bool isRightClick()
         {
             return currentMouseState.RightButton == ButtonState.Pressed && previousMouseState.RightButton == ButtonState.Released;
+        }
+        public Point GetMousePosition()
+        {
+            return new Point(currentMouseState.X, currentMouseState.Y);
         }
 
         public bool isPlayerMoveLeftPressed() { return false; }
