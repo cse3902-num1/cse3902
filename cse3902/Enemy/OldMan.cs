@@ -16,10 +16,10 @@ namespace cse3902.Enemy
         private GameContent content;
         private float OldManMoveSpeed = 20f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
-        private const int AttackInterval = 100;
+        private const int AttackInterval = 200;
         public OldMan(GameContent content, Room room) : base(content, room)
         {
-            this.HP = 50;
+            this.HP = 30;
             sprite = new Sprite(content.oldman,
                 new List<Rectangle>()
                 {
@@ -27,7 +27,7 @@ namespace cse3902.Enemy
                 },
                 EnermyConstant.OldManOrigin
             );
-            Collider = new BoxCollider(EnermyConstant.DragonPosition, EnermyConstant.DragonColliderSize, EnermyConstant.DragonColliderOrigin, ColliderType.ENEMY);
+            Collider = new BoxCollider(EnermyConstant.OldManPosition, EnermyConstant.OldmanColliderSize, EnermyConstant.OldmanColliderOrigin, ColliderType.ENEMY);
             this.content = content;
 
             this.room = room;
