@@ -54,5 +54,20 @@ namespace cse3902.Enemy
         public static Vector2 SkeletonInitialPosition = new Vector2(200, 200);
         public static Vector2 SkeletonColliderSize = new Vector2(15 * 2, 15 * 2);
         public static Vector2 SkeletonColliderOrigin = new Vector2(7.5f * 2, 7.5f * 2);
+        public static Rectangle OldMan = new Rectangle(0, 0, 15, 15);
+        public static Vector2 OldManOrigin = new Vector2(7.5f, 7.5f);
+        public static Vector2 OldManPosition = new Vector2(500, 300);
+        public static Vector2 OldmanColliderSize = new Vector2(15 * 2, 15 * 2);
+        public static Vector2 OldmanColliderOrigin = new Vector2(7.5f * 2, 7.5f * 2);
+        public static Vector2 OldmanFireBallVelocity1 = new Vector2(-200f, -200f);
+        public static Vector2 OldmanFireBallVelocity2 = new Vector2(-200f, 0f);
+        public static Vector2 OldmanFireBallVelocity3 = new Vector2(-200f, 200f);
+        public static Vector2 OldmanFireBallVelocity4 = new Vector2(200f, 200f);
+        public static Vector2 OldmanFireBallVelocity5 = new Vector2(200f, 0f);
+        public static Vector2 OldmanFireBallVelocity6 = new Vector2(0f, 200f);
+        public static Vector2 OldmanFireBallVelocity7 = new Vector2(0f, -200f);
+        public static Vector2 OldmanFireBallVelocity8 = new Vector2(200f, -200f);
+       
+
     }
 }

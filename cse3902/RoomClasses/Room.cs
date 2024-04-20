@@ -134,6 +134,8 @@ namespace cse3902.RoomClasses
                             case 12: Enemies.Add(new Keese(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
                             case 13: Enemies.Add(new Gel(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
                             case 14: Enemies.Add(new Goriya(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+                            case 15: Enemies.Add(new OldMan(content, this)); Enemies[idxEnemy].Position = position + this.Position; idxEnemy++; break;
+
                         }
                         Blocks[idx].BlockIndex = 0;
                     }
