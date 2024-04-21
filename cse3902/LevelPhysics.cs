@@ -32,6 +32,42 @@ public static class LevelPhysics
             return regions[x, y];
         }
 
+        /* returns an array of regions,
+           consisting of the region enclosing the current position,
+           and (up to) 8 other regions around it.
+           if any region would be out of bounds, it will not be in the array.
+           the number of valid regions in the array is also returned. */
+        public static (PhysicsRegion[], int) WorldPositionToNeighboringRegions(PhysicsRegion[,] regions, Vector2 position)
+        {
+            PhysicsRegion[] neighbors = new PhysicsRegion[9];
+
+            int x = (int) (position.X / SIZE);
+            int y = (int) (position.Y / SIZE);
+            x = Math.Clamp(x, 0, regions.GetLength(0) - 1);
+            y = Math.Clamp(y, 0, regions.GetLength(1) - 1);
+
+            int count = 0;
+            for (int rx = x - 1; rx < x + 2; rx++) {
+                for (int ry = y - 1; ry < y + 2; ry++) {
+                    PhysicsRegion r = GetRegionOrNull(regions, rx, ry);
+                    if (r == null) continue;
+                    neighbors[count] = r;
+                    count++;
+                }
+            }
+            
+            return (neighbors, count);
+        }
+
+        private static PhysicsRegion GetRegionOrNull(PhysicsRegion[,] regions, int x, int y)
+        {
+            if (x < 0) return null;
+            if (y < 0) return null;
+            if (x >= regions.GetLength(0)) return null;
+            if (y >= regions.GetLength(1)) return null;
+            return regions[x, y];
+        }
+
         public void Update()
         {
             /* projectile collisions */
@@ -136,26 +172,40 @@ public static class LevelPhysics
             regions[x, y] = new PhysicsRegion();
         }}
 
-        Debug.WriteLine("regions: {0}x{1}", regions.GetLength(0), regions.GetLength(1));
-
         /* assign every entity in the level to a region based on its position */
+        /* also assign them to neighboring regions */
         foreach (Block block in blocks)
         {
-            PhysicsRegion.WorldPositionToRegion(regions, block.Position).blocks.Add(block);
+            // PhysicsRegion.WorldPositionToRegion(regions, block.Position).blocks.Add(block);
+            // PhysicsRegion.WorldPositionToNeighboringRegions(regions, block.Position).ForEach(r => r.blocks.Add(block));
+            var (rlist, rcount) = PhysicsRegion.WorldPositionToNeighboringRegions(regions, block.Position);
+            for (int i = 0; i < rcount; i++) rlist[i].blocks.Add(block);
         }
         foreach (IEnemy enemy in enemies)
         {
             PhysicsRegion.WorldPositionToRegion(regions, enemy.Position).enemies.Add(enemy);
+            // PhysicsRegion.WorldPositionToNeighboringRegions(regions, enemy.Position).ForEach(r => r.enemies.Add(enemy));
+            // var (rlist, rcount) = PhysicsRegion.WorldPositionToNeighboringRegions(regions, enemy.Position);
+            // for (int i = 0; i < rcount; i++) rlist[i].enemies.Add(enemy);
         }
         foreach (IItemPickup item in items)
         {
             PhysicsRegion.WorldPositionToRegion(regions, item.Position).items.Add(item);
+            // PhysicsRegion.WorldPositionToNeighboringRegions(regions, item.Position).ForEach(r => r.items.Add(item));
+            // var (rlist, rcount) = PhysicsRegion.WorldPositionToNeighboringRegions(regions, item.Position);
+            // for (int i = 0; i < rcount; i++) rlist[i].items.Add(item);
         }
         foreach (IProjectile projectile in projectiles)
         {
             PhysicsRegion.WorldPositionToRegion(regions, projectile.Position).projectiles.Add(projectile);
+            // PhysicsRegion.WorldPositionToNeighboringRegions(regions, projectile.Position).ForEach(r => r.projectiles.Add(projectile));
+            // var (rlist, rcount) = PhysicsRegion.WorldPositionToNeighboringRegions(regions, projectile.Position);
+            // for (int i = 0; i< rcount; i++) rlist[i].projectiles.Add(projectile);
         }
         PhysicsRegion.WorldPositionToRegion(regions, player.Position).player = player;
+        // PhysicsRegion.WorldPositionToNeighboringRegions(regions, player.Position).ForEach(r => r.player = player);
+        // var (prlist, prcount) = PhysicsRegion.WorldPositionToNeighboringRegions(regions, player.Position);
+        // for (int i = 0; i < prcount; i++) prlist[i].player = player;
 
         /* update collisions within each region */
         foreach (PhysicsRegion region in regions)
