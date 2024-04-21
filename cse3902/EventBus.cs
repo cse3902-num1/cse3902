@@ -12,14 +12,4 @@ public static class EventBus
     // even though we don't intend anyone else to use the type itself :(
     public delegate void _LoggingMessage(string msg);
     public static _LoggingMessage LoggingMessage = (string msg) => {}; // must have a value, so set it to a lambda function that does nothing
-
-    /* when the player enters a door. direction determines which door was entered */
-    public delegate void _EnteringDoor(Direction direction);
-    public static _EnteringDoor EnteringDoor = (Direction direction) => { Debug.WriteLine("[event] EnteringDoor " + direction); }; 
-
-    public delegate void _StartingRoomTransition(Room roomFrom, Room roomTo);
-    public static _StartingRoomTransition StartingRoomTransition = (Room roomFrom, Room roomTo) => {};
-
-    public delegate void _EndingRoomTransition();
-    public static _EndingRoomTransition EndingRoomTransition = () => {};
 }

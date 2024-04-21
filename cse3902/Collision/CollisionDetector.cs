@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using cse3902.DoorClasses;
 using cse3902.Interfaces;
 using cse3902.Objects;
-using cse3902.WallClasses;
 using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 
@@ -38,20 +37,6 @@ public static class CollisionDetector
         return results;
     }
 
-    public static List<CollisionResult<Wall>> DetectWallCollision(ICollider self, Wall wall)
-    {
-        List<CollisionResult<Wall>> results = new List<CollisionResult<Wall>>();
-        foreach (BoxCollider w in wall.colliders)
-        {
-            if (self.IsColliding(w))
-            {
-                Vector2 depth = self.GetOverlap(w);
-                CollisionResult<Wall> result = new CollisionResult<Wall>(depth, w,wall);
-                results.Add(result);
-            }
-        }
-        return results;
-    }
     public static List<CollisionResult<IPlayer>> DetectPlayerCollision(ICollider self, IPlayer player) {
         List<CollisionResult<IPlayer>> results = new List<CollisionResult<IPlayer>>();
         if (self.IsColliding(player.Pushbox))

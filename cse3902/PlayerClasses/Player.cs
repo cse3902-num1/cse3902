@@ -6,7 +6,6 @@ using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using cse3902.WallClasses;
 using Microsoft.Xna.Framework.Audio;
 
 

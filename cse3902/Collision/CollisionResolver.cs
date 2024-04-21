@@ -4,7 +4,6 @@ using cse3902.DoorClasses;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
-using cse3902.WallClasses;
 using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
@@ -163,55 +162,6 @@ public static class CollisionResolver
 
         //Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
         //player.Position += reconciliation;
-    }
-
-    /* Called only when projectile collision with walls */
-    public static void ResolveProjectileWallCollision(IProjectile projectile)
-    {
-        projectile.IsDead = true;
-    }
-
-    public static void ResolveEnemyWallCollision(IEnemy enemy,  List<CollisionResult<Wall>> results)
-    {
-        if (results.Count == 0)
-        {
-            return;
-        }
-        float area = 0f;
-        CollisionResult<Wall> biggestResult = results[0];
-        foreach (CollisionResult<Wall> result in results)
-        {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
-        }
-
-        Vector2 reconciliation = CollisionMove(enemy.collider, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        enemy.Position += reconciliation;
-    }
-
-    public static void ResolvePlayerWallCollision(IPlayer player, List<CollisionResult<Wall>> results)
-    {
-        if (results.Count == 0)
-        {
-            return;
-        }
-
-        float area = 0f;
-        CollisionResult<Wall> biggestResult = results[0];
-        foreach (CollisionResult<Wall> result in results)
-        {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
-        }
-
-        Vector2 reconciliation = CollisionMove(((Player)player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        player.Position += reconciliation;
     }
 
     public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
