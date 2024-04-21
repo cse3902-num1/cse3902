@@ -85,6 +85,7 @@ namespace cse3902.Games
                 // The mouse is over the adventure mode text and the left button was clicked
                 // Transition to the adventure mode gameplay state
                 Game1.State = new GamePlayState(gameContent, game);
+                Game1.isNightmare = false;
             }
 
             // Check if the mouse is over the nightmare mode text
