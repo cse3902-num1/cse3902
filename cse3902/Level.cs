@@ -32,8 +32,8 @@ namespace cse3902
             SKELETON = 4,
         }
        
-        public const int MAP_WIDTH = 64;
-        public const int MAP_HEIGHT = 64;
+        public const int MAP_WIDTH = 32;
+        public const int MAP_HEIGHT = 32;
         private TileType[,] tilemap = new TileType[MAP_WIDTH, MAP_HEIGHT];
         private EnemyType[,] enemymap = new EnemyType[MAP_WIDTH, MAP_HEIGHT];
         
@@ -45,7 +45,7 @@ namespace cse3902
         public List<IEnemy> Enemies;
         public List<IParticleEffect> ParticleEffects;
         public List<IProjectile> Projectiles;
-        public Player player;
+        public IPlayer player;
 
         /* TODO: this is a temporary function to print mapdata */
         public void PrintTileMap()
@@ -197,7 +197,6 @@ namespace cse3902
 
                 if (tilemap[playerSpawnX, playerSpawnY] != TileType.FLOOR) continue;
                 if (enemymap[playerSpawnX, playerSpawnY] != EnemyType.NONE) continue;
-                enemymap[playerSpawnX, playerSpawnY] = EnemyType.DRAGON;
                 break;
             }
 
@@ -351,6 +350,8 @@ namespace cse3902
             Projectiles.ForEach(p => p.Update(gameTime, controllers));
 
             player.Update(gameTime, controllers);
+
+            LevelPhysics.Update(this);
         }
 
         public void Draw(SpriteBatch spriteBatch)
