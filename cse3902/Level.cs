@@ -258,7 +258,7 @@ namespace cse3902
 
 
                 /* spawn player */
-                player = new Player(content);
+                player = new Player(content, this);
             player.Position = new Vector2(playerSpawnX * TILE_SIZE, playerSpawnY * TILE_SIZE);
         }
 

@@ -32,12 +32,14 @@ public abstract class BasicDirectionalProjectile : IProjectile
         Position = position;
         Velocity = velocity;
         this.level = level;
-      
-        currentSprite = downSprite; /* currentSprite can't be null */
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
+        /* if draw() gets called before update(),
+           currentSprite could be null. */
+        if (currentSprite == null) return;
+
         currentSprite.Position = Position;
         currentSprite.Draw(spriteBatch);
     }

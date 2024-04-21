@@ -39,7 +39,7 @@ namespace cse3902.PlayerClasses
         public IPlayerState State;
         
         public GameContent content;
-        public Player(GameContent content)
+        public Player(GameContent content, Level level)
         {
             damageTimer = new Stopwatch();
             this.content = content;
@@ -48,6 +48,8 @@ namespace cse3902.PlayerClasses
             Pushbox = new BoxCollider(Position,Size*2.5f, Origin*2.5f, ColliderType.PLAYER);
 
             Inventory = new PlayerInventory(content);
+
+            this.level = level;
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
