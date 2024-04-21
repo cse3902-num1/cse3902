@@ -7,7 +7,6 @@ using cse3902.Objects;
 using cse3902.RoomClasses;
 using cse3902.PlayerClasses;
 using System;
-using cse3902.DoorClasses;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using System.Diagnostics;

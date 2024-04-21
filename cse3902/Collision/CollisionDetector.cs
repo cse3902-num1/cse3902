@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using cse3902.DoorClasses;
 using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.PlayerClasses;
@@ -60,21 +59,6 @@ public static class CollisionDetector
             if (self.IsColliding(item.Collider)) {
                 Vector2 depth = self.GetOverlap(item.Collider);
                 CollisionResult<IItemPickup> result = new CollisionResult<IItemPickup>(depth, item.Collider, item);
-                results.Add(result);
-            }
-        }
-        return results;
-    }
-
-    public static List<CollisionResult<Doors>> DetectDoorCollision(ICollider self, Doors door)
-    {
-        List<CollisionResult<Doors>> results = new List<CollisionResult<Doors>>();
-        foreach (BoxCollider d in door.colliders)
-        {
-            if (self.IsColliding(d))
-            {
-                Vector2 depth = self.GetOverlap(d);
-                CollisionResult<Doors> result = new CollisionResult<Doors>(depth, d, door);
                 results.Add(result);
             }
         }
