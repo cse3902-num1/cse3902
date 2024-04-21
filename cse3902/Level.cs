@@ -402,7 +402,7 @@ namespace cse3902
         }
         public void Update(GameTime gameTime, List<IController> controllers)
         {
-            // Blocks = Blocks.Where(b => !b.IsDead).ToList();
+            Blocks = Blocks.Where(b => !b.IsDead).ToList();
             Items = Items.Where(i => !i.IsDead).ToList();
             Enemies = Enemies.Where(e => !e.IsDead).ToList();
             ParticleEffects = ParticleEffects.Where(p => !p.IsDead).ToList();

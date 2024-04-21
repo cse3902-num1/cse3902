@@ -20,6 +20,8 @@ namespace cse3902.Objects
         //}
 
         //private ISprite sprite
+
+        public bool IsDead {set;get;}
         private int blockIndex;
         private List<Sprite> blocks;
         private Vector2 position;

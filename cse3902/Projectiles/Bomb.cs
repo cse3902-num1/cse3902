@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.Enemy;
 using Microsoft.Xna.Framework.Audio;
+using cse3902.Objects;
+using System;
 
 
 namespace cse3902.Projectiles;
@@ -47,20 +49,37 @@ public class Bomb : IProjectile
         IParticleEffect fx = new BombExplode(content, Position);
         level.ParticleEffects.Add(fx);
         Hitbox.Position = Position;
+
+        const float RANGE = 64.0f;
+
+        /* hurt all enemies within a certain range */
         foreach (IEnemy e in level.Enemies)
         {
-            switch (e)
-            {
-                case EnemyBase enemyBase:
-                    if (Hitbox.IsColliding(enemyBase.Collider))
-                    {
-                        IsDead = true;
-                        e.TakeDmg(1000);
+            // switch (e)
+            // {
+            //     case EnemyBase enemyBase:
+            //         if (Hitbox.IsColliding(enemyBase.Collider))
+            //         {
+            //             IsDead = true;
+            //             e.TakeDmg(1000);
 
-                    }
-                    break;
-            }
+            //         }
+            //         break;
+            // }
+            if (Vector2.Distance(e.Position, Position) > RANGE) continue;
+            e.TakeDmg(10);
         }
+
+        /* destroy all blocks within a certain range */
+        foreach (Block block in level.Blocks) {
+            if (block.BlockIndex == BlockConstant.BLOCK_TYPE_0) continue;
+            if (Math.Abs(block.Position.X - Position.X) > RANGE) continue;
+            if (Math.Abs(block.Position.Y - Position.Y) > RANGE) continue;
+            // block.IsDead = true;
+            block.BlockIndex = BlockConstant.BLOCK_TYPE_0;
+        }
+
+        IsDead = true;
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)
