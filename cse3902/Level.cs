@@ -50,22 +50,6 @@ namespace cse3902
         /* TODO: this is a temporary function to print mapdata */
         public void PrintTileMap()
         {
-            // for (int x = 0; x < tilemap.GetLength(0); x++)
-            // {
-            //     string[] row = Enumerable.Range(0, tilemap.GetLength(1))
-            //         .Select(y => tilemap[x, y])
-            //         .Select(t => {
-            //             switch (t) {
-            //                 case TileType.FLOOR: return ".";
-            //                 case TileType.WALL: return "#";
-            //                 default: throw new NotImplementedException("Unhandled TileType type");
-            //             }
-            //         })
-            //         .ToArray();
-                
-            //     Debug.WriteLine(string.Join(" ", row));
-            // }
-
             for (int x = 0; x < tilemap.GetLength(0); x++)
             {
                 string line = "";
@@ -82,25 +66,6 @@ namespace cse3902
 
         public void PrintEnemyMap()
         {
-            // for (int x = 0; x < enemymap.GetLength(0); x++)
-            // {
-            //     string[] row = Enumerable.Range(0, enemymap.GetLength(1))
-            //         .Select(y => enemymap[x, y])
-            //         .Select(e => {
-            //             switch (e) {
-            //                 case EnemyType.NONE: return ".";
-            //                 case EnemyType.DRAGON: return "D";
-            //                 case EnemyType.GEL: return "G";
-            //                 case EnemyType.KEESE: return "K";
-            //                 case EnemyType.SKELETON: return "S";
-            //                 default: throw new NotImplementedException("Unhandled EnemyType type");
-            //             }
-            //         })
-            //         .ToArray();
-                
-            //     Debug.WriteLine(string.Join(" ", row));
-            // }
-
             for (int x = 0; x < enemymap.GetLength(0); x++)
             {
                 string line = "";
@@ -153,14 +118,82 @@ namespace cse3902
                 }
             }
 
-            /* randomly add open spaces to map interior */
-            for (int x = 1; x < w - 1; x++)
+            // /* randomly add open spaces to map interior, at a certain spacing */
+            const int HALL_GRID_SIZE = 2;
+            const int MIN_HALL_LENGTH = 1 * HALL_GRID_SIZE;
+            const int MAX_HALL_LENGTH = 5 * HALL_GRID_SIZE;
+            const double HALL_PROBABILITY = 0.2;
+            // for (int x = 1; x < w - 1; x += INTERIOR_SPACING)
+            // {
+            //     for (int y = 1; y < h - 1; y += INTERIOR_SPACING)
+            //     {
+            //         if (random.NextDouble() <= 0.75)
+            //         {
+            //             tilemap[x, y] = TileType.FLOOR;
+            //         }
+            //     }
+            // }
+
+            /* randomly generate hallways on a grid */
+            for (int x = 1; x < w - 1; x += HALL_GRID_SIZE)
             {
-                for (int y = 1; y < h - 1; y++)
+                for (int y = 1; y < h - 1; y += HALL_GRID_SIZE)
                 {
-                    if (random.NextDouble() <= 0.75)
+                    if (random.NextDouble() > HALL_PROBABILITY) continue;
+
+                    /* generate hallway details */
+                    int hdirection = random.Next(4);                 /* 0=left, 1=right, 2=up, 3=down */
+                    int hlength = random.Next(MIN_HALL_LENGTH, MAX_HALL_LENGTH); /* number of tiles */
+
+                    /* build hallway */
+                    int hx = x;
+                    int hy = y;
+                    bool isdone = false;
+                    while (!isdone && hlength > 0)
                     {
-                        tilemap[x, y] = TileType.FLOOR;
+                        tilemap[hx, hy] = TileType.FLOOR;
+                        switch (hdirection) {
+                            case 0:
+                                hx--;
+                                if (hx < 1) isdone = true;
+                                break;
+                            case 1:
+                                hx++;
+                                if (hx >= w - 1) isdone = true;
+                                break;
+                            case 2:
+                                hy--;
+                                if (hy < 1) isdone = true;
+                                break;
+                            case 3:
+                                hy++;
+                                if (hy >= h - 1) isdone = true;
+                                break;
+                        }
+
+                        hlength--;
+                    }
+                }
+            }
+
+            /* generate basic randomly-sized rooms */
+            const double ROOM_PROBABILITY = 0.1;
+            const int ROOM_SIZE_INCREMENT = HALL_GRID_SIZE; /* in units of tiles */
+            const int MIN_ROOM_SIZE = 0; /* in units of the room size increment */
+            const int MAX_ROOM_SIZE = 5;
+            for (int x = 1; x < w - 1; x += HALL_GRID_SIZE) {
+                for (int y = 1; y < h - 1; y += HALL_GRID_SIZE) {
+                    if (random.NextDouble() > ROOM_PROBABILITY) continue;
+
+                    /* generate room details */
+                    int rw = random.Next(MIN_ROOM_SIZE, MAX_ROOM_SIZE + 1) * ROOM_SIZE_INCREMENT;
+                    int rh = random.Next(MIN_ROOM_SIZE, MAX_ROOM_SIZE + 1) * ROOM_SIZE_INCREMENT;
+
+                    /* build room */
+                    for (int rx = x; rx < x + rw && rx < w - 1; rx++) {
+                        for (int ry = y; ry < y + rh && ry < h - 1; ry++) {
+                            tilemap[rx, ry] = TileType.FLOOR;
+                        }
                     }
                 }
             }
@@ -175,17 +208,49 @@ namespace cse3902
             }
 
             /* randomly add enemies to open areas */
+            const double ENEMY_SPAWN_CHANCE = 0.05;
+            const double DRAGON_SPAWN_WEIGHT = 0.1;
+            const double GEL_SPAWN_WEIGHT = 0.2;
+            const double KEESE_SPAWN_WEIGHT = 0.3;
+            const double SKELETON_SPAWN_WEIGHT = 0.4;
+            const double TOTAL_SPAWN_WEIGHT = DRAGON_SPAWN_WEIGHT + GEL_SPAWN_WEIGHT + KEESE_SPAWN_WEIGHT + SKELETON_SPAWN_WEIGHT;
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
                     if (tilemap[x, y] != TileType.FLOOR) continue;
 
-                    if (random.NextDouble() < 0.25)
-                    {
-                        Array types = Enum.GetValues(typeof(EnemyType));
-                        enemymap[x, y] = (EnemyType) types.GetValue(random.Next(types.Length));
+                    if (random.NextDouble() > ENEMY_SPAWN_CHANCE) continue;
+
+                    /* determine enemy type */
+                    EnemyType e = EnemyType.NONE;
+                    double choice = random.NextDouble() * TOTAL_SPAWN_WEIGHT;
+
+                    if (choice <= DRAGON_SPAWN_WEIGHT) {
+                        e = EnemyType.DRAGON;
+                        goto Done;
                     }
+                    choice -= DRAGON_SPAWN_WEIGHT;
+
+                    if (choice <= GEL_SPAWN_WEIGHT) {
+                        e = EnemyType.GEL;
+                        goto Done;
+                    }
+                    choice -= GEL_SPAWN_WEIGHT;
+
+                    if (choice <= KEESE_SPAWN_WEIGHT) {
+                        e = EnemyType.KEESE;
+                        goto Done;
+                    }
+                    choice -= KEESE_SPAWN_WEIGHT;
+
+                    if (choice <= SKELETON_SPAWN_WEIGHT) {
+                        e = EnemyType.SKELETON;
+                        goto Done;
+                    }
+
+                    Done:
+                    enemymap[x, y] = e;
                 }
             }
 
