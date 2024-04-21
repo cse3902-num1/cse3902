@@ -1,6 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,8 +25,8 @@ namespace cse3902.Enemy
         private float GhostGoriyaMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         private GameContent content;
-
-        public Goriya(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public Goriya(GameContent content, Level level) : base(content)
         {
             this.HP = 7;
             spriteUp = new Sprite(content.goriya,
@@ -68,14 +68,16 @@ namespace cse3902.Enemy
             projectile = null;
             Collider = new BoxCollider(Position, EnermyConstant.GoriyaColliderSize, EnermyConstant.GoriyaColliderOrigin, ColliderType);
             this.content = content;
+            this.level = level;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
             if (IsGhost)
             {
-                Vector2 playerPos = room.Player.Position;
+                Vector2 playerPos = level.player.Position;
                 if (Position.X <= playerPos.X && Position.Y <= playerPos.Y)
                 {
                     currentSprite = spriteRight;
@@ -103,6 +105,7 @@ namespace cse3902.Enemy
             }
             else
             {
+            
                 switch (currentState)
                 {
                     case GoriyaState.Up:
@@ -172,7 +175,7 @@ namespace cse3902.Enemy
                     break;
             }
             velocity *= 200f;
-            projectile = new GreenBoomerang(content, room, Position, velocity);
+            //projectile = new GreenBoomerang(content, level, Position, velocity);
             projectile.isEnermyProjectile = true;
 
         }

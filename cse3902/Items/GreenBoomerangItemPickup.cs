@@ -1,7 +1,6 @@
 using cse3902.Items;
 using cse3902.PlayerClasses;
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace cse3902;
 public class GreenBoomerangItemPickup : BasicSlotBPickup
 {
     private bool isAdded = false;
-    public GreenBoomerangItemPickup(GameContent content, Room room) : base(room)
+    public GreenBoomerangItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                        ItemsConstant.GreenBoomerangItemSourceRect});

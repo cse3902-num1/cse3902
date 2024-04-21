@@ -11,6 +11,8 @@ using cse3902.DoorClasses;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Reflection.Metadata;
 
 namespace cse3902
 {
@@ -30,10 +32,12 @@ namespace cse3902
             KEESE = 3,
             SKELETON = 4,
         }
+       
         public const int MAP_WIDTH = 64;
         public const int MAP_HEIGHT = 64;
         private TileType[,] tilemap = new TileType[MAP_WIDTH, MAP_HEIGHT];
         private EnemyType[,] enemymap = new EnemyType[MAP_WIDTH, MAP_HEIGHT];
+        
         private int playerSpawnX = 0;
         private int playerSpawnY = 0;
 
@@ -217,27 +221,122 @@ namespace cse3902
             }}
 
             /* spawn items */
+            Random random = new Random();
+            for (int x = 0; x < MAP_WIDTH; x++)
+            {
+                for (int y = 0; y < MAP_HEIGHT; y++)
+                {
+                    if (tilemap[x, y] == TileType.FLOOR && random.NextDouble() < 0.1) // 10% chance to spawn an item on a floor tile
+                    {
+                        Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
+                        IItemPickup item = RandomItem(content); // This method would determine which item to create
+                        item.Position = pos;
+                        Items.Add(item);
+                    }
+                }
+            }
 
             /* spawn enemies */
-            for (int x = 0; x < w; x++) { for (int y = 0; y < h; y++)
+            for (int x = 0; x < w; x++)
             {
-                // Vector2 pos = new Vector2(x * SCALE, y * SCALE);
-                // if (enemymap[x, y] == EnemyType.NONE) continue;
-                // IEnemy e = enemymap[x, y] switch {
-                //     EnemyType.DRAGON => new Dragon(content, this),
-                //     EnemyType.GEL => new Gel(content, this),
-                //     EnemyType.KEESE => new Keese(content, this),
-                //     EnemyType.SKELETON => new Skeleton(content, this),
-                // };
-                // e.Position = pos;
-                // Enemies.Add(e);
-            }}
-            
-            /* spawn player */
-            player = new Player(content);
+                for (int y = 0; y < h; y++)
+                {
+                    if (enemymap[x, y] == EnemyType.NONE) continue;
+                    Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
+                    IEnemy e = enemymap[x, y] switch
+                    {
+                        EnemyType.DRAGON => new Dragon(content,this),
+                        EnemyType.GEL => new Gel(content,this),
+                        EnemyType.KEESE => new Keese(content,this),
+                        EnemyType.SKELETON => new Skeleton(content, this),
+                        _ => throw new NotImplementedException("Unhandled enemy type")
+                    };
+                    e.Position = pos;
+                    Enemies.Add(e);
+                }
+            }
+
+
+                /* spawn player */
+                player = new Player(content);
             player.Position = new Vector2(playerSpawnX * TILE_SIZE, playerSpawnY * TILE_SIZE);
         }
 
+        private IItemPickup RandomItem(GameContent content)
+        {
+            Random random = new Random();
+            // This is a simplified example, you would implement your logic based on item rarity or other criteria
+            int itemType = random.Next(0, 27); // assuming you have 27 item types as in your provided list
+            switch (itemType)
+            {
+                case 0: 
+                    return new FiveRupiesItemPickup(content, this);
+              
+                case 1: 
+                    return new FireItemPickUp(content, this);
+                case 2:
+                    return new RupyItemPickup(content, this);
+                case 3:
+                    return new TriforceItemPickup(content, this);
+                case 4:
+                    return new MapItemPickup(content, this);
+                case 5:
+                    return new KeyItemPickup(content, this);
+                case 6:
+                    return new HeartItemPickup(content, this);
+                case 7:
+                    return new HeartContainerItemPickup(content, this);
+                case 8:
+                    return new FairyItemPickup(content, this);
+                case 9:
+                    return new CompassItemPickUp(content, this);
+                case 10:
+                    return new ClockItemPickUp(content, this);
+                case 11:
+                    return new BowItemPickup(content, this);
+                case 12:
+                    return new BombItemPickup(content, this);
+                case 13:
+                    return new LifePotionItemPickup(content, this);
+                case 14:
+                    return new SecondPotionItemPickup(content, this);
+                case 15:
+                    return new LetterItemPickup(content, this);
+                case 16:
+                    return new FoodItemPickup(content, this);
+                case 17:
+                    return new SwordItemPickup(content, this);
+                case 18:
+                    return new WhiteSwordItemPickup(content, this);
+                case 19:
+                    return new MagicalSwordItemPickup(content, this);
+                case 20:
+                    return new MagicalShieldItemPickup(content, this);
+                case 21:
+                    return new BlueCandleItemPickup(content, this);
+                case 22:
+                    return new RedCandleItemPickup(content, this);
+                case 23:
+                    return new RedRingItemPickup(content, this);
+                case 24:
+                    return new BlueRingItemPickup(content, this);
+                case 25:
+                    return new PowerBraceletItemPickup(content, this);
+                case 26:
+                    return new RecorderItemPickup(content, this);
+                case 27:
+                    return new RaftItemPickup(content, this);
+                case 28:
+                    return new StepLadderItemPickup(content, this);
+                case 29:
+                    return new MagicalRodItemPickup(content, this);
+                case 30:
+                    return new BookOfMagicItemPickup(content, this);
+                case 31: 
+                    return new MagicalKeyItemPickup(content, this);
+                default: return null;
+            }
+        }
         public void Update(GameTime gameTime, List<IController> controllers)
         {
             // Blocks = Blocks.Where(b => !b.IsDead).ToList();

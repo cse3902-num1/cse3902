@@ -51,11 +51,10 @@ namespace cse3902.Enemy
         protected Random random = new Random();
         protected int randomNum;
 
-        protected Room room;
         
-        protected EnemyBase(GameContent content, Room room)
+        protected EnemyBase(GameContent content)
         {
-            this.room = room;
+
             IsDead = false;
             IsGhost = false;
             // Initialize sprite and collider here based on specific enemy content

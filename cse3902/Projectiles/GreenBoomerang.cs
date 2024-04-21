@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 
 namespace cse3902.Projectiles;
@@ -10,7 +9,7 @@ internal class GreenBoomerang : BasicBoomerangProjectile
 {
     private const float maxDistance = 200f;
     private Vector2 GreenBoomerangOrigin = new Vector2(4, 8);
-    public GreenBoomerang(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity, maxDistance)
+    public GreenBoomerang(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity, maxDistance)
     {
         sprite = new Sprite(content.enemiesSheet,
             new List<Rectangle>()

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,7 +8,7 @@ namespace cse3902.Projectiles;
 public class Fireball : BasicDirectionalProjectile
 {
     private Vector2 FireBallOrigin = new Vector2(4.5f, 9);
-    public Fireball(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
+    public Fireball(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity)
     {
         leftSprite = new Sprite(content.enemies,
             new List<Rectangle>()

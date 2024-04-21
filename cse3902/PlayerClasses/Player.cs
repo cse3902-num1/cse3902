@@ -14,7 +14,7 @@ namespace cse3902.PlayerClasses
 {    
     public class Player : IPlayer
     {
-        public Room CurrentRoom {set;get;}
+        public Level level {set;get;}
 
         public PlayerInventory Inventory {set;get;}
         
@@ -88,7 +88,7 @@ namespace cse3902.PlayerClasses
         /* Sets the current item, which is used by PlayerStateItem. */
         public void UseItem(IInventoryItem item)
         {
-            item.Use(this, CurrentRoom);
+            item.Use(this, level);
         }
 
         public void TakeDamage()

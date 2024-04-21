@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using cse3902.RoomClasses;
+
 
 namespace cse3902.Enemy
 {
@@ -15,7 +15,8 @@ namespace cse3902.Enemy
         private float KeeseMoveSpeedEnermyConstant = 100f;
         private float GhostKeeseMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
-        public Keese(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public Keese(GameContent content, Level level) : base(content)
         {
             this.HP = 5;
             sprite = new Sprite(content.enemiesSheet,
@@ -29,6 +30,7 @@ namespace cse3902.Enemy
 
             Position = EnermyConstant.KeeseInitialPosition;
             Collider = new BoxCollider(Position, EnermyConstant.KeeseColliderSize, EnermyConstant.KeeseColliderOrigin, ColliderType);
+            this.level = level;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -36,7 +38,7 @@ namespace cse3902.Enemy
             Vector2 newPosition = Position;
             if (IsGhost)
             {
-                Vector2 playerPos = room.Player.Position;
+                Vector2 playerPos = level.player.Position;
                 if (newPosition.X < playerPos.X)
                 {
                     newPosition.X += GhostKeeseMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -56,6 +58,7 @@ namespace cse3902.Enemy
             }
             else
             {
+            
                 switch (randomNum)
                 {
                     case 1:

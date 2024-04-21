@@ -11,14 +11,14 @@ public abstract class BasicItemPickup : IItemPickup
 {
     public Vector2 Position {set;get;}
     protected ISprite sprite; /* should set in constructor */
-    protected Room room;
+    protected Level level;
     public ICollider Collider {set;get;}
     public bool IsDead {set;get;}
 
-    public BasicItemPickup(Room room)
+    public BasicItemPickup(Level level)
     {
         Position = new Vector2(0);
-        this.room = room;
+        this.level = level;
         this.Collider = new BoxCollider(Position, ItemsConstant.BasicItemColliderSize, ItemsConstant.BasicItemColliderOrigin, ColliderType.ITEM_PICKUP);
         this.IsDead = false;
     }

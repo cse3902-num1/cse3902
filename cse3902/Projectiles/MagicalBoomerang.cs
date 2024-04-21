@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 
 namespace cse3902.Projectiles;
@@ -8,7 +7,7 @@ internal class MagicalBoomerang : BasicBoomerangProjectile
 {
     private const float maxDistance = 300f;
     private Vector2 MagicalBoomeringOrigin = new Vector2(10, 16);
-    public MagicalBoomerang(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity, maxDistance)
+    public MagicalBoomerang(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity, maxDistance)
     {
         sprite = new Sprite(content.blueBoomerang,
             new List<Rectangle>()

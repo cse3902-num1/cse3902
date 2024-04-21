@@ -1,6 +1,5 @@
 using cse3902.Items;
 using cse3902.PlayerClasses;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +11,7 @@ public class MagicalSwordItemPickup : BasicSlotAPickup
 {
     private bool isAdded = false;
     public static bool isMagicalSwordPicked = false;
-    public MagicalSwordItemPickup(GameContent content, Room room) : base(room)
+    public MagicalSwordItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         ItemsConstant.MagicSwordItemSourceRect });

@@ -8,7 +8,7 @@ namespace cse3902
 {
 	public interface IPlayer : IGameObject
 	{
-        public Room CurrentRoom {set;get;} /* current room */
+        public Level level {set;get;} 
         public Direction Facing {set;get;}
         public ICollider Pushbox {set;get;}
         public PlayerInventory Inventory {set;get;}

@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using cse3902.RoomClasses;
 
 namespace cse3902.Enemy
 {
@@ -14,7 +13,8 @@ namespace cse3902.Enemy
         private float GelMoveSpeedEnermyConstant = 100f;
         private float GhostGelMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
-        public Gel(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public Gel(GameContent content, Level level) : base(content)
         {
             this.HP = 1;
             sprite = new Sprite(content.enemiesSheet,
@@ -25,7 +25,7 @@ namespace cse3902.Enemy
             },
             EnermyConstant.GelOrigin
      );
-
+            this.level = level;
             Position = EnermyConstant.GelInitialPosition;
             Collider = new BoxCollider(Position, EnermyConstant.GelColliderSize, EnermyConstant.GelColliderOrigin, ColliderType.ENEMY);
         }
@@ -33,9 +33,10 @@ namespace cse3902.Enemy
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
+
             if (IsGhost)
             {
-                Vector2 playerPos = room.Player.Position;
+                Vector2 playerPos = level.player.Position;
                 if (newPosition.X < playerPos.X)
                 {
                     newPosition.X += GhostGelMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -55,6 +56,7 @@ namespace cse3902.Enemy
             }
             else
             {
+
                 switch (randomNum)
                 {
                     case 1:

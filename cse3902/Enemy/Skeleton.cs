@@ -1,5 +1,5 @@
 ﻿using cse3902.Interfaces;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +14,8 @@ namespace cse3902.Enemy
         private float SkeletonMoveSpeedEnermyConstant = 100f;
         private float GhostSkeletonMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
-        public Skeleton(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public Skeleton(GameContent content, Level level) : base(content)
         {
             this.HP = 3;
             sprite = new Sprite(content.skeleton,
@@ -25,9 +26,10 @@ namespace cse3902.Enemy
                 },
                 EnermyConstant.SkeletonOrigin
             );
-
+            this.level = level;
             Position = EnermyConstant.SkeletonInitialPosition;
             Collider = new BoxCollider(Position, EnermyConstant.SkeletonColliderSize, EnermyConstant.SkeletonColliderOrigin, ColliderType);
+            
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -37,7 +39,7 @@ namespace cse3902.Enemy
             float ghostSpeed = GhostSkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (IsGhost)
             {
-                Vector2 playerPos = room.Player.Position;
+                Vector2 playerPos = level.player.Position;
                 if (newPosition.X < playerPos.X)
                 {
                     newPosition.X += ghostSpeed;
@@ -57,6 +59,7 @@ namespace cse3902.Enemy
             }
             else
             {
+            
                 switch (randomNum)
                 {
                     case 1:
@@ -71,7 +74,7 @@ namespace cse3902.Enemy
                     case 4:
                         newPosition.Y += speed;
                         break;
-                }
+               }
             }
             Position = newPosition;
         }

@@ -22,9 +22,9 @@ public abstract class BasicBoomerangProjectile : IProjectile
     protected Vector2 initialPosition;
 
     public ICollider Hitbox; /* set in constructor */
-    protected Room room;
+    protected Level level;
 
-    public BasicBoomerangProjectile(Room room, Vector2 position, Vector2 velocity, float range)
+    public BasicBoomerangProjectile(Level level, Vector2 position, Vector2 velocity, float range)
     {
         IsDead = false;
         Position = position;
@@ -33,7 +33,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
         totalDistance = 0;
         isReturning = false;
         initialPosition = position;
-        this.room = room;
+        this.level = level;
     }
 
     public void Die()
@@ -73,7 +73,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
         if (isEnermyProjectile == false)
         {
             Hitbox.Position = Position;
-            foreach (IEnemy e in room.Enemies)
+            foreach (IEnemy e in level.Enemies)
             {
                 switch (e)
                 {
@@ -90,11 +90,11 @@ public abstract class BasicBoomerangProjectile : IProjectile
         else
         {
             Hitbox.Position = Position;
-            if (Hitbox.IsColliding(room.Player.Pushbox))
+            if (Hitbox.IsColliding(level.player.Pushbox))
             {
                 this.IsDead = true;
 
-                room.Player.TakeDamage();
+                level.player.TakeDamage();
             }
         }
 

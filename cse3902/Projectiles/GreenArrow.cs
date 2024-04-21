@@ -1,5 +1,4 @@
 ﻿using cse3902.Interfaces;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -12,7 +11,7 @@ public class GreenArrow : BasicDirectionalProjectile
     private GameContent content;
 
     private Vector2 GreenArrowOrigin = new Vector2(7.5f, 7.5f);
-    public GreenArrow(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
+    public GreenArrow(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity)
     {
         leftSprite = new Sprite(content.weapon2, new List<Rectangle>() { ProjectileConstant.GreenArrowLeftSourceRect }, GreenArrowOrigin);
         rightSprite = new Sprite(content.weapon, new List<Rectangle>() { ProjectileConstant.GreenArrowRightSourceRect }, GreenArrowOrigin);

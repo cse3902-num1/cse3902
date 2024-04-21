@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using cse3902.Enemy;
 using cse3902.Interfaces;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 namespace cse3902.Projectiles;
@@ -24,15 +23,15 @@ public abstract class BasicDirectionalProjectile : IProjectile
     
     private ISprite currentSprite;
     public ICollider Hitbox; /* set in constructor */
-    public Room room;
+    public Level level;
 
     /* need to call this super constructor in the subclass's constructor */
-    public BasicDirectionalProjectile(Room room, Vector2 position, Vector2 velocity)
+    public BasicDirectionalProjectile(Level level, Vector2 position, Vector2 velocity)
     {
         IsDead = false;
         Position = position;
         Velocity = velocity;
-        this.room = room;
+        this.level = level;
       
         currentSprite = downSprite; /* currentSprite can't be null */
     }
@@ -60,7 +59,7 @@ public abstract class BasicDirectionalProjectile : IProjectile
         // /* check for enemy collisions */
         // if (isEnermyProjectile == false)
         // {
-        //     foreach (IEnemy e in room.Enemies)
+        //     foreach (IEnemy e in level.Enemies)
         //     {
         //         switch (e)
         //         {
@@ -78,11 +77,11 @@ public abstract class BasicDirectionalProjectile : IProjectile
         // else
         // {
         //     /* check for player collisions */
-        //     if (Hitbox.IsColliding(room.Player.Pushbox))
+        //     if (Hitbox.IsColliding(level.Player.Pushbox))
         //     {
         //          this.IsDead = true;
 
-        //          room.Player.TakeDamage();
+        //          level.Player.TakeDamage();
         //     }
         // }
     }

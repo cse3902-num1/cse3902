@@ -15,13 +15,13 @@ public class BlueBombInventoryItem : IInventoryItem
         this.content = content;
     }
 
-    public void Use(IPlayer player, Room room)
+    public void Use(IPlayer player, Level level)
     {
         Vector2 direction = player.Facing.asVector2();
         Vector2 position = player.Position + direction * positionShift;
-        Bomb bomb = new Bomb(content, room, position);
+        Bomb bomb = new Bomb(content, level, position);
         SoundManager.Manager.bombDropSound();
-        room.Projectiles.Add(bomb);
+        level.Projectiles.Add(bomb);
         bomb.isEnermyProjectile = false;
     }
 }
