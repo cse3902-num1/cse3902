@@ -32,8 +32,8 @@ namespace cse3902
             SKELETON = 4,
         }
        
-        public const int MAP_WIDTH = 32;
-        public const int MAP_HEIGHT = 32;
+        public const int MAP_WIDTH = 64;
+        public const int MAP_HEIGHT = 64;
         private TileType[,] tilemap = new TileType[MAP_WIDTH, MAP_HEIGHT];
         private EnemyType[,] enemymap = new EnemyType[MAP_WIDTH, MAP_HEIGHT];
         
