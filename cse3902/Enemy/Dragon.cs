@@ -104,6 +104,22 @@ namespace cse3902.Enemy
                 SoundManager.Manager.fireballSound();
             }
             */
+
+            if (IsGhost) return;
+
+            Fireball f1 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity1);
+            f1.isEnermyProjectile = true;
+            level.Projectiles.Add(f1);
+
+            Fireball f2 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity2);
+            f2.isEnermyProjectile = true;
+            level.Projectiles.Add(f2);
+
+            Fireball f3 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity3);
+            f3.isEnermyProjectile = true;
+            level.Projectiles.Add(f3);
+
+            SoundManager.Manager.fireballSound();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
