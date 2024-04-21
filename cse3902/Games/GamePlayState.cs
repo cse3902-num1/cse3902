@@ -90,7 +90,8 @@ namespace cse3902.Games
             }
 
             if (level.player is not null) {
-                cameraPosition = level.player.CurrentRoom.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
+                // cameraPosition = level.player.CurrentRoom.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
+                cameraPosition = level.player.Position;
             }
 
         }
