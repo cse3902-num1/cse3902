@@ -107,17 +107,34 @@ namespace cse3902.Enemy
 
             if (IsGhost) return;
 
-            Fireball f1 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity1);
-            f1.isEnermyProjectile = true;
-            level.Projectiles.Add(f1);
+            // Fireball f1 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity1);
+            // f1.isEnermyProjectile = true;
+            // level.Projectiles.Add(f1);
 
-            Fireball f2 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity2);
-            f2.isEnermyProjectile = true;
-            level.Projectiles.Add(f2);
+            // Fireball f2 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity2);
+            // f2.isEnermyProjectile = true;
+            // level.Projectiles.Add(f2);
 
-            Fireball f3 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity3);
-            f3.isEnermyProjectile = true;
-            level.Projectiles.Add(f3);
+            // Fireball f3 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity3);
+            // f3.isEnermyProjectile = true;
+            // level.Projectiles.Add(f3);
+
+            /* spawn several rings of fireballs, with different speeds and # of fireballs */
+            double speed = 50.0;
+            int fireballCount = 8;
+            for (int ring = 0; ring < 4; ring++) {
+
+                for (double angle = 0.0; angle < Math.Tau; angle += Math.Tau / fireballCount) {
+                    double xvelocity = Math.Sin(angle) * speed;
+                    double yvelocity = Math.Cos(angle) * speed;
+                    Fireball f = new Fireball(content, level, Position, new Vector2((float) xvelocity, (float) yvelocity));
+                    f.isEnermyProjectile = true;
+                    level.Projectiles.Add(f);
+                }
+
+                speed += 25.0;
+                fireballCount += 3;
+            }
 
             SoundManager.Manager.fireballSound();
         }
