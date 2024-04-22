@@ -64,11 +64,11 @@ dotnet run
 * Map - show the map that player just picked
 * Compass - show the compass that player just picked
 
+## Win Check
+* Player will pick up 3 triforces to win
+* Beat dragon or the boss to get a new triforce
+
 ## Other control
 * Q - quit the game
 * M - Mute the game
 * R - Reset the game
-
-## Known bugs
-* Enemy hitbox is kind off
-* Wall hitbox is a little large or player pushbox is a little large
