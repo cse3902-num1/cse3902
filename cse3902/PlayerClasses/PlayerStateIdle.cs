@@ -78,7 +78,9 @@ namespace cse3902.PlayerClasses
             else if (controllers.Any(c => c.isPlayerUsePurpleCrystalPressed())) item = new PurpleCystleInventoryItem();
             if (item != null)
             {
-                player.State = new PlayerStateItem(content, player, item);
+                if (player.ItemUseCooldown.ElapsedMilliseconds >= Player.ITEM_USE_COOLDOWN) {
+                    player.State = new PlayerStateItem(content, player, item);
+                }
             }
         
             /* play idle sprite animation */
