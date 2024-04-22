@@ -3,6 +3,7 @@ using cse3902.Interfaces;
 using cse3902.Objects;
 using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace cse3902;
 
@@ -15,7 +16,7 @@ public static class CollisionDetector
         List<CollisionResult<IEnemy>> results = new List<CollisionResult<IEnemy>>();
         foreach (IEnemy enemy in enemies) {
             //Ghost enemies are excluded from detection.If a collision is detected
-            if (enemy.IsGhost) { continue; }
+            if (enemy.IsGhost && self.ColliderType != ColliderType.PLAYER) { continue; }
             if (self.IsColliding(enemy.collider))
             {
                 Vector2 depth = self.GetOverlap(enemy.collider);

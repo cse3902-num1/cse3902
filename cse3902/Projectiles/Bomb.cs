@@ -56,7 +56,7 @@ public class Bomb : IProjectile
         foreach (IEnemy e in level.Enemies)
         {
             if (Vector2.Distance(e.Position, Position) > RANGE) continue;
-            e.TakeDmg(10);
+            e.TakeDmg(ProjectileConstant.BOMB_DAMAGE);
         }
 
         /* destroy all blocks within a certain range */

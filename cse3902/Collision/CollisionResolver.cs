@@ -7,6 +7,7 @@ using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using cse3902.Projectiles;
 
 namespace cse3902;
 
@@ -59,9 +60,43 @@ public static class CollisionResolver
     {
         if (projectile.isEnermyProjectile) return;
         if (results.Count == 0) return;
-        projectile.IsDead = true;
+
+        projectile.IsDead = projectile switch {
+            Fire fire => false,
+            _ => true,
+        };
+
         foreach (CollisionResult<IEnemy> r in results) {
-            r.Entity.TakeDmg(1);
+            // r.Entity.TakeDmg(1);
+            IEnemy enemy = r.Entity;
+            enemy.TakeDmg(projectile switch {
+                BlueArrow blueArrow => enemy switch {
+                    Dragon dragon => ProjectileConstant.BLUE_ARROW_DAMAGE * 2,
+                    _ => ProjectileConstant.BLUE_ARROW_DAMAGE,
+                },
+                GreenArrow greenArrow => enemy switch {
+                    Dragon dragon => ProjectileConstant.GREEN_ARROW_DAMAGE * 2,
+                    _ => ProjectileConstant.GREEN_ARROW_DAMAGE,
+                },
+                MagicalBoomerang magicalBoomerang => enemy switch {
+                    Keese keese => ProjectileConstant.MAGICAL_BOOMERANG_DAMAGE * 2,
+                    _ => ProjectileConstant.MAGICAL_BOOMERANG_DAMAGE,
+                },
+                GreenBoomerang greenBoomerang => enemy switch {
+                    Keese keese => ProjectileConstant.GREEN_BOOMERANG_DAMAGE * 2,
+                    _ => ProjectileConstant.GREEN_BOOMERANG_DAMAGE,
+                },
+                Fire fire => enemy switch {
+                    Dragon dragon => 0,
+                    Skeleton skeleton => ProjectileConstant.FIRE_DAMAGE * 2,
+                    _ => ProjectileConstant.FIRE_DAMAGE,
+                },
+                Fireball fireball => enemy switch {
+                    Dragon dragon => 0,
+                    Goriya goriya => ProjectileConstant.FIREBALL_DAMAGE * 2,
+                    _ => ProjectileConstant.FIREBALL_DAMAGE,
+                },
+            });
         }
     }
 

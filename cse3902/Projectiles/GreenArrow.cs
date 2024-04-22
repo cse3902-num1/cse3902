@@ -7,7 +7,7 @@ namespace cse3902.Projectiles;
 public class GreenArrow : BasicDirectionalProjectile
 {
     private Vector2 initialPosition;
-    private const float maxDistance = 400f;
+    private const float maxDistance = 800f;
     private GameContent content;
 
     private Vector2 GreenArrowOrigin = new Vector2(7.5f, 7.5f);

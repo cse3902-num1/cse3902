@@ -44,6 +44,7 @@ namespace cse3902
         public Texture2D enemiesSheet;
         public Texture2D skeleton;
         public Texture2D goriya;
+        public Texture2D oldman;
 
         public Texture2D blueBoomerang;
         public Texture2D weapon;
@@ -113,7 +114,7 @@ namespace cse3902
             enemiesSheet = LoadTexture2D("enemiesSheet");
             skeleton = LoadTexture2D("skeleton");
             goriya = LoadTexture2D("spritesheet_goriya_walk");
-
+            oldman = LoadTexture2D("oldMan");
             blueBoomerang = LoadTexture2D("BlueBoomerang");
             weapon = LoadTexture2D("Weapon");
             weapon2 = LoadTexture2D("Weapon2");

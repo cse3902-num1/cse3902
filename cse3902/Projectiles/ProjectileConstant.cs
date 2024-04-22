@@ -9,6 +9,14 @@ namespace cse3902.Projectiles
 {
     public class ProjectileConstant
     {
+        public const int BLUE_ARROW_DAMAGE = 2;
+        public const int GREEN_ARROW_DAMAGE = 1;
+        public const int MAGICAL_BOOMERANG_DAMAGE = 2;
+        public const int GREEN_BOOMERANG_DAMAGE = 1;
+        public const int FIRE_DAMAGE = 3;
+        public const int FIREBALL_DAMAGE = 2;
+        public const int BOMB_DAMAGE = 11; /* enough to kill everything in 1 hit except goriya and dragon */
+
         public static Rectangle BlueArrowLeftSourceRect = new Rectangle(0, 15, 15, 15);
         public static Rectangle BlueArrowRightSourceRect = new Rectangle(36, 185, 15, 15);
         public static Rectangle BlueArrowUpSourceRect = new Rectangle(27, 185, 7, 15);

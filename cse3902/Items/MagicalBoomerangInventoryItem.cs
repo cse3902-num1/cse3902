@@ -8,7 +8,7 @@ namespace cse3902;
 public class MagicalBoomerangInventoryItem : IInventoryItem
 {
     private GameContent content;
-    private float directionShift = 400f;
+    private float directionShift = 600f;
     public MagicalBoomerangInventoryItem(GameContent content)
     {
         this.content = content;

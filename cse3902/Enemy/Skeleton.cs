@@ -17,7 +17,7 @@ namespace cse3902.Enemy
         private Level level;
         public Skeleton(GameContent content, Level level) : base(content)
         {
-            this.HP = 2;
+            this.HP = EnermyConstant.SKELETON_HEALTH;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {

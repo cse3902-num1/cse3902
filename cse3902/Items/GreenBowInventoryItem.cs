@@ -7,7 +7,7 @@ namespace cse3902;
 public class GreenBowInventoryItem : IInventoryItem
 {
     private GameContent content;
-    private float directionShift = 300f;
+    private float directionShift = 600f;
     public GreenBowInventoryItem(GameContent content)
     {
         this.content = content;

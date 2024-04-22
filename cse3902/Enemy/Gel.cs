@@ -16,7 +16,7 @@ namespace cse3902.Enemy
         private Level level;
         public Gel(GameContent content, Level level) : base(content)
         {
-            this.HP = 1;
+            this.HP = EnermyConstant.GEL_HEALTH;
             sprite = new Sprite(content.enemiesSheet,
             new List<Rectangle>()
             {

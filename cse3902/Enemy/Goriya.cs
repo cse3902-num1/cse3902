@@ -28,7 +28,7 @@ namespace cse3902.Enemy
         private Level level;
         public Goriya(GameContent content, Level level) : base(content)
         {
-            this.HP = 7;
+            this.HP = EnermyConstant.GORIYA_HEALTH;
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
@@ -162,8 +162,11 @@ namespace cse3902.Enemy
             SoundManager.Manager.arrowBoomerangSound();
 
             Vector2 velocity = new Vector2(0, 0);
-            switch (currentState)
-            {
+
+            if (level.player != null) {
+                velocity = Vector2.Normalize(level.player.Position - Position) * 1.0f;
+
+            } else switch (currentState) {
                 case GoriyaState.Left:
                     velocity = Constant.moveLeftOneUnit;
                     break;
@@ -177,10 +180,10 @@ namespace cse3902.Enemy
                     velocity = Constant.moveDownOneUnit;
                     break;
             }
+
             velocity *= 200f;
             projectile = new GreenBoomerang(content, level, Position, velocity);
             projectile.isEnermyProjectile = true;
-
         }
         // if in advanture mode set transparent to 0.4 , otherwise draw goriya without transparent.
         public override void Draw(SpriteBatch spriteBatch)
