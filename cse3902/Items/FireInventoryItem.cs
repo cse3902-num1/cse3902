@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using cse3902.Projectiles;
 using Microsoft.Xna.Framework;
@@ -8,7 +9,7 @@ namespace cse3902;
 public class FireInventoryItem : IInventoryItem
 {
     private GameContent content;
-    private float directionShift = 300f;
+    private float speed = 400f;
 
     public FireInventoryItem(GameContent content)
     {
@@ -17,11 +18,20 @@ public class FireInventoryItem : IInventoryItem
 
     public void Use(IPlayer player, Level level)
     {
-        Vector2 direction = player.Facing.asVector2();
-        Fire fire = new Fire(content, level, player.Position, direction * directionShift);
-        SoundManager.Manager.arrowBoomerangSound();
-        level.Projectiles.Add(fire);
-        fire.isEnermyProjectile = false;
+        /* spawn a ring of fireballs */
+        int count = 8;
+        for (double angle = 0; angle < Math.Tau; angle += Math.Tau / count) {
+            Vector2 velocity = new Vector2((float) Math.Sin(angle), (float) Math.Cos(angle)) * speed;
+            Fire f = new Fire(content, level, player.Position, velocity);
+            f.isEnermyProjectile = false;
+            level.Projectiles.Add(f);
+            SoundManager.Manager.fireballSound();
+        }
+        // Vector2 direction = player.Facing.asVector2();
+        // Fire fire = new Fire(content, level, player.Position, direction * speed);
+        // SoundManager.Manager.arrowBoomerangSound();
+        // level.Projectiles.Add(fire);
+        // fire.isEnermyProjectile = false;
     }
 
 }
