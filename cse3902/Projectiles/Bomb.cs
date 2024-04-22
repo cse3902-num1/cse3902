@@ -3,9 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
-using cse3902.RoomClasses;
 using cse3902.Enemy;
 using Microsoft.Xna.Framework.Audio;
+using cse3902.Objects;
+using System;
 
 
 namespace cse3902.Projectiles;
@@ -20,10 +21,10 @@ public class Bomb : IProjectile
     private ISprite sprite;
     private Stopwatch explodeTimer = new Stopwatch();
     private GameContent content;
-    private Room room;
+    private Level level;
     private Vector2 BombOrigin = new Vector2(3.5f, 7.5f);
     private int ExplodeTime = 1500;
-    public Bomb(GameContent content, Room room, Vector2 position)
+    public Bomb(GameContent content, Level level, Vector2 position)
     {
         sprite = new Sprite(content.weapon, 
             new List<Rectangle>()
@@ -37,7 +38,7 @@ public class Bomb : IProjectile
         explodeTimer.Start();
 
         this.content = content;
-        this.room = room;
+        this.level = level;
         Hitbox = new BoxCollider(position, ProjectileConstant.BombCollideSize, ProjectileConstant.BombCollideOrigin, ColliderType.ITEM_PICKUP);
     }
 
@@ -46,22 +47,28 @@ public class Bomb : IProjectile
         SoundManager.Manager.bombBlowUpSound();
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
-        room.ParticleEffects.Add(fx);
+        level.ParticleEffects.Add(fx);
         Hitbox.Position = Position;
-        foreach (IEnemy e in room.Enemies)
-        {
-            switch (e)
-            {
-                case EnemyBase enemyBase:
-                    if (Hitbox.IsColliding(enemyBase.Collider))
-                    {
-                        IsDead = true;
-                        e.TakeDmg(1000);
 
-                    }
-                    break;
-            }
+        const float RANGE = 64.0f;
+
+        /* hurt all enemies within a certain range */
+        foreach (IEnemy e in level.Enemies)
+        {
+            if (Vector2.Distance(e.Position, Position) > RANGE) continue;
+            e.TakeDmg(ProjectileConstant.BOMB_DAMAGE);
         }
+
+        /* destroy all blocks within a certain range */
+        foreach (Block block in level.Blocks) {
+            if (block.BlockIndex == BlockConstant.BLOCK_TYPE_0) continue;
+            if (Math.Abs(block.Position.X - Position.X) > RANGE) continue;
+            if (Math.Abs(block.Position.Y - Position.Y) > RANGE) continue;
+            // block.IsDead = true;
+            block.BlockIndex = BlockConstant.BLOCK_TYPE_0;
+        }
+
+        IsDead = true;
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)

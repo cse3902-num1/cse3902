@@ -1,5 +1,4 @@
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
@@ -15,12 +14,13 @@ public class FireballInventoryItem : IInventoryItem
         this.content = content;
     }
 
-    public void Use(IPlayer player, Room room)
+    public void Use(IPlayer player, Level level)
     {
+        
         Vector2 direction = player.Facing.asVector2();
-        Fireball fireballProjectile = new Fireball(content, room, player.Position, direction * directionShift);
+        Fireball fireballProjectile = new Fireball(content, level, player.Position, direction * directionShift);
         SoundManager.Manager.fireballSound();
-        room.Projectiles.Add(fireballProjectile);
+        level.Projectiles.Add(fireballProjectile);
         fireballProjectile.isEnermyProjectile = false;
     }
 }

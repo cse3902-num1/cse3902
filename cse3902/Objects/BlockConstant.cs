@@ -10,6 +10,14 @@ namespace cse3902.Objects
 {
     public class BlockConstant
     {
+        public const int BLOCK_TYPE_0 = 0;
+        public const int BLOCK_TYPE_1 = 1;
+        public const int BLOCK_TYPE_2 = 2;
+        public const int BLOCK_TYPE_3 = 3;
+        public const int BLOCK_TYPE_4 = 4;
+        public const int BLOCK_TYPE_5 = 5;
+        public const int BLOCK_TYPE_6 = 6;
+
         public static readonly Vector2 ColliderScale = new Vector2(16, 16) * 3;
         public static readonly Vector2 ColliderOffset = new Vector2(8, 8) * 3;
         public static readonly Vector2 SpriteOrigin = new Vector2(8, 8);

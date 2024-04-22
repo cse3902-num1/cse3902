@@ -6,7 +6,7 @@ namespace cse3902.Items
 {
 	public class BasicSlotAPickup : BasicItemPickup
     {
-		public BasicSlotAPickup(Room room) : base(room)
+		public BasicSlotAPickup(Level level) : base(level)
         {
 
 		}

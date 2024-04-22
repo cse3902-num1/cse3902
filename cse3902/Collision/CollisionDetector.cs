@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using cse3902.DoorClasses;
 using cse3902.Interfaces;
 using cse3902.Objects;
-using cse3902.WallClasses;
 using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
 
@@ -10,10 +8,14 @@ namespace cse3902;
 
 public static class CollisionDetector
 {
+    /*Dectect collisions between a given collider and a list of enemy objects. 
+     * and return what enermy is colliding with the object*/
     public static List<CollisionResult<IEnemy>> DetectEnemyCollision(ICollider self, List<IEnemy> enemies)
     {
         List<CollisionResult<IEnemy>> results = new List<CollisionResult<IEnemy>>();
         foreach (IEnemy enemy in enemies) {
+            //Ghost enemies are excluded from detection.If a collision is detected
+            if (enemy.IsGhost) { continue; }
             if (self.IsColliding(enemy.collider))
             {
                 Vector2 depth = self.GetOverlap(enemy.collider);
@@ -23,7 +25,7 @@ public static class CollisionDetector
         }
         return results;
     }
-
+    // detect clission between given collider and list of blocks, return what block is colliding with object
     public static List<CollisionResult<Block>> DetectBlockCollision(ICollider self, List<Block> blocks)
     {
         List<CollisionResult<Block>> results = new List<CollisionResult<Block>>();
@@ -36,37 +38,22 @@ public static class CollisionDetector
         }
         return results;
     }
-
-    public static List<CollisionResult<Wall>> DetectWallCollision(ICollider self, Wall wall)
-    {
-        List<CollisionResult<Wall>> results = new List<CollisionResult<Wall>>();
-        foreach (BoxCollider w in wall.colliders)
-        {
-            if (self.IsColliding(w))
-            {
-                Vector2 depth = self.GetOverlap(w);
-                CollisionResult<Wall> result = new CollisionResult<Wall>(depth, w,wall);
-                results.Add(result);
-            }
-        }
-        return results;
-    }
+    /*Dectect collisions between a given collider and player. 
+     * and return player object*/
     public static List<CollisionResult<IPlayer>> DetectPlayerCollision(ICollider self, IPlayer player) {
         List<CollisionResult<IPlayer>> results = new List<CollisionResult<IPlayer>>();
         if (self.IsColliding(player.Pushbox))
         {
+            //calculate overlap depth 
             Vector2 depth = self.GetOverlap(player.Pushbox);
             CollisionResult<IPlayer> result = null;
-            switch (player) {
-                case Player p:
-                    result = new CollisionResult<IPlayer>(depth, player.Pushbox, p);
-                    break;
-            }
+            result = new CollisionResult<IPlayer>(depth, player.Pushbox, player);
             results.Add(result);
         } 
         return results;
     }
-
+    /*Dectect collisions between a given collider and each items. 
+     * and return overlap area, what collide with item and item*/
     public static List<CollisionResult<IItemPickup>> DetectItemPickupCollision(ICollider self, List<IItemPickup> items) {
         List<CollisionResult<IItemPickup>> results = new List<CollisionResult<IItemPickup>>();
         foreach (IItemPickup item in items)
@@ -74,21 +61,6 @@ public static class CollisionDetector
             if (self.IsColliding(item.Collider)) {
                 Vector2 depth = self.GetOverlap(item.Collider);
                 CollisionResult<IItemPickup> result = new CollisionResult<IItemPickup>(depth, item.Collider, item);
-                results.Add(result);
-            }
-        }
-        return results;
-    }
-
-    public static List<CollisionResult<Doors>> DetectDoorCollision(ICollider self, Doors door)
-    {
-        List<CollisionResult<Doors>> results = new List<CollisionResult<Doors>>();
-        foreach (BoxCollider d in door.colliders)
-        {
-            if (self.IsColliding(d))
-            {
-                Vector2 depth = self.GetOverlap(d);
-                CollisionResult<Doors> result = new CollisionResult<Doors>(depth, d, door);
                 results.Add(result);
             }
         }

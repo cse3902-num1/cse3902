@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using cse3902.RoomClasses;
 
 namespace cse3902.Projectiles;
 
@@ -13,7 +12,7 @@ public class Fire : BasicDirectionalProjectile
     private GameContent content;
     private Sprite sprite;
     private Vector2 FireOrigin = new Vector2(7.5f, 7.5f);
-    public Fire(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity)
+    public Fire(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity)
     {
         sprite = new Sprite(content.weapon2,
             new List<Rectangle>()
@@ -35,7 +34,6 @@ public class Fire : BasicDirectionalProjectile
     private void Die()
     {
         IsDead = true;
-        /* TODO: "spawn" the particle effect in the level */
     }
     public override void Update(GameTime gameTime, List<IController> controllers)
     {

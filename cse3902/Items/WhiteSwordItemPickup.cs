@@ -1,6 +1,5 @@
 using cse3902.Items;
 using cse3902.PlayerClasses;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +11,7 @@ public class WhiteSwordItemPickup : BasicSlotAPickup
 {
     private bool isAdded = false;
     public static bool isWhiteSwordPicked;
-    public WhiteSwordItemPickup(GameContent content, Room room) : base(room)
+    public WhiteSwordItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         ItemsConstant.WhiteItemSourceRect });

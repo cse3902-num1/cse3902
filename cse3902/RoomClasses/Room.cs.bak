@@ -58,7 +58,7 @@ namespace cse3902.RoomClasses
             }
             Enemies = new List<IEnemy>() {};
             idxEnemy = 0;
-
+            /*
             Items = new List<IItemPickup>
             {
                 new FiveRupiesItemPickup(content, this),
@@ -95,7 +95,7 @@ namespace cse3902.RoomClasses
                 new BookOfMagicItemPickup(content, this),
                 new MagicalKeyItemPickup(content, this),
             };
-
+            */
             //Items[0].Position = new Vector2(300, 200) + position;
             //Items[1].Position = new Vector2(300,300) + position;
             //Items[2].Position = new Vector2(400, 400) + position;

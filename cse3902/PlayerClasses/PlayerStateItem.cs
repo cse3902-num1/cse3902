@@ -45,7 +45,6 @@ namespace cse3902.PlayerClasses
                 },
             };
 
-            /* TODO: use the item */
             player.UseItem(item);
         }
         public void Update(GameTime gameTime, List<IController> controllers)
@@ -55,9 +54,6 @@ namespace cse3902.PlayerClasses
             {
                 player.State = new PlayerStateIdle(content, player);
             }
-
-            /* TODO: depending on how we implement items, we might need to update them */
-            // item.Update();
 
             /* play idle sprite animation */
             sprites[player.Facing].Update(gameTime, controllers);

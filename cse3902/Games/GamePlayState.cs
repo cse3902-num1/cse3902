@@ -18,35 +18,21 @@ namespace cse3902.Games
         private Level level;
         private Hud hud;
         private bool isPaused = false;
-
-        /* room transition animation variables */
-        private bool isTransitioningRooms = false;
-        private Vector2 cameraPosition = new Vector2(0, 0);
-        private Vector2 initialCameraPosition = new Vector2(0, 0);
-        private Vector2 targetCameraPosition = new Vector2(0, 0);
-        private const float TRANSITION_LENGTH = 1.0f; /* seconds */
-        Stopwatch transitionTimer = new Stopwatch();
-
+        // initalize level and hud
         public GamePlayState(GameContent gamecontent, Game1 game)
         {
             this.gameContent = gamecontent;
             this.game = game;
             level = new Level(gamecontent);
             hud = new Hud(gameContent,level);
-
-            EventBus.StartingRoomTransition += OnStartingRoomTransition;
-            EventBus.EndingRoomTransition += OnEndingRoomTransition;
         }
+        // draw level, hud
         public void Draw(Camera camera)
         {
             if (level.player is not null) {
-                // camera.Position = level.player.Position;
-                // camera.Position = level.player.CurrentRoom.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
+                camera.Position = level.player.Position;
             }
 
-            camera.Position = cameraPosition;
-
-            // camera.Position = new Vector2(0, 0);
             camera.BeginDraw();
 
             level.Draw(camera.spriteBatch);
@@ -56,7 +42,9 @@ namespace cse3902.Games
 
             camera.EndDraw();
         }
-
+        /* if p is pressed game will paused, if r is pressed game will reset to current mode
+         * if player picked up all the triforce will turn to win state
+         */
         public void Update(GameTime gameTime, List<IController> controllers)
         {
             if(controllers.Any(c => c.isPausePressed()))
@@ -65,16 +53,6 @@ namespace cse3902.Games
             }
 
             if (isPaused) return;
-
-            if (isTransitioningRooms) {
-                /* lerp camera towards target position */
-                float t = (float) transitionTimer.Elapsed.TotalSeconds / TRANSITION_LENGTH;
-                if (t >= 1) EventBus.EndingRoomTransition();
-                cameraPosition = Vector2.Lerp(initialCameraPosition, targetCameraPosition, t);
-                Debug.WriteLine(t);
-
-                return;
-            }
 
             level.Update(gameTime, controllers);
             /* reset level if R is pressed */
@@ -88,28 +66,6 @@ namespace cse3902.Games
             {
                 Game1.State = new GameWinState(gameContent, game);
             }
-
-            if (level.player is not null) {
-                cameraPosition = level.player.CurrentRoom.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
-            }
-
-        }
-        
-        public void OnStartingRoomTransition(Room roomFrom, Room roomTo)
-        {
-            isTransitioningRooms = true;
-            initialCameraPosition = cameraPosition;
-            targetCameraPosition = roomTo.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
-            transitionTimer.Reset();
-            transitionTimer.Start();
-            Debug.WriteLine("STARTING ROOM TRANSITION");
-        }
-
-        public void OnEndingRoomTransition()
-        {
-            isTransitioningRooms = false;
-            transitionTimer.Stop();
-            Debug.WriteLine("ENDING ROOM TRANSITION");
         }
     }
 }

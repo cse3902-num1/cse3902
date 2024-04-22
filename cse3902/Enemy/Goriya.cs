@@ -1,6 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,10 +25,10 @@ namespace cse3902.Enemy
         private float GhostGoriyaMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         private GameContent content;
-
-        public Goriya(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public Goriya(GameContent content, Level level) : base(content)
         {
-            this.HP = 7;
+            this.HP = EnermyConstant.GORIYA_HEALTH;
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
@@ -68,14 +68,17 @@ namespace cse3902.Enemy
             projectile = null;
             Collider = new BoxCollider(Position, EnermyConstant.GoriyaColliderSize, EnermyConstant.GoriyaColliderOrigin, ColliderType);
             this.content = content;
+            this.level = level;
         }
-
+        /*if Goriya is in nightmare mode, when Goriya is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
             if (IsGhost)
             {
-                Vector2 playerPos = room.Player.Position;
+                Vector2 playerPos = level.player.Position;
                 if (Position.X <= playerPos.X && Position.Y <= playerPos.Y)
                 {
                     currentSprite = spriteRight;
@@ -103,6 +106,7 @@ namespace cse3902.Enemy
             }
             else
             {
+            
                 switch (currentState)
                 {
                     case GoriyaState.Up:
@@ -120,7 +124,8 @@ namespace cse3902.Enemy
                 }
             }
         }
-
+        /*randonly changing goria's action between move in different direction or attack
+         */
         public void ChangeAction(int randomNum)
         {
             if (!IsGhost)
@@ -147,7 +152,8 @@ namespace cse3902.Enemy
                 }
             }
         }
-
+        /*In advanture mode goriya will move and throw boomering
+         */
         public override void Attack()
         {
             if (projectile != null || IsGhost) {
@@ -156,8 +162,11 @@ namespace cse3902.Enemy
             SoundManager.Manager.arrowBoomerangSound();
 
             Vector2 velocity = new Vector2(0, 0);
-            switch (currentState)
-            {
+
+            if (level.player != null) {
+                velocity = Vector2.Normalize(level.player.Position - Position) * 1.0f;
+
+            } else switch (currentState) {
                 case GoriyaState.Left:
                     velocity = Constant.moveLeftOneUnit;
                     break;
@@ -171,12 +180,12 @@ namespace cse3902.Enemy
                     velocity = Constant.moveDownOneUnit;
                     break;
             }
+
             velocity *= 200f;
-            projectile = new GreenBoomerang(content, room, Position, velocity);
+            projectile = new GreenBoomerang(content, level, Position, velocity);
             projectile.isEnermyProjectile = true;
-
         }
-
+        // if in advanture mode set transparent to 0.4 , otherwise draw goriya without transparent.
         public override void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.Position = Position;
@@ -212,10 +221,8 @@ namespace cse3902.Enemy
             }
 
             /* only move if boomerang has returned */
-            // if (projectiles.Count == 0) {
                 Move(gameTime, randomNum);
                 ChangeAction(randomNum);
-            // }
 
             currentSprite.Update(gameTime, controllers);
         }

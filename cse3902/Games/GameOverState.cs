@@ -22,6 +22,8 @@ namespace cse3902.Games
         private const float StartOverTextScale = 3;
         private const int TextOffsetX = -50;
 
+        /* set up the sprite text positon and intialize the background to black screen
+         */
         public GameOverState(GameContent gamecontent, Game1 game) {
             this.gameContent = gamecontent;
             this.game = game;
@@ -31,6 +33,7 @@ namespace cse3902.Games
             textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - 50, Game1.graphics.PreferredBackBufferHeight / 2);
             
         }
+        //draw game over text
         public void Draw(Camera camera)
         {
             Vector2 centerPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2, Game1.graphics.PreferredBackBufferHeight / 2);
@@ -53,10 +56,6 @@ namespace cse3902.Games
                 {
                     Game1.State = new GameStartState(gameContent, game);
                 }
-            //
-
-
-
         }
     }
 }

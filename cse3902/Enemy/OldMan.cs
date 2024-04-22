@@ -17,9 +17,10 @@ namespace cse3902.Enemy
         private float OldManMoveSpeed = 20f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
         private const int AttackInterval = 200;
-        public OldMan(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public OldMan(GameContent content, Level level) : base(content)
         {
-            this.HP = 30;
+            this.HP = EnermyConstant.OLD_MAN_HEALTH;
             sprite = new Sprite(content.oldman,
                 new List<Rectangle>()
                 {
@@ -31,7 +32,7 @@ namespace cse3902.Enemy
             Collider = new BoxCollider(EnermyConstant.OldManPosition, EnermyConstant.OldmanColliderSize, EnermyConstant.OldmanColliderOrigin, ColliderType.ENEMY);
             this.content = content;
 
-            this.room = room;
+            this.level = level;
         }
 
         public override void Move(GameTime gameTime, int randomNum)
@@ -64,9 +65,9 @@ namespace cse3902.Enemy
 
                 foreach (Vector2 velocity in velocities)
                 {
-                    Fireball ball = new Fireball(content, room, Position, velocity);
+                    Fireball ball = new Fireball(content, level, Position, velocity);
                     ball.isEnermyProjectile = true;
-                    room.Projectiles.Add(ball);
+                    level.Projectiles.Add(ball);
                 }
                 SoundManager.Manager.fireballSound();
             }

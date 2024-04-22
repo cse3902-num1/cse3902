@@ -1,4 +1,4 @@
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ namespace cse3902;
 
 public class HeartItemPickup : BasicItemPickup
 {
-    public HeartItemPickup(GameContent content, Room room) : base(room)
+    public HeartItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         new Rectangle(0, 8, 7, 7) ,

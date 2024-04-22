@@ -1,6 +1,6 @@
 using cse3902.Items;
 using cse3902.PlayerClasses;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ namespace cse3902;
 public class BombItemPickup : BasicSlotBPickup
 {
     private bool isAdded = false;
-    public BombItemPickup(GameContent content, Room room) : base(room)
+    public BombItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                         ItemsConstant.BombItemSourceRect });

@@ -7,149 +7,438 @@ using cse3902.Objects;
 using cse3902.RoomClasses;
 using cse3902.PlayerClasses;
 using System;
-using cse3902.DoorClasses;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Reflection.Metadata;
 
 namespace cse3902
 {
     public class Level
     {
-      
-        public Player player;
-        private List<List<Room>> rooms; /* 2d array of rooms, indexed x first then y */
-        private int currentRoomX = 0;
-        private int currentRoomY = 0;
-        private int newRoomX = 0;
-        private int newRoomY = 0;
+        public const float TILE_SIZE = 16 * 3.0f;
+        public enum TileType
+        {
+            FLOOR = 0,
+            WALL = 1,
+        }
+        public enum EnemyType
+        {
+            NONE = 0,
+            DRAGON = 1,
+            GEL = 2,
+            KEESE = 3,
+            SKELETON = 4,
+            GORIYA = 5
+        }
+       
+        public const int MAP_WIDTH = 64;
+        public const int MAP_HEIGHT = 64;
+        private TileType[,] tilemap = new TileType[MAP_WIDTH, MAP_HEIGHT];
+        private EnemyType[,] enemymap = new EnemyType[MAP_WIDTH, MAP_HEIGHT];
+        
+        private int playerSpawnX = 0;
+        private int playerSpawnY = 0;
+
+        public List<Block> Blocks;
+        public List<IItemPickup> Items;
+        public List<IEnemy> Enemies;
+        public List<IParticleEffect> ParticleEffects;
+        public List<IProjectile> Projectiles;
+        public IPlayer player;
+
+        /* TODO: this is a temporary function to print mapdata */
+        public void PrintTileMap()
+        {
+            for (int x = 0; x < tilemap.GetLength(0); x++)
+            {
+                string line = "";
+                for (int y = 0; y < tilemap.GetLength(1); y++)
+                {
+                    line += tilemap[x, y] switch {
+                        TileType.FLOOR => '.',
+                        TileType.WALL => '#',
+                    } + " ";
+                }
+                Debug.WriteLine(line);
+            }
+        }
+
+        public void PrintEnemyMap()
+        {
+            for (int x = 0; x < enemymap.GetLength(0); x++)
+            {
+                string line = "";
+                for (int y = 0; y < enemymap.GetLength(1); y++)
+                {
+                    line += enemymap[x, y] switch {
+                        EnemyType.NONE => '.',
+                        EnemyType.DRAGON => 'D',
+                        EnemyType.GEL => 'G',
+                        EnemyType.KEESE => 'K',
+                        EnemyType.SKELETON => 'S',
+                        EnemyType.GORIYA => 'Y'
+                    } + " ";
+                }
+                Debug.WriteLine(line);
+            }
+        }
        
 
         public Level(GameContent content)
         {
-            player = new Player(content);
-            player.Position = new Vector2(300, 300);
+            /* initialize mapdata */
+            Generate();
+            PrintTileMap();
+            PrintEnemyMap();
+            Debug.WriteLine("spawnx: {0} spawny: {1}", playerSpawnX, playerSpawnY);
 
-            /* initialize rooms 2d array. null values mean there's no room there */
-            const int MAX_ROOMS_HORIZONTAL = 6;
-            const int MAX_ROOMS_VERTICAL = 6;
-            rooms = new List<List<Room>>();
-            for (int x = 0; x < MAX_ROOMS_HORIZONTAL; x++) {
-                rooms.Add(new List<Room>());
-                for (int y = 0; y < MAX_ROOMS_VERTICAL; y++) {
-                    rooms[x].Add(null);
+            // throw new NotImplementedException();
+
+            Blocks = new List<Block>();
+            Items = new List<IItemPickup>();
+            Enemies = new List<IEnemy>();
+            ParticleEffects = new List<IParticleEffect>();
+            Projectiles = new List<IProjectile>();
+
+            Build(content);
+        }
+
+        private void Generate()
+        {
+            Random random = new Random();
+            int w = tilemap.GetLength(0);
+            int h = tilemap.GetLength(1);
+
+            /* fill map with walls */
+            for (int x = 0; x < w; x++)
+            {
+                for (int y = 0; y < h; y++)
+                {
+                    tilemap[x, y] = TileType.WALL;
                 }
             }
 
-            /* new rooms */
-            AddRoom(0, 0, content, @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player);
-            AddRoom(1, 0, content, @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml", player);
-            AddRoom(2, 0, content, @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml", player);
-            AddRoom(0, 1, content, @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml", player);
-            AddRoom(1, 1, content, @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml", player);
-
-            // rooms = new List<Room>
+            // /* randomly add open spaces to map interior, at a certain spacing */
+            const int HALL_GRID_SIZE = 2;
+            const int MIN_HALL_LENGTH = 1 * HALL_GRID_SIZE;
+            const int MAX_HALL_LENGTH = 5 * HALL_GRID_SIZE;
+            const double HALL_PROBABILITY = 0.2;
+            // for (int x = 1; x < w - 1; x += INTERIOR_SPACING)
             // {
-            //     new Room(content, new Vector2(0 * Room.ROOM_WIDTH, 0 * Room.ROOM_HEIGHT), @"TilesData/Tile0.xml", @"DoorsData/Room0Door.xml", player),
-            //     new Room(content, new Vector2(1 * Room.ROOM_WIDTH, 0 * Room.ROOM_HEIGHT), @"TilesData/Tile1.xml", @"DoorsData/Room1Door.xml", player),
-            //     new Room(content, new Vector2(0 * Room.ROOM_WIDTH, 1 * Room.ROOM_HEIGHT), @"TilesData/Tile2.xml", @"DoorsData/Room2Door.xml", player),
-            //     new Room(content, new Vector2(1 * Room.ROOM_WIDTH, 1 * Room.ROOM_HEIGHT), @"TilesData/Tile3.xml", @"DoorsData/Room3Door.xml", player),
-            //     new Room(content, new Vector2(-1 * Room.ROOM_WIDTH, 0 * Room.ROOM_HEIGHT), @"TilesData/Tile4.xml", @"DoorsData/Room4Door.xml", player)
-            // };
+            //     for (int y = 1; y < h - 1; y += INTERIOR_SPACING)
+            //     {
+            //         if (random.NextDouble() <= 0.75)
+            //         {
+            //             tilemap[x, y] = TileType.FLOOR;
+            //         }
+            //     }
+            // }
 
-            currentRoomX = 0;
-            currentRoomY = 0;
-            player.CurrentRoom = rooms[0][0];
-       
-            EventBus.EnteringDoor += OnEnteringDoor;
-            EventBus.EndingRoomTransition += OnEndingRoomTransition;
-        }
+            /* randomly generate hallways on a grid */
+            for (int x = 1; x < w - 1; x += HALL_GRID_SIZE)
+            {
+                for (int y = 1; y < h - 1; y += HALL_GRID_SIZE)
+                {
+                    if (random.NextDouble() > HALL_PROBABILITY) continue;
 
-        private void AddRoom(int x, int y, GameContent content, String xmlFilePath, String doorFilePath, Player player)
-        {
-            rooms[x][y] = new Room(
-                content,
-                new Vector2(x * Room.ROOM_WIDTH, y * Room.ROOM_HEIGHT),
-                xmlFilePath,
-                doorFilePath,
-                player
-            );
-        }
+                    /* generate hallway details */
+                    int hdirection = random.Next(4);                 /* 0=left, 1=right, 2=up, 3=down */
+                    int hlength = random.Next(MIN_HALL_LENGTH, MAX_HALL_LENGTH); /* number of tiles */
 
-        private void OnEnteringDoor(Direction direction)
-        {
-            newRoomX = currentRoomX;
-            newRoomY = currentRoomY;
-            switch (direction) {
-                case Direction.Left:
-                    newRoomX -= 1;
-                    break;
-                case Direction.Right:
-                    newRoomX += 1;
-                    break;
-                case Direction.Up:
-                    newRoomY -= 1;
-                    break;
-                case Direction.Down:
-                    newRoomY += 1;
-                    break;
+                    /* build hallway */
+                    int hx = x;
+                    int hy = y;
+                    bool isdone = false;
+                    while (!isdone && hlength > 0)
+                    {
+                        tilemap[hx, hy] = TileType.FLOOR;
+                        switch (hdirection) {
+                            case 0:
+                                hx--;
+                                if (hx < 1) isdone = true;
+                                break;
+                            case 1:
+                                hx++;
+                                if (hx >= w - 1) isdone = true;
+                                break;
+                            case 2:
+                                hy--;
+                                if (hy < 1) isdone = true;
+                                break;
+                            case 3:
+                                hy++;
+                                if (hy >= h - 1) isdone = true;
+                                break;
+                        }
+
+                        hlength--;
+                    }
+                }
             }
-            if (newRoomX < 0) newRoomX = 0;
-            if (newRoomX >= rooms.Count) newRoomX = rooms.Count - 1;
-            if (newRoomY < 0) newRoomY = 0;
-            if (newRoomY >= rooms[newRoomX].Count) newRoomY = rooms[newRoomX].Count - 1;
 
-            Room currentRoom = rooms[currentRoomX][currentRoomY];
-            Room nextRoom = rooms[newRoomX][newRoomY];
-            EventBus.StartingRoomTransition(currentRoom, nextRoom);
+            /* generate basic randomly-sized rooms */
+            const double ROOM_PROBABILITY = 0.1;
+            const int ROOM_SIZE_INCREMENT = HALL_GRID_SIZE; /* in units of tiles */
+            const int MIN_ROOM_SIZE = 0; /* in units of the room size increment */
+            const int MAX_ROOM_SIZE = 5;
+            for (int x = 1; x < w - 1; x += HALL_GRID_SIZE) {
+                for (int y = 1; y < h - 1; y += HALL_GRID_SIZE) {
+                    if (random.NextDouble() > ROOM_PROBABILITY) continue;
 
-            // if (currentRoomX < 0) currentRoomX = 0;
-            // if (currentRoomX >= rooms.Count) currentRoomX = rooms.Count - 1;
-            // if (currentRoomY < 0) currentRoomY = 0;
-            // if (currentRoomY >= rooms[currentRoomX].Count) currentRoomY = rooms[currentRoomX].Count - 1;
-            // player.CurrentRoom = rooms[currentRoomX][currentRoomY];
+                    /* generate room details */
+                    int rw = random.Next(MIN_ROOM_SIZE, MAX_ROOM_SIZE + 1) * ROOM_SIZE_INCREMENT;
+                    int rh = random.Next(MIN_ROOM_SIZE, MAX_ROOM_SIZE + 1) * ROOM_SIZE_INCREMENT;
+
+                    /* build room */
+                    for (int rx = x; rx < x + rw && rx < w - 1; rx++) {
+                        for (int ry = y; ry < y + rh && ry < h - 1; ry++) {
+                            tilemap[rx, ry] = TileType.FLOOR;
+                        }
+                    }
+                }
+            }
+
+            /* fill enemy map with none */
+            for (int x = 0; x < w; x++)
+            {
+                for (int y = 0; y < h; y++)
+                {
+                    enemymap[x, y] = EnemyType.NONE;
+                }
+            }
+
+            /* randomly add enemies to open areas */
+            const double ENEMY_SPAWN_CHANCE = 0.05;
+            const double DRAGON_SPAWN_WEIGHT = 0.1;
+            const double GEL_SPAWN_WEIGHT = 0.3;
+            const double KEESE_SPAWN_WEIGHT = 0.4;
+            const double SKELETON_SPAWN_WEIGHT = 0.5;
+            const double GORIYA_SPAWN_WEIGHT = 0.2;
+            const double TOTAL_SPAWN_WEIGHT = DRAGON_SPAWN_WEIGHT + GEL_SPAWN_WEIGHT + KEESE_SPAWN_WEIGHT + SKELETON_SPAWN_WEIGHT + GORIYA_SPAWN_WEIGHT;
+            for (int x = 0; x < w; x++)
+            {
+                for (int y = 0; y < h; y++)
+                {
+                    if (tilemap[x, y] != TileType.FLOOR) continue;
+
+                    if (random.NextDouble() > ENEMY_SPAWN_CHANCE) continue;
+
+                    /* determine enemy type */
+                    EnemyType e = EnemyType.NONE;
+                    double choice = random.NextDouble() * TOTAL_SPAWN_WEIGHT;
+
+                    if (choice <= DRAGON_SPAWN_WEIGHT) {
+                        e = EnemyType.DRAGON;
+                        goto Done;
+                    }
+                    choice -= DRAGON_SPAWN_WEIGHT;
+
+                    if (choice <= GEL_SPAWN_WEIGHT) {
+                        e = EnemyType.GEL;
+                        goto Done;
+                    }
+                    choice -= GEL_SPAWN_WEIGHT;
+
+                    if (choice <= KEESE_SPAWN_WEIGHT) {
+                        e = EnemyType.KEESE;
+                        goto Done;
+                    }
+                    choice -= KEESE_SPAWN_WEIGHT;
+
+                    if (choice <= SKELETON_SPAWN_WEIGHT) {
+                        e = EnemyType.SKELETON;
+                        goto Done;
+                    }
+                    choice -= SKELETON_SPAWN_WEIGHT;
+                    if (choice <= GORIYA_SPAWN_WEIGHT)
+                    {
+                        e = EnemyType.GORIYA;
+                        goto Done;
+                    }
+                    
+
+                    Done:
+                    enemymap[x, y] = e;
+                }
+            }
+
+            /* randomly choose a starting player location */
+            while (true)
+            {
+                playerSpawnX = random.Next(w);
+                playerSpawnY = random.Next(h);
+
+                if (tilemap[playerSpawnX, playerSpawnY] != TileType.FLOOR) continue;
+                if (enemymap[playerSpawnX, playerSpawnY] != EnemyType.NONE) continue;
+                break;
+            }
+
         }
 
-        public void OnEndingRoomTransition()
+        public void Build(GameContent content)
         {
-            currentRoomX = newRoomX;
-            currentRoomY = newRoomY;
-            player.CurrentRoom = rooms[currentRoomX][currentRoomY];
+            int w = tilemap.GetLength(0);
+            int h = tilemap.GetLength(1);
+
+            /* spawn blocks */
+            for (int x = 0; x < w; x++) { for (int y = 0; y < h; y++)
+            {
+                Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
+                Block b = tilemap[x, y] switch {
+                    TileType.FLOOR => new Block(content, BlockConstant.BLOCK_TYPE_0, pos),
+                    TileType.WALL => new Block(content, BlockConstant.BLOCK_TYPE_1, pos),
+                };
+                Blocks.Add(b);
+            }}
+
+            /* spawn items */
+            Random random = new Random();
+            for (int x = 0; x < MAP_WIDTH; x++)
+            {
+                for (int y = 0; y < MAP_HEIGHT; y++)
+                {
+                    if (tilemap[x, y] == TileType.FLOOR && random.NextDouble() < 0.1) // 10% chance to spawn an item on a floor tile
+                    {
+                        Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
+                        IItemPickup item = RandomItem(content); // This method would determine which item to create
+                        item.Position = pos;
+                        Items.Add(item);
+                    }
+                }
+            }
+
+            /* spawn enemies */
+            for (int x = 0; x < w; x++)
+            {
+                for (int y = 0; y < h; y++)
+                {
+                    if (enemymap[x, y] == EnemyType.NONE) continue;
+                    Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
+                    IEnemy e = enemymap[x, y] switch
+                    {
+                        EnemyType.DRAGON => new Dragon(content, this),
+                        EnemyType.GEL => new Gel(content, this),
+                        EnemyType.KEESE => new Keese(content, this),
+                        EnemyType.SKELETON => new Skeleton(content, this),
+                        EnemyType.GORIYA => new Goriya(content, this),
+                        _ => throw new NotImplementedException("Unhandled enemy type")
+                    } ;
+                    e.Position = pos;
+                    Enemies.Add(e);
+                }
+            }
+
+
+                /* spawn player */
+                player = new Player(content, this);
+            player.Position = new Vector2(playerSpawnX * TILE_SIZE, playerSpawnY * TILE_SIZE);
         }
 
+        private IItemPickup RandomItem(GameContent content)
+        {
+            Random random = new Random();
+            // This is a simplified example, you would implement your logic based on item rarity or other criteria
+            int itemType = random.Next(0, 27); // assuming you have 27 item types as in your provided list
+            switch (itemType)
+            {
+                case 0: 
+                    return new FiveRupiesItemPickup(content, this);
+              
+                case 1: 
+                    return new FireItemPickUp(content, this);
+                case 2:
+                    return new RupyItemPickup(content, this);
+                case 3:
+                    return new TriforceItemPickup(content, this);
+                case 4:
+                    return new MapItemPickup(content, this);
+                case 5:
+                    return new KeyItemPickup(content, this);
+                case 6:
+                    return new HeartItemPickup(content, this);
+                case 7:
+                    return new HeartContainerItemPickup(content, this);
+                case 8:
+                    return new FairyItemPickup(content, this);
+                case 9:
+                    return new CompassItemPickUp(content, this);
+                case 10:
+                    return new ClockItemPickUp(content, this);
+                case 11:
+                    return new BowItemPickup(content, this);
+                case 12:
+                    return new BombItemPickup(content, this);
+                case 13:
+                    return new LifePotionItemPickup(content, this);
+                case 14:
+                    return new SecondPotionItemPickup(content, this);
+                case 15:
+                    return new LetterItemPickup(content, this);
+                case 16:
+                    return new FoodItemPickup(content, this);
+                case 17:
+                    return new SwordItemPickup(content, this);
+                case 18:
+                    return new WhiteSwordItemPickup(content, this);
+                case 19:
+                    return new MagicalSwordItemPickup(content, this);
+                case 20:
+                    return new MagicalShieldItemPickup(content, this);
+                case 21:
+                    return new BlueCandleItemPickup(content, this);
+                case 22:
+                    return new RedCandleItemPickup(content, this);
+                case 23:
+                    return new RedRingItemPickup(content, this);
+                case 24:
+                    return new BlueRingItemPickup(content, this);
+                case 25:
+                    return new PowerBraceletItemPickup(content, this);
+                case 26:
+                    return new RecorderItemPickup(content, this);
+                case 27:
+                    return new RaftItemPickup(content, this);
+                case 28:
+                    return new StepLadderItemPickup(content, this);
+                case 29:
+                    return new MagicalRodItemPickup(content, this);
+                case 30:
+                    return new BookOfMagicItemPickup(content, this);
+                case 31: 
+                    return new MagicalKeyItemPickup(content, this);
+                default: return null;
+            }
+        }
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+            Blocks = Blocks.Where(b => !b.IsDead).ToList();
+            Items = Items.Where(i => !i.IsDead).ToList();
+            Enemies = Enemies.Where(e => !e.IsDead).ToList();
+            ParticleEffects = ParticleEffects.Where(p => !p.IsDead).ToList();
+            Projectiles = Projectiles.Where(p => !p.IsDead).ToList();
+
+            Blocks.ForEach(b => b.Update(gameTime, controllers));
+            Items.ForEach(i => i.Update(gameTime, controllers));
+            Enemies.ForEach(e => e.Update(gameTime, controllers));
+            ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
+            Projectiles.ForEach(p => p.Update(gameTime, controllers));
+
             player.Update(gameTime, controllers);
 
-            // TODO: only update current room, and provide a way to transition between rooms
-            rooms[currentRoomX][currentRoomY].Update(gameTime, controllers);
-            // rooms.ForEach(r => r.Update(gameTime, controllers));
-
-            // if (controllers.Any(c => c.isLeftClick()))
-            // {
-            //     roomIdx++;
-            //     roomIdx %= rooms.Count;
-            //     player.CurrentRoom = rooms[roomIdx];
-            // }
-            // if (controllers.Any(c => c.isRightClick()))
-            // {
-            //     roomIdx--;
-            //     if (roomIdx < 0) roomIdx = rooms.Count - 1;
-            //     player.CurrentRoom = rooms[roomIdx];
-            // }
+            LevelPhysics.Update(this);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (List<Room> column in rooms) {
-                foreach (Room room in column) {
-                    if (room == null) continue;
-                    room.Draw(spriteBatch);
-                }
-            }
-           
-            player.Draw(spriteBatch);
-          
+            Blocks.ForEach(b => b.Draw(spriteBatch));
+            Items.ForEach(i => i.Draw(spriteBatch));
+            Enemies.ForEach(e => e.Draw(spriteBatch));
+            ParticleEffects.ForEach(p => p.Draw(spriteBatch));
+            Projectiles.ForEach(p => p.Draw(spriteBatch));
 
+            player.Draw(spriteBatch);
         }
     }
 }

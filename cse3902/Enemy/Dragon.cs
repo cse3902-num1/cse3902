@@ -1,6 +1,6 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,9 +18,10 @@ namespace cse3902.Enemy
         private float GhostDragonMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
         private const int AttackInterval = 3000;
-        public Dragon(GameContent content, Room room): base(content, room)
+        private Level level;
+        public Dragon(GameContent content, Level level): base(content)
         {
-            this.HP = 20;
+            this.HP = EnermyConstant.DRAGON_HEALTH;
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
@@ -33,16 +34,18 @@ namespace cse3902.Enemy
             );
             Collider = new BoxCollider(EnermyConstant.DragonPosition, EnermyConstant.DragonColliderSize,EnermyConstant.DragonColliderOrigin, ColliderType.ENEMY);
             this.content = content;
+            this.level = level;
 
-            this.room = room;
         }
-
+        /*if dragon is in nightmare mode, when dragon is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
+            
             if (IsGhost)
             {
-                Vector2 playerPos = room.Player.Position;
+                Vector2 playerPos = level.player.Position;
                 if (newPosition.X < playerPos.X)
                 {
                     newPosition.X += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -60,8 +63,10 @@ namespace cse3902.Enemy
                     newPosition.Y -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+            
             else
             {
+            
                 switch (randomNum)
                 {
                     case 1:
@@ -77,26 +82,42 @@ namespace cse3902.Enemy
                         newPosition.Y += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         break;
                 }
-            }
+         
+        }
+        
+
             Position = newPosition;
         }
-
+        /*In Advanture mode Attack using fireball for all directions.
+         * In Nightmare mode is not attacking
+         */
         public override void Attack()
         {
-            if (!IsGhost)
-            {
-                Vector2[] velocities = { EnermyConstant.DragonFireBallVelocity1, EnermyConstant.DragonFireBallVelocity2, EnermyConstant.DragonFireBallVelocity3 };
 
-                foreach (Vector2 velocity in velocities)
-                {
-                    Fireball ball = new Fireball(content, room, Position, velocity);
-                    ball.isEnermyProjectile = true;
-                    room.Projectiles.Add(ball);
+            if (IsGhost) return;
+
+
+            /* spawn several rings of fireballs, with different speeds and # of fireballs */
+            double speed = 50.0;
+            int fireballCount = 8;
+            double angleOffset = random.NextDouble() * Math.Tau;
+            for (int ring = 0; ring < 4; ring++) {
+
+                for (double angle = angleOffset; angle < Math.Tau + angleOffset; angle += Math.Tau / fireballCount) {
+                    double xvelocity = Math.Sin(angle) * speed;
+                    double yvelocity = Math.Cos(angle) * speed;
+                    Fireball f = new Fireball(content, level, Position, new Vector2((float) xvelocity, (float) yvelocity));
+                    f.isEnermyProjectile = true;
+                    level.Projectiles.Add(f);
                 }
-                SoundManager.Manager.fireballSound();
-            }
-        }
 
+                speed += 25.0;
+                fireballCount += 3;
+            }
+
+            SoundManager.Manager.fireballSound();
+        }
+        // update dragon position and draw dragon
         public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
@@ -106,7 +127,7 @@ namespace cse3902.Enemy
             }
             sprite.Draw(spriteBatch);
         }
-
+        // update timer, movement etc.
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);

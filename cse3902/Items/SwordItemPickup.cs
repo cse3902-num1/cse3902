@@ -1,5 +1,4 @@
 using cse3902.Items;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +11,7 @@ public class SwordItemPickup : BasicSlotAPickup
 {
     private bool isAdded = false;
     public static bool swordIsPicked = false;
-    public SwordItemPickup(GameContent content, Room room) : base(room)
+    public SwordItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
                        ItemsConstant.SwordItemSourceRect});

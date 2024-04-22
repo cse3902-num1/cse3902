@@ -6,7 +6,6 @@ using cse3902.Interfaces;
 using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using cse3902.WallClasses;
 using Microsoft.Xna.Framework.Audio;
 
 
@@ -14,7 +13,7 @@ namespace cse3902.PlayerClasses
 {    
     public class Player : IPlayer
     {
-        public Room CurrentRoom {set;get;}
+        public Level level {set;get;}
 
         public PlayerInventory Inventory {set;get;}
         
@@ -39,7 +38,7 @@ namespace cse3902.PlayerClasses
         public IPlayerState State;
         
         public GameContent content;
-        public Player(GameContent content)
+        public Player(GameContent content, Level level)
         {
             damageTimer = new Stopwatch();
             this.content = content;
@@ -48,10 +47,13 @@ namespace cse3902.PlayerClasses
             Pushbox = new BoxCollider(Position,Size*2.5f, Origin*2.5f, ColliderType.PLAYER);
 
             Inventory = new PlayerInventory(content);
+
+            this.level = level;
         }
 
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+         
             if (controllers.Any(c => c.isPlayerTakeDamageJustPressed()))
             {
                 TakeDamage();
@@ -62,6 +64,7 @@ namespace cse3902.PlayerClasses
             }
 
             State.Update(gameTime, controllers);
+
 
             Pushbox.Position = Position;
         }
@@ -86,7 +89,7 @@ namespace cse3902.PlayerClasses
         /* Sets the current item, which is used by PlayerStateItem. */
         public void UseItem(IInventoryItem item)
         {
-            item.Use(this, CurrentRoom);
+            item.Use(this, level);
         }
 
         public void TakeDamage()
