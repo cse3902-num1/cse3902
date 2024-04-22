@@ -9,7 +9,12 @@ namespace cse3902.Enemy
 {
     public class EnermyConstant
     {
-        
+        public const int DRAGON_HEALTH = 40;
+        public const int GEL_HEALTH = 4;
+        public const int GORIYA_HEALTH = 12;
+        public const int KEESE_HEALTH = 4;
+        public const int SKELETON_HEALTH = 4;
+
         public static Vector2 moveRightOneUnit = new Vector2(1, 0);
         public static Vector2 moveUpOneUnit = new Vector2(0, -1);
         public static Vector2 moveDownOneUnit = new Vector2(0, 1);

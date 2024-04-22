@@ -18,7 +18,7 @@ namespace cse3902.Enemy
         private Level level;
         public Keese(GameContent content, Level level) : base(content)
         {
-            this.HP = 5;
+            this.HP = EnermyConstant.KEESE_HEALTH;
             sprite = new Sprite(content.enemiesSheet,
                 new List<Rectangle>()
                 {

@@ -21,7 +21,7 @@ namespace cse3902.Enemy
         private Level level;
         public Dragon(GameContent content, Level level): base(content)
         {
-            this.HP = 15;
+            this.HP = EnermyConstant.DRAGON_HEALTH;
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
@@ -100,9 +100,10 @@ namespace cse3902.Enemy
             /* spawn several rings of fireballs, with different speeds and # of fireballs */
             double speed = 50.0;
             int fireballCount = 8;
+            double angleOffset = random.NextDouble() * Math.Tau;
             for (int ring = 0; ring < 4; ring++) {
 
-                for (double angle = 0.0; angle < Math.Tau; angle += Math.Tau / fireballCount) {
+                for (double angle = angleOffset; angle < Math.Tau + angleOffset; angle += Math.Tau / fireballCount) {
                     double xvelocity = Math.Sin(angle) * speed;
                     double yvelocity = Math.Cos(angle) * speed;
                     Fireball f = new Fireball(content, level, Position, new Vector2((float) xvelocity, (float) yvelocity));

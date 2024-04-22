@@ -5,7 +5,7 @@ namespace cse3902.Projectiles;
 
 internal class MagicalBoomerang : BasicBoomerangProjectile
 {
-    private const float maxDistance = 300f;
+    private const float maxDistance = 400f;
     private Vector2 MagicalBoomeringOrigin = new Vector2(10, 16);
     public MagicalBoomerang(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity, maxDistance)
     {
