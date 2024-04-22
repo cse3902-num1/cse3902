@@ -40,6 +40,7 @@ public class Bomb : IProjectile
         this.content = content;
         this.level = level;
         Hitbox = new BoxCollider(position, ProjectileConstant.BombCollideSize, ProjectileConstant.BombCollideOrigin, ColliderType.ITEM_PICKUP);
+        Hitbox.IsEnabled = false; /* bombs don't collide with anything */
     }
 
     private void Die()
