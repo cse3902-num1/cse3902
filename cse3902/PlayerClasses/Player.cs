@@ -21,6 +21,9 @@ namespace cse3902.PlayerClasses
         private bool isDamaged = false;
         private const int RandomChangeInterval = 2000;
 
+        public Stopwatch itemUseCooldown;
+        private const int ITEM_USE_COOLDOWN = 250;
+
         private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
             set {
@@ -41,6 +44,9 @@ namespace cse3902.PlayerClasses
         public Player(GameContent content, Level level)
         {
             damageTimer = new Stopwatch();
+            itemUseCooldown = new Stopwatch();
+            itemUseCooldown.Start();
+
             this.content = content;
             State = new PlayerStateIdle(content,this);
             
@@ -89,6 +95,9 @@ namespace cse3902.PlayerClasses
         /* Sets the current item, which is used by PlayerStateItem. */
         public void UseItem(IInventoryItem item)
         {
+            if (itemUseCooldown.ElapsedMilliseconds < ITEM_USE_COOLDOWN) return;
+            itemUseCooldown.Restart();
+
             item.Use(this, level);
         }
 

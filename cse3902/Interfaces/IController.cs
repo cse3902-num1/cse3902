@@ -17,15 +17,14 @@ public interface IController
     public bool isPlayerTakeDamageJustPressed();
 
     /* player item use keys */
-    public bool isPlayerUseItem1JustPressed();
-    public bool isPlayerUseItem2JustPressed();
-    public bool isPlayerUseItem3JustPressed();
-    public bool isPlayerUseItem4JustPressed();
-    public bool isPlayerUseItem5JustPressed();
-    public bool isPlayerUseItem6JustPressed();
-    public bool isPlayerUseItem7JustPressed();
-    public bool isPlayerUseItem8JustPressed();
-    public bool isPlayerUseItem9JustPressed();
+    public bool isPlayerUseBombJustPressed();
+    public bool isPlayerUseMagicalBoomerangPressed();
+    public bool isPlayerUseBlueBowPressed();
+    public bool isPlayerUseFireballPressed();
+    public bool isPlayerUseFirePressed();
+    public bool isPlayerUseGreenBoomerangPressed();
+    public bool isPlayerUseGreenBowPressed();
+    public bool isPlayerUsePurpleCrystalPressed();
     public bool isMutePressed();
     /* enemy keys */
     public bool isEnemyPressO();

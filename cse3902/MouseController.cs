@@ -47,15 +47,14 @@ namespace cse3902
         public bool isPlayerMoveDownPressed() { return false; }
         public bool isPlayerAttackJustPressed() { return false; }
         public bool isPlayerTakeDamageJustPressed() { return false; }
-        public bool isPlayerUseItem1JustPressed() { return false; }
-        public bool isPlayerUseItem2JustPressed() { return false; }
-        public bool isPlayerUseItem3JustPressed() { return false; }
-        public bool isPlayerUseItem4JustPressed() { return false; }
-        public bool isPlayerUseItem5JustPressed() { return false; }
-        public bool isPlayerUseItem6JustPressed() { return false; }
-        public bool isPlayerUseItem7JustPressed() { return false; }
-        public bool isPlayerUseItem8JustPressed() { return false; }
-        public bool isPlayerUseItem9JustPressed() { return false; }
+        public bool isPlayerUseBombJustPressed() { return false; }
+        public bool isPlayerUseMagicalBoomerangPressed() { return false; }
+        public bool isPlayerUseBlueBowPressed() { return false; }
+        public bool isPlayerUseFireballPressed() { return false; }
+        public bool isPlayerUseFirePressed() { return false; }
+        public bool isPlayerUseGreenBoomerangPressed() { return false; }
+        public bool isPlayerUseGreenBowPressed() { return false; }
+        public bool isPlayerUsePurpleCrystalPressed() { return false; }
         public bool isEnemyPressO() { return false; }
         public bool isEnemyPressP() { return false; }
         public bool isPreviousItemKeyPress() { return false; }

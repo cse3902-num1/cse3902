@@ -68,15 +68,14 @@ namespace cse3902.PlayerClasses
             /* enter item state if any item use keys are pressed */
             /* TODO: finish once items classes are created */
             IInventoryItem item = null;
-            if      (controllers.Any(c => c.isPlayerUseItem1JustPressed())) item = new BlueBombInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem2JustPressed())) item = new MagicalBoomerangInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem3JustPressed())) item = new BlueBowInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem4JustPressed())) item = new FireballInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem5JustPressed())) item = new FireInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem6JustPressed())) item = new GreenBoomerangInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem7JustPressed())) item = new GreenBowInventoryItem(content);
-            else if (controllers.Any(c => c.isPlayerUseItem8JustPressed())) item = new PurpleCystleInventoryItem();
-            else if (controllers.Any(c => c.isPlayerUseItem9JustPressed())) item = new MagicalBoomerangInventoryItem(content);
+            if      (controllers.Any(c => c.isPlayerUseBombJustPressed())) item = new BlueBombInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseMagicalBoomerangPressed())) item = new MagicalBoomerangInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseBlueBowPressed())) item = new BlueBowInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseFireballPressed())) item = new FireballInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseFirePressed())) item = new FireInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseGreenBoomerangPressed())) item = new GreenBoomerangInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUseGreenBowPressed())) item = new GreenBowInventoryItem(content);
+            else if (controllers.Any(c => c.isPlayerUsePurpleCrystalPressed())) item = new PurpleCystleInventoryItem();
             if (item != null)
             {
                 player.State = new PlayerStateItem(content, player, item);
