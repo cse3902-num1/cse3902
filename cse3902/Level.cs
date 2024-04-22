@@ -30,7 +30,8 @@ namespace cse3902
             GEL = 2,
             KEESE = 3,
             SKELETON = 4,
-            GORIYA = 5
+            GORIYA = 5,
+            OLD_MAN = 6,
         }
        
         public const int MAP_WIDTH = 64;
@@ -87,7 +88,8 @@ public void PrintTileMap()
                         EnemyType.GEL => 'G',
                         EnemyType.KEESE => 'K',
                         EnemyType.SKELETON => 'S',
-                        EnemyType.GORIYA => 'Y'
+                        EnemyType.GORIYA => 'Y',
+                        EnemyType.OLD_MAN => 'O',
                     } + " ";
                 }
                 Debug.WriteLine(line);
@@ -283,6 +285,16 @@ public void PrintTileMap()
                 }
             }
 
+            /* spawn an old man */
+            while (true) {
+                int omx = random.Next(1, w - 1);
+                int omy = random.Next(1, h - 1);
+                if (tilemap[omx, omy] != TileType.FLOOR) continue;
+                if (enemymap[omx, omy] != EnemyType.NONE) continue;
+                enemymap[omx, omy] = EnemyType.OLD_MAN;
+                break;
+            }
+
             /* randomly choose a starting player location */
             while (true)
             {
@@ -342,6 +354,7 @@ public void PrintTileMap()
                         EnemyType.KEESE => new Keese(content, this),
                         EnemyType.SKELETON => new Skeleton(content, this),
                         EnemyType.GORIYA => new Goriya(content, this),
+                        EnemyType.OLD_MAN => new OldMan(content, this),
                         _ => throw new NotImplementedException("Unhandled enemy type")
                     } ;
                     e.Position = pos;
@@ -349,9 +362,8 @@ public void PrintTileMap()
                 }
             }
 
-
-                /* spawn player */
-                player = new Player(content, this);
+            /* spawn player */
+            player = new Player(content, this);
             player.Position = new Vector2(playerSpawnX * TILE_SIZE, playerSpawnY * TILE_SIZE);
         }
 
