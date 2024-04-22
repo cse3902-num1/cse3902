@@ -159,6 +159,18 @@ namespace cse3902.Enemy
             }
         }
 
+        public override void Die() {
+            /* spawn a triforce and a health potion as reward */
 
+            IItemPickup triforceDrop = new TriforceItemPickup(content, level);
+            triforceDrop.Position = Position + new Vector2(-4, 0);
+            level.Items.Add(triforceDrop);
+
+            IItemPickup healthDrop = new SecondPotionItemPickup(content, level);
+            healthDrop.Position = Position + new Vector2(4, 0);
+            level.Items.Add(healthDrop);
+
+            base.Die();
+        }
     }
 }
