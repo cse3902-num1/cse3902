@@ -14,7 +14,6 @@ public static class CollisionDetector
     {
         List<CollisionResult<IEnemy>> results = new List<CollisionResult<IEnemy>>();
         foreach (IEnemy enemy in enemies) {
-            if (enemy.IsGhost) { continue; }
             if (self.IsColliding(enemy.collider))
             {
                 Vector2 depth = self.GetOverlap(enemy.collider);

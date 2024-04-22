@@ -61,8 +61,9 @@ public static class CollisionResolver
     {
         if (projectile.isEnermyProjectile) return;
         if (results.Count == 0) return;
-        projectile.IsDead = true;
         foreach (CollisionResult<IEnemy> r in results) {
+            if (r.Entity.IsGhost) { continue; }
+            projectile.IsDead = true;
             r.Entity.TakeDmg(1);
         }
     }
