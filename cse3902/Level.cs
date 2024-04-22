@@ -382,7 +382,7 @@ public void PrintTileMap()
             Random random = new Random();
      
             int itemType = random.Next(0, 27); 
-            if (itemType == 3 && triforceCount >= 5)
+            if (itemType == 3 && triforceCount >= 6)
             {
                 // If 5 Triforce items already exist, choose a different item type
                 return RandomItem(content); // Recursively call RandomItem to get a different item type
