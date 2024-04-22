@@ -9,7 +9,7 @@ namespace cse3902;
 public class FireInventoryItem : IInventoryItem
 {
     private GameContent content;
-    private float speed = 400f;
+    private float speed = 300f;
 
     public FireInventoryItem(GameContent content)
     {

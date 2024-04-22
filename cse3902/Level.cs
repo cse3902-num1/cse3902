@@ -17,6 +17,9 @@ namespace cse3902
 {
     public class Level
     {
+        private int hitstop_duration_ms = 0;
+        private Stopwatch hitstop_timer = new Stopwatch();
+
         public const float TILE_SIZE = 16 * 3.0f;
         public enum TileType
         {
@@ -54,12 +57,8 @@ namespace cse3902
         public  Sprite enemyDot;
         public  Sprite triforceDot;
 
-    
-
-
-
-/* TODO: this is a temporary function to print mapdata */
-public void PrintTileMap()
+        /* TODO: this is a temporary function to print mapdata */
+        public void PrintTileMap()
         {
             for (int x = 0; x < tilemap.GetLength(0); x++)
             {
@@ -104,6 +103,9 @@ public void PrintTileMap()
             PrintTileMap();
             PrintEnemyMap();
             Debug.WriteLine("spawnx: {0} spawny: {1}", playerSpawnX, playerSpawnY);
+
+            EventBus.HitStop += OnHitStop;
+            hitstop_timer.Start();
 
             // throw new NotImplementedException();
 
@@ -460,6 +462,12 @@ public void PrintTileMap()
         }
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+            if (hitstop_timer.ElapsedMilliseconds < hitstop_duration_ms) {
+                return;
+            }
+            hitstop_timer.Restart();
+            hitstop_duration_ms = 0;
+
             Blocks = Blocks.Where(b => !b.IsDead).ToList();
             Items = Items.Where(i => !i.IsDead).ToList();
             Enemies = Enemies.Where(e => !e.IsDead).ToList();
@@ -486,6 +494,10 @@ public void PrintTileMap()
             Projectiles.ForEach(p => p.Draw(spriteBatch));
 
             player.Draw(spriteBatch);
+        }
+
+        public void OnHitStop(int duration_ms) {
+            hitstop_duration_ms += duration_ms;
         }
     }
 }
