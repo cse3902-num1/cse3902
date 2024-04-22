@@ -19,7 +19,7 @@ namespace cse3902.PlayerClasses
         
         public Stopwatch damageTimer;
         private bool isDamaged = false;
-        private const int RandomChangeInterval = 500;
+        private const int RandomChangeInterval = 2000;
 
         private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
