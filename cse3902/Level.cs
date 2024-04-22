@@ -489,9 +489,9 @@ namespace cse3902
         {
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Items.ForEach(i => i.Draw(spriteBatch));
+            Projectiles.ForEach(p => p.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
-            Projectiles.ForEach(p => p.Draw(spriteBatch));
 
             player.Draw(spriteBatch);
         }

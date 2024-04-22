@@ -66,7 +66,7 @@ public static class CollisionResolver
             _ => true,
         };
 
-        if (!(projectile is Fire) && !(projectile is Bomb)) EventBus.HitStop(200); /* fireball doesn't die on hit, so avoid multiple repeated hitstops. bomb doesn't damage until it explodes. */
+        if (!(projectile is Fire) && !(projectile is Bomb)) EventBus.HitStop(100); /* fireball doesn't die on hit, so avoid multiple repeated hitstops. bomb doesn't damage until it explodes. */
 
         foreach (CollisionResult<IEnemy> r in results) {
             // r.Entity.TakeDmg(1);

@@ -124,7 +124,7 @@ namespace cse3902.PlayerClasses
                 }
 
                 // EventBus.HitStop(200);
-                EventBus.CameraShake(200, 3f);
+                EventBus.CameraShake(200, 5f);
             }
             if (Inventory.health == 0)
             {

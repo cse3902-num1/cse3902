@@ -69,7 +69,7 @@ public class Bomb : IProjectile
             block.BlockIndex = BlockConstant.BLOCK_TYPE_0;
         }
 
-        EventBus.CameraShake(300, 5f);
+        EventBus.CameraShake(300, 10f);
 
         IsDead = true;
     }
