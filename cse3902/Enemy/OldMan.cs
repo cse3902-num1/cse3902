@@ -18,6 +18,8 @@ namespace cse3902.Enemy
         private const int RandomChangeInterval = 500;  // Time in milliseconds
         private const int AttackInterval = 200;
         private Level level;
+        private double time = 0.0;
+
         public OldMan(GameContent content, Level level) : base(content)
         {
             this.HP = EnermyConstant.OLD_MAN_HEALTH;
@@ -37,6 +39,8 @@ namespace cse3902.Enemy
 
         public override void Move(GameTime gameTime, int randomNum)
         {
+            time = gameTime.TotalGameTime.TotalSeconds;
+
             Vector2 newPosition = Position;
                 switch (randomNum)
                 {
@@ -61,14 +65,16 @@ namespace cse3902.Enemy
         {
             if (!IsGhost)
             {
-                Vector2[] velocities = { EnermyConstant.OldmanFireBallVelocity1, EnermyConstant.OldmanFireBallVelocity2, EnermyConstant.OldmanFireBallVelocity3, EnermyConstant.OldmanFireBallVelocity4, EnermyConstant.OldmanFireBallVelocity5, EnermyConstant.OldmanFireBallVelocity6, EnermyConstant.OldmanFireBallVelocity7, EnermyConstant.OldmanFireBallVelocity8 };
-
-                foreach (Vector2 velocity in velocities)
-                {
-                    Fireball ball = new Fireball(content, level, Position, velocity);
-                    ball.isEnermyProjectile = true;
-                    level.Projectiles.Add(ball);
+                const float FIREBALL_SPEED = 200f;
+                double angleOffset = time * Math.Tau * 0.05;
+                int count = 4;
+                for (double angle = angleOffset; angle < Math.Tau + angleOffset; angle += Math.Tau / count) {
+                    Vector2 velocity = new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * FIREBALL_SPEED;
+                    Fireball f = new Fireball(content, level, Position, velocity);
+                    f.isEnermyProjectile = true;
+                    level.Projectiles.Add(f);
                 }
+
                 SoundManager.Manager.fireballSound();
             }
         }
