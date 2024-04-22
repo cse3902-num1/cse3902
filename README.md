@@ -33,16 +33,36 @@ dotnet run
 * Z - make Link use his primary attack
 * N - make Link use his primary attack
 
-* C - display the hud
-* B - switch weapon in slot B - slot B contains all the other weapon
-* V - switch weapon in slot A - slot A contains only sword
-* 1 - use bomb
+* 1 - use bomb, bombs can break the block
 * 2 - use magical boomerang
 * 3 - use blue arrow
 * 4 - use fireball
 * 5 - use fire (not implemented yet)
 * 6 - use green boomerang
 * 7 - use green arrow
+
+## Hud controls
+* Hud displays:
+* minimap radar on the top left corner to display relative position
+* * green dot represents where the player is
+  * lavender dots represents where the triforces are
+  * red dots represents where the dragons are
+
+* Life container represents the health of the player
+* Ruby picked up quantity
+* Key picked up quantity
+* Bombs picked up quantity
+* slot A contains only swords
+* slot B contains all the other weapons
+* B - switch weapon in slot B 
+* V - switch weapon in slot A
+
+## Player Inventory controls
+* C - display the full player inventory
+* B - switch weapon in slot B 
+* V - switch weapon in slot A
+* Map - show the map that player just picked
+* Compass - show the compass that player just picked
 
 ## Other control
 * Q - quit the game
