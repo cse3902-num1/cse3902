@@ -32,7 +32,7 @@ namespace cse3902
             SKELETON = 4,
             GORIYA = 5
         }
-       
+        public  int triforceCount = 0;
         public const int MAP_WIDTH = 64;
         public const int MAP_HEIGHT = 64;
         private TileType[,] tilemap = new TileType[MAP_WIDTH, MAP_HEIGHT];
@@ -303,6 +303,7 @@ namespace cse3902
                     {
                         Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
                         IItemPickup item = RandomItem(content); // This method would determine which item to create
+                        
                         item.Position = pos;
                         Items.Add(item);
                     }
@@ -339,8 +340,13 @@ namespace cse3902
         private IItemPickup RandomItem(GameContent content)
         {
             Random random = new Random();
-            // This is a simplified example, you would implement your logic based on item rarity or other criteria
-            int itemType = random.Next(0, 27); // assuming you have 27 item types as in your provided list
+     
+            int itemType = random.Next(0, 27); 
+            if (itemType == 3 && triforceCount >= 5)
+            {
+                // If 5 Triforce items already exist, choose a different item type
+                return RandomItem(content); // Recursively call RandomItem to get a different item type
+            }
             switch (itemType)
             {
                 case 0: 
@@ -351,6 +357,7 @@ namespace cse3902
                 case 2:
                     return new RupyItemPickup(content, this);
                 case 3:
+                    triforceCount++;
                     return new TriforceItemPickup(content, this);
                 case 4:
                     return new MapItemPickup(content, this);

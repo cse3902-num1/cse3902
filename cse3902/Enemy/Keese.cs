@@ -78,12 +78,7 @@ namespace cse3902.Enemy
             }
             Position = newPosition;
         }
-
-        public override void Attack()
-        {
-
-        }
-
+        // update keese's abstract class and timer.
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);

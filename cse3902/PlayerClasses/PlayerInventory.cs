@@ -24,7 +24,7 @@ namespace cse3902.PlayerClasses
         public int Keys;
         public int Bombs;
         public int Triforce;
-        public int lifeContainer = 3;
+        public int lifeContainer = 10;
         private int count = 0;
         private int boxH = 0;
         private int boxW = 0;
@@ -54,7 +54,7 @@ namespace cse3902.PlayerClasses
         public static List<BasicSlotAPickup> slotAItems = new List<BasicSlotAPickup>();
         public PlayerInventory(GameContent content)
         {
-            health = 3;
+            health = 10;
             BowUnlocked = true;
             Rubies = 0;
             Keys = 0;
