@@ -25,7 +25,8 @@ namespace cse3902.Enemy
                 {
                     EnermyConstant.OldMan,
                 },
-                EnermyConstant.OldManOrigin
+                EnermyConstant.OldManOrigin,
+                4.0f
             );
             Collider = new BoxCollider(EnermyConstant.OldManPosition, EnermyConstant.OldmanColliderSize, EnermyConstant.OldmanColliderOrigin, ColliderType.ENEMY);
             this.content = content;

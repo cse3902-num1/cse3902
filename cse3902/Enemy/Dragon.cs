@@ -100,6 +100,10 @@ namespace cse3902.Enemy
         public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
+            if (IsGhost)
+            {
+                sprite.setAlpha(0.4f);
+            }
             sprite.Draw(spriteBatch);
         }
 
