@@ -54,7 +54,7 @@ public static class CollisionResolver
             }
         }
     }
-
+    /*when projectile hit enermy enermy should take damage and projectile is disappearing*/
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
     {
         if (projectile.isEnermyProjectile) return;
@@ -137,7 +137,7 @@ public static class CollisionResolver
             }
         }
     }
-
+    /*player touch enermy player lost 1 hp and doesn't lose more instantly*/
     public static void ResolvePlayerEnemyCollision(IPlayer player, List<CollisionResult<IEnemy>> results)
     {
         
@@ -145,24 +145,13 @@ public static class CollisionResolver
         {
             return;
         }
-
-        //float area = 0f;
-        //CollisionResult<IEnemy> biggestResult = results[0];
         foreach (CollisionResult<IEnemy> result in results)
         {
-            //if (result.GetArea() > area)
-            //{
-            //    area = result.GetArea();
-            //    biggestResult = result;
-            //}
             player.TakeDamage();
 
         }
-
-        //Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        //player.Position += reconciliation;
     }
-
+    //player touch item, item should disappear and useful item should transfer to player inventory
     public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
     {
         foreach (CollisionResult<IItemPickup> result in results)

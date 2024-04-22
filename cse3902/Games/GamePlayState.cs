@@ -18,7 +18,7 @@ namespace cse3902.Games
         private Level level;
         private Hud hud;
         private bool isPaused = false;
-
+        // initalize level and hud
         public GamePlayState(GameContent gamecontent, Game1 game)
         {
             this.gameContent = gamecontent;
@@ -26,11 +26,11 @@ namespace cse3902.Games
             level = new Level(gamecontent);
             hud = new Hud(gameContent,level);
         }
+        // draw level, hud
         public void Draw(Camera camera)
         {
             if (level.player is not null) {
                 camera.Position = level.player.Position;
-                // camera.Position = level.player.CurrentRoom.Position + new Vector2(Room.ROOM_WIDTH / 2, Room.ROOM_HEIGHT / 2);
             }
 
             camera.BeginDraw();
@@ -42,7 +42,9 @@ namespace cse3902.Games
 
             camera.EndDraw();
         }
-
+        /* if p is pressed game will paused, if r is pressed game will reset to current mode
+         * if player picked up all the triforce will turn to win state
+         */
         public void Update(GameTime gameTime, List<IController> controllers)
         {
             if(controllers.Any(c => c.isPausePressed()))

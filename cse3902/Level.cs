@@ -30,6 +30,7 @@ namespace cse3902
             GEL = 2,
             KEESE = 3,
             SKELETON = 4,
+            GORIYA = 5
         }
        
         public const int MAP_WIDTH = 64;
@@ -76,7 +77,8 @@ namespace cse3902
                         EnemyType.DRAGON => 'D',
                         EnemyType.GEL => 'G',
                         EnemyType.KEESE => 'K',
-                        EnemyType.SKELETON => 'S'
+                        EnemyType.SKELETON => 'S',
+                        EnemyType.GORIYA => 'Y'
                     } + " ";
                 }
                 Debug.WriteLine(line);
@@ -210,10 +212,11 @@ namespace cse3902
             /* randomly add enemies to open areas */
             const double ENEMY_SPAWN_CHANCE = 0.05;
             const double DRAGON_SPAWN_WEIGHT = 0.1;
-            const double GEL_SPAWN_WEIGHT = 0.2;
-            const double KEESE_SPAWN_WEIGHT = 0.3;
-            const double SKELETON_SPAWN_WEIGHT = 0.4;
-            const double TOTAL_SPAWN_WEIGHT = DRAGON_SPAWN_WEIGHT + GEL_SPAWN_WEIGHT + KEESE_SPAWN_WEIGHT + SKELETON_SPAWN_WEIGHT;
+            const double GEL_SPAWN_WEIGHT = 0.3;
+            const double KEESE_SPAWN_WEIGHT = 0.4;
+            const double SKELETON_SPAWN_WEIGHT = 0.5;
+            const double GORIYA_SPAWN_WEIGHT = 0.2;
+            const double TOTAL_SPAWN_WEIGHT = DRAGON_SPAWN_WEIGHT + GEL_SPAWN_WEIGHT + KEESE_SPAWN_WEIGHT + SKELETON_SPAWN_WEIGHT + GORIYA_SPAWN_WEIGHT;
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
@@ -248,6 +251,13 @@ namespace cse3902
                         e = EnemyType.SKELETON;
                         goto Done;
                     }
+                    choice -= SKELETON_SPAWN_WEIGHT;
+                    if (choice <= GORIYA_SPAWN_WEIGHT)
+                    {
+                        e = EnemyType.GORIYA;
+                        goto Done;
+                    }
+                    
 
                     Done:
                     enemymap[x, y] = e;
@@ -308,12 +318,13 @@ namespace cse3902
                     Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
                     IEnemy e = enemymap[x, y] switch
                     {
-                        EnemyType.DRAGON => new Dragon(content,this),
-                        EnemyType.GEL => new Gel(content,this),
-                        EnemyType.KEESE => new Keese(content,this),
+                        EnemyType.DRAGON => new Dragon(content, this),
+                        EnemyType.GEL => new Gel(content, this),
+                        EnemyType.KEESE => new Keese(content, this),
                         EnemyType.SKELETON => new Skeleton(content, this),
+                        EnemyType.GORIYA => new Goriya(content, this),
                         _ => throw new NotImplementedException("Unhandled enemy type")
-                    };
+                    } ;
                     e.Position = pos;
                     Enemies.Add(e);
                 }

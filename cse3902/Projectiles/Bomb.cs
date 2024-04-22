@@ -55,17 +55,6 @@ public class Bomb : IProjectile
         /* hurt all enemies within a certain range */
         foreach (IEnemy e in level.Enemies)
         {
-            // switch (e)
-            // {
-            //     case EnemyBase enemyBase:
-            //         if (Hitbox.IsColliding(enemyBase.Collider))
-            //         {
-            //             IsDead = true;
-            //             e.TakeDmg(1000);
-
-            //         }
-            //         break;
-            // }
             if (Vector2.Distance(e.Position, Position) > RANGE) continue;
             e.TakeDmg(10);
         }

@@ -21,7 +21,7 @@ namespace cse3902.Enemy
         private Level level;
         public Dragon(GameContent content, Level level): base(content)
         {
-            this.HP = 20;
+            this.HP = 15;
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
@@ -37,7 +37,8 @@ namespace cse3902.Enemy
             this.level = level;
 
         }
-
+        /*if dragon is in nightmare mode, when dragon is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
@@ -87,37 +88,14 @@ namespace cse3902.Enemy
 
             Position = newPosition;
         }
-
+        /*In Advanture mode Attack using fireball for all directions.
+         * In Nightmare mode is not attacking
+         */
         public override void Attack()
         {
-            /*
-            if (!IsGhost)
-            {
-                Vector2[] velocities = { EnermyConstant.DragonFireBallVelocity1, EnermyConstant.DragonFireBallVelocity2, EnermyConstant.DragonFireBallVelocity3 };
-
-                foreach (Vector2 velocity in velocities)
-                {
-                    Fireball ball = new Fireball(content, level, Position, velocity);
-                    ball.isEnermyProjectile = true;
-                    level.Projectiles.Add(ball);
-                }
-                SoundManager.Manager.fireballSound();
-            }
-            */
 
             if (IsGhost) return;
 
-            // Fireball f1 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity1);
-            // f1.isEnermyProjectile = true;
-            // level.Projectiles.Add(f1);
-
-            // Fireball f2 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity2);
-            // f2.isEnermyProjectile = true;
-            // level.Projectiles.Add(f2);
-
-            // Fireball f3 = new Fireball(content, level, Position, EnermyConstant.DragonFireBallVelocity3);
-            // f3.isEnermyProjectile = true;
-            // level.Projectiles.Add(f3);
 
             /* spawn several rings of fireballs, with different speeds and # of fireballs */
             double speed = 50.0;
@@ -138,13 +116,13 @@ namespace cse3902.Enemy
 
             SoundManager.Manager.fireballSound();
         }
-
+        // update dragon position and draw dragon
         public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
             sprite.Draw(spriteBatch);
         }
-
+        // update timer, movement etc.
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);

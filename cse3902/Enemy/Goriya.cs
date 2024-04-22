@@ -70,7 +70,8 @@ namespace cse3902.Enemy
             this.content = content;
             this.level = level;
         }
-
+        /*if Goriya is in nightmare mode, when Goriya is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -123,7 +124,8 @@ namespace cse3902.Enemy
                 }
             }
         }
-
+        /*randonly changing goria's action between move in different direction or attack
+         */
         public void ChangeAction(int randomNum)
         {
             if (!IsGhost)
@@ -150,7 +152,8 @@ namespace cse3902.Enemy
                 }
             }
         }
-
+        /*In advanture mode goriya will move and throw boomering
+         */
         public override void Attack()
         {
             if (projectile != null || IsGhost) {
@@ -175,11 +178,11 @@ namespace cse3902.Enemy
                     break;
             }
             velocity *= 200f;
-            //projectile = new GreenBoomerang(content, level, Position, velocity);
+            projectile = new GreenBoomerang(content, level, Position, velocity);
             projectile.isEnermyProjectile = true;
 
         }
-
+        // if in advanture mode set transparent to 0.4 , otherwise draw goriya without transparent.
         public override void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.Position = Position;
@@ -215,10 +218,8 @@ namespace cse3902.Enemy
             }
 
             /* only move if boomerang has returned */
-            // if (projectiles.Count == 0) {
                 Move(gameTime, randomNum);
                 ChangeAction(randomNum);
-            // }
 
             currentSprite.Update(gameTime, controllers);
         }

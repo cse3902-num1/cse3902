@@ -12,14 +12,6 @@ namespace cse3902.Objects
    
     public class Block : IBlock
 	{
-        // Shared data class
-        //public static class GameData
-        //{
-        //    public static int BlockIndex { get; set; } = 0;
-
-        //}
-
-        //private ISprite sprite
 
         public bool IsDead {set;get;}
         private int blockIndex;

@@ -28,7 +28,6 @@ public class GreenArrow : BasicDirectionalProjectile
     {
         IsDead = true;
         IParticleEffect fx = new ArrowExplode(content, Position);
-        /* TODO: "spawn" the particle effect in the level */
     }
 
     public override void Update(GameTime gameTime, List<IController> controllers)

@@ -53,13 +53,8 @@ public abstract class BasicBoomerangProjectile : IProjectile
         // Check if the boomerang has reached its maximum range and should start returning
         if (!isReturning && totalDistance >= range && totalDistance < range * 2)
         {
-            // Debug.WriteLine("displacement" + displacement + "range" + range);
             isReturning = true;
-            // Instead of simply inverting the velocity, calculate the direction back to the initial position
-            // Velocity = (initialPosition - Position);
-            // if (Velocity != Vector2.Zero)
-            //     Velocity.Normalize();
-            // Velocity *= Velocity.Length(); // Set the return speed (might be different from initial speed)
+
             Velocity *= -1f;
         }
 

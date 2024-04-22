@@ -29,7 +29,8 @@ namespace cse3902.Enemy
             Position = EnermyConstant.GelInitialPosition;
             Collider = new BoxCollider(Position, EnermyConstant.GelColliderSize, EnermyConstant.GelColliderOrigin, ColliderType.ENEMY);
         }
-
+        /*if Gel is in nightmare mode, when Gel is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
@@ -75,12 +76,7 @@ namespace cse3902.Enemy
             }
             Position = newPosition;
         }
-
-        public override void Attack()
-        {
-
-        }
-
+        // update Gel's position
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);

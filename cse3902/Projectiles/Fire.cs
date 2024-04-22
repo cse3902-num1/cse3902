@@ -34,7 +34,6 @@ public class Fire : BasicDirectionalProjectile
     private void Die()
     {
         IsDead = true;
-        /* TODO: "spawn" the particle effect in the level */
     }
     public override void Update(GameTime gameTime, List<IController> controllers)
     {

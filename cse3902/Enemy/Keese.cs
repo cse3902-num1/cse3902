@@ -32,7 +32,8 @@ namespace cse3902.Enemy
             Collider = new BoxCollider(Position, EnermyConstant.KeeseColliderSize, EnermyConstant.KeeseColliderOrigin, ColliderType);
             this.level = level;
         }
-
+        /*if Keese is in nightmare mode, when Keese is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;

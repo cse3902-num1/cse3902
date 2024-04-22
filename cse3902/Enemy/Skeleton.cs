@@ -17,7 +17,7 @@ namespace cse3902.Enemy
         private Level level;
         public Skeleton(GameContent content, Level level) : base(content)
         {
-            this.HP = 3;
+            this.HP = 2;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {
@@ -31,7 +31,8 @@ namespace cse3902.Enemy
             Collider = new BoxCollider(Position, EnermyConstant.SkeletonColliderSize, EnermyConstant.SkeletonColliderOrigin, ColliderType);
             
         }
-
+        /*if Skeleton is in nightmare mode, when Skeleton is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
@@ -78,7 +79,7 @@ namespace cse3902.Enemy
             }
             Position = newPosition;
         }
-
+        //update base class and timer.
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);
