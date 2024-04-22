@@ -213,12 +213,11 @@ namespace cse3902
 
             /* randomly add enemies to open areas */
             const double ENEMY_SPAWN_CHANCE = 0.05;
-            const double DRAGON_SPAWN_WEIGHT = 0.1;
             const double GEL_SPAWN_WEIGHT = 0.3;
             const double KEESE_SPAWN_WEIGHT = 0.4;
             const double SKELETON_SPAWN_WEIGHT = 0.5;
             const double GORIYA_SPAWN_WEIGHT = 0.2;
-            const double TOTAL_SPAWN_WEIGHT = DRAGON_SPAWN_WEIGHT + GEL_SPAWN_WEIGHT + KEESE_SPAWN_WEIGHT + SKELETON_SPAWN_WEIGHT + GORIYA_SPAWN_WEIGHT;
+            const double TOTAL_SPAWN_WEIGHT = GEL_SPAWN_WEIGHT + KEESE_SPAWN_WEIGHT + SKELETON_SPAWN_WEIGHT + GORIYA_SPAWN_WEIGHT;
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
@@ -230,12 +229,6 @@ namespace cse3902
                     /* determine enemy type */
                     EnemyType e = EnemyType.NONE;
                     double choice = random.NextDouble() * TOTAL_SPAWN_WEIGHT;
-
-                    if (choice <= DRAGON_SPAWN_WEIGHT) {
-                        e = EnemyType.DRAGON;
-                        goto Done;
-                    }
-                    choice -= DRAGON_SPAWN_WEIGHT;
 
                     if (choice <= GEL_SPAWN_WEIGHT) {
                         e = EnemyType.GEL;
@@ -266,14 +259,30 @@ namespace cse3902
                 }
             }
 
+            /* spawns 2 dragons */
+            const int DRAGON_SPAWN_COUNT = 2;
+            for (int i = 0; i < DRAGON_SPAWN_COUNT; i++) {
+                while (true) {
+                    int dx = random.Next(1, w - 1);
+                    int dy = random.Next(1, h - 1);
+                    if (tilemap[dx, dy] != TileType.FLOOR) continue;
+                    if (enemymap[dx, dy] != EnemyType.NONE) continue;
+                    enemymap[dx, dy] = EnemyType.DRAGON;
+                    break;
+                }
+            }
+
             /* spawn an old man */
-            while (true) {
-                int omx = random.Next(1, w - 1);
-                int omy = random.Next(1, h - 1);
-                if (tilemap[omx, omy] != TileType.FLOOR) continue;
-                if (enemymap[omx, omy] != EnemyType.NONE) continue;
-                enemymap[omx, omy] = EnemyType.OLD_MAN;
-                break;
+            const int OLD_MAN_SPAWN_COUNT = 1;
+            for (int i = 0; i < OLD_MAN_SPAWN_COUNT; i++) {
+                while (true) {
+                    int omx = random.Next(1, w - 1);
+                    int omy = random.Next(1, h - 1);
+                    if (tilemap[omx, omy] != TileType.FLOOR) continue;
+                    if (enemymap[omx, omy] != EnemyType.NONE) continue;
+                    enemymap[omx, omy] = EnemyType.OLD_MAN;
+                    break;
+                }
             }
 
             /* randomly choose a starting player location */
