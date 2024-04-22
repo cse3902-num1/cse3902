@@ -16,7 +16,7 @@ namespace cse3902.Enemy
         private GameContent content;
         private float OldManMoveSpeed = 20f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
-        private const int AttackInterval = 200;
+        private const int AttackInterval = 300;
         private Level level;
         private double time = 0.0;
 

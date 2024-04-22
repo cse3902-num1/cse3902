@@ -50,7 +50,7 @@ namespace cse3902.PlayerClasses
             this.content = content;
             State = new PlayerStateIdle(content,this);
             
-            Pushbox = new BoxCollider(Position,Size*2.5f, Origin*2.5f, ColliderType.PLAYER);
+            Pushbox = new BoxCollider(Position,Size*1.0f, Origin*1.0f, ColliderType.PLAYER);
 
             Inventory = new PlayerInventory(content);
 

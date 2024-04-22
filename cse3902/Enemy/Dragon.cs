@@ -160,15 +160,18 @@ namespace cse3902.Enemy
         }
 
         public override void Die() {
-            /* spawn a triforce and a health potion as reward */
+            /* spawn a triforce and a bunch of health as reward */
 
             IItemPickup triforceDrop = new TriforceItemPickup(content, level);
             triforceDrop.Position = Position + new Vector2(-4, 0);
             level.Items.Add(triforceDrop);
 
-            IItemPickup healthDrop = new SecondPotionItemPickup(content, level);
-            healthDrop.Position = Position + new Vector2(4, 0);
-            level.Items.Add(healthDrop);
+            for (int i = 0; i < 10; i++) {
+                Vector2 offset = new Vector2(random.Next(-64, 64), random.Next(-64, 64));
+                IItemPickup heart = new HeartItemPickup(content, level);
+                heart.Position = Position + offset;
+                level.Items.Add(heart);
+            }
 
             base.Die();
         }
