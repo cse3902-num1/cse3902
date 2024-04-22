@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using cse3902;
 using System;
 using System.Reflection.Emit;
+using cse3902.Enemy;
 
 
 namespace cse3902.PlayerClasses
@@ -47,6 +48,7 @@ namespace cse3902.PlayerClasses
         private IItemPickup itemCopy;
         private IItemPickup itemCopy2;
         private IItemPickup itemCopy3;
+        
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
         /* sword items List array */
@@ -130,8 +132,9 @@ namespace cse3902.PlayerClasses
         
 
         // Method to prepare the text to be drawn (won't actually draw anything)
-        public void Draw(GameContent gameContent, SpriteBatch spriteBatch)
+        public void Draw(GameContent gameContent, SpriteBatch spriteBatch,Level Level)
         {
+            
             // Draw the textsprite of items
             drawText(gameContent, spriteBatch, 30);
            
@@ -160,6 +163,27 @@ namespace cse3902.PlayerClasses
                 //sprite.Position = new Vector2(0, 175*3.5f);
 
                 sprite.Draw(spriteBatch);
+
+                //draw the minimap to the left bottom corner:
+                //draw play dot on the hud
+                Level.playerDot.Position = Level.player.Position / 28f + Position + new Vector2(55, 5 + 175 * 3.5f);
+                Level.playerDot.Draw(spriteBatch);
+                //draw triforce locaion on the hud
+                IEnumerable<TriforceItemPickup> triforceList = Level.Items.OfType<TriforceItemPickup>();
+                foreach (TriforceItemPickup t in triforceList)
+                {
+                    Level.triforceDot.Position = t.Position / 28f + Position + new Vector2(55, 5+175*3.5f);
+                    Level.triforceDot.Draw(spriteBatch);
+                }
+                //draw dragons locaion on the hud
+                IEnumerable<Dragon> dragonList = Level.Enemies.OfType<Dragon>();
+                foreach (Dragon dragon in dragonList)
+                {
+
+                    Level.enemyDot.Position = dragon.Position / 28f + Position + new Vector2(55, 5 + 175 * 3.5f);
+                    Level.enemyDot.Draw(spriteBatch);
+                }
+
 
                 //this is for drawing the inventory
                 spriteBatch.Draw(gameContent.hud, inventoryPosition + Position, inventory, Color.White, 0f, Vector2.Zero, inventoryScale, SpriteEffects.None, 0f);
@@ -230,6 +254,28 @@ namespace cse3902.PlayerClasses
                     isAPressed = false;
                 }
 
+                //this is to draw in the inventory middle:
+                //draw the minimap to the left bottom corner:
+                //draw play dot on the hud
+                Level.playerDot.Position = Level.player.Position / 28f + Position + new Vector2(480, 380);
+                Level.playerDot.Draw(spriteBatch);
+                //draw triforce locaion on the hud
+               
+                foreach (TriforceItemPickup t in triforceList)
+                {
+                    Level.triforceDot.Position = t.Position / 28f + Position + new Vector2(480, 380);
+                    Level.triforceDot.Draw(spriteBatch);
+                }
+                //draw dragons locaion on the hud
+              
+                foreach (Dragon dragon in dragonList)
+                {
+
+                    Level.enemyDot.Position = dragon.Position / 28f + Position + new Vector2(480, 380);
+                    Level.enemyDot.Draw(spriteBatch);
+                }
+
+
             }
             
 
@@ -292,37 +338,7 @@ namespace cse3902.PlayerClasses
                 x.Position = new Vector2(440, y) + Position;
                 x.Draw(spriteBatch);
             }
-            //if (SwordItemPickup.swordIsPicked == true)
-            //{
-
-
-            //    Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-            //            new Rectangle(104, 0, 8, 16) });
-            //    sword.X = 440;
-            //    sword.Y = y;
-            //    sword.Position += Position;
-            //    sword.Draw(spriteBatch);
-            //}
-            //else if (MagicalSwordItemPickup.isMagicalSwordPicked == true)
-            //{
-
-
-            //    Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-            //            new Rectangle(112, 0, 8, 16) });
-            //    sword.X = 440;
-            //    sword.Y = y;
-            //    sword.Position += Position;
-            //    sword.Draw(spriteBatch);
-            //}
-            //else if (WhiteSwordItemPickup.isWhiteSwordPicked)
-            //{
-            //    Sprite sword = new Sprite(gameContent.ItemSheet, new List<Rectangle>() {
-            //            new Rectangle(104, 16, 8, 16) });
-            //    sword.X = 440;
-            //    sword.Y = y;
-            //    sword.Position += Position;
-            //    sword.Draw(spriteBatch);
-            //}
+           
         }
     }
 }

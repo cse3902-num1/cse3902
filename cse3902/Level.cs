@@ -48,8 +48,17 @@ namespace cse3902
         public List<IProjectile> Projectiles;
         public IPlayer player;
 
-        /* TODO: this is a temporary function to print mapdata */
-        public void PrintTileMap()
+
+        public  Sprite playerDot;
+        public  Sprite enemyDot;
+        public  Sprite triforceDot;
+
+    
+
+
+
+/* TODO: this is a temporary function to print mapdata */
+public void PrintTileMap()
         {
             for (int x = 0; x < tilemap.GetLength(0); x++)
             {
@@ -103,6 +112,16 @@ namespace cse3902
             Projectiles = new List<IProjectile>();
 
             Build(content);
+
+            playerDot = new Sprite(content.hud, new List<Rectangle>() {
+                new Rectangle(519,126,3,3)
+            });
+            enemyDot = new Sprite(content.hud, new List<Rectangle>() {
+                 new Rectangle(537,126,3,3)
+            });
+            triforceDot = new Sprite(content.hud, new List<Rectangle>() {
+                 new Rectangle(528,126,3,3)
+            });
         }
 
         private void Generate()
