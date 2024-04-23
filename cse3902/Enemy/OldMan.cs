@@ -75,7 +75,7 @@ namespace cse3902.Enemy
                     level.Projectiles.Add(f);
                 }
 
-                SoundManager.Manager.fireballSound();
+                // SoundManager.Manager.fireballSound();
             }
         }
 

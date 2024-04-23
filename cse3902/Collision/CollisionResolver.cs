@@ -62,7 +62,8 @@ public static class CollisionResolver
         if (results.Count == 0) return;
 
         projectile.IsDead = projectile switch {
-            Fire fire => false,
+            // Fire fire => false,
+            Fire fire => true,
             _ => true,
         };
 

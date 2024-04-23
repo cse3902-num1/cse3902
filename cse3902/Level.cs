@@ -476,7 +476,11 @@ namespace cse3902
 
             Blocks.ForEach(b => b.Update(gameTime, controllers));
             Items.ForEach(i => i.Update(gameTime, controllers));
-            Enemies.ForEach(e => e.Update(gameTime, controllers));
+            // Enemies.ForEach(e => e.Update(gameTime, controllers));
+            const float ENEMY_UPDATE_RANGE = Level.TILE_SIZE * 36;
+            Enemies.ForEach(e => {
+                if (Vector2.DistanceSquared(e.Position, player.Position) < ENEMY_UPDATE_RANGE * ENEMY_UPDATE_RANGE) e.Update(gameTime, controllers);
+            });
             ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
             Projectiles.ForEach(p => p.Update(gameTime, controllers));
 
