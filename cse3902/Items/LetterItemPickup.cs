@@ -10,7 +10,7 @@ public class LetterItemPickup : BasicItemPickup
     public LetterItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.LetterItemSourceRect });
+                        ItemsConstant.LetterItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

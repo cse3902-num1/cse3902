@@ -11,7 +11,7 @@ public class LifePotionItemPickup : BasicItemPickup
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
             ItemsConstant.LifePotionItemSourceRect,
-        });
+        }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

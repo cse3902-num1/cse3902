@@ -11,7 +11,7 @@ public class RaftItemPickup : BasicItemPickup
     public RaftItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.RaftItemSourceRect });
+                        ItemsConstant.RaftItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
