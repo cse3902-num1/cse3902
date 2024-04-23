@@ -104,7 +104,7 @@ namespace cse3902.Enemy
             Vector2 velocity = Vector2.Normalize(level.player.Position - Position) * 200;
             Fireball f = new Fireball(content, level, Position, velocity);
             f.isEnermyProjectile = true;
-            level.Projectiles.Add(f);
+            level.SpawnProjectile(f);
 
             base.Die();
         }
