@@ -10,7 +10,7 @@ public class StepLadderItemPickup : BasicItemPickup
     public StepLadderItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.StepLadderItemSourceRect });
+                        ItemsConstant.StepLadderItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

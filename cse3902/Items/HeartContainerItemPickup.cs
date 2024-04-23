@@ -10,7 +10,7 @@ public class HeartContainerItemPickup : BasicItemPickup
     public HeartContainerItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.HeartContainerItemSourceRect});
+                        ItemsConstant.HeartContainerItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

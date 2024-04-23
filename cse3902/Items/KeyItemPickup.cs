@@ -12,7 +12,7 @@ public class KeyItemPickup : BasicItemPickup
     public KeyItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                         ItemsConstant.KeyItemSourceRect });
+                         ItemsConstant.KeyItemSourceRect }, new Vector2(8, 8));
     }
 
     public override void Pickup(IPlayer player)
