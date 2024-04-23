@@ -14,7 +14,7 @@ public class LetterItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-        Debug.WriteLine("letter picked up");
+        //Debug.WriteLine("letter picked up");
         IsDead = true;
     }
 }

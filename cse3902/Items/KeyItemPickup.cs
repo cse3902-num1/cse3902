@@ -18,7 +18,7 @@ public class KeyItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
         player.Inventory.Keys += 1;
-        Debug.WriteLine("Keys: " + player.Inventory.Keys);
+        //Debug.WriteLine("Keys: " + player.Inventory.Keys);
         IsDead = true;
         
     }

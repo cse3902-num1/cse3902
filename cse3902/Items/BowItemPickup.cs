@@ -24,7 +24,7 @@ public class BowItemPickup : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("bow item picked up");
+        //Debug.WriteLine("bow item picked up");
         IsDead = true;
     }
 }

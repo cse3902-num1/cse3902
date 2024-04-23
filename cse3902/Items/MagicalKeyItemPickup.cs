@@ -14,7 +14,7 @@ public class MagicalKeyItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-        Debug.WriteLine("magic key picked up");
+        //Debug.WriteLine("magic key picked up");
         IsDead = true;
     }
 }

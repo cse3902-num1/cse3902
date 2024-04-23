@@ -104,8 +104,6 @@ namespace cse3902.PlayerClasses
             if (!(State is PlayerDamage))
             {
                 State = new PlayerDamage(content, this);
-                Debug.WriteLine("current state is: " + State);
-                Debug.WriteLine(Inventory.health);
             }
            
             if (Inventory.health > 0)
@@ -128,7 +126,7 @@ namespace cse3902.PlayerClasses
             }
             if (Inventory.health == 0)
             {
-                Debug.WriteLine("YOU ARE DEAD!!!!!");
+                //Debug.WriteLine("YOU ARE DEAD!!!!!");
                 EventBus.PlayerDying(this);
             }
         }

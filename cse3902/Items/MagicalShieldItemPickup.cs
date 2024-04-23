@@ -14,7 +14,7 @@ public class MagicalShieldItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-        Debug.WriteLine("magic shield picked up");
+        //Debug.WriteLine("magic shield picked up");
         IsDead = true;
     }
 }

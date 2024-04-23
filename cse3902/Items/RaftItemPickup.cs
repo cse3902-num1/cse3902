@@ -16,7 +16,7 @@ public class RaftItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("raft item picked up");
+        //Debug.WriteLine("raft item picked up");
         IsDead = true;
     }
 }

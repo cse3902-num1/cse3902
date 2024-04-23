@@ -15,7 +15,7 @@ public class FiveRupiesItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
         player.Inventory.Rubies += 5;
-        Debug.WriteLine("five rubies picked up");
+        //Debug.WriteLine("five rubies picked up");
         IsDead = true;
     }
 }

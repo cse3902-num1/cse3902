@@ -15,7 +15,7 @@ public class BlueCandleItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
        
-        Debug.WriteLine("blue candle picked up");
+        //Debug.WriteLine("blue candle picked up");
         IsDead = true;
     }
 }

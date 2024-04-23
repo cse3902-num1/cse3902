@@ -15,7 +15,7 @@ public class BookOfMagicItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("book of magic item picked up");
+        //Debug.WriteLine("book of magic item picked up");
         IsDead = true;
     }
 }

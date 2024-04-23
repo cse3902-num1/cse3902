@@ -15,7 +15,7 @@ public class RedRingItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("red ring item picked up");
+        //Debug.WriteLine("red ring item picked up");
         IsDead = true;
     }
 }

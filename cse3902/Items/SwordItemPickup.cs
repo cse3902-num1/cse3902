@@ -26,7 +26,7 @@ public class SwordItemPickup : BasicSlotAPickup
             isAdded = true;
         }
         swordIsPicked = true;
-        Debug.WriteLine("sword item picked up");
+        //Debug.WriteLine("sword item picked up");
         IsDead = true;
     }
 }

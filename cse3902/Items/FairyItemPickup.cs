@@ -15,7 +15,7 @@ public class FairyItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("fairy item picked up");
+        //Debug.WriteLine("fairy item picked up");
         IsDead = true;
     }
 }

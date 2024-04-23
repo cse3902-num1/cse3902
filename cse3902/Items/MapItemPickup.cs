@@ -15,7 +15,7 @@ public class MapItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
         player.Inventory.hasMap = true;
-        Debug.WriteLine("map picked up");
+        //Debug.WriteLine("map picked up");
         IsDead = true;
     }
 }

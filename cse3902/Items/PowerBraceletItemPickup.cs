@@ -15,7 +15,7 @@ public class PowerBraceletItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("power bracelet item picked up");
+        //Debug.WriteLine("power bracelet item picked up");
         IsDead = true;
     }
 }

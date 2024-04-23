@@ -16,7 +16,7 @@ public class CompassItemPickUp : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
         player.Inventory.hasCompass = true;
-        Debug.WriteLine("Compass picked up");
+        //Debug.WriteLine("Compass picked up");
         IsDead = true;
     }
 }
