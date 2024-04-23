@@ -1,5 +1,5 @@
 ﻿using cse3902.Interfaces;
-
+using cse3902.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,6 +15,7 @@ namespace cse3902.Enemy
         private float GhostSkeletonMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;
         private Level level;
+        private GameContent content;
         public Skeleton(GameContent content, Level level) : base(content)
         {
             this.HP = EnermyConstant.SKELETON_HEALTH;
@@ -30,6 +31,7 @@ namespace cse3902.Enemy
             Position = EnermyConstant.SkeletonInitialPosition;
             Collider = new BoxCollider(Position, EnermyConstant.SkeletonColliderSize, EnermyConstant.SkeletonColliderOrigin, ColliderType);
             
+            this.content = content;
         }
         /*if Skeleton is in nightmare mode, when Skeleton is dying it will follow player, and still take damage.
          * Otherwise it moves randomly*/
@@ -95,6 +97,16 @@ namespace cse3902.Enemy
             Move(gameTime, randomNum);
 
             sprite.Update(gameTime, controllers);
+        }
+
+        public override void Die() {
+            /* spawn some projectiles */
+            Vector2 velocity = Vector2.Normalize(level.player.Position - Position) * 200;
+            Fireball f = new Fireball(content, level, Position, velocity);
+            f.isEnermyProjectile = true;
+            level.Projectiles.Add(f);
+
+            base.Die();
         }
     }
 }
