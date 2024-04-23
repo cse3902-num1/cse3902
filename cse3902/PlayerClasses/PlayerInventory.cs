@@ -149,11 +149,11 @@ namespace cse3902.PlayerClasses
             if (slotBItems.Count > 0)
             {
                 itemCopy3 = slotBItems[boxCount];
-<<<<<<< HEAD
+
                 itemCopy3.Position = new Vector2(375 + 9, 60 + 9) + Position;
-=======
+
                 itemCopy3.Position = new Vector2(375, 60) + Position + new Vector2(8, 8);
->>>>>>> origin/master
+
                 itemCopy3.Draw(spriteBatch);
             }
 
@@ -220,19 +220,19 @@ namespace cse3902.PlayerClasses
                     selectBox.Draw(spriteBatch);
                     // Holding item drawing
                     itemCopy = itemCopy3;
-<<<<<<< HEAD
+
                     itemCopy.Position = new Vector2(256, 196) + Position;
                     itemCopy.Draw(spriteBatch);
                     // Slot B drawing
                     itemCopy2 = itemCopy;
                     itemCopy2.Position = new Vector2(375+18, 194 * 3.5f+18) + Position;
-=======
+
                     itemCopy.Position = new Vector2(240, 180) + Position + new Vector2(8, 8);
                     itemCopy.Draw(spriteBatch);
                     // Slot B drawing
                     itemCopy2 = itemCopy;
                     itemCopy2.Position = new Vector2(375, 194 * 3.5f) + Position + new Vector2(8, 8);
->>>>>>> origin/master
+
                     itemCopy2.Draw(spriteBatch);
                 }
 
@@ -347,11 +347,11 @@ namespace cse3902.PlayerClasses
             if (slotAItems.Count > 0)
             {
                 IItemPickup x = slotAItems[slotAindex];
-<<<<<<< HEAD
+
                 x.Position = new Vector2(440 + 18, y) + Position;
-=======
+
                 x.Position = new Vector2(440, y) + Position + new Vector2(8, 8);
->>>>>>> origin/master
+
                 x.Draw(spriteBatch);
             }
            

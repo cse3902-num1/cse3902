@@ -115,7 +115,7 @@ namespace cse3902.Enemy
                 fireballCount += 3;
             }
 
-            SoundManager.Manager.fireballSound();
+            SoundManager.Manager.newFireballSound();
         }
         // update dragon position and draw dragon
         public override void Draw(SpriteBatch spriteBatch)

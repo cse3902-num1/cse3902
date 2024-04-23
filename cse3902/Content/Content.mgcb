@@ -248,6 +248,12 @@
 /processorParam:Quality=Best
 /build:Sound/LOZ_Enemy_Hit.wav
 
+#begin Sound/LOZ_Enemy_NewFireBall.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/LOZ_Enemy_NewFireBall.wav
+
 #begin Sound/LOZ_Fireball.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
