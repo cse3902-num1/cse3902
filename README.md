@@ -50,7 +50,7 @@ dotnet run
 
 * Life container represents the health of the player
 * Ruby picked up quantity
-* Key picked up quantity
+* Triforce picked up quantity
 * Bombs picked up quantity
 * slot A contains only swords
 * slot B contains all the other weapons
