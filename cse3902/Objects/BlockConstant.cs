@@ -12,7 +12,7 @@ namespace cse3902.Objects
     {
         public const int BLOCK_TYPE_FLOOR = 0;
         public const int BLOCK_TYPE_WALL = 1;
-        public const int BLOCK_TYPE_2 = 2;
+        public const int BLOCK_TYPE_ROOM_WALL = 2;
         public const int BLOCK_TYPE_3 = 3;
         public const int BLOCK_TYPE_4 = 4;
         public const int BLOCK_TYPE_5 = 5;

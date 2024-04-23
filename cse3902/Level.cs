@@ -25,7 +25,8 @@ namespace cse3902
         {
             FLOOR = 0,
             WALL = 1,
-            LEVEL_WALL = 2,
+            ROOM_WALL = 2,
+            LEVEL_WALL = 3,
         }
         public enum EnemyType
         {
@@ -68,8 +69,9 @@ namespace cse3902
                 {
                     line += tilemap[x, y] switch {
                         TileType.FLOOR => '.',
-                        TileType.WALL => '#',
-                        TileType.LEVEL_WALL => '%'
+                        TileType.WALL => '*',
+                        TileType.ROOM_WALL => '#',
+                        TileType.LEVEL_WALL => '%',
                     } + " ";
                 }
                 Debug.WriteLine(line);
@@ -218,8 +220,8 @@ namespace cse3902
             const int ROOM_SIZE_INCREMENT = HALL_GRID_SIZE; /* in units of tiles */
             const int MIN_ROOM_SIZE = 0; /* in units of the room size increment */
             const int MAX_ROOM_SIZE = 5;
-            for (int x = 1; x < w - 1; x += HALL_GRID_SIZE) {
-                for (int y = 1; y < h - 1; y += HALL_GRID_SIZE) {
+            for (int x = 1; x < w - 1 - MIN_ROOM_SIZE * ROOM_SIZE_INCREMENT; x += HALL_GRID_SIZE) {
+                for (int y = 1; y < h - 1 - MIN_ROOM_SIZE * ROOM_SIZE_INCREMENT; y += HALL_GRID_SIZE) {
                     if (random.NextDouble() > ROOM_PROBABILITY) continue;
 
                     /* generate room details */
@@ -231,6 +233,24 @@ namespace cse3902
                         for (int ry = y; ry < y + rh && ry < h - 1; ry++) {
                             tilemap[rx, ry] = TileType.FLOOR;
                         }
+                    }
+
+                    /* surround room with room wall tiles */
+                    int leftx = Math.Max(x - 1, 1);
+                    int rightx = Math.Min(x + rw, w - 1 - 1);
+                    int topy = Math.Max(y - 1, 1);
+                    int bottomy = Math.Min(y + rh, h - 1 - 1);
+                    // for (int rx = Math.Max(0, x - 1); rx < x + rw && rx < w - 1; rx++) {
+                    //     if (tilemap[rx, 0] == TileType.WALL) tilemap[rx, 0] = TileType.ROOM_WALL;
+                    //     if (tilemap[rx, Math.Min(y + rh, h - 1)] == TileType.WALL) tilemap[rx, 0] = TileType.ROOM_WALL;
+                    // }
+                    for (int rx = leftx; rx < rightx; rx++) {
+                        if (tilemap[rx, topy] == TileType.WALL) tilemap[rx, topy] = TileType.ROOM_WALL;
+                        if (tilemap[rx, bottomy] == TileType.WALL) tilemap[rx, bottomy] = TileType.ROOM_WALL;
+                    }
+                    for (int ry = topy; ry < bottomy; ry++) {
+                        if (tilemap[leftx, ry] == TileType.WALL) tilemap[leftx, ry] = TileType.ROOM_WALL;
+                        if (tilemap[rightx, ry] == TileType.WALL) tilemap[rightx, ry] = TileType.ROOM_WALL;
                     }
                 }
             }
@@ -343,6 +363,7 @@ namespace cse3902
                 Block b = tilemap[x, y] switch {
                     TileType.FLOOR => new Block(content, BlockConstant.BLOCK_TYPE_FLOOR, pos),
                     TileType.WALL => new Block(content, BlockConstant.BLOCK_TYPE_WALL, pos),
+                    TileType.ROOM_WALL => new Block(content, BlockConstant.BLOCK_TYPE_ROOM_WALL, pos),
                     TileType.LEVEL_WALL => new Block(content, BlockConstant.BLOCK_TYPE_LEVEL_WALL, pos),
                 };
                 Blocks.Add(b);
