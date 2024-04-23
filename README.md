@@ -44,7 +44,7 @@ dotnet run
 ## Hud controls
 * Hud displays:
 * minimap radar on the top left corner to display relative position
-* * green dot represents where the player is
+  * green dot represents where the player is
   * lavender dots represents where the triforces are
   * red dots represents where the dragons are
 
