@@ -434,7 +434,8 @@ namespace cse3902
                     return new RupyItemPickup(content, this);
                 case 3:
                     triforceCount++;
-                    return new TriforceItemPickup(content, this);
+                    // return new TriforceItemPickup(content, this);
+                    return new HeartItemPickup(content, this);
                 case 4:
                     return new MapItemPickup(content, this);
                 case 5:

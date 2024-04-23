@@ -81,7 +81,7 @@ namespace cse3902.PlayerClasses
                 if (player.ItemCooldownTimer.ElapsedMilliseconds >= player.item_cooldown_ms) {
                     player.item_cooldown_ms = item switch {
                         FireInventoryItem fire => 1000,
-                        _ => 250,
+                        _ => 500,
                     };
                     player.ItemCooldownTimer.Restart();
                     player.State = new PlayerStateItem(content, player, item);
