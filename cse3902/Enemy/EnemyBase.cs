@@ -105,7 +105,6 @@ namespace cse3902.Enemy
             else
             {
                 IsDead = true;
-                Debug.WriteLine(IsDead);
             }
         }
     }

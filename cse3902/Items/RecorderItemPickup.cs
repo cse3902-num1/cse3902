@@ -15,7 +15,7 @@ public class RecorderItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("recorder  item picked up");
+        //Debug.WriteLine("recorder  item picked up");
         IsDead = true;
     }
 }

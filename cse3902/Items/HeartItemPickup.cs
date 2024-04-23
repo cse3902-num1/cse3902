@@ -19,7 +19,7 @@ public class HeartItemPickup : BasicItemPickup
             player.Inventory.health += 1;
         }
              
-        Debug.WriteLine("heart picked up, health is "+ player.Inventory.health);
+        //Debug.WriteLine("heart picked up, health is "+ player.Inventory.health);
         IsDead = true;
     }
 }

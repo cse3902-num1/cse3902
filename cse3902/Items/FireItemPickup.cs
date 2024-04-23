@@ -26,7 +26,7 @@ public class FireItemPickUp : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("fire picked up");
+        //Debug.WriteLine("fire picked up");
         IsDead = true;
     }
 }

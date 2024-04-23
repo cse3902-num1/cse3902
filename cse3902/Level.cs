@@ -74,7 +74,7 @@ namespace cse3902
                         TileType.LEVEL_WALL => '%',
                     } + " ";
                 }
-                Debug.WriteLine(line);
+                //Debug.WriteLine(line);
             }
         }
 
@@ -95,7 +95,7 @@ namespace cse3902
                         EnemyType.OLD_MAN => 'O',
                     } + " ";
                 }
-                Debug.WriteLine(line);
+                //Debug.WriteLine(line);
             }
         }
        
@@ -106,7 +106,7 @@ namespace cse3902
             Generate();
             PrintTileMap();
             PrintEnemyMap();
-            Debug.WriteLine("spawnx: {0} spawny: {1}", playerSpawnX, playerSpawnY);
+            //Debug.WriteLine("spawnx: {0} spawny: {1}", playerSpawnX, playerSpawnY);
 
             EventBus.HitStop += OnHitStop;
             hitstop_timer.Start();

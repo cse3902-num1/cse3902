@@ -14,7 +14,7 @@ public class MagicalRodItemPickup : BasicItemPickup
     }
     public override void Pickup(IPlayer player)
     {
-        Debug.WriteLine("magic rod picked up");
+        //Debug.WriteLine("magic rod picked up");
         IsDead = true;
     }
 }

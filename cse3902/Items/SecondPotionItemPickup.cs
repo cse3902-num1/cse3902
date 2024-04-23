@@ -17,7 +17,7 @@ public class SecondPotionItemPickup : BasicItemPickup
     {
 
         player.Inventory.health = player.Inventory.lifeContainer;
-        Debug.WriteLine("life potion picked up, health is " + player.Inventory.health);
+        //Debug.WriteLine("life potion picked up, health is " + player.Inventory.health);
         IsDead = true;
     }
 }

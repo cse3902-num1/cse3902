@@ -18,7 +18,7 @@ public class RupyItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
         player.Inventory.Rubies += 1;
-        Debug.WriteLine("Rubies: " + player.Inventory.Rubies);
+        //Debug.WriteLine("Rubies: " + player.Inventory.Rubies);
         IsDead = true;
     }
 

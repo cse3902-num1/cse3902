@@ -15,7 +15,7 @@ public class ClockItemPickUp : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("Clock picked up");
+        //Debug.WriteLine("Clock picked up");
         IsDead = true;
     }
 }

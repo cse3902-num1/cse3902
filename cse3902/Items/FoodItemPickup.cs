@@ -15,7 +15,7 @@ public class FoodItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("food item picked up");
+        //Debug.WriteLine("food item picked up");
         IsDead = true;
     }
 }

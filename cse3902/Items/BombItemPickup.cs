@@ -26,7 +26,7 @@ public class BombItemPickup : BasicSlotBPickup
             isAdded = true;
         }
         player.Inventory.Bombs += 1;
-        Debug.WriteLine("Bombs: " + player.Inventory.Bombs);
+        //Debug.WriteLine("Bombs: " + player.Inventory.Bombs);
         IsDead = true;
     }
 }

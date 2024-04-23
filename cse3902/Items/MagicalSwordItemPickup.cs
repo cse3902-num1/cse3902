@@ -26,7 +26,7 @@ public class MagicalSwordItemPickup : BasicSlotAPickup
             isAdded = true;
         }
         isMagicalSwordPicked = true;
-        Debug.WriteLine("magic sword item picked up");
+        //Debug.WriteLine("magic sword item picked up");
         IsDead = true;
     }
 }

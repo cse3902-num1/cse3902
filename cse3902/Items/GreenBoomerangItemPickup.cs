@@ -26,7 +26,7 @@ public class GreenBoomerangItemPickup : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("Green boomerang item picked up");
+        //Debug.WriteLine("Green boomerang item picked up");
         IsDead = true;
     }
 }

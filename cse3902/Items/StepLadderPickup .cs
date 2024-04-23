@@ -15,7 +15,7 @@ public class StepLadderItemPickup : BasicItemPickup
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("step ladder item picked up");
+        //Debug.WriteLine("step ladder item picked up");
         IsDead = true;
     }
 }

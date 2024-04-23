@@ -24,7 +24,7 @@ public class MagicBoomerangItemPickup : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("letter picked up");
+        //Debug.WriteLine("letter picked up");
         IsDead = true;
     }
 }
