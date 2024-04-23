@@ -25,8 +25,8 @@ public class FireInventoryItem : IInventoryItem
             Fire f = new Fire(content, level, player.Position, velocity);
             f.isEnermyProjectile = false;
             level.Projectiles.Add(f);
-            SoundManager.Manager.fireballSound();
         }
+        SoundManager.Manager.fireballSound();
         // Vector2 direction = player.Facing.asVector2();
         // Fire fire = new Fire(content, level, player.Position, direction * speed);
         // SoundManager.Manager.arrowBoomerangSound();

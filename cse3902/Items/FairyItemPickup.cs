@@ -10,7 +10,7 @@ public class FairyItemPickup : BasicItemPickup
     public FairyItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.FairyItemSourceRect });
+                        ItemsConstant.FairyItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

@@ -10,7 +10,7 @@ public class ClockItemPickUp : BasicItemPickup
     public ClockItemPickUp(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.ClockItemSourceRect });
+                       ItemsConstant.ClockItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

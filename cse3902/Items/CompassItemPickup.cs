@@ -11,7 +11,7 @@ public class CompassItemPickUp : BasicItemPickup
     public CompassItemPickUp(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.CompassItemSourceRect });
+                       ItemsConstant.CompassItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

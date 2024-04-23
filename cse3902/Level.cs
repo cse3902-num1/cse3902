@@ -25,6 +25,7 @@ namespace cse3902
         {
             FLOOR = 0,
             WALL = 1,
+            LEVEL_WALL = 2,
         }
         public enum EnemyType
         {
@@ -68,6 +69,7 @@ namespace cse3902
                     line += tilemap[x, y] switch {
                         TileType.FLOOR => '.',
                         TileType.WALL => '#',
+                        TileType.LEVEL_WALL => '%'
                     } + " ";
                 }
                 //Debug.WriteLine(line);
@@ -141,6 +143,16 @@ namespace cse3902
                 {
                     tilemap[x, y] = TileType.WALL;
                 }
+            }
+
+            /* make outside of map a different kind of block */
+            for (int x = 0; x < w; x++) {
+                tilemap[x, 0] = TileType.LEVEL_WALL;
+                tilemap[x, h - 1] = TileType.LEVEL_WALL;
+            }
+            for (int y = 0; y < h; y++) {
+                tilemap[0, y] = TileType.LEVEL_WALL;
+                tilemap[w - 1, y] = TileType.LEVEL_WALL;
             }
 
             // /* randomly add open spaces to map interior, at a certain spacing */
@@ -329,8 +341,9 @@ namespace cse3902
             {
                 Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
                 Block b = tilemap[x, y] switch {
-                    TileType.FLOOR => new Block(content, BlockConstant.BLOCK_TYPE_0, pos),
-                    TileType.WALL => new Block(content, BlockConstant.BLOCK_TYPE_1, pos),
+                    TileType.FLOOR => new Block(content, BlockConstant.BLOCK_TYPE_FLOOR, pos),
+                    TileType.WALL => new Block(content, BlockConstant.BLOCK_TYPE_WALL, pos),
+                    TileType.LEVEL_WALL => new Block(content, BlockConstant.BLOCK_TYPE_LEVEL_WALL, pos),
                 };
                 Blocks.Add(b);
             }}
@@ -476,7 +489,11 @@ namespace cse3902
 
             Blocks.ForEach(b => b.Update(gameTime, controllers));
             Items.ForEach(i => i.Update(gameTime, controllers));
-            Enemies.ForEach(e => e.Update(gameTime, controllers));
+            // Enemies.ForEach(e => e.Update(gameTime, controllers));
+            const float ENEMY_UPDATE_RANGE = Level.TILE_SIZE * 20;
+            Enemies.ForEach(e => {
+                if (Vector2.DistanceSquared(e.Position, player.Position) < ENEMY_UPDATE_RANGE * ENEMY_UPDATE_RANGE) e.Update(gameTime, controllers);
+            });
             ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
             Projectiles.ForEach(p => p.Update(gameTime, controllers));
 

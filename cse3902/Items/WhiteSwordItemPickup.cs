@@ -14,7 +14,7 @@ public class WhiteSwordItemPickup : BasicSlotAPickup
     public WhiteSwordItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.WhiteItemSourceRect });
+                        ItemsConstant.WhiteItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

@@ -10,7 +10,7 @@ public class MagicalKeyItemPickup : BasicItemPickup
     public MagicalKeyItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.MagicKeyItemSourceRect});
+                        ItemsConstant.MagicKeyItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

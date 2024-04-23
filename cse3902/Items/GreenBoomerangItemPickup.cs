@@ -15,7 +15,7 @@ public class GreenBoomerangItemPickup : BasicSlotBPickup
     public GreenBoomerangItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.GreenBoomerangItemSourceRect});
+                       ItemsConstant.GreenBoomerangItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

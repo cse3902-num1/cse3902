@@ -11,7 +11,7 @@ public class BlueRingItemPickup : BasicItemPickup
     public BlueRingItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.BlueRingItemSourceRect });
+                       ItemsConstant.BlueRingItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {

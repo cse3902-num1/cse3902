@@ -62,11 +62,12 @@ public class Bomb : IProjectile
 
         /* destroy all blocks within a certain range */
         foreach (Block block in level.Blocks) {
-            if (block.BlockIndex == BlockConstant.BLOCK_TYPE_0) continue;
+            // if (block.BlockIndex == BlockConstant.BLOCK_TYPE_FLOOR) continue;
+            if (block.BlockIndex != BlockConstant.BLOCK_TYPE_WALL) continue;
             if (Math.Abs(block.Position.X - Position.X) > RANGE) continue;
             if (Math.Abs(block.Position.Y - Position.Y) > RANGE) continue;
             // block.IsDead = true;
-            block.BlockIndex = BlockConstant.BLOCK_TYPE_0;
+            block.BlockIndex = BlockConstant.BLOCK_TYPE_FLOOR;
         }
 
         EventBus.CameraShake(300, 10f);

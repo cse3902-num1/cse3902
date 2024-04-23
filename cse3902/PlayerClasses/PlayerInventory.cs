@@ -137,6 +137,7 @@ namespace cse3902.PlayerClasses
             
             // Draw the textsprite of items
             drawText(gameContent, spriteBatch, 30);
+
            
             //this is for drawing the hud
             //draw hearts in life:
@@ -151,8 +152,6 @@ namespace cse3902.PlayerClasses
                 itemCopy3.Position = new Vector2(375, 60) + Position;
                 itemCopy3.Draw(spriteBatch);
             }
-            //drawSlotA(gameContent, spriteBatch, 60);
-
 
             // Draw blackout effect if inventory is displayed and draw the other things
             if (!isDisplayed)
@@ -322,7 +321,7 @@ namespace cse3902.PlayerClasses
 
         public void drawText(GameContent gameContent, SpriteBatch spriteBatch, float y)
         {
-            spriteBatch.DrawString(gameContent.font, "Keys: " + this.Keys, new Vector2(280, y+40) + Position, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Triforces: " + this.Triforce, new Vector2(280, y+40) + Position, Color.White);
             spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, y+70) + Position, Color.White);
             spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, y) + Position, Color.White);
 

@@ -10,7 +10,7 @@ public class MapItemPickup : BasicItemPickup
     public MapItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.MapItemSourceRect });
+                        ItemsConstant.MapItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
