@@ -38,11 +38,12 @@ public class Fireball : BasicDirectionalProjectile
         base.Draw(spriteBatch);
     }
 
-    private void Die()
+    public override void Die()
     {
-        IsDead = true;
+        
         IParticleEffect fx = new ArrowExplode(content, Position);
         level.ParticleEffects.Add(fx);
+        base.Die();
     }
 
     public override void Update(GameTime gameTime, List<IController> controllers)

@@ -43,7 +43,7 @@ public class Bomb : IProjectile
         Hitbox.IsEnabled = false; /* bombs don't collide with anything */
     }
 
-    private void Die()
+    public void Die()
     {
         SoundManager.Manager.bombBlowUpSound();
         IsDead = true;
@@ -94,4 +94,5 @@ public class Bomb : IProjectile
         sprite.Position = Position;
         sprite.Draw(spriteBatch);
     }
+
 }

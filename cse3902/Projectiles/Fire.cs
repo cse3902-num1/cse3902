@@ -38,10 +38,7 @@ public class Fire : BasicDirectionalProjectile
         this.lifetime.Start();
         this.ttl = ttl;
     }
-    private void Die()
-    {
-        IsDead = true;
-    }
+
     public override void Update(GameTime gameTime, List<IController> controllers)
     {
 

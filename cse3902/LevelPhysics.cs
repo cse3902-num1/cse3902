@@ -110,9 +110,7 @@ public static class LevelPhysics
                         collisionResults = CollisionDetector.DetectBlockCollision(b.Hitbox, blocks);
                         break;
                 }
-                if (collisionResults.Count > 0) {
-                    p.IsDead = true;
-                }
+                CollisionResolver.ResolveProjectileBlockCollision(p, collisionResults);
             }
 
             /* enemy collisions */
