@@ -149,7 +149,7 @@ namespace cse3902.PlayerClasses
             if (slotBItems.Count > 0)
             {
                 itemCopy3 = slotBItems[boxCount];
-                itemCopy3.Position = new Vector2(375, 60) + Position;
+                itemCopy3.Position = new Vector2(375, 60) + Position + new Vector2(8, 8);
                 itemCopy3.Draw(spriteBatch);
             }
 
@@ -192,7 +192,7 @@ namespace cse3902.PlayerClasses
                 drawSlotB(gameContent, spriteBatch, 194 * 3.5f);
                 drawHeart(gameContent, spriteBatch, 200 * 3.5f);
 
-                Vector2 pos = new Vector2(460, 170) + Position;
+                Vector2 pos = new Vector2(460, 170) + Position + new Vector2(8, 8);
                 selectBox.Position = pos - new Vector2(5, 0);
                 foreach(IItemPickup i in slotBItems) {
                     i.Position = pos;
@@ -215,22 +215,22 @@ namespace cse3902.PlayerClasses
                     selectBox.Draw(spriteBatch);
                     // Holding item drawing
                     itemCopy = itemCopy3;
-                    itemCopy.Position = new Vector2(240, 180) + Position;
+                    itemCopy.Position = new Vector2(240, 180) + Position + new Vector2(8, 8);
                     itemCopy.Draw(spriteBatch);
                     // Slot B drawing
                     itemCopy2 = itemCopy;
-                    itemCopy2.Position = new Vector2(375, 194 * 3.5f) + Position;
+                    itemCopy2.Position = new Vector2(375, 194 * 3.5f) + Position + new Vector2(8, 8);
                     itemCopy2.Draw(spriteBatch);
                 }
 
                 if (hasMap)
                 {
-                    map.Position = new Vector2(160, 380) + Position;
+                    map.Position = new Vector2(160, 380) + Position + new Vector2(8, 8);
                     map.Draw(spriteBatch);
                 }
                 if (hasCompass)
                 {
-                    compass.Position = new Vector2(160, 540) + Position;
+                    compass.Position = new Vector2(160, 540) + Position + new Vector2(8, 8);
                     compass.Draw(spriteBatch);
                 }
 
@@ -334,7 +334,7 @@ namespace cse3902.PlayerClasses
             if (slotAItems.Count > 0)
             {
                 IItemPickup x = slotAItems[slotAindex];
-                x.Position = new Vector2(440, y) + Position;
+                x.Position = new Vector2(440, y) + Position + new Vector2(8, 8);
                 x.Draw(spriteBatch);
             }
            
