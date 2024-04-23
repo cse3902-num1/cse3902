@@ -1,14 +1,20 @@
-using cse3902.RoomClasses;
+using cse3902.Items;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902;
 
 public class LetterItemPickup : BasicItemPickup
 {
-    public LetterItemPickup(GameContent content, Room room) : base(room)
+    public LetterItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(87, 16, 8, 15) });
+                        ItemsConstant.LetterItemSourceRect }, new Vector2(8, 8));
+    }
+    public override void Pickup(IPlayer player)
+    {
+        //Debug.WriteLine("letter picked up");
+        IsDead = true;
     }
 }

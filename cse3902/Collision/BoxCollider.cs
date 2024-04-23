@@ -5,6 +5,7 @@ namespace cse3902;
 
 public class BoxCollider : ICollider
 {
+    public bool IsEnabled {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Size {set;get;}
     public Vector2 Origin {set;get;}
@@ -12,6 +13,7 @@ public class BoxCollider : ICollider
     
     public BoxCollider(Vector2 position, Vector2 size, Vector2 origin, ColliderType type)
     {
+        IsEnabled = true;
         Position = position;
         Size = size;
         Origin = origin;
@@ -20,9 +22,9 @@ public class BoxCollider : ICollider
 
     public bool IsColliding(ICollider collider)
     {
-        if (collider is null) {
-            return false;
-        }
+        if (!IsEnabled) return false;
+
+        if (collider is null) return false;
 
         switch (collider)
         {

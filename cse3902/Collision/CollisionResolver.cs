@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Objects;
-using cse3902.WallClasses;
+using cse3902.PlayerClasses;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using cse3902.Projectiles;
+
 namespace cse3902;
 
 public static class CollisionResolver
@@ -12,6 +16,8 @@ public static class CollisionResolver
 
     public static Vector2 CollisionMove(ICollider collider1, ICollider collider, float width, float height)
     {
+        const float CollisionBuffer = 2;
+
         BoxCollider a = (BoxCollider)collider1;
 
         // a is subject b is object
@@ -29,11 +35,11 @@ public static class CollisionResolver
         {
             if (aleft >= bleft) // if player is moving collide with right part of the object 
             {
-                return new Vector2(width + 2, 0);
+                return new Vector2(width + CollisionBuffer, 0);
             }
             else //if player is moving collide with left part of the object
             {
-                return new Vector2(-width - 2, 0);
+                return new Vector2(-width - CollisionBuffer, 0);
             }
             
         }
@@ -41,24 +47,59 @@ public static class CollisionResolver
         {
             if (abottom <= bbottom)   // player is moving collide with top of the object
             {
-                return new Vector2 (0, -height-2);
+                return new Vector2 (0, -height- CollisionBuffer);
             }
             else // player is moving collide with bottom of the obejct
             {
-                return new Vector2 (0, height+2);
+                return new Vector2 (0, height+ CollisionBuffer);
             }
         }
     }
-
+    /*when projectile hit enermy enermy should take damage and projectile is disappearing*/
     public static void ResolveProjectileEnemyCollision(IProjectile projectile, List<CollisionResult<IEnemy>> results)
     {
-        if (results.Count == 0)
-        {
-            return;
-        }
-        projectile.IsDead = true;
+        if (projectile.isEnermyProjectile) return;
+        if (results.Count == 0) return;
+
+        projectile.IsDead = projectile switch {
+            // Fire fire => false,
+            Fire fire => true,
+            _ => true,
+        };
+
+        if (!(projectile is Fire) && !(projectile is Bomb)) EventBus.HitStop(100); /* fireball doesn't die on hit, so avoid multiple repeated hitstops. bomb doesn't damage until it explodes. */
+
         foreach (CollisionResult<IEnemy> r in results) {
-            r.Entity.TakeDmg(1);
+            // r.Entity.TakeDmg(1);
+            IEnemy enemy = r.Entity;
+            enemy.TakeDmg(projectile switch {
+                BlueArrow blueArrow => enemy switch {
+                    Dragon dragon => ProjectileConstant.BLUE_ARROW_DAMAGE * 2,
+                    _ => ProjectileConstant.BLUE_ARROW_DAMAGE,
+                },
+                GreenArrow greenArrow => enemy switch {
+                    Dragon dragon => ProjectileConstant.GREEN_ARROW_DAMAGE * 2,
+                    _ => ProjectileConstant.GREEN_ARROW_DAMAGE,
+                },
+                MagicalBoomerang magicalBoomerang => enemy switch {
+                    Keese keese => ProjectileConstant.MAGICAL_BOOMERANG_DAMAGE * 2,
+                    _ => ProjectileConstant.MAGICAL_BOOMERANG_DAMAGE,
+                },
+                GreenBoomerang greenBoomerang => enemy switch {
+                    Keese keese => ProjectileConstant.GREEN_BOOMERANG_DAMAGE * 2,
+                    _ => ProjectileConstant.GREEN_BOOMERANG_DAMAGE,
+                },
+                Fire fire => enemy switch {
+                    Dragon dragon => 0,
+                    Skeleton skeleton => ProjectileConstant.FIRE_DAMAGE * 2,
+                    _ => ProjectileConstant.FIRE_DAMAGE,
+                },
+                Fireball fireball => enemy switch {
+                    Dragon dragon => 0,
+                    Goriya goriya => ProjectileConstant.FIREBALL_DAMAGE * 2,
+                    _ => ProjectileConstant.FIREBALL_DAMAGE,
+                },
+            });
         }
     }
 
@@ -119,81 +160,42 @@ public static class CollisionResolver
     }
 
     /* Called only when projectile collision with player */
-    public static void ResolveProjectilePlayerCollision(IProjectile projectile, IPlayer player)
+    public static void ResolveProjectilePlayerCollision(IProjectile projectile, List<CollisionResult<IPlayer>> results)
     {
+        if (!projectile.isEnermyProjectile) return;
+        if (results.Count == 0) return;
         projectile.IsDead = true;
-        player.TakeDamage();
+        foreach (CollisionResult<IPlayer> result in results)
+        {
+            
+            switch (result.Entity) {
+                case Player p:
+                    p.TakeDamage();
+                    break;
+            }
+        }
     }
-
+    /*player touch enermy player lost 1 hp and doesn't lose more instantly*/
     public static void ResolvePlayerEnemyCollision(IPlayer player, List<CollisionResult<IEnemy>> results)
     {
+        
         if (results.Count == 0)
         {
             return;
         }
-
-        float area = 0f;
-        CollisionResult<IEnemy> biggestResult = results[0];
         foreach (CollisionResult<IEnemy> result in results)
         {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
             player.TakeDamage();
-        }
 
-        Vector2 reconciliation = CollisionMove(player.Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        player.Position += reconciliation;
+        }
     }
-
-    /* Called only when projectile collision with walls */
-    public static void ResolveProjectileWallCollision(IProjectile projectile)
+    //player touch item, item should disappear and useful item should transfer to player inventory
+    public static void ResolvePlayerItemPickupCollision(IPlayer player, List<CollisionResult<IItemPickup>> results)
     {
-        projectile.IsDead = true;
-    }
-
-    public static void ResolveEnemyWallCollision(IEnemy enemy,  List<CollisionResult<Wall>> results)
-    {
-        if (results.Count == 0)
+        foreach (CollisionResult<IItemPickup> result in results)
         {
-            return;
+            
+            result.Entity.Pickup(player);
         }
-        float area = 0f;
-        CollisionResult<Wall> biggestResult = results[0];
-        foreach (CollisionResult<Wall> result in results)
-        {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
-        }
-
-        Vector2 reconciliation = CollisionMove(enemy.collider, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        enemy.Position += reconciliation;
-    }
-
-    public static void ResolvePlayerWallCollision(IPlayer player, List<CollisionResult<Wall>> results)
-    {
-        if (results.Count == 0)
-        {
-            return;
-        }
-
-        float area = 0f;
-        CollisionResult<Wall> biggestResult = results[0];
-        foreach (CollisionResult<Wall> result in results)
-        {
-            if (result.GetArea() > area)
-            {
-                area = result.GetArea();
-                biggestResult = result;
-            }
-        }
-
-        Vector2 reconciliation = CollisionMove(((Player)player).Pushbox, biggestResult.Collider, biggestResult.Size.X, biggestResult.Size.Y);
-        player.Position += reconciliation;
     }
 }

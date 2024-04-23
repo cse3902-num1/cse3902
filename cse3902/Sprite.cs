@@ -14,6 +14,8 @@ namespace cse3902
 
         private int frame = 0;
         private float scale = 2.0f;
+
+        private float _alpha = 1.0f;
         public int Frame /* index of current frame's source rectangle */
         {
             get { return frame; }
@@ -41,6 +43,19 @@ namespace cse3902
         {
             get { return position; }
             set { position = value; }
+        }
+
+        public void setAlpha(float f)
+        {
+            _alpha = f;
+        }
+
+        public Sprite(Sprite sprite)
+        {
+            texture = sprite.texture;
+            frames = sprite.frames;
+            scale = sprite.scale;
+            origin = sprite.origin;
         }
 
         public Sprite(Texture2D texture, List<Rectangle> frames)
@@ -92,7 +107,7 @@ namespace cse3902
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, frames[Frame], Color.White, 0.0f, origin, scale, SpriteEffects.None, 1f);
+            spriteBatch.Draw(texture, position, frames[Frame], Color.White * _alpha, 0.0f, origin, scale, SpriteEffects.None, 1f);
         }
 
         // Set the position of the sprite

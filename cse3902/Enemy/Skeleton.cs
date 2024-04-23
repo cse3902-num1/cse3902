@@ -1,5 +1,5 @@
 ﻿using cse3902.Interfaces;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,50 +11,81 @@ namespace cse3902.Enemy
 {
     public class Skeleton : EnemyBase
     {
-
-        public Skeleton(GameContent content, Room room) : base(content, room)
+        private float SkeletonMoveSpeedEnermyConstant = 100f;
+        private float GhostSkeletonMoveSpeedEnermyConstant = 30f;
+        private const int RandomChangeInterval = 500;
+        private Level level;
+        public Skeleton(GameContent content, Level level) : base(content)
         {
-            this.HP = 3;
+            this.HP = EnermyConstant.SKELETON_HEALTH;
             sprite = new Sprite(content.skeleton,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 0, 15, 15),
-                    new Rectangle(15, 0, 15, 15)
+                    EnermyConstant.SkeletonSpriteSheet1,
+                    EnermyConstant.SkeletonSpriteSheet2
                 },
-                new Vector2(7.5f, 7.5f)
+                EnermyConstant.SkeletonOrigin
             );
-
-            Position = new Vector2(200, 200);
-            Collider = new BoxCollider(Position, new Vector2(15 * 2, 15 * 2), new Vector2(7.5f * 2, 7.5f * 2), ColliderType);
+            this.level = level;
+            Position = EnermyConstant.SkeletonInitialPosition;
+            Collider = new BoxCollider(Position, EnermyConstant.SkeletonColliderSize, EnermyConstant.SkeletonColliderOrigin, ColliderType);
+            
         }
-
+        /*if Skeleton is in nightmare mode, when Skeleton is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            float speed = SkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float ghostSpeed = GhostSkeletonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.Y -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X -= 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.X += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = level.player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += ghostSpeed;
+                }
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= ghostSpeed;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += ghostSpeed;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= ghostSpeed;
+                }
+            }
+            else
+            {
+            
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.Y -= speed;
+                        break;
+                    case 2:
+                        newPosition.X -= speed;
+                        break;
+                    case 3:
+                        newPosition.X += speed;
+                        break;
+                    case 4:
+                        newPosition.Y += speed;
+                        break;
+               }
             }
             Position = newPosition;
         }
-
+        //update base class and timer.
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
                 randomChangeTimer.Restart();
 

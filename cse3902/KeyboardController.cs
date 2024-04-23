@@ -47,17 +47,17 @@ public class KeyboardController : IController
     public bool isPlayerMoveRightPressed()      { return isKeyPressed(Keys.D) || isKeyPressed(Keys.Right); }
     public bool isPlayerAttackJustPressed()     { return isKeyJustPressed(Keys.Z) || isKeyJustPressed(Keys.N); }
     public bool isPlayerTakeDamageJustPressed() { return isKeyJustPressed(Keys.E); }
+    
 
     /* player item use keys */
-    public bool isPlayerUseItem1JustPressed()   { return isKeyJustPressed(Keys.NumPad1) || isKeyJustPressed(Keys.D1); }
-    public bool isPlayerUseItem2JustPressed()   { return isKeyJustPressed(Keys.NumPad2) || isKeyJustPressed(Keys.D2); }
-    public bool isPlayerUseItem3JustPressed()   { return isKeyJustPressed(Keys.NumPad3) || isKeyJustPressed(Keys.D3); }
-    public bool isPlayerUseItem4JustPressed()   { return isKeyJustPressed(Keys.NumPad4) || isKeyJustPressed(Keys.D4); }
-    public bool isPlayerUseItem5JustPressed()   { return isKeyJustPressed(Keys.NumPad5) || isKeyJustPressed(Keys.D5); }
-    public bool isPlayerUseItem6JustPressed()   { return isKeyJustPressed(Keys.NumPad6) || isKeyJustPressed(Keys.D6); }
-    public bool isPlayerUseItem7JustPressed()   { return isKeyJustPressed(Keys.NumPad7) || isKeyJustPressed(Keys.D7); }
-    public bool isPlayerUseItem8JustPressed()   { return isKeyJustPressed(Keys.NumPad8) || isKeyJustPressed(Keys.D8); }
-    public bool isPlayerUseItem9JustPressed()   { return isKeyJustPressed(Keys.NumPad9) || isKeyJustPressed(Keys.D9); }
+    public bool isPlayerUseBombJustPressed()   { return isKeyJustPressed(Keys.NumPad1) || isKeyJustPressed(Keys.D1); }
+    public bool isPlayerUseMagicalBoomerangPressed()   { return isKeyPressed(Keys.NumPad2) || isKeyPressed(Keys.D2); }
+    public bool isPlayerUseBlueBowPressed()   { return isKeyPressed(Keys.NumPad3) || isKeyPressed(Keys.D3); }
+    public bool isPlayerUseFireballPressed()   { return isKeyPressed(Keys.NumPad4) || isKeyPressed(Keys.D4); }
+    public bool isPlayerUseFirePressed()   { return isKeyPressed(Keys.NumPad5) || isKeyPressed(Keys.D5); }
+    public bool isPlayerUseGreenBoomerangPressed()   { return isKeyPressed(Keys.NumPad6) || isKeyPressed(Keys.D6); }
+    public bool isPlayerUseGreenBowPressed()   { return isKeyPressed(Keys.NumPad7) || isKeyPressed(Keys.D7); }
+    public bool isPlayerUsePurpleCrystalPressed()   { return isKeyPressed(Keys.NumPad8) || isKeyPressed(Keys.D8); }
 
     /* enemy keys */
     public bool isEnemyPressO()                 { return isKeyJustPressed(Keys.O); }
@@ -74,8 +74,15 @@ public class KeyboardController : IController
     /* gameplay keys */
     public bool isResetPressed()                { return isKeyJustPressed(Keys.R); }
     public bool isQuitPressed()                 { return isKeyJustPressed(Keys.Q); }
+    public bool isMutePressed()                 { return isKeyJustPressed(Keys.M); }
 
+    public bool isPausePressed()                { return isKeyJustPressed(Keys.P); }
     /* room controls */
     public bool isLeftClick() { return false; }
     public bool isRightClick() { return false; }
+
+    /* display the inventory */
+    public bool isInventoryDisplayedPressed() { return isKeyJustPressed(Keys.C); }
+    public bool isSwitchSlotAPressed() { return isKeyJustPressed(Keys.V); }
+    public bool isSwitchSlotBPressed() { return isKeyJustPressed(Keys.B); }
 }

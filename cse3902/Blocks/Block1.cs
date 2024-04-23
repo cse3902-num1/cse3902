@@ -6,15 +6,17 @@ namespace cse3902;
 
 public class Block1 : BasicBlock
 {
+    private int spriteSheetXPosition = 2;
+    private int spriteSheetYPosition = 11;
     public Block1(GameContent content)
     {
         sprite = new Sprite(
             content.TilesSheet,
             new List<Rectangle>() {
-                new Rectangle(2, 11, 16, 16)
+                new Rectangle(spriteSheetXPosition, spriteSheetYPosition, Constant.RectangleWidth, Constant.RectangleHeight)
             },
-            new Vector2(8, 8) // width and height both multiple by 8
+            new Vector2(Constant.BlockOriginX, Constant.BlockOriginX) // width and height both multiple by 8
         );
-        collider = new BoxCollider(Position, Size, new Vector2(8, 8), ColliderType.BLOCK);
+        collider = new BoxCollider(Position, Size, new Vector2(Constant.BoxColliderOriginX, Constant.BoxColliderOriginY), ColliderType.BLOCK);
     }
 }

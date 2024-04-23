@@ -1,7 +1,8 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,140 +13,168 @@ namespace cse3902.Enemy
 {
     public class Dragon : EnemyBase
     {
-        
-        private List<IProjectile> projectiles;
-
         private GameContent content;
-        
-
-        public Dragon(GameContent content, Room room): base(content, room)
+        private float DragonMoveSpeedEnermyConstant = 50f;
+        private float GhostDragonMoveSpeedEnermyConstant = 30f;
+        private const int RandomChangeInterval = 500;  // Time in milliseconds
+        private int attack_cooldown_ms = 3000;
+        private Level level;
+        public Dragon(GameContent content, Level level): base(content)
         {
-            this.HP = 20;
+            this.HP = EnermyConstant.DRAGON_HEALTH;
             sprite = new Sprite(content.enemies,
                 new List<Rectangle>()
                 {
-                    new Rectangle(1, 11, 25, 32),
-                    new Rectangle(26, 11, 25, 32),
-                    new Rectangle(51, 11, 25, 32),
-                    new Rectangle(76, 11, 25, 32),
+                    EnermyConstant.DragonSpriteSheetAnimation1,
+                    EnermyConstant.DragonSpriteSheetAnimation2,
+                    EnermyConstant.DragonSpriteSheetAnimation3,
+                    EnermyConstant.DragonSpriteSheetAnimation4,
                 },
-                new Vector2(12.5f, 16f)
+                EnermyConstant.DragonOrigin
             );
-
-            projectiles = new List<IProjectile>();
-
-            // ballUp = new Fireball(content, 
-            //     new Vector2(-200f, -50f), 
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-            // ballDown = new Fireball(content,
-            //     new Vector2(-200f, +50f),
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-            // ballMid = new Fireball(content,
-            //     new Vector2(-200f, 0f),
-            //     new Vector2(sprite.X, sprite.Y)
-            // );
-
-            Position = new Vector2(500, 200);
-            Collider = new BoxCollider(Position, new Vector2(25 * 2, 32 * 2), new Vector2(12.5f * 2, 16f * 2), ColliderType.ENEMY);
+            Collider = new BoxCollider(EnermyConstant.DragonPosition, EnermyConstant.DragonColliderSize,EnermyConstant.DragonColliderOrigin, ColliderType.ENEMY);
             this.content = content;
+            this.level = level;
 
-            this.room = room;
         }
-
+        /*if dragon is in nightmare mode, when dragon is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             Vector2 newPosition = Position;
-            switch (randomNum)
+            
+            if (IsGhost)
             {
-                case 1:
-                    newPosition.X -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 2:
-                    newPosition.X += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 3:
-                    newPosition.Y -= 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
-                case 4:
-                    newPosition.Y += 50f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    break;
+                Vector2 playerPos = level.player.Position;
+                if (newPosition.X < playerPos.X)
+                {
+                    newPosition.X += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                } 
+                else if (newPosition.X > playerPos.X)
+                {
+                    newPosition.X -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (newPosition.Y < playerPos.Y)
+                {
+                    newPosition.Y += GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else if (newPosition.Y > playerPos.Y)
+                {
+                    newPosition.Y -= GhostDragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
             }
+            
+            else
+            {
+            
+                switch (randomNum)
+                {
+                    case 1:
+                        newPosition.X -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 2:
+                        newPosition.X += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 3:
+                        newPosition.Y -= DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                    case 4:
+                        newPosition.Y += DragonMoveSpeedEnermyConstant * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        break;
+                }
+         
+        }
+        
+
             Position = newPosition;
         }
-
+        /*In Advanture mode Attack using fireball for all directions.
+         * In Nightmare mode is not attacking
+         */
         public override void Attack()
         {
-            Fireball ballUp = new Fireball(content, 
-                room,
-                Position,
-                new Vector2(-200f, -50f)
-            );
-            Fireball ballDown = new Fireball(content,
-                room,
-                Position,
-                new Vector2(-200f, +50f)
-            );
-            Fireball ballMid = new Fireball(content,
-                room,
-                Position,
-                new Vector2(-200f, 0f)
-            );
-            projectiles.Add(ballUp);
-            ballUp.isEnermyProjectile = true;
-            projectiles.Add(ballMid);
-            ballMid.isEnermyProjectile = true;
-            projectiles.Add(ballDown);
-            ballDown.isEnermyProjectile = true;
-        }
 
+            if (IsGhost) return;
+
+
+            /* spawn several rings of fireballs, with different speeds and # of fireballs */
+            double speed = 50.0;
+            int fireballCount = 8;
+            double angleOffset = random.NextDouble() * Math.Tau;
+            for (int ring = 0; ring < 4; ring++) {
+
+                for (double angle = angleOffset; angle < Math.Tau + angleOffset; angle += Math.Tau / fireballCount) {
+                    double xvelocity = Math.Sin(angle) * speed;
+                    double yvelocity = Math.Cos(angle) * speed;
+                    Fireball f = new Fireball(content, level, Position, new Vector2((float) xvelocity, (float) yvelocity));
+                    f.isEnermyProjectile = true;
+                    level.Projectiles.Add(f);
+                }
+
+                speed += 25.0;
+                fireballCount += 3;
+            }
+
+            SoundManager.Manager.fireballSound();
+        }
+        // update dragon position and draw dragon
         public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Position = Position;
+            if (IsGhost)
+            {
+                sprite.setAlpha(0.4f);
+            }
             sprite.Draw(spriteBatch);
-
-            projectiles.ForEach(p => p.Draw(spriteBatch));
         }
-
+        // update timer, movement etc.
         public override void Update(GameTime gameTime, List<IController> controllers)
         {
             base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
             attackTimer.Start();
-
-
-          
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
-            {
-                randomChangeTimer.Restart();
-
-                randomNum = random.Next(1, 5);
-            }
-
-            if (attackTimer.ElapsedMilliseconds >= 3000)
-            {
-                attackTimer.Restart();
-                Attack();
-            }
-
-            projectiles.ForEach(p => p.Update(gameTime, controllers));
-            
-            /* remove dead projectiles */
-            projectiles = projectiles.Where(p => !p.IsDead).ToList();
-
+            UpdateRandomNumber();
+            TryAttack();
             Move(gameTime, randomNum);
 
             sprite.Update(gameTime, controllers);
-            /*if (BoxCollider.IsColliding(dragon.collider)) // Assuming you have a reference to the dragon
+
+        }
+        private void UpdateRandomNumber()
+        {
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
-                dragon.TakeDamage(damageAmount); // damageAmount is the damage this projectile does
-                this.IsDead = true; // Optionally remove the projectile upon impact
+                randomChangeTimer.Restart();
+                randomNum = random.Next(1, 5);  // Assuming randomNum is declared elsewhere
             }
-            */
         }
 
+        private void TryAttack()
+        {
+            if (attackTimer.ElapsedMilliseconds >= attack_cooldown_ms)
+            {
+                attack_cooldown_ms = 3000 + random.Next(0, 1000) - 500;
+                attackTimer.Restart();
+                Attack();
+            }
+        }
 
+        public override void Die() {
+            /* spawn a triforce and a bunch of health as reward */
+
+            IItemPickup triforceDrop = new TriforceItemPickup(content, level);
+            triforceDrop.Position = Position + new Vector2(-4, 0);
+            level.Items.Add(triforceDrop);
+
+            for (int i = 0; i < 10; i++) {
+                Vector2 offset = new Vector2(random.Next(-64, 64), random.Next(-64, 64));
+                IItemPickup heart = new HeartItemPickup(content, level);
+                heart.Position = Position + offset;
+                level.Items.Add(heart);
+            }
+
+            base.Die();
+        }
     }
 }

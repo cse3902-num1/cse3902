@@ -1,14 +1,21 @@
-using cse3902.RoomClasses;
+using cse3902.Items;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902;
 
 public class BookOfMagicItemPickup : BasicItemPickup
 {
-    public BookOfMagicItemPickup(GameContent content, Room room) : base(room)
+    public BookOfMagicItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(230, 0, 11, 16) });
+                       ItemsConstant.BookOfMMagicItemSourceRect }, new Vector2(8, 8));
+    }
+    public override void Pickup(IPlayer player)
+    {
+
+        //Debug.WriteLine("book of magic item picked up");
+        IsDead = true;
     }
 }

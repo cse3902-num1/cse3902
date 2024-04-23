@@ -3,8 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
-using cse3902.RoomClasses;
 using cse3902.Enemy;
+using Microsoft.Xna.Framework.Audio;
+using cse3902.Objects;
+using System;
+
 
 namespace cse3902.Projectiles;
 
@@ -18,46 +21,61 @@ public class Bomb : IProjectile
     private ISprite sprite;
     private Stopwatch explodeTimer = new Stopwatch();
     private GameContent content;
-    private Room room;
-    
-    public Bomb(GameContent content, Room room, Vector2 position)
+    private Level level;
+    private Vector2 BombOrigin = new Vector2(3.5f, 7.5f);
+    private int ExplodeTime = 1500;
+    public Bomb(GameContent content, Level level, Vector2 position)
     {
         sprite = new Sprite(content.weapon, 
             new List<Rectangle>()
             {
-                new Rectangle(129, 185, 7, 15)
+                ProjectileConstant.BombSourceRect
             },
-            new Vector2(3.5f, 7.5f)
+            BombOrigin
         );
 
         Position = position;
         explodeTimer.Start();
 
         this.content = content;
-        this.room = room;
-        Hitbox = new BoxCollider(position, new Vector2(7, 15), new Vector2(3.5f, 7.5f), ColliderType.ITEM_PICKUP);
+        this.level = level;
+        Hitbox = new BoxCollider(position, ProjectileConstant.BombCollideSize, ProjectileConstant.BombCollideOrigin, ColliderType.ITEM_PICKUP);
+        Hitbox.IsEnabled = false; /* bombs don't collide with anything */
     }
 
     private void Die()
     {
+        SoundManager.Manager.bombBlowUpSound();
         IsDead = true;
         IParticleEffect fx = new BombExplode(content, Position);
-        room.ParticleEffects.Add(fx);
+        level.ParticleEffects.Add(fx);
         Hitbox.Position = Position;
-        foreach (IEnemy e in room.Enemies)
-        {
-            switch (e)
-            {
-                case EnemyBase enemyBase:
-                    if (Hitbox.IsColliding(enemyBase.Collider))
-                    {
-                        IsDead = true;
-                        e.TakeDmg(1000);
 
-                    }
-                    break;
-            }
+        const float RANGE = 64.0f;
+
+        /* hurt all enemies within a certain range */
+        foreach (IEnemy e in level.Enemies)
+        {
+            if (Vector2.Distance(e.Position, Position) > RANGE) continue;
+            e.TakeDmg(ProjectileConstant.BOMB_DAMAGE);
         }
+
+        /* destroy all blocks within a certain range */
+        foreach (Block block in level.Blocks) {
+            // if (block.BlockIndex == BlockConstant.BLOCK_TYPE_FLOOR) continue;
+            if (Math.Abs(block.Position.X - Position.X) > RANGE) continue;
+            if (Math.Abs(block.Position.Y - Position.Y) > RANGE) continue;
+            block.BlockIndex = block.BlockIndex switch {
+                BlockConstant.BLOCK_TYPE_WALL => BlockConstant.BLOCK_TYPE_FLOOR,
+                BlockConstant.BLOCK_TYPE_ROOM_WALL => BlockConstant.BLOCK_TYPE_WALL,
+                _ => block.BlockIndex,
+            };
+            // block.IsDead = true;
+        }
+
+        EventBus.CameraShake(300, 10f);
+
+        IsDead = true;
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)
@@ -65,7 +83,7 @@ public class Bomb : IProjectile
         
         sprite.Update(gameTime, controllers);
 
-        if (explodeTimer.ElapsedMilliseconds >= 1500)
+        if (explodeTimer.ElapsedMilliseconds >= ExplodeTime)
         {
             Die();
         }

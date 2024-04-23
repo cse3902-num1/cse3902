@@ -8,4 +8,5 @@ public interface ICollider
     public ColliderType ColliderType {set;get;}
     public bool IsColliding(ICollider collider);
     public Vector2 GetOverlap(ICollider collider);
+    public bool IsEnabled {set;get;}
 }

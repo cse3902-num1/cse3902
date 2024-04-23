@@ -1,14 +1,21 @@
-using cse3902.RoomClasses;
+using cse3902.Items;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902;
 
 public class FairyItemPickup : BasicItemPickup
 {
-    public FairyItemPickup(GameContent content, Room room) : base(room)
+    public FairyItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(39, 0, 7, 15) });
+                        ItemsConstant.FairyItemSourceRect }, new Vector2(8, 8));
+    }
+    public override void Pickup(IPlayer player)
+    {
+
+        //Debug.WriteLine("fairy item picked up");
+        IsDead = true;
     }
 }

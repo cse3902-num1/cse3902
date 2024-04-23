@@ -1,14 +1,21 @@
-using cse3902.RoomClasses;
+using cse3902.Items;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902;
 
 public class StepLadderItemPickup : BasicItemPickup
 {
-    public StepLadderItemPickup(GameContent content, Room room) : base(room)
+    public StepLadderItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(207, 0, 17, 16) });
+                        ItemsConstant.StepLadderItemSourceRect }, new Vector2(8, 8));
+    }
+    public override void Pickup(IPlayer player)
+    {
+
+        //Debug.WriteLine("step ladder item picked up");
+        IsDead = true;
     }
 }

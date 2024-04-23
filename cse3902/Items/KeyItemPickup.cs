@@ -1,14 +1,25 @@
-using cse3902.RoomClasses;
+using cse3902.Items;
+
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace cse3902;
 
 public class KeyItemPickup : BasicItemPickup
 {
-    public KeyItemPickup(GameContent content, Room room) : base(room)
+    public KeyItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        new Rectangle(240, 0, 8, 15) });
+                         ItemsConstant.KeyItemSourceRect }, new Vector2(8, 8));
+    }
+
+    public override void Pickup(IPlayer player)
+    {
+        player.Inventory.Keys += 1;
+        //Debug.WriteLine("Keys: " + player.Inventory.Keys);
+        IsDead = true;
+        
     }
 }

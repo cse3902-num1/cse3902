@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using cse3902.RoomClasses;
 using Microsoft.Xna.Framework;
 
 namespace cse3902.Projectiles;
 
 internal class GreenBoomerang : BasicBoomerangProjectile
 {
-    private const float maxDistance = 200f;
-    public GreenBoomerang(GameContent content, Room room, Vector2 position, Vector2 velocity) : base(room, position, velocity, maxDistance)
+    private const float maxDistance = 400f;
+    private Vector2 GreenBoomerangOrigin = new Vector2(4, 8);
+    public GreenBoomerang(GameContent content, Level level, Vector2 position, Vector2 velocity) : base(level, position, velocity, maxDistance)
     {
         sprite = new Sprite(content.enemiesSheet,
             new List<Rectangle>()
             {
-                new Rectangle(290, 11, 8, 16),
-                new Rectangle(299, 11, 8, 16),
-                new Rectangle(308, 11, 8, 16)
+                ProjectileConstant.GreenBoomerangAnimationSourceRect1,
+                ProjectileConstant.GreenBoomerangAnimationSourceRect2,
+                ProjectileConstant.GreenBoomerangAnimationSourceRect3
             },
-            new Vector2(4, 8)
+            GreenBoomerangOrigin
         );
-        Hitbox = new BoxCollider(position, new Vector2(8, 16), new Vector2(4, 8), ColliderType.PROJECTILE);
+        Hitbox = new BoxCollider(position, ProjectileConstant.GreenBoomerangCollideSize, ProjectileConstant.GreenBoomerangCollideOrigin, ColliderType.PROJECTILE);
     }
 
 

@@ -1,7 +1,8 @@
 ﻿using cse3902.Interfaces;
 using cse3902.Projectiles;
-using cse3902.RoomClasses;
+
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -20,128 +21,178 @@ namespace cse3902.Enemy
         private Sprite spriteRight;
         private Sprite currentSprite;
         private IProjectile projectile;
-
+        private float GoriyaMoveSpeedEnermyConstant = 100f;
+        private float GhostGoriyaMoveSpeedEnermyConstant = 30f;
+        private const int RandomChangeInterval = 500;
         private GameContent content;
-
-        public Goriya(GameContent content, Room room) : base(content, room)
+        private Level level;
+        public Goriya(GameContent content, Level level) : base(content)
         {
-            this.HP = 7;
+            this.HP = EnermyConstant.GORIYA_HEALTH;
             spriteUp = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 32, 16, 16),
-                    new Rectangle(16, 32, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetUp1,
+                    EnermyConstant.GoriyaSpriteSheetUp2
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             spriteDown = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 48, 16, 16),
-                    new Rectangle(16, 48, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetDown1,
+                    EnermyConstant.GoriyaSpriteSheetDown2,
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             spriteRight = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 16, 16, 16),
-                    new Rectangle(16, 16, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetRight1,
+                    EnermyConstant.GoriyaSpriteSheetRight2,
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             spriteLeft = new Sprite(content.goriya,
                 new List<Rectangle>()
                 {
-                    new Rectangle(0, 0, 16, 16),
-                    new Rectangle(16, 0, 16, 16)
+                    EnermyConstant.GoriyaSpriteSheetLeft1,
+                    EnermyConstant.GoriyaSpriteSheetLeft2,
                 },
-                new Vector2(8, 8)
+                EnermyConstant.GoriyaOrigin
             );
             currentSprite = spriteDown;
 
-            Position = new Vector2(400, 200);
+            Position = EnermyConstant.GoriyaInitialPosition;
 
             projectile = null;
-            Collider = new BoxCollider(Position, new Vector2(16 * 2, 16 * 2), new Vector2(8 * 2, 8 * 2), ColliderType);
+            Collider = new BoxCollider(Position, EnermyConstant.GoriyaColliderSize, EnermyConstant.GoriyaColliderOrigin, ColliderType);
             this.content = content;
+            this.level = level;
         }
-
+        /*if Goriya is in nightmare mode, when Goriya is dying it will follow player, and still take damage.
+         * Otherwise it moves randomly*/
         public override void Move(GameTime gameTime, int randomNum)
         {
             float totalTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            switch (currentState)
+            
+            if (IsGhost)
             {
-                case GoriyaState.Up:
-                    Position += new Vector2(0, -0) * 100f * totalTime;
-                    break;
-                case GoriyaState.Left:
-                    Position += new Vector2(-1, 0) * 100f * totalTime;
-                    break;
-                case GoriyaState.Right:
-                    Position += new Vector2(1, 0) * 100f * totalTime;
-                    break;
-                case GoriyaState.Down:
-                    Position += new Vector2(0, 1) * 100f * totalTime;
-                    break;
+                Vector2 playerPos = level.player.Position;
+                if (Position.X <= playerPos.X && Position.Y <= playerPos.Y)
+                {
+                    currentSprite = spriteRight;
+                    Position += Constant.moveDownOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveRightOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+                else if (Position.X <= playerPos.X && Position.Y > playerPos.Y)
+                {
+                    currentSprite = spriteRight;
+                    Position += Constant.moveRightOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveUpOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+                else if (Position.X > playerPos.X && Position.Y <= playerPos.Y)
+                {
+                    currentSprite = spriteLeft;
+                    Position += Constant.moveLeftOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveDownOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+                else if (Position.X > playerPos.X && Position.Y > playerPos.Y)
+                {
+                    currentSprite = spriteLeft;
+                    Position += Constant.moveLeftOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                    Position += Constant.moveUpOneUnit * GhostGoriyaMoveSpeedEnermyConstant * totalTime;
+                }
+            }
+            else
+            {
+            
+                switch (currentState)
+                {
+                    case GoriyaState.Up:
+                        Position += Constant.moveUpOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                    case GoriyaState.Left:
+                        Position += Constant.moveLeftOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                    case GoriyaState.Right:
+                        Position += Constant.moveRightOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                    case GoriyaState.Down:
+                        Position += Constant.moveDownOneUnit * GoriyaMoveSpeedEnermyConstant * totalTime;
+                        break;
+                }
             }
         }
-
+        /*randonly changing goria's action between move in different direction or attack
+         */
         public void ChangeAction(int randomNum)
         {
-            switch (randomNum)
+            if (!IsGhost)
             {
-                case 1:
-                    currentState = GoriyaState.Up;
-                    currentSprite = spriteUp;
-                    break;
-                case 2:
-                    currentState = GoriyaState.Down;
-                    currentSprite = spriteDown;
-                    break;
-                case 3:
-                    currentState = GoriyaState.Left;
-                    currentSprite = spriteLeft;
-                    break;
-                case 4:
-                    currentState = GoriyaState.Right;
-                    currentSprite = spriteRight;
-                    break;
-                case 5: Attack(); break;
+                switch (randomNum)
+                {
+                    case 1:
+                        currentState = GoriyaState.Up;
+                        currentSprite = spriteUp;
+                        break;
+                    case 2:
+                        currentState = GoriyaState.Down;
+                        currentSprite = spriteDown;
+                        break;
+                    case 3:
+                        currentState = GoriyaState.Left;
+                        currentSprite = spriteLeft;
+                        break;
+                    case 4:
+                        currentState = GoriyaState.Right;
+                        currentSprite = spriteRight;
+                        break;
+                    case 5: Attack(); break;
+                }
             }
         }
-
+        /*In advanture mode goriya will move and throw boomering
+         */
         public override void Attack()
         {
-            if (projectile != null) {
+            if (projectile != null || IsGhost) {
                 return;
             }
+            SoundManager.Manager.arrowBoomerangSound();
 
             Vector2 velocity = new Vector2(0, 0);
-            switch (currentState)
-            {
+
+            if (level.player != null) {
+                velocity = Vector2.Normalize(level.player.Position - Position) * 1.0f;
+
+            } else switch (currentState) {
                 case GoriyaState.Left:
-                    velocity = new Vector2(-1, 0);
+                    velocity = Constant.moveLeftOneUnit;
                     break;
                 case GoriyaState.Right:
-                    velocity = new Vector2(1, 0);
+                    velocity = Constant.moveRightOneUnit;
                     break;
                 case GoriyaState.Up:
-                    velocity = new Vector2(0, -1);
+                    velocity = Constant.moveUpOneUnit;
                     break;
                 case GoriyaState.Down:
-                    velocity = new Vector2(0, 1);
+                    velocity = Constant.moveDownOneUnit;
                     break;
             }
+
             velocity *= 200f;
-            projectile = new GreenBoomerang(content, room, Position, velocity);
+            projectile = new GreenBoomerang(content, level, Position, velocity);
             projectile.isEnermyProjectile = true;
-
         }
-
+        // if in advanture mode set transparent to 0.4 , otherwise draw goriya without transparent.
         public override void Draw(SpriteBatch spriteBatch)
         {
             currentSprite.Position = Position;
+            if (IsGhost)
+            {
+                currentSprite.setAlpha(0.4f);
+            }
             currentSprite.Draw(spriteBatch);
             if (projectile is not null) {
                 projectile.Draw(spriteBatch);
@@ -153,7 +204,7 @@ namespace cse3902.Enemy
             base.Update(gameTime, controllers);
 
             randomChangeTimer.Start();
-            if (randomChangeTimer.ElapsedMilliseconds >= 500)
+            if (randomChangeTimer.ElapsedMilliseconds >= RandomChangeInterval)
             {
                 randomChangeTimer.Restart();
 
@@ -170,10 +221,8 @@ namespace cse3902.Enemy
             }
 
             /* only move if boomerang has returned */
-            // if (projectiles.Count == 0) {
                 Move(gameTime, randomNum);
                 ChangeAction(randomNum);
-            // }
 
             currentSprite.Update(gameTime, controllers);
         }

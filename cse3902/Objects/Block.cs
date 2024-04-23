@@ -12,22 +12,15 @@ namespace cse3902.Objects
    
     public class Block : IBlock
 	{
-        // Shared data class
-        //public static class GameData
-        //{
-        //    public static int BlockIndex { get; set; } = 0;
 
-        //}
-
-        //private ISprite sprite
+        public bool IsDead {set;get;}
         private int blockIndex;
         private List<Sprite> blocks;
         private Vector2 position;
         public ICollider Collider;
-       
-       
         public bool isVisible = true;
-
+        private Vector2 BlockOrigin = new Vector2(8, 8);
+        private float blockScale = 3.0f;
         public int BlockIndex
         {
             get { return blockIndex; }
@@ -37,7 +30,7 @@ namespace cse3902.Objects
                 /* only add a collider if the block is of the right type */
                 Collider = null;
                 if (value == 1) {
-                    Collider = new BoxCollider(position, new Vector2(16, 16)*2, new Vector2(8, 8)*2, ColliderType.BLOCK);
+                    Collider = new BoxCollider(position, BlockConstant.ColliderScale, BlockConstant.ColliderOffset, ColliderType.BLOCK);
                 }
             }
         }
@@ -60,32 +53,32 @@ namespace cse3902.Objects
 
             blocks = new List<Sprite>() {
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(2, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                        BlockConstant.BlockSprite1}, BlockOrigin, blockScale)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(19, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                        BlockConstant.BlockSprite2}, BlockOrigin, blockScale)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(36, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                       BlockConstant.BlockSprite3}, BlockOrigin, blockScale)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(53, 11, 16, 16) }, new Vector2(8, 8), 3.0f)
+                        BlockConstant.BlockSprite4}, BlockOrigin, blockScale)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(19, 28, 16, 16) }, new Vector2(8, 8), 3.0f)
+                        BlockConstant.BlockSprite5}, BlockOrigin, blockScale)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                        new Rectangle(36, 28, 16, 16) }, new Vector2(8, 8), 3.0f)
+                        BlockConstant.BlockSprite6}, BlockOrigin, blockScale)
                 },
                 { new Sprite(content.TilesSheet, new List<Rectangle>() {
-                       new Rectangle(53, 28, 16, 16) }, new Vector2(8, 8), 3.0f)
+                      BlockConstant.BlockSprite7}, BlockOrigin, blockScale)
                 }
             };
 
             /* only add a collider if the block is of the right type */
             Collider = null;
-            if (this.blockIndex == 1) {
-                Collider = new BoxCollider(position, new Vector2(16 * 3, 16 * 3), new Vector2(8 * 3, 8 * 3), ColliderType.BLOCK);
+            if (this.blockIndex != BlockConstant.BLOCK_TYPE_FLOOR) {
+                Collider = new BoxCollider(position, BlockConstant.ColliderScale, BlockConstant.ColliderOffset, ColliderType.BLOCK);
             }
         }
 
