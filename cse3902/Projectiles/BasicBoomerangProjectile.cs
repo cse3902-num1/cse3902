@@ -36,7 +36,7 @@ public abstract class BasicBoomerangProjectile : IProjectile
         this.level = level;
     }
 
-    public void Die()
+    public virtual void Die()
     {
         IsDead = true;
     }

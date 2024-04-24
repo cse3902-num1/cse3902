@@ -59,4 +59,9 @@ public abstract class BasicDirectionalProjectile : IProjectile
         Hitbox.Position = Position;
 
     }
+
+    public virtual void Die()
+    {
+        IsDead=true;
+    }
 }
