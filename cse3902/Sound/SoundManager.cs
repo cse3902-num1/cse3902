@@ -43,7 +43,8 @@ namespace cse3902
         private static SoundEffect bombDrop = null;
         private static SoundEffect bombBlowUp = null;
 
-        private static SoundEffect fireball = null;
+        //private static SoundEffect fireball = null;
+        private static SoundEffect newFireball = null;
         public static SoundEffectInstance musicLoop = null;
 
 
@@ -61,7 +62,8 @@ namespace cse3902
             arrowBoomerang = content.arrowBoomerang;
             bombDrop = content.bombDrop;
             bombBlowUp = content.bombBlowUp;
-            fireball = content.fireball;
+            //fireball = content.fireball;
+            newFireball = content.newFireball;
 
             MediaPlayer.Volume = 0.2f;
             MediaPlayer.Play(music);
@@ -151,11 +153,19 @@ namespace cse3902
             }
         }
 
-        public void fireballSound()
+       /* public void fireballSound()
         {
             if (!isMusicPaused)
             {
                 fireball.Play();
+            }
+        }
+       */
+        public void newFireballSound()
+        {
+            if (!isMusicPaused)
+            {
+                newFireball.Play();
             }
         }
     }

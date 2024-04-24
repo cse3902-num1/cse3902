@@ -19,7 +19,7 @@ public class FireballInventoryItem : IInventoryItem
     {
         Vector2 direction = player.Facing.asVector2();
         Fireball fireballProjectile = new Fireball(content, level, player.Position, direction * speed);
-        SoundManager.Manager.fireballSound();
+        SoundManager.Manager.newFireballSound();
         level.Projectiles.Add(fireballProjectile);
         fireballProjectile.isEnermyProjectile = false;
     }
