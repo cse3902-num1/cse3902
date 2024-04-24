@@ -17,8 +17,8 @@ public class Fireball : BasicDirectionalProjectile
         leftSprite = new Sprite(content.enemies,
             new List<Rectangle>()
             {
-                ProjectileConstant.FireBallAnimationSourceRect1,
-                ProjectileConstant.FireBallAnimationSourceRect2,
+                // ProjectileConstant.FireBallAnimationSourceRect1,
+                // ProjectileConstant.FireBallAnimationSourceRect2,
                 ProjectileConstant.FireBallAnimationSourceRect3,
                 ProjectileConstant.FireBallAnimationSourceRect4
             },

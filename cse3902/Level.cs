@@ -54,6 +54,9 @@ namespace cse3902
         public List<IProjectile> Projectiles;
         public IPlayer player;
 
+        /* spawn queues */
+        private List<IProjectile> newProjectiles;
+
 
         public  Sprite playerDot;
         public  Sprite enemyDot;
@@ -118,6 +121,8 @@ namespace cse3902
             Enemies = new List<IEnemy>();
             ParticleEffects = new List<IParticleEffect>();
             Projectiles = new List<IProjectile>();
+
+            newProjectiles = new List<IProjectile>();
 
             Build(content);
 
@@ -434,7 +439,8 @@ namespace cse3902
                     return new RupyItemPickup(content, this);
                 case 3:
                     triforceCount++;
-                    return new TriforceItemPickup(content, this);
+                    // return new TriforceItemPickup(content, this);
+                    return new HeartItemPickup(content, this);
                 case 4:
                     return new MapItemPickup(content, this);
                 case 5:
@@ -502,6 +508,10 @@ namespace cse3902
             hitstop_timer.Restart();
             hitstop_duration_ms = 0;
 
+            /* dequeue things from spawn queue */
+            Projectiles.AddRange(newProjectiles);
+            newProjectiles.Clear();
+
             Blocks = Blocks.Where(b => !b.IsDead).ToList();
             Items = Items.Where(i => !i.IsDead).ToList();
             Enemies = Enemies.Where(e => !e.IsDead).ToList();
@@ -536,6 +546,10 @@ namespace cse3902
 
         public void OnHitStop(int duration_ms) {
             hitstop_duration_ms += duration_ms;
+        }
+
+        public void SpawnProjectile(IProjectile projectile) {
+            newProjectiles.Add(projectile);
         }
     }
 }

@@ -132,6 +132,8 @@ namespace cse3902.Enemy
             level.Items.Add(healthDrop);
 
             base.Die();
+
+            IsDead = true; /* minibosses don't turn into ghosts */
         }
     }
 }
