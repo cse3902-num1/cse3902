@@ -50,9 +50,9 @@ namespace cse3902
         public IPlayer player;
 
 
-        public  Sprite playerDot;
-        public  Sprite enemyDot;
-        public  Sprite triforceDot;
+        public Sprite playerDot;
+        public Sprite enemyDot;
+        public Sprite triforceDot;
 
     
 
