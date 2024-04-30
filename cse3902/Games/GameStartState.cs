@@ -47,7 +47,7 @@ namespace cse3902.Games
             welcomeTextPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - TextOffsetX, Game1.graphics.PreferredBackBufferHeight / 4);
             adventureTextPos = new Vector2(300, 440);
             nightMareTextPos = new Vector2(300, 640);
-            SoundManager.Manager.BossBGM();
+            SoundManager.Manager.MenuBGM();
         }
         public void Draw(Camera camera)
         {

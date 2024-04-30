@@ -248,6 +248,12 @@
 /processorParam:Quality=Best
 /build:Sound/Dungeon.mp3
 
+#begin Sound/GameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/GameOver.wav
+
 #begin Sound/LOZ_Arrow_Boomerang.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -313,6 +319,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/LOZ_Sword_Slash.wav
+
+#begin Sound/MainTheme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/MainTheme.mp3
 
 #begin Sound/VictorySound.wav
 /importer:WavImporter

@@ -63,6 +63,7 @@ namespace cse3902
 
         public Song bgmusic;
         public Song BossMusic;
+        public Song MenuMusic;
         public SoundEffect sword;
         public SoundEffect itemPickUp;
         public SoundEffect linkDamage;
@@ -75,6 +76,7 @@ namespace cse3902
         public SoundEffect fireball;
         public SoundEffect newFireball;
         public SoundEffect Victory;
+        public SoundEffect GameOver;
         
         
 
@@ -134,6 +136,7 @@ namespace cse3902
 
             bgmusic = content.Load<Song>(@"Sound/Dungeon");
             BossMusic = content.Load<Song>(@"Sound/Boss");
+            MenuMusic = content.Load<Song>(@"Sound/MainTheme");
             sword = LoadSoundEffect(@"Sound/LOZ_Sword_Slash");
             itemPickUp = LoadSoundEffect(@"Sound/LOZ_Get_Item");
             linkDamage = LoadSoundEffect(@"Sound/LOZ_Link_Hurt");
@@ -145,6 +148,7 @@ namespace cse3902
             bombBlowUp = LoadSoundEffect(@"Sound/LOZ_Bomb_Blow");
             fireball = LoadSoundEffect(@"Sound/LOZ_Fireball");
             newFireball = LoadSoundEffect(@"Sound/LOZ_Enemy_NewFireBall");
+            GameOver = LoadSoundEffect(@"Sound/GameOver");
             Victory = LoadSoundEffect(@"Sound/VictorySound");
         }
     }
