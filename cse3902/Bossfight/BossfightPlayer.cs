@@ -66,7 +66,7 @@ public class BossfightPlayer {
     private void FireProjectile(GameTime gameTime)
     {
         IBossfightProjectile pleft = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(-4, 0), new Vector2(-20, -300), 0, 5, new Sprite(
+            content, Level, Position + new Vector2(-4, 0), new Vector2(-20, -1000), 0, 5, new Sprite(
             content.enemies,
             new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect1 },
             new Vector2(4.5f, 9)
@@ -74,7 +74,7 @@ public class BossfightPlayer {
         pleft.IsEnemy = false;
 
         IBossfightProjectile pcenter = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(0, 8), new Vector2(0, -300), 0, 5, new Sprite(
+            content, Level, Position + new Vector2(0, 8), new Vector2(0, -1000), 0, 5, new Sprite(
             content.enemies,
             new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect1 },
             new Vector2(4.5f, 9)
@@ -82,7 +82,7 @@ public class BossfightPlayer {
         pcenter.IsEnemy = false;
 
         IBossfightProjectile pright = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(4, 0), new Vector2(20, -300), 0, 5, new Sprite(
+            content, Level, Position + new Vector2(4, 0), new Vector2(20, -1000), 0, 5, new Sprite(
             content.enemies,
             new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect1 },
             new Vector2(4.5f, 9)

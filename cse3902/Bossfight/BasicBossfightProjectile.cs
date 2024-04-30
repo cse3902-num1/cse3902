@@ -70,7 +70,7 @@ public class BasicBossfightProjectile : IBossfightProjectile
             if (Level.boss.IsDead) return;
             float minDistance = Radius + Level.boss.Radius;
             if (Vector2.DistanceSquared(Position, Level.boss.Position) < minDistance * minDistance) {
-                Level.boss.Health -= 3;
+                Level.boss.Health -= 5;
                 IsDead = true;
             }
         }

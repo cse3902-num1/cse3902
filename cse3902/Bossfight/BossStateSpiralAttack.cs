@@ -11,7 +11,8 @@ public class BossStateSpiralAttack : IBossState
     private GameContent content;
     private Sprite sprite;
 
-    private List<IBossfightProjectile> localProjectiles = new List<IBossfightProjectile>();
+    private List<IBossfightProjectile> redProjectiles = new List<IBossfightProjectile>();
+    private List<IBossfightProjectile> blueProjectiles = new List<IBossfightProjectile>();
 
     private int phase = 0;
 
@@ -40,9 +41,9 @@ public class BossStateSpiralAttack : IBossState
     private Timer phase2Timer = new Timer();
     private Timer phase3Timer = new Timer();
     private Timer endTimer = new Timer();
-    const double PHASE_1_TIME = 10;
+    const double PHASE_1_TIME = 5;
     const double PHASE_1_ATTACK_INTERVAL = 0.15;
-    const double PHASE_2_TIME = 10;
+    const double PHASE_2_TIME = 5;
     const double PHASE_3_TIME = 3;
     const double END_TIME = 1;
     public void Update(GameTime gameTime, List<IController> controllers)
@@ -71,12 +72,33 @@ public class BossStateSpiralAttack : IBossState
             if (phase1Timer.Time >= PHASE_1_TIME) {
                 phase2Timer.Start(0);
                 phase++;
-                localProjectiles.ForEach(p => p.AngularVelocity = Math.Tau * -0.2);
+                redProjectiles.ForEach(p => p.AngularVelocity = Math.Tau * -0.02);
+                redProjectiles.ForEach(p => p.Velocity = BossConstant.RotateVector2(p.Velocity, Math.Tau * 0.25));
+                blueProjectiles.ForEach(p => p.Velocity = new Vector2(0, 0));
             }
+        
+        } else if (phase == 1) {
+
+            if (phase2Timer.Time >= PHASE_2_TIME) {
+                phase3Timer.Start(0);
+                phase++;
+
+                Vector2 v = Vector2.Normalize(boss.Level.player.Position - boss.Position);
+                blueProjectiles.ForEach(p => p.AngularVelocity = 0);
+                blueProjectiles.ForEach(p => p.Velocity = Vector2.Normalize(boss.Level.player.Position - p.Position) * 50); 
+            }
+
         
         } else if (phase == 2) {
 
-            if (phase2Timer.Time >= PHASE_2_TIME) {
+            blueProjectiles.ForEach(p => {
+                float length = Vector2.Distance(p.Velocity, new Vector2(0, 0));
+                Vector2 normal = Vector2.Normalize(p.Velocity);
+                length += 15 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                p.Velocity = normal * length;
+            });
+
+            if (phase3Timer.Time >= PHASE_3_TIME) {
                 endTimer.Start(0);
                 phase++;
             }
@@ -116,7 +138,7 @@ public class BossStateSpiralAttack : IBossState
                 new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 200,
                 Math.Tau * 0.01
             );
-            localProjectiles.Add(p1);
+            redProjectiles.Add(p1);
         }
 
         for (double angle = 0 + offset; angle < Math.Tau + offset; angle += Math.Tau / count) {
@@ -125,7 +147,7 @@ public class BossStateSpiralAttack : IBossState
                 new Vector2((float) Math.Cos(-angle), (float) Math.Sin(-angle)) * 200,
                 Math.Tau * -0.01
             );
-            localProjectiles.Add(p1);
+            blueProjectiles.Add(p1);
         }
 
         /* vector that points towards the player */
