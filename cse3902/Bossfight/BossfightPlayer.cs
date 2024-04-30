@@ -6,6 +6,8 @@ namespace cse3902.Bossfight;
 
 public class BossfightPlayer {
     public Vector2 Position;
+    public float Radius;
+
     public BossfightLevel Level;
     private GameContent content;
 
@@ -13,6 +15,7 @@ public class BossfightPlayer {
         this.content = content;
         this.Level = level;
         this.Position = position;
+        this.Radius = 8f * 3;
     }
 
     public void Update(GameTime gameTime, List<IController> controllers) {

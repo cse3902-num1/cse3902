@@ -19,8 +19,8 @@ namespace cse3902
         private Texture2D blackBackground;
         public PlayerInventory Inventory;
         public  Level Level;
-
-     
+        IEnumerable<TriforceItemPickup> triforceList;
+        IEnumerable<Dragon> dragonList;
 
         public Hud(GameContent content, Level level)
         {
@@ -29,13 +29,18 @@ namespace cse3902
             content1 = content;
             Inventory = level.player.Inventory;
             blackBackground = content.hud;
-           
+
+
             this.Level = level;
+            dragonList = Level.Enemies.OfType<Dragon>();
+            triforceList = Level.Items.OfType<TriforceItemPickup>();
         }
 
         // Update method for the HUD
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+            //update play dot on the hud
+            Level.playerDot.Position = Level.player.Position / 14f + Position + new Vector2(55, 5);
             Inventory.Update(gameTime, controllers);
         }
 
@@ -48,19 +53,15 @@ namespace cse3902
             sprite.Draw(spriteBatch);
   
             //draw play dot on the hud
-            Level.playerDot.Position = Level.player.Position/28f + Position + new Vector2(55,5);
             Level.playerDot.Draw(spriteBatch);
             //draw triforce locaion on the hud
-            IEnumerable<TriforceItemPickup> triforceList = Level.Items.OfType<TriforceItemPickup>();
             foreach (TriforceItemPickup t in triforceList) {
-                Level.triforceDot.Position = t.Position / 28f + Position + new Vector2(55, 5);
+                Level.triforceDot.Position = t.Position / 14f + Position + new Vector2(55, 5);
                 Level.triforceDot.Draw(spriteBatch);
             }
             //draw dragons locaion on the hud
-            IEnumerable<Dragon> dragonList = Level.Enemies.OfType<Dragon>();
             foreach (Dragon dragon in dragonList) {
-
-                Level.enemyDot.Position = dragon.Position/ 28f + Position + new Vector2(55, 5);
+                Level.enemyDot.Position = dragon.Position / 14f + Position + new Vector2(55, 5);
                 Level.enemyDot.Draw(spriteBatch);
             }
 

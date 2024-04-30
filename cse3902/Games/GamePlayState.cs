@@ -78,6 +78,7 @@ namespace cse3902.Games
             if (controllers.Any(c => c.isResetPressed()))
             {
                 level = new Level(gameContent);
+                hud = new Hud(gameContent, level);
             }
 
             hud.Update(gameTime, controllers);
