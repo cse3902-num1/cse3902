@@ -31,6 +31,7 @@ namespace cse3902.Games
                         new Rectangle()
                     });
             textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - 50, Game1.graphics.PreferredBackBufferHeight / 2);
+            SoundManager.Manager.GameOver();
             
         }
         //draw game over text

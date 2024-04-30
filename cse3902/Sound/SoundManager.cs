@@ -34,6 +34,7 @@ namespace cse3902
 
         private static Song music = null;
         private static Song BossMusic =null;
+        private static Song MenuMusic = null;
         private static SoundEffect sword = null;
         private static SoundEffect itemPickUp = null;
         private static SoundEffect linkDamage = null;
@@ -43,6 +44,7 @@ namespace cse3902
         private static SoundEffect arrowBoomerang = null;
         private static SoundEffect bombDrop = null;
         private static SoundEffect bombBlowUp = null;
+        private static SoundEffect gameOver = null;
         private static SoundEffect victory = null;
 
         //private static SoundEffect fireball = null;
@@ -56,6 +58,7 @@ namespace cse3902
         {
             music = content.bgmusic;
             BossMusic = content.BossMusic;
+            MenuMusic = content.MenuMusic;
             sword = content.sword;
             itemPickUp = content.itemPickUp;
             linkDamage = content.linkDamage;
@@ -67,6 +70,7 @@ namespace cse3902
             bombBlowUp = content.bombBlowUp;
             //fireball = content.fireball;
             newFireball = content.newFireball;
+            gameOver = content.GameOver;
             victory = content.Victory;
             
         }
@@ -101,6 +105,14 @@ namespace cse3902
                 MediaPlayer.Play(BossMusic);
                 MediaPlayer.IsRepeating = true;
             
+        }
+        public void MenuBGM()
+        {
+
+            MediaPlayer.Volume = 0.3f;
+            MediaPlayer.Play(MenuMusic);
+            MediaPlayer.IsRepeating = true;
+
         }
         public void swordSound()
         {
@@ -179,6 +191,13 @@ namespace cse3902
             if (!isMusicPaused)
             {
                 newFireball.Play();
+            }
+        }
+        public void GameOver()
+        {
+            if (!isMusicPaused)
+            {
+               gameOver.Play();
             }
         }
         public void Victory()
