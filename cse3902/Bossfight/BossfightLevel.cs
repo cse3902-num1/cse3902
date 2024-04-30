@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using cse3902.Games;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,9 +13,11 @@ public class BossfightLevel
     public List<IBossfightProjectile> projectiles;
 
     private GameContent content;
+    private Game1 game;
 
-    public BossfightLevel(GameContent content) {
+    public BossfightLevel(GameContent content, Game1 game) {
         this.content = content;
+        this.game = game;
 
         boss = new Boss(content, this, new Vector2(0, -100));
         player = new BossfightPlayer(content, this, new Vector2(0, 100));
@@ -28,6 +31,8 @@ public class BossfightLevel
     }
 
     public void Draw(Camera camera) {
+        game.GraphicsDevice.Clear(Color.White);
+
         camera.Position = new Vector2(0, 0);
 
         camera.BeginDraw();

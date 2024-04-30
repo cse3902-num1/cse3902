@@ -15,7 +15,7 @@ public class GameBossfightState : IGameState
         this.content = content;
         this.game = game;
         
-        this.Level = new BossfightLevel(content);
+        this.Level = new BossfightLevel(content, game);
     }
 
     public void Draw(Camera camera)
