@@ -24,7 +24,7 @@ public class BossfightLevel
         this.content = content;
         this.game = game;
 
-        boss = new Boss(content, this, new Vector2(0, -400));
+        boss = new Boss(content, this, new Vector2(0, -350));
         player = new BossfightPlayer(content, this, new Vector2(0, 4));
         projectiles = new List<IBossfightProjectile>();
     }
