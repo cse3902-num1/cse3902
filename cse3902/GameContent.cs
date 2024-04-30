@@ -97,7 +97,7 @@ namespace cse3902
             TilesSheet = LoadTexture2D("Tileset");
             ItemSheet = LoadTexture2D("Items");
             hud = LoadTexture2D("hud");
-            boggus = LoadTexture2D("boss");
+            boggus = LoadTexture2D("Boss");
             SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");

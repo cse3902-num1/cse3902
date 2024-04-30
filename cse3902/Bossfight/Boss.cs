@@ -22,13 +22,15 @@ public class Boss
     private Random random;
 
     public Boss(GameContent content, BossfightLevel level, Vector2 position) {
-        boggus = new Sprite(content.boggus,
-               new List<Rectangle>()
-               {
-                   new Rectangle(0,0,256,416)
-               },
-              0.5f
-           )  ;
+        boggus = new Sprite(
+            content.boggus,
+            new List<Rectangle>()
+            {
+                new Rectangle(0,0,256,416)
+            },
+            new Vector2(257f/2, 419f/2),
+            0.5f
+        );
         this.content = content;
         this.Level = level;
         this.Position = position;
@@ -64,12 +66,13 @@ public class Boss
         for (double angle = 0 + offset; angle < Math.Tau + offset; angle += Math.Tau / count) {
             IBossfightProjectile p1 = SpawnRedProjectile(
                 this.Position,
-                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 100
+                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 150
             );
         }
 
+        offset = random.NextDouble() * Math.Tau * 0.05;
         double gap_width = Math.Tau * 0.25;
-        double gap_angle = random.NextDouble() * Math.Tau * 0.5;
+        double gap_angle = Math.Tau * 0.25 + ((random.NextDouble() - 0.5)*2 * Math.Tau * 0.2);
         count = 100;
         for (double angle = 0 + offset; angle < Math.Tau + offset; angle += Math.Tau / count) {
 
@@ -77,7 +80,7 @@ public class Boss
 
             IBossfightProjectile p2 = SpawnBlueProjectile(
                 this.Position,
-                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 50
+                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 75
             );
         }
     }

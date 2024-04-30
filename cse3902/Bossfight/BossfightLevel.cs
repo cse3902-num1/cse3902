@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using cse3902.Games;
@@ -15,18 +16,16 @@ public class BossfightLevel
 
     private GameContent content;
     private Game1 game;
-    public Rectangle worldBounds;
+
+    public const float WORLD_WIDTH = 868;
+    public const float WORLD_HEIGHT = 828;
+
     public BossfightLevel(GameContent content, Game1 game) {
         this.content = content;
         this.game = game;
 
-        // Set world boundaries based on screen dimensions
-        this.worldBounds = new Rectangle(0, 0, 868, 828);
-
-
-        boss = new Boss(content, this, new Vector2(100, 20));
-
-        player = new BossfightPlayer(content, this, new Vector2(0, worldBounds.Bottom));
+        boss = new Boss(content, this, new Vector2(0, -400));
+        player = new BossfightPlayer(content, this, new Vector2(0, 4));
         projectiles = new List<IBossfightProjectile>();
     }
 
@@ -38,17 +37,18 @@ public class BossfightLevel
         player.Update(gameTime, controllers);
         boss.Update(gameTime, controllers);
         projectiles.ForEach(p => p.Update(gameTime, controllers));
-        player.Position = Vector2.Clamp(player.Position, new Vector2(worldBounds.Left, worldBounds.Top), new Vector2(worldBounds.Right, worldBounds.Bottom));
-        boss.Position = Vector2.Clamp(boss.Position, new Vector2(worldBounds.Left, worldBounds.Top), new Vector2(worldBounds.Right, worldBounds.Bottom));
 
+        /* make sure player can't leave the area */
+        Vector2 playerPosition = player.Position;
+        playerPosition.X = Math.Clamp(playerPosition.X, -WORLD_WIDTH/2, WORLD_WIDTH/2);
+        playerPosition.Y = Math.Clamp(playerPosition.Y, -WORLD_HEIGHT/2, WORLD_HEIGHT/2);
+        player.Position = playerPosition;
     }
 
     public void Draw(Camera camera) {
         game.GraphicsDevice.Clear(Color.White);
 
-        Vector2 screenCenter = new Vector2(worldBounds.Width / 2, worldBounds.Height / 2);
-
-        camera.Position = screenCenter;
+        camera.Position = new Vector2(0, 0);
 
         camera.BeginDraw();
 
