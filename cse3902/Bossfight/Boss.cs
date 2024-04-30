@@ -69,6 +69,14 @@ public class Boss
 
         if (Health <= 0) IsDead = true;
 
+        /* boss-player collision */
+        if (!Level.player.IsDead) {
+            float minDistance = Radius + Level.player.Radius;
+            if (Vector2.DistanceSquared(Position, Level.player.Position) < minDistance * minDistance) {
+                Level.player.Health -= 999;
+            }
+        }
+
         Vector2 p = Position;
         // p.Y = -350 + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.5) * 50;
         p.X = (float)Math.Cos(gameTime.TotalGameTime.TotalSeconds * 1.0) * 350;
