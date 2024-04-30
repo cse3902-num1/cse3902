@@ -28,6 +28,7 @@ namespace cse3902.Games
                     });
             textPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - 50, Game1.graphics.PreferredBackBufferHeight / 2);
             boggusComingTimer.Start();
+            SoundManager.Manager.BossBGM();
         }
         public void Draw(Camera camera)
         {
