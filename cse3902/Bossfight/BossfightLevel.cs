@@ -15,13 +15,18 @@ public class BossfightLevel
 
     private GameContent content;
     private Game1 game;
-
+    public Rectangle worldBounds;
     public BossfightLevel(GameContent content, Game1 game) {
         this.content = content;
         this.game = game;
 
-        boss = new Boss(content, this, new Vector2(0, -100));
-        player = new BossfightPlayer(content, this, new Vector2(0, 100));
+        // Set world boundaries based on screen dimensions
+        this.worldBounds = new Rectangle(0, 0, 868, 828);
+
+
+        boss = new Boss(content, this, new Vector2(100, 20));
+
+        player = new BossfightPlayer(content, this, new Vector2(0, worldBounds.Bottom));
         projectiles = new List<IBossfightProjectile>();
     }
 
@@ -33,12 +38,17 @@ public class BossfightLevel
         player.Update(gameTime, controllers);
         boss.Update(gameTime, controllers);
         projectiles.ForEach(p => p.Update(gameTime, controllers));
+        player.Position = Vector2.Clamp(player.Position, new Vector2(worldBounds.Left, worldBounds.Top), new Vector2(worldBounds.Right, worldBounds.Bottom));
+        boss.Position = Vector2.Clamp(boss.Position, new Vector2(worldBounds.Left, worldBounds.Top), new Vector2(worldBounds.Right, worldBounds.Bottom));
+
     }
 
     public void Draw(Camera camera) {
         game.GraphicsDevice.Clear(Color.White);
 
-        camera.Position = new Vector2(0, 0);
+        Vector2 screenCenter = new Vector2(worldBounds.Width / 2, worldBounds.Height / 2);
+
+        camera.Position = screenCenter;
 
         camera.BeginDraw();
 
