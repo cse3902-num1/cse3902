@@ -70,7 +70,9 @@ public class Boss
         if (Health <= 0) IsDead = true;
 
         Vector2 p = Position;
-        p.Y = -350 + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.5) * 50;
+        // p.Y = -350 + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.5) * 50;
+        p.X = (float)Math.Cos(gameTime.TotalGameTime.TotalSeconds * 1.0) * 350;
+        p.Y = (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.0) * 350;
         Position = p;
 
         if (projectileTimer.ElapsedMilliseconds < 1000) return;
@@ -89,17 +91,11 @@ public class Boss
             );
         }
 
-        offset = random.NextDouble() * Math.Tau * 0.05;
-        double gap_width = Math.Tau * 0.25;
-        double gap_angle = Math.Tau * 0.25 + ((random.NextDouble() - 0.5)*2 * Math.Tau * 0.2);
-        count = 100;
-        for (double angle = 0 + offset; angle < Math.Tau + offset; angle += Math.Tau / count) {
-
-            if (angle >= gap_angle - gap_width/2 && angle <= gap_angle + gap_width/2) continue;
-
+        
+        for (int speed = 200; speed >= 100; speed -= 10) {
             IBossfightProjectile p2 = SpawnBlueProjectile(
                 this.Position,
-                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 75
+                Vector2.Normalize(Level.player.Position - Position) * speed
             );
         }
     }
