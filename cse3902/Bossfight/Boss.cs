@@ -16,6 +16,7 @@ public class Boss
     public Vector2 Position {set;get;}
     private GameContent content;    
     public BossfightLevel Level;
+    public float Radius = 257f;
     private Sprite boggus;
     public Rectangle bossHealthBar;
     public int Health = 999;

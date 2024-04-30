@@ -53,6 +53,11 @@ public class BasicBossfightProjectile : IBossfightProjectile
             if (Vector2.DistanceSquared(Position, Level.player.Position) < minDistance * minDistance) {
                 Level.player.Health -= 1;
             }
+        } else {
+            float minDistance = Radius + Level.boss.Radius;
+            if (Vector2.DistanceSquared(Position, Level.boss.Position) < minDistance * minDistance) {
+                Level.boss.Health -= 1;
+            }
         }
     }
 }
