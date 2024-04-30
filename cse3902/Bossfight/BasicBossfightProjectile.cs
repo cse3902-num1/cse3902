@@ -47,5 +47,12 @@ public class BasicBossfightProjectile : IBossfightProjectile
         Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         sprite.Update(gameTime, controllers);
+
+        if (IsEnemy) {
+            float minDistance = Radius + Level.player.Radius;
+            if (Vector2.DistanceSquared(Position, Level.player.Position) < minDistance * minDistance) {
+                Level.player.Health -= 1;
+            }
+        }
     }
 }

@@ -95,7 +95,7 @@ public class Boss
     }
 
     private IBossfightProjectile SpawnRedProjectile(Vector2 position, Vector2 velocity) {
-        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 16f * 3, new Sprite(
+        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 8f, new Sprite(
             content.enemies,
             new List<Rectangle>()
             {
@@ -108,7 +108,7 @@ public class Boss
     }
 
     private IBossfightProjectile SpawnBlueProjectile(Vector2 position, Vector2 velocity) {
-        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 16f * 3, new Sprite(
+        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 8f, new Sprite(
             content.enemies,
             new List<Rectangle>()
             {
