@@ -21,6 +21,7 @@ namespace cse3902
         public  Level Level;
         IEnumerable<TriforceItemPickup> triforceList;
         IEnumerable<Dragon> dragonList;
+        IEnumerable<OldMan> wizardList;
 
         public Hud(GameContent content, Level level)
         {
@@ -34,6 +35,8 @@ namespace cse3902
             this.Level = level;
             dragonList = Level.Enemies.OfType<Dragon>();
             triforceList = Level.Items.OfType<TriforceItemPickup>();
+            wizardList =   Level.Enemies.OfType<OldMan>();
+
         }
 
         // Update method for the HUD
@@ -64,6 +67,13 @@ namespace cse3902
                 Level.enemyDot.Position = dragon.Position / 14f + Position + new Vector2(55, 5);
                 Level.enemyDot.Draw(spriteBatch);
             }
+            //draw wizard location on the hud
+            foreach (OldMan wizard in wizardList)
+            {
+                Level.wizardDot.Position = wizard.Position / 14f + Position + new Vector2(55, 5);
+                Level.wizardDot.Draw(spriteBatch);
+            }
+
 
             Inventory.Position = Position;
             Inventory.Draw(content1, spriteBatch,Level);

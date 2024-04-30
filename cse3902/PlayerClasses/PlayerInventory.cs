@@ -139,8 +139,6 @@ namespace cse3902.PlayerClasses
 
             // Draw the textsprite of items
             drawText(gameContent, spriteBatch, 30);
-
-
             //this is for drawing the hud
             //draw hearts in life:
             drawHeart(gameContent, spriteBatch, 85);
@@ -148,13 +146,8 @@ namespace cse3902.PlayerClasses
             //this is to fill slot A
             drawSlotA(gameContent, spriteBatch, 60 + 9);
             //fill slot B:
-            if (slotBItems.Count > 0)
-            {
-                itemCopy3 = slotBItems[boxCount];
-                itemCopy3.Position = new Vector2(375 + 9, 60 + 9) + Position;
-
-                itemCopy3.Draw(spriteBatch);
-            }
+            drawSlotB(gameContent, spriteBatch, 60 + 9);
+            
 
             // Draw blackout effect if inventory is displayed and draw the other things
             if (!isDisplayed)
@@ -185,6 +178,14 @@ namespace cse3902.PlayerClasses
                     Level.enemyDot.Position = dragon.Position / 28f + Position + new Vector2(55, 5 + 175 * 3.5f);
                     Level.enemyDot.Draw(spriteBatch);
                 }
+                //draw wizard location on the hub
+                IEnumerable<OldMan> wizardList = Level.Enemies.OfType<OldMan>();
+                foreach (OldMan wizard in wizardList)
+                {
+                   
+                    Level.wizardDot.Position = wizard.Position / 28f + Position + new Vector2(55, 5 + 175 * 3.5f);
+                    Level.wizardDot.Draw(spriteBatch);
+                } 
 
 
                 //this is for drawing the inventory
@@ -278,7 +279,12 @@ namespace cse3902.PlayerClasses
                     Level.enemyDot.Position = dragon.Position / 28f + Position + new Vector2(480, 380);
                     Level.enemyDot.Draw(spriteBatch);
                 }
-
+                //draw wizard loc on the hud
+                foreach (OldMan wizard in wizardList)
+                {
+                    Level.wizardDot.Position = wizard.Position / 28f + Position + new Vector2(480, 380);
+                    Level.wizardDot.Draw(spriteBatch);
+                }
 
             }
 
@@ -335,6 +341,13 @@ namespace cse3902.PlayerClasses
         }
         public void drawSlotB(GameContent gameContent, SpriteBatch spriteBatch, float y)
         {
+            if (slotBItems.Count > 0)
+            {
+                itemCopy3 = slotBItems[boxCount];
+                itemCopy3.Position = new Vector2(375 + 9, y ) + Position;
+
+                itemCopy3.Draw(spriteBatch);
+            }
 
         }
         public void drawSlotA(GameContent gameContent, SpriteBatch spriteBatch, float y)
