@@ -34,6 +34,7 @@ namespace cse3902.Games
 
             EventBus.CameraShake += OnCameraShake;
             camerashake_timer.Start();
+            SoundManager.Manager.CommonBGM();
         }
         // draw level, hud
         public void Draw(Camera camera)

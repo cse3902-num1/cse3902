@@ -65,8 +65,8 @@ public class Game1 : Game
         camera.Position = new Vector2(graphics.PreferredBackBufferWidth/2, graphics.PreferredBackBufferHeight/2);
         font = Content.Load<SpriteFont>("font_arial");
         gameContent = new GameContent(Content);
-        State = new GameStartState(gameContent, this);
         SoundManager.Manager.LoadContent(gameContent);
+        State = new GameStartState(gameContent, this);
     }
 
     protected override void Update(GameTime gameTime)

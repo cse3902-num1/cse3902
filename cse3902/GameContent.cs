@@ -62,6 +62,7 @@ namespace cse3902
         public SpriteFont font;
 
         public Song bgmusic;
+        public Song BossMusic;
         public SoundEffect sword;
         public SoundEffect itemPickUp;
         public SoundEffect linkDamage;
@@ -72,7 +73,8 @@ namespace cse3902
         public SoundEffect bombDrop;
         public SoundEffect bombBlowUp;
         public SoundEffect fireball;
-
+        public SoundEffect newFireball;
+        public SoundEffect Victory;
         
         
 
@@ -131,6 +133,7 @@ namespace cse3902
             rightDoors = LoadTexture2D("rightDoors");
 
             bgmusic = content.Load<Song>(@"Sound/Dungeon");
+            BossMusic = content.Load<Song>(@"Sound/Boss");
             sword = LoadSoundEffect(@"Sound/LOZ_Sword_Slash");
             itemPickUp = LoadSoundEffect(@"Sound/LOZ_Get_Item");
             linkDamage = LoadSoundEffect(@"Sound/LOZ_Link_Hurt");
@@ -141,6 +144,8 @@ namespace cse3902
             bombDrop = LoadSoundEffect(@"Sound/LOZ_Bomb_Drop");
             bombBlowUp = LoadSoundEffect(@"Sound/LOZ_Bomb_Blow");
             fireball = LoadSoundEffect(@"Sound/LOZ_Fireball");
+            newFireball = LoadSoundEffect(@"Sound/LOZ_Enemy_NewFireBall");
+            Victory = LoadSoundEffect(@"Sound/VictorySound");
         }
     }
 }

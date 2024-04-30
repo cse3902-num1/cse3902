@@ -24,10 +24,12 @@ public class GreenArrow : BasicDirectionalProjectile
         this.Hitbox = new BoxCollider(position, ProjectileConstant.GreenArrowCollideSize, ProjectileConstant.GreenArrowCollideOrigin, ColliderType.PROJECTILE);
     }
 
-    private void Die()
+    public override void Die()
     {
-        IsDead = true;
+        
         IParticleEffect fx = new ArrowExplode(content, Position);
+        level.ParticleEffects.Add(fx);
+        base.Die();
     }
 
     public override void Update(GameTime gameTime, List<IController> controllers)

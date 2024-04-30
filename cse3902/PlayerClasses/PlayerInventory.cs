@@ -16,7 +16,7 @@ namespace cse3902.PlayerClasses
 {
     public class PlayerInventory
     {
-        public Vector2 Position {set;get;}
+        public Vector2 Position { set; get; }
         public bool hasMap;
         public bool BowUnlocked;
         public bool hasCompass;
@@ -48,7 +48,7 @@ namespace cse3902.PlayerClasses
         private IItemPickup itemCopy;
         private IItemPickup itemCopy2;
         private IItemPickup itemCopy3;
-        
+
 
         public static List<IItemPickup> inventoryItems = new List<IItemPickup>();
         /* sword items List array */
@@ -74,7 +74,8 @@ namespace cse3902.PlayerClasses
             selectBox.Position = new Vector2(460, 170) + Position;
         }
 
-        public void Update(GameTime gameTime, List<IController> controllers) {
+        public void Update(GameTime gameTime, List<IController> controllers)
+        {
 
             if (isDisplayed)
             {
@@ -91,17 +92,18 @@ namespace cse3902.PlayerClasses
             {
                 isDisplayed = !isDisplayed;
 
-            }  
+            }
             if (controllers.Any(c => c.isSwitchSlotAPressed()))
             {
                 isAPressed = true;
 
 
-                if (slotAindex < slotAItems.Count-1)
+                if (slotAindex < slotAItems.Count - 1)
                 {
                     slotAindex++;
                 }
-                else {
+                else
+                {
                     slotAindex = 0;
                 }
 
@@ -126,30 +128,31 @@ namespace cse3902.PlayerClasses
                     boxW = 0;
                     boxH = 0;
                 }
-                
+
             }
         }
-        
+
 
         // Method to prepare the text to be drawn (won't actually draw anything)
-        public void Draw(GameContent gameContent, SpriteBatch spriteBatch,Level Level)
+        public void Draw(GameContent gameContent, SpriteBatch spriteBatch, Level Level)
         {
-            
+
             // Draw the textsprite of items
             drawText(gameContent, spriteBatch, 30);
 
-           
+
             //this is for drawing the hud
             //draw hearts in life:
             drawHeart(gameContent, spriteBatch, 85);
 
             //this is to fill slot A
-            drawSlotA(gameContent, spriteBatch, 60+9);
+            drawSlotA(gameContent, spriteBatch, 60 + 9);
             //fill slot B:
             if (slotBItems.Count > 0)
             {
                 itemCopy3 = slotBItems[boxCount];
                 itemCopy3.Position = new Vector2(375 + 9, 60 + 9) + Position;
+
                 itemCopy3.Draw(spriteBatch);
             }
 
@@ -158,7 +161,7 @@ namespace cse3902.PlayerClasses
             {
                 spriteBatch.Draw(gameContent.hud, Vector2.Zero + Position, blackbackground, Color.Black, 0f, Vector2.Zero, blackbackgroundScale, SpriteEffects.None, 0f);
 
-                 sprite.Position = new Vector2(0, 175*3.5f) + Position;
+                sprite.Position = new Vector2(0, 175 * 3.5f) + Position;
                 //sprite.Position = new Vector2(0, 175*3.5f);
 
                 sprite.Draw(spriteBatch);
@@ -171,7 +174,7 @@ namespace cse3902.PlayerClasses
                 IEnumerable<TriforceItemPickup> triforceList = Level.Items.OfType<TriforceItemPickup>();
                 foreach (TriforceItemPickup t in triforceList)
                 {
-                    Level.triforceDot.Position = t.Position / 28f + Position + new Vector2(55, 5+175*3.5f);
+                    Level.triforceDot.Position = t.Position / 28f + Position + new Vector2(55, 5 + 175 * 3.5f);
                     Level.triforceDot.Draw(spriteBatch);
                 }
                 //draw dragons locaion on the hud
@@ -187,14 +190,15 @@ namespace cse3902.PlayerClasses
                 //this is for drawing the inventory
                 spriteBatch.Draw(gameContent.hud, inventoryPosition + Position, inventory, Color.White, 0f, Vector2.Zero, inventoryScale, SpriteEffects.None, 0f);
 
-                drawText(gameContent, spriteBatch, 184*3.5f);
-                drawSlotA(gameContent, spriteBatch, 194 * 3.5f+18);
+                drawText(gameContent, spriteBatch, 184 * 3.5f);
+                drawSlotA(gameContent, spriteBatch, 194 * 3.5f + 18);
                 drawSlotB(gameContent, spriteBatch, 194 * 3.5f);
                 drawHeart(gameContent, spriteBatch, 200 * 3.5f);
 
                 Vector2 pos = new Vector2(476, 186) + Position;
-                selectBox.Position = pos - new Vector2(5, 0) - new Vector2(16,16);
-                foreach(IItemPickup i in slotBItems) {
+                selectBox.Position = pos - new Vector2(5, 0) - new Vector2(16, 16);
+                foreach (IItemPickup i in slotBItems)
+                {
                     i.Position = pos;
                     pos.X += 40;
                     count++;
@@ -219,7 +223,8 @@ namespace cse3902.PlayerClasses
                     itemCopy.Draw(spriteBatch);
                     // Slot B drawing
                     itemCopy2 = itemCopy;
-                    itemCopy2.Position = new Vector2(375+18, 194 * 3.5f+18) + Position;
+                    itemCopy2.Position = new Vector2(375 + 18, 194 * 3.5f + 18) + Position;
+
                     itemCopy2.Draw(spriteBatch);
                 }
 
@@ -259,14 +264,14 @@ namespace cse3902.PlayerClasses
                 Level.playerDot.Position = Level.player.Position / 28f + Position + new Vector2(480, 380);
                 Level.playerDot.Draw(spriteBatch);
                 //draw triforce locaion on the hud
-               
+
                 foreach (TriforceItemPickup t in triforceList)
                 {
                     Level.triforceDot.Position = t.Position / 28f + Position + new Vector2(480, 380);
                     Level.triforceDot.Draw(spriteBatch);
                 }
                 //draw dragons locaion on the hud
-              
+
                 foreach (Dragon dragon in dragonList)
                 {
 
@@ -276,13 +281,14 @@ namespace cse3902.PlayerClasses
 
 
             }
-            
 
-            
+
+
 
         }
 
-        public void drawHeart(GameContent gameContent, SpriteBatch spriteBatch, float y) {
+        public void drawHeart(GameContent gameContent, SpriteBatch spriteBatch, float y)
+        {
             //draw the heart for the health, initial there are 3 hearts:
             // Draw heart items based on player's health
 
@@ -321,24 +327,27 @@ namespace cse3902.PlayerClasses
 
         public void drawText(GameContent gameContent, SpriteBatch spriteBatch, float y)
         {
-            spriteBatch.DrawString(gameContent.font, "Triforces: " + this.Triforce, new Vector2(280, y+40) + Position, Color.White);
-            spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, y+70) + Position, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Triforces: " + this.Triforce, new Vector2(280, y + 40) + Position, Color.White);
+            spriteBatch.DrawString(gameContent.font, "Bombs: " + this.Bombs, new Vector2(280, y + 70) + Position, Color.White);
             spriteBatch.DrawString(gameContent.font, "Rubies: " + this.Rubies, new Vector2(280, y) + Position, Color.White);
 
 
         }
-        public void drawSlotB(GameContent gameContent, SpriteBatch spriteBatch, float y) {
-            
+        public void drawSlotB(GameContent gameContent, SpriteBatch spriteBatch, float y)
+        {
+
         }
-        public void drawSlotA(GameContent gameContent, SpriteBatch spriteBatch, float y) {
+        public void drawSlotA(GameContent gameContent, SpriteBatch spriteBatch, float y)
+        {
             if (slotAItems.Count > 0)
             {
                 IItemPickup x = slotAItems[slotAindex];
+
                 x.Position = new Vector2(440 + 18, y) + Position;
+
                 x.Draw(spriteBatch);
             }
-           
+
         }
     }
 }
-
