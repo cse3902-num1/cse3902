@@ -67,7 +67,7 @@ dotnet run
 ## Win Check
 * Player will pick up 3 triforces to win
 * Beat dragon or the boss to get a new triforce
-
+* Press "boggus" to trigger the final round and beat Mr.Boggus to win the game
 ## Other control
 * Q - quit the game
 * M - Mute the game
