@@ -188,6 +188,18 @@
 /processorParam:TextureFormat=Color
 /build:oldMan.png
 
+#begin Red_Color.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Red_Color.jpg
+
 #begin rightDoors.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -50,7 +50,7 @@ namespace cse3902
         public Texture2D blueBoomerang;
         public Texture2D weapon;
         public Texture2D weapon2;
-
+        public Texture2D redBackground;
         public Texture2D rooms;
         public Texture2D walls;
         public Texture2D topDoors;
@@ -97,7 +97,8 @@ namespace cse3902
             TilesSheet = LoadTexture2D("Tileset");
             ItemSheet = LoadTexture2D("Items");
             hud = LoadTexture2D("hud");
-            boggus = LoadTexture2D("boss");
+            boggus = LoadTexture2D("Boss");
+            redBackground = LoadTexture2D("Red_Color");
             SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");

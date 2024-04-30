@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Diagnostics;
-
+using System.Security.Cryptography.X509Certificates;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Projectiles;
@@ -14,25 +14,25 @@ namespace cse3902.Bossfight;
 public class Boss
 {
     public Vector2 Position {set;get;}
-
-    private GameContent content;
+    private GameContent content;    
     public BossfightLevel Level;
     private Sprite boggus;
-
+    public Rectangle bossHealthBar;
+    public int bossHealth;
     private Random random;
 
     public Boss(GameContent content, BossfightLevel level, Vector2 position) {
         boggus = new Sprite(content.boggus,
                new List<Rectangle>()
                {
-                   new Rectangle(0,0,256,416)
+                   BossConstant.bossSprite
                },
-              0.5f
+              BossConstant.bossScale
            )  ;
         this.content = content;
         this.Level = level;
         this.Position = position;
-
+        
         this.random = new Random();
 
         projectileTimer.Start();
@@ -42,6 +42,7 @@ public class Boss
     {
         boggus.Position = Position;
         boggus.Draw(spriteBatch);
+        spriteBatch.Draw(content.redBackground, bossHealthBar, Color.White);
     }
 
     private Stopwatch projectileTimer = new Stopwatch();
@@ -51,7 +52,8 @@ public class Boss
         //boggus.Update(gameTime, controllers);
         //Position += new Vector2(1, 0);
 
-    {        
+    {
+        bossHealthBar = new Rectangle(20, 20, 200, 18);
         if (projectileTimer.ElapsedMilliseconds < 1000) return;
         projectileTimer.Restart();
 
