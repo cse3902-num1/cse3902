@@ -100,10 +100,14 @@ public class Boss
         }
 
         
-        for (int speed = 200; speed >= 100; speed -= 10) {
-            IBossfightProjectile p2 = SpawnBlueProjectile(
+        for (int speed = 200; speed >= 0; speed -= 10) {
+            IBossfightProjectile p1 = SpawnBlueProjectile(
                 this.Position,
                 Vector2.Normalize(Level.player.Position - Position) * speed
+            );
+            IBossfightProjectile p2 = SpawnBlueProjectile(
+                this.Position,
+                -Vector2.Normalize(Level.player.Position - Position) * speed
             );
         }
     }
