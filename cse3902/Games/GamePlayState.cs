@@ -86,7 +86,7 @@ namespace cse3902.Games
             if (level.player.Inventory.Triforce == 3 || controllers.Any(c => c.isCheatCodeJustPressed()))
             {
                 // Game1.State = new GameWinState(gameContent, game);
-                Game1.State = new GameBossfightState(gameContent, game);
+                Game1.State = new GameComingState(gameContent, game);
             }
         }
 
