@@ -55,9 +55,9 @@ public class BossfightLevel
         camera.BeginDraw();
 
 
-        boss.Draw(camera.spriteBatch);
         player.Draw(camera.spriteBatch);
         projectiles.ForEach(p => p.Draw(camera.spriteBatch));
+        boss.Draw(camera.spriteBatch);
 
         camera.EndDraw();
     }

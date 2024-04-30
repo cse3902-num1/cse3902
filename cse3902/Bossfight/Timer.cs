@@ -6,6 +6,10 @@ public class Timer {
     public double Time = 0;
     public bool IsStarted = false;
 
+    public Timer(bool started = false) {
+        IsStarted = started;
+    }
+
     public void Start(double initial = 0) {
         Time = initial;
         IsStarted = true;

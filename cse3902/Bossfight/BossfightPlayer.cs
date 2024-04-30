@@ -66,25 +66,25 @@ public class BossfightPlayer {
     private void FireProjectile(GameTime gameTime)
     {
         IBossfightProjectile pleft = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(-4, 0), new Vector2(-10, -300), 5, new Sprite(
+            content, Level, Position + new Vector2(-4, 0), new Vector2(-20, -300), 0, 5, new Sprite(
             content.enemies,
-            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect3 },
+            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect1 },
             new Vector2(4.5f, 9)
         ));
         pleft.IsEnemy = false;
 
         IBossfightProjectile pcenter = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(0, 8), new Vector2(0, -300), 5, new Sprite(
+            content, Level, Position + new Vector2(0, 8), new Vector2(0, -300), 0, 5, new Sprite(
             content.enemies,
-            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect3 },
+            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect1 },
             new Vector2(4.5f, 9)
         ));
         pcenter.IsEnemy = false;
 
         IBossfightProjectile pright = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(4, 0), new Vector2(10, -300), 5, new Sprite(
+            content, Level, Position + new Vector2(4, 0), new Vector2(20, -300), 0, 5, new Sprite(
             content.enemies,
-            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect3 },
+            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect1 },
             new Vector2(4.5f, 9)
         ));
         pright.IsEnemy = false;

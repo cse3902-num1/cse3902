@@ -94,7 +94,7 @@ public class BossStateCircleAttack : IBossState
             boss.Level.projectiles.ForEach(p => { if (p.IsEnemy) p.IsDead = true; });
 
             /* transition to next state */
-            boss.State = new BossStateStart(content, boss);
+            boss.State = new BossStateSpiralAttack(content, boss);
         }
     }
 
@@ -108,7 +108,8 @@ public class BossStateCircleAttack : IBossState
         for (double angle = 0 + offset; angle < Math.Tau + offset; angle += Math.Tau / count) {
             IBossfightProjectile p1 = boss.SpawnRedProjectile(
                 boss.Position,
-                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 150
+                new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)) * 150,
+                0
             );
         }
 
@@ -118,22 +119,26 @@ public class BossStateCircleAttack : IBossState
         for (int speed = 200; speed >= 0; speed -= 10) {
             IBossfightProjectile p1 = boss.SpawnBlueProjectile(
                 boss.Position,
-                v * speed
+                v * speed,
+                0
             );
             IBossfightProjectile p2 = boss.SpawnBlueProjectile(
                 boss.Position,
-                -v * speed
+                -v * speed,
+                0
             );
         }
 
         for (int speed = 200; speed >= 0; speed -= 10) {
             IBossfightProjectile p1 = boss.SpawnBlueProjectile(
                 boss.Position,
-                BossConstant.RotateVector2(v, Math.Tau * 0.25) * speed
+                BossConstant.RotateVector2(v, Math.Tau * 0.25) * speed,
+                0
             );
             IBossfightProjectile p2 = boss.SpawnBlueProjectile(
                 boss.Position,
-                BossConstant.RotateVector2(-v, Math.Tau * 0.25) * speed
+                BossConstant.RotateVector2(-v, Math.Tau * 0.25) * speed,
+                0
             );
         }
     }

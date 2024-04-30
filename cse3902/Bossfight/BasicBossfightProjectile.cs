@@ -11,6 +11,7 @@ public class BasicBossfightProjectile : IBossfightProjectile
     public bool IsEnemy {set;get;}
     public Vector2 Position {get;set;}
     public Vector2 Velocity {get;set;}
+    public double AngularVelocity {get;set;}
     public float Radius {get;set;}
     public Sprite sprite {get;set;}
 
@@ -20,13 +21,14 @@ public class BasicBossfightProjectile : IBossfightProjectile
     private GameContent content;
     public BossfightLevel Level {set;get;}
 
-    public BasicBossfightProjectile(GameContent content, BossfightLevel level, Vector2 position, Vector2 velocity, float radius, Sprite sprite) {
+    public BasicBossfightProjectile(GameContent content, BossfightLevel level, Vector2 position, Vector2 velocity, double angularVelocity, float radius, Sprite sprite) {
         this.content = content;
         this.Level = level;
         this.IsDead = false;
         this.IsEnemy = true;
         this.Position = position;
         this.Velocity = velocity;
+        this.AngularVelocity = angularVelocity;
         this.Radius = radius;
         this.sprite = sprite;
 
@@ -49,6 +51,7 @@ public class BasicBossfightProjectile : IBossfightProjectile
         if (TTLTimer.ElapsedMilliseconds >= TTL) IsDead = true;
 
         Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        Velocity = BossConstant.RotateVector2(Velocity, AngularVelocity * gameTime.ElapsedGameTime.TotalSeconds);
 
         sprite.Update(gameTime, controllers);
 
@@ -67,7 +70,7 @@ public class BasicBossfightProjectile : IBossfightProjectile
             if (Level.boss.IsDead) return;
             float minDistance = Radius + Level.boss.Radius;
             if (Vector2.DistanceSquared(Position, Level.boss.Position) < minDistance * minDistance) {
-                Level.boss.Health -= 1;
+                Level.boss.Health -= 3;
                 IsDead = true;
             }
         }
