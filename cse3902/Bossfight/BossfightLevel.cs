@@ -34,8 +34,10 @@ public class BossfightLevel
     }
 
     public void Update(GameTime gameTime, List<IController> controllers) {
+
         player.Update(gameTime, controllers);
         boss.Update(gameTime, controllers);
+        projectiles = projectiles.Where(p => !p.IsDead).ToList();
         projectiles.ForEach(p => p.Update(gameTime, controllers));
 
         /* make sure player can't leave the area */
@@ -52,9 +54,8 @@ public class BossfightLevel
 
         camera.BeginDraw();
 
-        projectiles = projectiles.Where(p => !p.IsDead).ToList();
-        projectiles.ForEach(p => p.Draw(camera.spriteBatch));
         player.Draw(camera.spriteBatch);
+        projectiles.ForEach(p => p.Draw(camera.spriteBatch));
         boss.Draw(camera.spriteBatch);
 
         camera.EndDraw();

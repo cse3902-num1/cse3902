@@ -9,8 +9,11 @@ using Microsoft.Xna.Framework.Graphics;
 namespace cse3902.Bossfight;
 
 public class BossfightPlayer {
+    public bool IsDead = false;
     public Vector2 Position;
     public float Radius;
+    public int Health = 3;
+    public int MaxHealth = 3;
 
     private Sprite sprite;
 
@@ -24,7 +27,7 @@ public class BossfightPlayer {
         this.content = content;
         this.Level = level;
         this.Position = position;
-        this.Radius = 8f * 3;
+        this.Radius = 4f;
 
         this.sprite = new Sprite(
             content.SpritesheetLinkWalk,
@@ -38,6 +41,10 @@ public class BossfightPlayer {
     }
 
     public void Update(GameTime gameTime, List<IController> controllers) {
+        if (Health <= 0) IsDead = true;
+
+        if (IsDead) return;
+
         sprite.Update(gameTime, controllers);
 
         Vector2 movement = new Vector2(0, 0);
@@ -80,6 +87,8 @@ public class BossfightPlayer {
         lastShotTime = gameTime.TotalGameTime.TotalSeconds;  // Update last shot time
     }
     public void Draw(SpriteBatch spriteBatch) {
+        if (IsDead) return;
+
         sprite.Position = Position;
         sprite.Draw(spriteBatch);
         foreach (var projectile in projectiles)

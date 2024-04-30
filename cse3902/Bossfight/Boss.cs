@@ -18,8 +18,8 @@ public class Boss
     public BossfightLevel Level;
     private Sprite boggus;
     public Rectangle bossHealthBar;
-    public int bossHealth = 999;
-    public int bossHealthMax = 999;
+    public int Health = 999;
+    public int MaxHealth = 999;
     private Random random;
 
     public Boss(GameContent content, BossfightLevel level, Vector2 position) {
@@ -50,7 +50,7 @@ public class Boss
         bossHealthBar = new Rectangle(
             /* x */ -(int)BossfightLevel.WORLD_WIDTH/2 + margin,
             /* y */ -(int)BossfightLevel.WORLD_HEIGHT/2 + margin,
-            /* width */ (int)BossfightLevel.WORLD_WIDTH - 2*margin,
+            /* width */ (int)BossfightLevel.WORLD_WIDTH - 2*margin * (Health / MaxHealth),
             /* height */ 8
         );
         spriteBatch.Draw(content.redBackground, bossHealthBar, Color.White);
@@ -59,6 +59,10 @@ public class Boss
     private Stopwatch projectileTimer = new Stopwatch();
     public void Update(GameTime gameTime, List<IController> controllers)
     {
+        Vector2 p = Position;
+        p.Y = -350 + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.5) * 50;
+        Position = p;
+
         if (projectileTimer.ElapsedMilliseconds < 1000) return;
         projectileTimer.Restart();
 
@@ -91,7 +95,7 @@ public class Boss
     }
 
     private IBossfightProjectile SpawnRedProjectile(Vector2 position, Vector2 velocity) {
-        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 16f * 3, new Sprite(
+        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 8f, new Sprite(
             content.enemies,
             new List<Rectangle>()
             {
@@ -104,7 +108,7 @@ public class Boss
     }
 
     private IBossfightProjectile SpawnBlueProjectile(Vector2 position, Vector2 velocity) {
-        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 16f * 3, new Sprite(
+        IBossfightProjectile p = new BasicBossfightProjectile(content, Level, position, velocity, 8f, new Sprite(
             content.enemies,
             new List<Rectangle>()
             {
