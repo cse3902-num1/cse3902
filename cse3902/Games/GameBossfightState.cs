@@ -6,7 +6,17 @@ namespace cse3902.Games;
 
 public class GameBossfightState : IGameState
 {
-    public BossfightLevel Level = new BossfightLevel();
+    private GameContent content;
+    private Game1 game;
+
+    public BossfightLevel Level;
+
+    public GameBossfightState(GameContent content, Game1 game) {
+        this.content = content;
+        this.game = game;
+        
+        this.Level = new BossfightLevel(content);
+    }
 
     public void Draw(Camera camera)
     {
