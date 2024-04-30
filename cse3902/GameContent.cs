@@ -73,6 +73,7 @@ namespace cse3902
         public SoundEffect bombBlowUp;
         public SoundEffect fireball;
         public SoundEffect newFireball;
+        public SoundEffect Victory;
         
         
 
@@ -141,6 +142,7 @@ namespace cse3902
             bombBlowUp = LoadSoundEffect(@"Sound/LOZ_Bomb_Blow");
             fireball = LoadSoundEffect(@"Sound/LOZ_Fireball");
             newFireball = LoadSoundEffect(@"Sound/LOZ_Enemy_NewFireBall");
+            Victory = LoadSoundEffect(@"Sound/VictorySound");
         }
     }
 }

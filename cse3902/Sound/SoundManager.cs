@@ -43,6 +43,7 @@ namespace cse3902
         private static SoundEffect arrowBoomerang = null;
         private static SoundEffect bombDrop = null;
         private static SoundEffect bombBlowUp = null;
+        private static SoundEffect victory = null;
 
         //private static SoundEffect fireball = null;
         private static SoundEffect newFireball = null;
@@ -66,6 +67,7 @@ namespace cse3902
             bombBlowUp = content.bombBlowUp;
             //fireball = content.fireball;
             newFireball = content.newFireball;
+            victory = content.Victory;
             
         }
         public void Update(GameTime gameTime, List<IController> controllers) {
@@ -177,6 +179,13 @@ namespace cse3902
             if (!isMusicPaused)
             {
                 newFireball.Play();
+            }
+        }
+        public void Victory()
+        {
+            if (!isMusicPaused)
+            {
+                victory.Play();
             }
         }
     }

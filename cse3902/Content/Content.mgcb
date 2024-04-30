@@ -290,6 +290,12 @@
 /processorParam:Quality=Best
 /build:Sound/LOZ_Sword_Slash.wav
 
+#begin Sound/VictorySound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/VictorySound.wav
+
 #begin spritesheet_goriya_walk.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -29,6 +29,7 @@ namespace cse3902.Games
                         new Rectangle()
                     });
             Constant.textPosMidScreen = new Vector2(Constant.TextPosMidScreenX, Constant.TextPosMidScreenY);
+            SoundManager.Manager.Victory();
         }
         public void Draw(Camera camera)
         {
