@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using cse3902.Games;
 using cse3902.Interfaces;
 using Microsoft.Xna.Framework;
@@ -24,6 +25,10 @@ public class BossfightLevel
         projectiles = new List<IBossfightProjectile>();
     }
 
+    public void SpawnProjectile(IBossfightProjectile projectile) {
+        projectiles.Add(projectile);
+    }
+
     public void Update(GameTime gameTime, List<IController> controllers) {
         player.Update(gameTime, controllers);
         boss.Update(gameTime, controllers);
@@ -37,6 +42,7 @@ public class BossfightLevel
 
         camera.BeginDraw();
 
+        projectiles = projectiles.Where(p => !p.IsDead).ToList();
         projectiles.ForEach(p => p.Draw(camera.spriteBatch));
         player.Draw(camera.spriteBatch);
         boss.Draw(camera.spriteBatch);
