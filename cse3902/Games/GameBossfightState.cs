@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using cse3902.Bossfight;
 using Microsoft.Xna.Framework;
 
@@ -26,5 +27,17 @@ public class GameBossfightState : IGameState
     public void Update(GameTime gameTime, List<IController> controllers)
     {
         Level.Update(gameTime, controllers);
+        if(controllers.Any(c => c.isResetPressed()))
+        {
+            Game1.State = new GameStartState(content, game);
+        }
+        if(Level.boss.IsDead)
+        {
+            Game1.State = new GameWinState(content, game);
+        }
+        if(Level.player.IsDead)
+        {
+            Game1.State = new GameOverState(content, game);
+        }
     }
 }
