@@ -146,10 +146,10 @@ namespace cse3902.PlayerClasses
             drawHeart(gameContent, spriteBatch, 85);
 
             //this is to fill slot A
-            drawSlotA(gameContent, spriteBatch, 53);
+            drawSlotA(gameContent, spriteBatch, 69);
             //fill slot B:
 
-            drawSlotB(gameContent, spriteBatch, 53) ;
+            drawSlotB(gameContent, spriteBatch, 69) ;
            
 
             // Draw blackout effect if inventory is displayed and draw the other things
@@ -212,8 +212,8 @@ namespace cse3902.PlayerClasses
             drawSlotB(gameContent, spriteBatch, 194 * 3.5f);
             drawHeart(gameContent, spriteBatch, 200 * 3.5f);
 
-            Vector2 pos = new Vector2(460, 170) + Position;
-            selectBox.Position = pos - new Vector2(5, 0);
+            Vector2 pos = new Vector2(475, 185) + Position;
+            selectBox.Position = pos - new Vector2(5, 0) - new Vector2(16, 16);
             foreach (IItemPickup i in slotBItems)
             {
                 i.Position = pos;
@@ -238,11 +238,6 @@ namespace cse3902.PlayerClasses
                 itemCopy = itemCopy3;
                 itemCopy.Position = PlayerInventoryConstant.itemcopy + Position;
                 itemCopy.Draw(spriteBatch);
-                // Slot B drawing
-                //itemCopy2 = itemCopy;
-                //itemCopy2.Position = PlayerInventoryConstant.itemcopt2offset + Position;
-
-                //itemCopy2.Draw(spriteBatch);
             }
 
             if (hasMap)
@@ -351,7 +346,7 @@ namespace cse3902.PlayerClasses
             if (slotBItems.Count > 0)
             {
                 itemCopy3 = slotBItems[boxCount];
-                itemCopy3.Position = new Vector2(368, y) + Position;
+                itemCopy3.Position = new Vector2(384, y) + Position;
 
                 itemCopy3.Draw(spriteBatch);
             }
@@ -363,7 +358,7 @@ namespace cse3902.PlayerClasses
             {
                 IItemPickup x = slotAItems[slotAindex];
 
-                x.Position = new Vector2(440, y) + Position;
+                x.Position = new Vector2(456, y) + Position;
 
                 x.Draw(spriteBatch);
             }
