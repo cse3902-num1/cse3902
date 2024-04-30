@@ -65,24 +65,33 @@ public class BossfightPlayer {
     }
     private void FireProjectile(GameTime gameTime)
     {
-        IBossfightProjectile p1 = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(-8, 0), new Vector2(0, -300), 5, new Sprite(
+        IBossfightProjectile pleft = new BasicBossfightProjectile(
+            content, Level, Position + new Vector2(-4, 0), new Vector2(-10, -300), 5, new Sprite(
             content.enemies,
             new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect3 },
             new Vector2(4.5f, 9)
         ));
-        p1.IsEnemy = false;
+        pleft.IsEnemy = false;
 
-        IBossfightProjectile p2 = new BasicBossfightProjectile(
-            content, Level, Position + new Vector2(8, 0), new Vector2(0, -300), 5, new Sprite(
+        IBossfightProjectile pcenter = new BasicBossfightProjectile(
+            content, Level, Position + new Vector2(0, 8), new Vector2(0, -300), 5, new Sprite(
             content.enemies,
             new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect3 },
             new Vector2(4.5f, 9)
         ));
-        p2.IsEnemy = false;
+        pcenter.IsEnemy = false;
 
-        Level.SpawnProjectile(p1);
-        Level.SpawnProjectile(p2);
+        IBossfightProjectile pright = new BasicBossfightProjectile(
+            content, Level, Position + new Vector2(4, 0), new Vector2(10, -300), 5, new Sprite(
+            content.enemies,
+            new List<Rectangle>() { ProjectileConstant.FireBallAnimationSourceRect3 },
+            new Vector2(4.5f, 9)
+        ));
+        pright.IsEnemy = false;
+
+        Level.SpawnProjectile(pleft);
+        Level.SpawnProjectile(pcenter);
+        Level.SpawnProjectile(pright);
         lastShotTime = gameTime.TotalGameTime.TotalSeconds;  // Update last shot time
     }
     public void Draw(SpriteBatch spriteBatch) {

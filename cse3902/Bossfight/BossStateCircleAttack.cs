@@ -63,14 +63,7 @@ public class BossStateCircleAttack : IBossState
         if (state == 0) {
 
             double angle = Math.Tau * stageTimer.Time / STAGE_TIME; // make boss take 4 seconds to complete orbit
-            Vector2 p = new Vector2(0, -350);
-            float px = p.X;
-            float py = p.Y;
-            p.X = (float) (Math.Cos(angle) * px - Math.Sin(angle) * py);
-            p.Y = (float) (Math.Sin(angle) * px + Math.Cos(angle) * py);
-            // p.Y = -350 + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.5) * 50;
-            // p.X = (float)Math.Cos(gameTime.TotalGameTime.TotalSeconds * 1.0) * 350;
-            // p.Y = (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.0) * 350;
+            Vector2 p = BossConstant.RotateVector2(new Vector2(0, -350), angle);
             boss.Position = p;
 
             if (attackTimer.Time >= ATTACK_INTERVAL) {
@@ -119,15 +112,28 @@ public class BossStateCircleAttack : IBossState
             );
         }
 
+        /* vector that points towards the player */
+        Vector2 v = Vector2.Normalize(boss.Level.player.Position - boss.Position);
         
         for (int speed = 200; speed >= 0; speed -= 10) {
             IBossfightProjectile p1 = boss.SpawnBlueProjectile(
                 boss.Position,
-                Vector2.Normalize(boss.Level.player.Position - boss.Position) * speed
+                v * speed
             );
             IBossfightProjectile p2 = boss.SpawnBlueProjectile(
                 boss.Position,
-                -Vector2.Normalize(boss.Level.player.Position - boss.Position) * speed
+                -v * speed
+            );
+        }
+
+        for (int speed = 200; speed >= 0; speed -= 10) {
+            IBossfightProjectile p1 = boss.SpawnBlueProjectile(
+                boss.Position,
+                BossConstant.RotateVector2(v, Math.Tau * 0.25) * speed
+            );
+            IBossfightProjectile p2 = boss.SpawnBlueProjectile(
+                boss.Position,
+                BossConstant.RotateVector2(-v, Math.Tau * 0.25) * speed
             );
         }
     }
