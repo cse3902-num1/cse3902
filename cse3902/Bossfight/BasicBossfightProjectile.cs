@@ -36,28 +36,41 @@ public class BasicBossfightProjectile : IBossfightProjectile
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        if (IsDead) return;
+
         sprite.Position = Position;
         sprite.Draw(spriteBatch);
     }
 
     public void Update(GameTime gameTime, List<IController> controllers)
     {
+        if (IsDead) return;
+
         if (TTLTimer.ElapsedMilliseconds >= TTL) IsDead = true;
 
         Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         sprite.Update(gameTime, controllers);
 
+        CollisionDetection();
+    }
+
+    private void CollisionDetection() {
         if (IsEnemy) {
+            if (Level.player.IsDead) return;
             float minDistance = Radius + Level.player.Radius;
             if (Vector2.DistanceSquared(Position, Level.player.Position) < minDistance * minDistance) {
                 Level.player.Health -= 1;
+                IsDead = true;
             }
         } else {
+            if (Level.boss.IsDead) return;
             float minDistance = Radius + Level.boss.Radius;
             if (Vector2.DistanceSquared(Position, Level.boss.Position) < minDistance * minDistance) {
                 Level.boss.Health -= 1;
+                IsDead = true;
             }
         }
+
     }
 }

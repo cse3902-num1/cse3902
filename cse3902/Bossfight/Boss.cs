@@ -13,18 +13,19 @@ namespace cse3902.Bossfight;
 
 public class Boss
 {
+    public bool IsDead {set;get;}
     public Vector2 Position {set;get;}
     private GameContent content;    
     public BossfightLevel Level;
-    public float Radius = 257f;
-    private Sprite boggus;
+    public float Radius = 75f;
+    private Sprite sprite;
     public Rectangle bossHealthBar;
-    public int Health = 999;
-    public int MaxHealth = 999;
+    public int Health = 9999;
+    public int MaxHealth = 9999;
     private Random random;
 
     public Boss(GameContent content, BossfightLevel level, Vector2 position) {
-        boggus = new Sprite(content.boggus,
+        sprite = new Sprite(content.boggus,
             new List<Rectangle>()
             {
                 BossConstant.bossSprite
@@ -43,15 +44,19 @@ public class Boss
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        boggus.Position = Position;
-        boggus.Draw(spriteBatch);
+        if (IsDead) return;
+
+        sprite.Position = Position;
+        sprite.Draw(spriteBatch);
 
         /* draw health bar */
         int margin = 8;
         bossHealthBar = new Rectangle(
             /* x */ -(int)BossfightLevel.WORLD_WIDTH/2 + margin,
             /* y */ -(int)BossfightLevel.WORLD_HEIGHT/2 + margin,
-            /* width */ (int)BossfightLevel.WORLD_WIDTH - 2*margin * (Health / MaxHealth),
+            /* width */ (int) (
+                ((int)BossfightLevel.WORLD_WIDTH - 2*margin) * ((float)Health / MaxHealth)
+            ),
             /* height */ 8
         );
         spriteBatch.Draw(content.redBackground, bossHealthBar, Color.White);
@@ -60,6 +65,10 @@ public class Boss
     private Stopwatch projectileTimer = new Stopwatch();
     public void Update(GameTime gameTime, List<IController> controllers)
     {
+        if (IsDead) return;
+
+        if (Health <= 0) IsDead = true;
+
         Vector2 p = Position;
         p.Y = -350 + (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds * 1.5) * 50;
         Position = p;
@@ -71,7 +80,7 @@ public class Boss
     }
 
     private void RingsAttack() {
-        double offset = 0;
+        double offset = random.NextDouble() * Math.Tau;
         int count = 32;
         for (double angle = 0 + offset; angle < Math.Tau + offset; angle += Math.Tau / count) {
             IBossfightProjectile p1 = SpawnRedProjectile(
