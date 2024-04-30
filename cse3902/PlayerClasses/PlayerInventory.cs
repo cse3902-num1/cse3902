@@ -147,10 +147,10 @@ namespace cse3902.PlayerClasses
             drawHeart(gameContent, spriteBatch, 85);
 
             //this is to fill slot A
-            drawSlotA(gameContent, spriteBatch, 69);
+            drawSlotA(gameContent, spriteBatch, 53);
             //fill slot B:
 
-            drawSlotB(gameContent, spriteBatch, 69) ;
+            drawSlotB(gameContent, spriteBatch, 53) ;
            
 
             // Draw blackout effect if inventory is displayed and draw the other things
@@ -207,12 +207,12 @@ namespace cse3902.PlayerClasses
             spriteBatch.Draw(gameContent.hud, PlayerInventoryConstant.InventoryPosition + Position, PlayerInventoryConstant.Inventory, Color.White, 0f, Vector2.Zero, PlayerInventoryConstant.InventoryScale, SpriteEffects.None, 0f);
 
             drawText(gameContent, spriteBatch, 184 * 3.5f);
-            drawSlotA(gameContent, spriteBatch, 194 * 3.5f + 18);
+            drawSlotA(gameContent, spriteBatch, 194 * 3.5f);
             drawSlotB(gameContent, spriteBatch, 194 * 3.5f);
             drawHeart(gameContent, spriteBatch, 200 * 3.5f);
 
-            Vector2 pos = new Vector2(476, 186) + Position;
-            selectBox.Position = pos - new Vector2(5, 0) - new Vector2(16, 16);
+            Vector2 pos = new Vector2(460, 170) + Position;
+            selectBox.Position = pos - new Vector2(5, 0);
             foreach (IItemPickup i in slotBItems)
             {
                 i.Position = pos;
@@ -238,10 +238,10 @@ namespace cse3902.PlayerClasses
                 itemCopy.Position = PlayerInventoryConstant.itemcopy + Position;
                 itemCopy.Draw(spriteBatch);
                 // Slot B drawing
-                itemCopy2 = itemCopy;
-                itemCopy2.Position = PlayerInventoryConstant.itemcopt2offset + Position;
+                //itemCopy2 = itemCopy;
+                //itemCopy2.Position = PlayerInventoryConstant.itemcopt2offset + Position;
 
-                itemCopy2.Draw(spriteBatch);
+                //itemCopy2.Draw(spriteBatch);
             }
 
             if (hasMap)
@@ -350,7 +350,7 @@ namespace cse3902.PlayerClasses
             if (slotBItems.Count > 0)
             {
                 itemCopy3 = slotBItems[boxCount];
-                itemCopy3.Position = new Vector2(384, y) + Position;
+                itemCopy3.Position = new Vector2(368, y) + Position;
 
                 itemCopy3.Draw(spriteBatch);
             }
@@ -362,7 +362,7 @@ namespace cse3902.PlayerClasses
             {
                 IItemPickup x = slotAItems[slotAindex];
 
-                x.Position = new Vector2(458, y) + Position;
+                x.Position = new Vector2(440, y) + Position;
 
                 x.Draw(spriteBatch);
             }

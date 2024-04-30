@@ -63,9 +63,9 @@ namespace cse3902.PlayerClasses
 
         public static Vector2 InventoryPosition = new Vector2(0, -600);
         public static Vector2 NewInventoryPosition = new Vector2(0, -600);
-        public static Vector2 itemcopt2offset = new Vector2(375 + 18, 194 * 3.5f + 18);
+        public static Vector2 itemcopt2offset = new Vector2(375, 194 * 3.5f);
         public static Vector2 radaroffset = new Vector2(480, 380);
-        public static Vector2 itemcopy = new Vector2(256, 196);
+        public static Vector2 itemcopy = new Vector2(240, 180);
     }
 }
 
