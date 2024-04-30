@@ -439,8 +439,8 @@ namespace cse3902
                     return new RupyItemPickup(content, this);
                 case 3:
                     triforceCount++;
-                    // return new TriforceItemPickup(content, this);
-                    return new HeartItemPickup(content, this);
+                    return new TriforceItemPickup(content, this);
+
                 case 4:
                     return new MapItemPickup(content, this);
                 case 5:
@@ -497,6 +497,8 @@ namespace cse3902
                     return new BookOfMagicItemPickup(content, this);
                 case 31: 
                     return new MagicalKeyItemPickup(content, this);
+                case 32:
+                    return new HeartItemPickup(content, this);
                 default: return null;
             }
         }
