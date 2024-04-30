@@ -61,6 +61,8 @@ namespace cse3902
         public  Sprite playerDot;
         public  Sprite enemyDot;
         public  Sprite triforceDot;
+        public  Sprite wizardDot;
+
 
         /* TODO: this is a temporary function to print mapdata */
         public void PrintTileMap()
@@ -134,6 +136,9 @@ namespace cse3902
             });
             triforceDot = new Sprite(content.hud, new List<Rectangle>() {
                  new Rectangle(528,126,3,3)
+            });
+            wizardDot = new Sprite(content.hud, new List<Rectangle>() {
+                 new Rectangle(582,126,3,3)
             });
         }
 
