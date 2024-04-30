@@ -83,10 +83,14 @@ namespace cse3902.Games
             }
 
             hud.Update(gameTime, controllers);
-            if (level.player.Inventory.Triforce == 3 || controllers.Any(c => c.isCheatCodeJustPressed()))
+            if ((level.player.Inventory.Triforce == 3 && Game1.isNightmare == true) || (controllers.Any(c => c.isCheatCodeJustPressed()) && Game1.isNightmare == true))
             {
                 // Game1.State = new GameWinState(gameContent, game);
                 Game1.State = new GameComingState(gameContent, game);
+            }
+            else if(level.player.Inventory.Triforce == 3)
+            {
+                Game1.State = new GameWinState(gameContent, game);
             }
         }
 
