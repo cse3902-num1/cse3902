@@ -70,5 +70,10 @@ namespace cse3902
         public bool isInventoryDisplayedPressed() { return false; }
         public bool isSwitchSlotAPressed() { return false; }
         public bool isSwitchSlotBPressed() { return false; }
+
+        public bool isCheatCodeJustPressed()
+        {
+            return false;
+        }
     }
 }
