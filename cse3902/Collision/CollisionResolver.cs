@@ -61,10 +61,17 @@ public static class CollisionResolver
         if (projectile.isEnermyProjectile) return;
         if (results.Count == 0) return;
 
-        projectile.IsDead = projectile switch {
-            Fire fire => false,
-            _ => true,
-        };
+
+        switch (projectile){
+            case Fire fire:
+                break;
+            default:
+                projectile.Die();
+                break;
+        } 
+      
+        
+        if (!(projectile is Fire) && !(projectile is Bomb)) EventBus.HitStop(100); /* fireball doesn't die on hit, so avoid multiple repeated hitstops. bomb doesn't damage until it explodes. */
 
         foreach (CollisionResult<IEnemy> r in results) {
             // r.Entity.TakeDmg(1);
@@ -195,4 +202,12 @@ public static class CollisionResolver
             result.Entity.Pickup(player);
         }
     }
+    public static void ResolveProjectileBlockCollision(IProjectile projectile, List<CollisionResult<Block>> results)
+    {
+        if (results.Count > 0)
+        {
+            projectile.Die();
+        }
+    }
+    
 }

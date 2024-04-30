@@ -14,7 +14,7 @@ public class BombItemPickup : BasicSlotBPickup
     public BombItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.BombItemSourceRect });
+                        ItemsConstant.BombItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
@@ -26,7 +26,7 @@ public class BombItemPickup : BasicSlotBPickup
             isAdded = true;
         }
         player.Inventory.Bombs += 1;
-        Debug.WriteLine("Bombs: " + player.Inventory.Bombs);
+        //Debug.WriteLine("Bombs: " + player.Inventory.Bombs);
         IsDead = true;
     }
 }

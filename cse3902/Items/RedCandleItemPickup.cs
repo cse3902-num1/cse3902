@@ -10,12 +10,12 @@ public class RedCandleItemPickup : BasicItemPickup
     public RedCandleItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.RedCandleItemSourceRect});
+                       ItemsConstant.RedCandleItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("red candle item picked up");
+        //Debug.WriteLine("red candle item picked up");
         IsDead = true;
     }
 }

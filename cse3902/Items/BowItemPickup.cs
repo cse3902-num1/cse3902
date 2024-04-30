@@ -13,7 +13,7 @@ public class BowItemPickup : BasicSlotBPickup
     public BowItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.BowItemSourceRect });
+                        ItemsConstant.BowItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
@@ -24,7 +24,7 @@ public class BowItemPickup : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("bow item picked up");
+        //Debug.WriteLine("bow item picked up");
         IsDead = true;
     }
 }

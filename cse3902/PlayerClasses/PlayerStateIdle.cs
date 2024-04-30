@@ -78,7 +78,12 @@ namespace cse3902.PlayerClasses
             else if (controllers.Any(c => c.isPlayerUsePurpleCrystalPressed())) item = new PurpleCystleInventoryItem();
             if (item != null)
             {
-                if (player.ItemUseCooldown.ElapsedMilliseconds >= Player.ITEM_USE_COOLDOWN) {
+                if (player.ItemCooldownTimer.ElapsedMilliseconds >= player.item_cooldown_ms) {
+                    player.item_cooldown_ms = item switch {
+                        FireInventoryItem fire => 1000,
+                        _ => 500,
+                    };
+                    player.ItemCooldownTimer.Restart();
                     player.State = new PlayerStateItem(content, player, item);
                 }
             }

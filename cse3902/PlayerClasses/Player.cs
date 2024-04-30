@@ -21,8 +21,9 @@ namespace cse3902.PlayerClasses
         private bool isDamaged = false;
         private const int RandomChangeInterval = 2000;
 
-        public Stopwatch ItemUseCooldown;
-        public const int ITEM_USE_COOLDOWN = 250;
+        public Stopwatch ItemCooldownTimer;
+        public const int DEFAULT_ITEM_COOLDOWN_MS = 250;
+        public int item_cooldown_ms = 0;
 
         private Vector2 _position = Vector2.Zero;
         public Vector2 Position {
@@ -44,8 +45,8 @@ namespace cse3902.PlayerClasses
         public Player(GameContent content, Level level)
         {
             damageTimer = new Stopwatch();
-            ItemUseCooldown = new Stopwatch();
-            ItemUseCooldown.Start();
+            ItemCooldownTimer = new Stopwatch();
+            ItemCooldownTimer.Start();
 
             this.content = content;
             State = new PlayerStateIdle(content,this);
@@ -95,9 +96,6 @@ namespace cse3902.PlayerClasses
         /* Sets the current item, which is used by PlayerStateItem. */
         public void UseItem(IInventoryItem item)
         {
-            if (ItemUseCooldown.ElapsedMilliseconds < ITEM_USE_COOLDOWN) return;
-            ItemUseCooldown.Restart();
-
             item.Use(this, level);
         }
 
@@ -106,8 +104,6 @@ namespace cse3902.PlayerClasses
             if (!(State is PlayerDamage))
             {
                 State = new PlayerDamage(content, this);
-                Debug.WriteLine("current state is: " + State);
-                Debug.WriteLine(Inventory.health);
             }
            
             if (Inventory.health > 0)
@@ -124,13 +120,15 @@ namespace cse3902.PlayerClasses
                 {
                     isDamaged = false; // Reset damage flag after 100 ms
                 }
+
+                // EventBus.HitStop(200);
+                EventBus.CameraShake(200, 5f);
             }
             if (Inventory.health == 0)
             {
-                Debug.WriteLine("YOU ARE DEAD!!!!!");
+                //Debug.WriteLine("YOU ARE DEAD!!!!!");
                 EventBus.PlayerDying(this);
             }
-            
         }
     }
 }

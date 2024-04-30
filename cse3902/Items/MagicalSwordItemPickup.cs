@@ -14,7 +14,7 @@ public class MagicalSwordItemPickup : BasicSlotAPickup
     public MagicalSwordItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.MagicSwordItemSourceRect });
+                        ItemsConstant.MagicSwordItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
@@ -26,7 +26,7 @@ public class MagicalSwordItemPickup : BasicSlotAPickup
             isAdded = true;
         }
         isMagicalSwordPicked = true;
-        Debug.WriteLine("magic sword item picked up");
+        //Debug.WriteLine("magic sword item picked up");
         IsDead = true;
     }
 }

@@ -12,4 +12,10 @@ public static class EventBus
     // even though we don't intend anyone else to use the type itself :(
     public delegate void _LoggingMessage(string msg);
     public static _LoggingMessage LoggingMessage = (string msg) => {}; // must have a value, so set it to a lambda function that does nothing
+
+    public delegate void _HitStop(int duration_ms);
+    public static _HitStop HitStop = (int duration_ms) => {};
+    
+    public delegate void _CameraShake(int duration_ms, float intensity);
+    public static _CameraShake CameraShake = (int duration_ms, float intensity) => {};
 }

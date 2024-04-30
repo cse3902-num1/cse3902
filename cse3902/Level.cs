@@ -17,11 +17,16 @@ namespace cse3902
 {
     public class Level
     {
+        private int hitstop_duration_ms = 0;
+        private Stopwatch hitstop_timer = new Stopwatch();
+
         public const float TILE_SIZE = 16 * 3.0f;
         public enum TileType
         {
             FLOOR = 0,
             WALL = 1,
+            ROOM_WALL = 2,
+            LEVEL_WALL = 3,
         }
         public enum EnemyType
         {
@@ -49,17 +54,18 @@ namespace cse3902
         public List<IProjectile> Projectiles;
         public IPlayer player;
 
-
-        public Sprite playerDot;
-        public Sprite enemyDot;
-        public Sprite triforceDot;
-
-    
+        /* spawn queues */
+        private List<IProjectile> newProjectiles;
 
 
+        public  Sprite playerDot;
+        public  Sprite enemyDot;
+        public  Sprite triforceDot;
+        public  Sprite wizardDot;
 
-/* TODO: this is a temporary function to print mapdata */
-public void PrintTileMap()
+
+        /* TODO: this is a temporary function to print mapdata */
+        public void PrintTileMap()
         {
             for (int x = 0; x < tilemap.GetLength(0); x++)
             {
@@ -68,10 +74,12 @@ public void PrintTileMap()
                 {
                     line += tilemap[x, y] switch {
                         TileType.FLOOR => '.',
-                        TileType.WALL => '#',
+                        TileType.WALL => '*',
+                        TileType.ROOM_WALL => '#',
+                        TileType.LEVEL_WALL => '%',
                     } + " ";
                 }
-                Debug.WriteLine(line);
+                //Debug.WriteLine(line);
             }
         }
 
@@ -92,7 +100,7 @@ public void PrintTileMap()
                         EnemyType.OLD_MAN => 'O',
                     } + " ";
                 }
-                Debug.WriteLine(line);
+                //Debug.WriteLine(line);
             }
         }
        
@@ -103,7 +111,10 @@ public void PrintTileMap()
             Generate();
             PrintTileMap();
             PrintEnemyMap();
-            Debug.WriteLine("spawnx: {0} spawny: {1}", playerSpawnX, playerSpawnY);
+            //Debug.WriteLine("spawnx: {0} spawny: {1}", playerSpawnX, playerSpawnY);
+
+            EventBus.HitStop += OnHitStop;
+            hitstop_timer.Start();
 
             // throw new NotImplementedException();
 
@@ -112,6 +123,8 @@ public void PrintTileMap()
             Enemies = new List<IEnemy>();
             ParticleEffects = new List<IParticleEffect>();
             Projectiles = new List<IProjectile>();
+
+            newProjectiles = new List<IProjectile>();
 
             Build(content);
 
@@ -123,6 +136,9 @@ public void PrintTileMap()
             });
             triforceDot = new Sprite(content.hud, new List<Rectangle>() {
                  new Rectangle(528,126,3,3)
+            });
+            wizardDot = new Sprite(content.hud, new List<Rectangle>() {
+                 new Rectangle(582,126,3,3)
             });
         }
 
@@ -139,6 +155,16 @@ public void PrintTileMap()
                 {
                     tilemap[x, y] = TileType.WALL;
                 }
+            }
+
+            /* make outside of map a different kind of block */
+            for (int x = 0; x < w; x++) {
+                tilemap[x, 0] = TileType.LEVEL_WALL;
+                tilemap[x, h - 1] = TileType.LEVEL_WALL;
+            }
+            for (int y = 0; y < h; y++) {
+                tilemap[0, y] = TileType.LEVEL_WALL;
+                tilemap[w - 1, y] = TileType.LEVEL_WALL;
             }
 
             // /* randomly add open spaces to map interior, at a certain spacing */
@@ -204,8 +230,8 @@ public void PrintTileMap()
             const int ROOM_SIZE_INCREMENT = HALL_GRID_SIZE; /* in units of tiles */
             const int MIN_ROOM_SIZE = 0; /* in units of the room size increment */
             const int MAX_ROOM_SIZE = 5;
-            for (int x = 1; x < w - 1; x += HALL_GRID_SIZE) {
-                for (int y = 1; y < h - 1; y += HALL_GRID_SIZE) {
+            for (int x = 1; x < w - 1 - MIN_ROOM_SIZE * ROOM_SIZE_INCREMENT; x += HALL_GRID_SIZE) {
+                for (int y = 1; y < h - 1 - MIN_ROOM_SIZE * ROOM_SIZE_INCREMENT; y += HALL_GRID_SIZE) {
                     if (random.NextDouble() > ROOM_PROBABILITY) continue;
 
                     /* generate room details */
@@ -217,6 +243,24 @@ public void PrintTileMap()
                         for (int ry = y; ry < y + rh && ry < h - 1; ry++) {
                             tilemap[rx, ry] = TileType.FLOOR;
                         }
+                    }
+
+                    /* surround room with room wall tiles */
+                    int leftx = Math.Max(x - 1, 1);
+                    int rightx = Math.Min(x + rw, w - 1 - 1);
+                    int topy = Math.Max(y - 1, 1);
+                    int bottomy = Math.Min(y + rh, h - 1 - 1);
+                    // for (int rx = Math.Max(0, x - 1); rx < x + rw && rx < w - 1; rx++) {
+                    //     if (tilemap[rx, 0] == TileType.WALL) tilemap[rx, 0] = TileType.ROOM_WALL;
+                    //     if (tilemap[rx, Math.Min(y + rh, h - 1)] == TileType.WALL) tilemap[rx, 0] = TileType.ROOM_WALL;
+                    // }
+                    for (int rx = leftx; rx < rightx; rx++) {
+                        if (tilemap[rx, topy] == TileType.WALL) tilemap[rx, topy] = TileType.ROOM_WALL;
+                        if (tilemap[rx, bottomy] == TileType.WALL) tilemap[rx, bottomy] = TileType.ROOM_WALL;
+                    }
+                    for (int ry = topy; ry < bottomy; ry++) {
+                        if (tilemap[leftx, ry] == TileType.WALL) tilemap[leftx, ry] = TileType.ROOM_WALL;
+                        if (tilemap[rightx, ry] == TileType.WALL) tilemap[rightx, ry] = TileType.ROOM_WALL;
                     }
                 }
             }
@@ -327,8 +371,10 @@ public void PrintTileMap()
             {
                 Vector2 pos = new Vector2(x * TILE_SIZE, y * TILE_SIZE);
                 Block b = tilemap[x, y] switch {
-                    TileType.FLOOR => new Block(content, BlockConstant.BLOCK_TYPE_0, pos),
-                    TileType.WALL => new Block(content, BlockConstant.BLOCK_TYPE_1, pos),
+                    TileType.FLOOR => new Block(content, BlockConstant.BLOCK_TYPE_FLOOR, pos),
+                    TileType.WALL => new Block(content, BlockConstant.BLOCK_TYPE_WALL, pos),
+                    TileType.ROOM_WALL => new Block(content, BlockConstant.BLOCK_TYPE_ROOM_WALL, pos),
+                    TileType.LEVEL_WALL => new Block(content, BlockConstant.BLOCK_TYPE_LEVEL_WALL, pos),
                 };
                 Blocks.Add(b);
             }}
@@ -382,7 +428,7 @@ public void PrintTileMap()
             Random random = new Random();
      
             int itemType = random.Next(0, 27); 
-            if (itemType == 3 && triforceCount >= 5)
+            if (itemType == 3 && triforceCount >= 6)
             {
                 // If 5 Triforce items already exist, choose a different item type
                 return RandomItem(content); // Recursively call RandomItem to get a different item type
@@ -399,6 +445,7 @@ public void PrintTileMap()
                 case 3:
                     triforceCount++;
                     return new TriforceItemPickup(content, this);
+
                 case 4:
                     return new MapItemPickup(content, this);
                 case 5:
@@ -455,11 +502,23 @@ public void PrintTileMap()
                     return new BookOfMagicItemPickup(content, this);
                 case 31: 
                     return new MagicalKeyItemPickup(content, this);
+                case 32:
+                    return new HeartItemPickup(content, this);
                 default: return null;
             }
         }
         public void Update(GameTime gameTime, List<IController> controllers)
         {
+            if (hitstop_timer.ElapsedMilliseconds < hitstop_duration_ms) {
+                return;
+            }
+            hitstop_timer.Restart();
+            hitstop_duration_ms = 0;
+
+            /* dequeue things from spawn queue */
+            Projectiles.AddRange(newProjectiles);
+            newProjectiles.Clear();
+
             Blocks = Blocks.Where(b => !b.IsDead).ToList();
             Items = Items.Where(i => !i.IsDead).ToList();
             Enemies = Enemies.Where(e => !e.IsDead).ToList();
@@ -468,7 +527,11 @@ public void PrintTileMap()
 
             Blocks.ForEach(b => b.Update(gameTime, controllers));
             Items.ForEach(i => i.Update(gameTime, controllers));
-            Enemies.ForEach(e => e.Update(gameTime, controllers));
+            // Enemies.ForEach(e => e.Update(gameTime, controllers));
+            const float ENEMY_UPDATE_RANGE = Level.TILE_SIZE * 20;
+            Enemies.ForEach(e => {
+                if (Vector2.DistanceSquared(e.Position, player.Position) < ENEMY_UPDATE_RANGE * ENEMY_UPDATE_RANGE) e.Update(gameTime, controllers);
+            });
             ParticleEffects.ForEach(p => p.Update(gameTime, controllers));
             Projectiles.ForEach(p => p.Update(gameTime, controllers));
 
@@ -481,11 +544,19 @@ public void PrintTileMap()
         {
             Blocks.ForEach(b => b.Draw(spriteBatch));
             Items.ForEach(i => i.Draw(spriteBatch));
+            Projectiles.ForEach(p => p.Draw(spriteBatch));
             Enemies.ForEach(e => e.Draw(spriteBatch));
             ParticleEffects.ForEach(p => p.Draw(spriteBatch));
-            Projectiles.ForEach(p => p.Draw(spriteBatch));
 
             player.Draw(spriteBatch);
+        }
+
+        public void OnHitStop(int duration_ms) {
+            hitstop_duration_ms += duration_ms;
+        }
+
+        public void SpawnProjectile(IProjectile projectile) {
+            newProjectiles.Add(projectile);
         }
     }
 }

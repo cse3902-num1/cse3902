@@ -11,12 +11,12 @@ public class LifePotionItemPickup : BasicItemPickup
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
             ItemsConstant.LifePotionItemSourceRect,
-        });
+        }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
         player.Inventory.health = player.Inventory.lifeContainer;
-        Debug.WriteLine("life potion picked up, health is "+ player.Inventory.health);
+        //Debug.WriteLine("life potion picked up, health is "+ player.Inventory.health);
         IsDead = true;
     }
 }

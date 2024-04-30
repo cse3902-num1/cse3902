@@ -10,12 +10,12 @@ public class FiveRupiesItemPickup : BasicItemPickup
     public FiveRupiesItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.FiveRupiesItemSourceRect});
+                        ItemsConstant.FiveRupiesItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
         player.Inventory.Rubies += 5;
-        Debug.WriteLine("five rubies picked up");
+        //Debug.WriteLine("five rubies picked up");
         IsDead = true;
     }
 }

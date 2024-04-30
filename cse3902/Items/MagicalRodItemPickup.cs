@@ -10,11 +10,11 @@ public class MagicalRodItemPickup : BasicItemPickup
     public MagicalRodItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.MagicRodItemSourceRect });
+                        ItemsConstant.MagicRodItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
-        Debug.WriteLine("magic rod picked up");
+        //Debug.WriteLine("magic rod picked up");
         IsDead = true;
     }
 }

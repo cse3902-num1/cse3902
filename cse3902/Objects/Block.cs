@@ -77,7 +77,7 @@ namespace cse3902.Objects
 
             /* only add a collider if the block is of the right type */
             Collider = null;
-            if (this.blockIndex == 1) {
+            if (this.blockIndex != BlockConstant.BLOCK_TYPE_FLOOR) {
                 Collider = new BoxCollider(position, BlockConstant.ColliderScale, BlockConstant.ColliderOffset, ColliderType.BLOCK);
             }
         }

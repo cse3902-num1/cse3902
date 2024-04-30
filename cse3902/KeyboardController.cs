@@ -5,6 +5,8 @@ using cse3902.Objects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using cse3902.Interfaces;
+using System.Linq;
+using System.Diagnostics;
 
 namespace cse3902;
 
@@ -12,16 +14,33 @@ public class KeyboardController : IController
 {
     private KeyboardState currentKeyboardState;
     private  KeyboardState previousKeyboardState;
+
+    private Queue<Keys> last6Keys;
+
     public KeyboardController()
     {
         currentKeyboardState = Keyboard.GetState();
         previousKeyboardState = currentKeyboardState; // Initialize both to the same state
+
+        last6Keys = new Queue<Keys>();
     }
 
     public void Update(GameTime gameTime)
     {
         previousKeyboardState = currentKeyboardState;
         currentKeyboardState = Keyboard.GetState();
+
+        Keys[] pressedKeys = currentKeyboardState.GetPressedKeys();
+        Keys[] lastPressedKeys = previousKeyboardState.GetPressedKeys();
+        foreach (Keys k in pressedKeys) {
+            if (lastPressedKeys.Contains(k)) break;
+            last6Keys.Enqueue(k);
+        }
+        while (last6Keys.Count > 6) {
+            last6Keys.Dequeue();
+        }
+
+        // foreach (Keys k in last6Keys) Debug.WriteLine(k);
     }
 
     /* Returns true if the key is currently down. */
@@ -85,4 +104,17 @@ public class KeyboardController : IController
     public bool isInventoryDisplayedPressed() { return isKeyJustPressed(Keys.C); }
     public bool isSwitchSlotAPressed() { return isKeyJustPressed(Keys.V); }
     public bool isSwitchSlotBPressed() { return isKeyJustPressed(Keys.B); }
+
+    public bool isCheatCodeJustPressed()
+    {
+        Keys[] keys = last6Keys.ToArray();
+        if (keys.Length != 6) return false;
+        if (keys[0] != Keys.B) return false;
+        if (keys[1] != Keys.O) return false;
+        if (keys[2] != Keys.G) return false;
+        if (keys[3] != Keys.G) return false;
+        if (keys[4] != Keys.U) return false;
+        if (keys[5] != Keys.S) return false;
+        return true;
+    }
 }

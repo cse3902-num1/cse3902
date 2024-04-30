@@ -13,6 +13,12 @@ namespace cse3902.Games
 {
     public class GamePlayState : IGameState
     {
+        private Random random = new Random();
+
+        private int camerashake_duration_ms = 0;
+        private float camerashake_intensity = 0f;
+        private Stopwatch camerashake_timer = new Stopwatch();
+
         private GameContent gameContent;
         private Game1 game;
         private Level level;
@@ -25,12 +31,26 @@ namespace cse3902.Games
             this.game = game;
             level = new Level(gamecontent);
             hud = new Hud(gameContent,level);
+
+            EventBus.CameraShake += OnCameraShake;
+            camerashake_timer.Start();
+            SoundManager.Manager.CommonBGM();
         }
         // draw level, hud
         public void Draw(Camera camera)
         {
             if (level.player is not null) {
                 camera.Position = level.player.Position;
+            }
+
+            if (camerashake_timer.ElapsedMilliseconds < camerashake_duration_ms) {
+                camera.Position += new Vector2(
+                    random.NextSingle() * camerashake_intensity - camerashake_intensity/2,
+                    random.NextSingle() * camerashake_intensity - camerashake_intensity/2
+                );
+            } else {
+                camerashake_duration_ms = 0;
+                camerashake_timer.Restart();
             }
 
             camera.BeginDraw();
@@ -59,13 +79,24 @@ namespace cse3902.Games
             if (controllers.Any(c => c.isResetPressed()))
             {
                 level = new Level(gameContent);
+                hud = new Hud(gameContent, level);
             }
 
             hud.Update(gameTime, controllers);
-            if (level.player.Inventory.Triforce == 5)
+            if ((level.player.Inventory.Triforce == 3 && Game1.isNightmare == true) || (controllers.Any(c => c.isCheatCodeJustPressed()) && Game1.isNightmare == true))
+            {
+                // Game1.State = new GameWinState(gameContent, game);
+                Game1.State = new GameComingState(gameContent, game);
+            }
+            else if(level.player.Inventory.Triforce == 3)
             {
                 Game1.State = new GameWinState(gameContent, game);
             }
+        }
+
+        public void OnCameraShake(int duration_ms, float intensity) {
+            camerashake_duration_ms = duration_ms;
+            camerashake_intensity = intensity;
         }
     }
 }

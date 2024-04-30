@@ -14,7 +14,7 @@ public class SwordItemPickup : BasicSlotAPickup
     public SwordItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                       ItemsConstant.SwordItemSourceRect});
+                       ItemsConstant.SwordItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
@@ -26,7 +26,7 @@ public class SwordItemPickup : BasicSlotAPickup
             isAdded = true;
         }
         swordIsPicked = true;
-        Debug.WriteLine("sword item picked up");
+        //Debug.WriteLine("sword item picked up");
         IsDead = true;
     }
 }

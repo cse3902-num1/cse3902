@@ -17,7 +17,7 @@ namespace cse3902.Enemy
         private float DragonMoveSpeedEnermyConstant = 50f;
         private float GhostDragonMoveSpeedEnermyConstant = 30f;
         private const int RandomChangeInterval = 500;  // Time in milliseconds
-        private const int AttackInterval = 3000;
+        private int attack_cooldown_ms = 3000;
         private Level level;
         public Dragon(GameContent content, Level level): base(content)
         {
@@ -115,7 +115,7 @@ namespace cse3902.Enemy
                 fireballCount += 3;
             }
 
-            SoundManager.Manager.fireballSound();
+            SoundManager.Manager.newFireballSound();
         }
         // update dragon position and draw dragon
         public override void Draw(SpriteBatch spriteBatch)
@@ -152,8 +152,9 @@ namespace cse3902.Enemy
 
         private void TryAttack()
         {
-            if (attackTimer.ElapsedMilliseconds >= AttackInterval)
+            if (attackTimer.ElapsedMilliseconds >= attack_cooldown_ms)
             {
+                attack_cooldown_ms = 3000 + random.Next(0, 1000) - 500;
                 attackTimer.Restart();
                 Attack();
             }
@@ -174,6 +175,8 @@ namespace cse3902.Enemy
             }
 
             base.Die();
+
+            IsDead = true; /* minibosses don't turn into ghosts */
         }
     }
 }

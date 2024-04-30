@@ -10,12 +10,12 @@ public class FoodItemPickup : BasicItemPickup
     public FoodItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.FoodItemSourceRect});
+                        ItemsConstant.FoodItemSourceRect}, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("food item picked up");
+        //Debug.WriteLine("food item picked up");
         IsDead = true;
     }
 }

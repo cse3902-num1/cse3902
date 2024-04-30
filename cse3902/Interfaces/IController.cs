@@ -53,4 +53,5 @@ public interface IController
      public bool isSwitchSlotAPressed();
     public bool isSwitchSlotBPressed();
 
+    public bool isCheatCodeJustPressed();
 }

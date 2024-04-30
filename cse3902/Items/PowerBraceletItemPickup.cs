@@ -10,12 +10,12 @@ public class PowerBraceletItemPickup : BasicItemPickup
     public PowerBraceletItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.PowerBraceletItemSourceRect });
+                        ItemsConstant.PowerBraceletItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
 
-        Debug.WriteLine("power bracelet item picked up");
+        //Debug.WriteLine("power bracelet item picked up");
         IsDead = true;
     }
 }

@@ -13,7 +13,7 @@ public class MagicBoomerangItemPickup : BasicSlotBPickup
     public MagicBoomerangItemPickup(GameContent content, Level level) : base(level)
     {
         sprite = new Sprite(content.ItemSheet, new List<Rectangle>() {
-                        ItemsConstant.MagicBoomerangItemSourceRect });
+                        ItemsConstant.MagicBoomerangItemSourceRect }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
@@ -24,7 +24,7 @@ public class MagicBoomerangItemPickup : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("letter picked up");
+        //Debug.WriteLine("letter picked up");
         IsDead = true;
     }
 }

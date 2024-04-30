@@ -140,8 +140,7 @@ namespace cse3902.PlayerClasses
 
             // Draw the textsprite of items
             drawText(gameContent, spriteBatch, 30);
-
-
+           
             //this is for drawing the hud
             //draw hearts in life:
             drawHeart(gameContent, spriteBatch, 85);
@@ -158,6 +157,8 @@ namespace cse3902.PlayerClasses
             {
                 drawBlackEffect(gameContent, spriteBatch);
 
+                 sprite.Position = new Vector2(0, 175*3.5f) + Position;
+                //sprite.Position = new Vector2(0, 175*3.5f);
 
                 drawRadarToHud(gameContent, spriteBatch,Level);
                

@@ -73,7 +73,7 @@ namespace cse3902.Enemy
         {
             SoundManager.Manager.enemyDamageSound();
             HP -= damage;
-            if (HP <= 0)
+            if (HP <= 0 && !IsGhost)
             {
                 Die();
             }
@@ -105,7 +105,6 @@ namespace cse3902.Enemy
             else
             {
                 IsDead = true;
-                Debug.WriteLine(IsDead);
             }
         }
     }

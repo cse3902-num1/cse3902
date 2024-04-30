@@ -15,7 +15,7 @@ public class FireItemPickUp : BasicSlotBPickup
         sprite = new Sprite(content.mergedSheet, new List<Rectangle>() {
             ItemsConstant.FireItemAnimationSourceRect1,
              ItemsConstant.FireItemAnimationSourceRect2,
-        });
+        }, new Vector2(8, 8));
     }
     public override void Pickup(IPlayer player)
     {
@@ -26,7 +26,7 @@ public class FireItemPickUp : BasicSlotBPickup
             PlayerInventory.inventoryItems.Add(this);
             isAdded = true;
         }
-        Debug.WriteLine("fire picked up");
+        //Debug.WriteLine("fire picked up");
         IsDead = true;
     }
 }

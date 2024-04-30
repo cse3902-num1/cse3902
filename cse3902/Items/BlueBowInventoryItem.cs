@@ -8,7 +8,7 @@ namespace cse3902;
 public class BlueBowInventoryItem: IInventoryItem
 {
     private GameContent content;
-    private float speed = 800f;
+    private float speed = 1000f;
     public BlueBowInventoryItem(GameContent content)
     {
         this.content = content;
