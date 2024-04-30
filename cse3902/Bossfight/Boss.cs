@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Diagnostics;
-
+using System.Security.Cryptography.X509Certificates;
 using cse3902.Enemy;
 using cse3902.Interfaces;
 using cse3902.Projectiles;
@@ -14,27 +14,27 @@ namespace cse3902.Bossfight;
 public class Boss
 {
     public Vector2 Position {set;get;}
-
-    private GameContent content;
+    private GameContent content;    
     public BossfightLevel Level;
     private Sprite boggus;
-
+    public Rectangle bossHealthBar;
+    public int bossHealth = 999;
+    public int bossHealthMax = 999;
     private Random random;
 
     public Boss(GameContent content, BossfightLevel level, Vector2 position) {
-        boggus = new Sprite(
-            content.boggus,
+        boggus = new Sprite(content.boggus,
             new List<Rectangle>()
             {
-                new Rectangle(0,0,256,416)
+                BossConstant.bossSprite
             },
             new Vector2(257f/2, 419f/2),
-            0.5f
+            BossConstant.bossScale
         );
         this.content = content;
         this.Level = level;
         this.Position = position;
-
+        
         this.random = new Random();
 
         projectileTimer.Start();
@@ -44,16 +44,21 @@ public class Boss
     {
         boggus.Position = Position;
         boggus.Draw(spriteBatch);
+
+        /* draw health bar */
+        int margin = 8;
+        bossHealthBar = new Rectangle(
+            /* x */ -(int)BossfightLevel.WORLD_WIDTH/2 + margin,
+            /* y */ -(int)BossfightLevel.WORLD_HEIGHT/2 + margin,
+            /* width */ (int)BossfightLevel.WORLD_WIDTH - 2*margin,
+            /* height */ 8
+        );
+        spriteBatch.Draw(content.redBackground, bossHealthBar, Color.White);
     }
 
     private Stopwatch projectileTimer = new Stopwatch();
     public void Update(GameTime gameTime, List<IController> controllers)
-
-    //{
-        //boggus.Update(gameTime, controllers);
-        //Position += new Vector2(1, 0);
-
-    {        
+    {
         if (projectileTimer.ElapsedMilliseconds < 1000) return;
         projectileTimer.Restart();
 

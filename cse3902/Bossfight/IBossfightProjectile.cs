@@ -7,6 +7,7 @@ namespace cse3902.Bossfight;
 public interface IBossfightProjectile {
     public BossfightLevel Level {set;get;}
     public bool IsDead {set;get;}
+    public bool IsEnemy {set;get;}
     public Vector2 Position {set;get;}
     public Vector2 Velocity {set;get;}
     public float Radius {set;get;}

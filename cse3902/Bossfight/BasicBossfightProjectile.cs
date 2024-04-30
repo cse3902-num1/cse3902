@@ -8,6 +8,7 @@ namespace cse3902.Bossfight;
 public class BasicBossfightProjectile : IBossfightProjectile
 {
     public bool IsDead {set;get;}
+    public bool IsEnemy {set;get;}
     public Vector2 Position {get;set;}
     public Vector2 Velocity {get;set;}
     public float Radius {get;set;}
@@ -23,6 +24,7 @@ public class BasicBossfightProjectile : IBossfightProjectile
         this.content = content;
         this.Level = level;
         this.IsDead = false;
+        this.IsEnemy = true;
         this.Position = position;
         this.Velocity = velocity;
         this.Radius = radius;
