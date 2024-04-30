@@ -45,6 +45,7 @@ namespace cse3902
         public Texture2D skeleton;
         public Texture2D goriya;
         public Texture2D oldman;
+        public Texture2D boggus;
 
         public Texture2D blueBoomerang;
         public Texture2D weapon;
@@ -71,6 +72,7 @@ namespace cse3902
         public SoundEffect bombDrop;
         public SoundEffect bombBlowUp;
         public SoundEffect fireball;
+
         
         
 
@@ -95,6 +97,7 @@ namespace cse3902
             TilesSheet = LoadTexture2D("Tileset");
             ItemSheet = LoadTexture2D("Items");
             hud = LoadTexture2D("hud");
+            boggus = LoadTexture2D("boss");
             SpriteSheetFlipped = LoadTexture2D("flipped");
             SpritesheetLinkAttackMagicRodMagicShield = LoadTexture2D("spritesheet_link_attack_magicrod_magicshield");
             SpritesheetLinkAttackMagicRod = LoadTexture2D("spritesheet_link_attack_magicrod");
