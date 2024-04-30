@@ -47,6 +47,7 @@ dotnet run
   * green dot represents where the player is
   * lavender dots represents where the triforces are
   * red dots represents where the dragons are
+  * indigo dots represents where the wizard are
 
 * Life container represents the health of the player
 * Ruby picked up quantity
@@ -67,6 +68,7 @@ dotnet run
 ## Win Check
 * Player will pick up 3 triforces to win
 * Beat dragon or the boss to get a new triforce
+* press "boggus" to trigger final round, beat Mr.Boggus to win the game
 
 ## Other control
 * Q - quit the game
