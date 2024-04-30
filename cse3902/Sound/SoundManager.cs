@@ -30,9 +30,10 @@ namespace cse3902
                 return manager;
             }
         }
-        private bool isMusicPaused = false; 
+        private bool isMusicPaused = false;
 
         private static Song music = null;
+        private static Song BossMusic =null;
         private static SoundEffect sword = null;
         private static SoundEffect itemPickUp = null;
         private static SoundEffect linkDamage = null;
@@ -53,6 +54,7 @@ namespace cse3902
         public void LoadContent(GameContent content)
         {
             music = content.bgmusic;
+            BossMusic = content.BossMusic;
             sword = content.sword;
             itemPickUp = content.itemPickUp;
             linkDamage = content.linkDamage;
@@ -64,11 +66,7 @@ namespace cse3902
             bombBlowUp = content.bombBlowUp;
             //fireball = content.fireball;
             newFireball = content.newFireball;
-
-            MediaPlayer.Volume = 0.2f;
-            MediaPlayer.Play(music);
-            MediaPlayer.IsRepeating = true;
-
+            
         }
         public void Update(GameTime gameTime, List<IController> controllers) {
 
@@ -86,9 +84,22 @@ namespace cse3902
                     isMusicPaused = true;
                 }
             }
-           
+
         }
-    
+        public void CommonBGM()
+        {
+            MediaPlayer.Volume = 0.2f;
+            MediaPlayer.Play(music);
+            MediaPlayer.IsRepeating = true;
+
+        }
+        public void BossBGM(){
+            
+                MediaPlayer.Volume = 0.05f;
+                MediaPlayer.Play(BossMusic);
+                MediaPlayer.IsRepeating = true;
+            
+        }
         public void swordSound()
         {
             if (!isMusicPaused)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,7 @@ namespace cse3902.Games
             welcomeTextPos = new Vector2(Game1.graphics.PreferredBackBufferWidth / 2 - TextOffsetX, Game1.graphics.PreferredBackBufferHeight / 4);
             adventureTextPos = new Vector2(300, 440);
             nightMareTextPos = new Vector2(300, 640);
+            SoundManager.Manager.BossBGM();
         }
         public void Draw(Camera camera)
         {

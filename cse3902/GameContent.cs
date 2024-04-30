@@ -61,6 +61,7 @@ namespace cse3902
         public SpriteFont font;
 
         public Song bgmusic;
+        public Song BossMusic;
         public SoundEffect sword;
         public SoundEffect itemPickUp;
         public SoundEffect linkDamage;
@@ -128,6 +129,7 @@ namespace cse3902
             rightDoors = LoadTexture2D("rightDoors");
 
             bgmusic = content.Load<Song>(@"Sound/Dungeon");
+            BossMusic = content.Load<Song>(@"Sound/Boss");
             sword = LoadSoundEffect(@"Sound/LOZ_Sword_Slash");
             itemPickUp = LoadSoundEffect(@"Sound/LOZ_Get_Item");
             linkDamage = LoadSoundEffect(@"Sound/LOZ_Link_Hurt");

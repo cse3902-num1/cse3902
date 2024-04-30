@@ -212,6 +212,12 @@
 /processorParam:TextureFormat=Color
 /build:skeleton.png
 
+#begin Sound/Boss.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Boss.mp3
+
 #begin Sound/Dungeon.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
